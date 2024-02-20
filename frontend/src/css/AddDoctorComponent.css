@@ -1,0 +1,91 @@
+/* ADD DOCTOR */
+/* form.css */
+
+.doctor-container {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    margin: auto;
+    margin-top: 150px;
+    background: rgb(255, 255, 255);
+  }
+  
+  /* Container */
+  .form-container {
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  /* Form */
+  .form-container form {
+    display: grid;
+    grid-row-gap: 20px;
+  }
+  
+  /* Labels */
+  .form-container label {
+    font-weight: bold;
+  }
+  
+  /* Inputs */
+  .form-container input[type="text"],
+  .form-container input[type="email"],
+  .form-container select,
+  .form-container input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .ic {
+    padding: 5px;
+  }
+  
+  .ic input[type="radio"] + label {
+    margin-right: 10px;
+    margin-left: 10px; /* Adjust the value as needed */
+    
+  }
+  
+  /* Submit Button */
+  .form-container button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #8d55f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Submit Container */
+  
+  /* Submit Button Link */
+  
+  /* Update DOCTOR */
+  .update-doctor-container {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+  
+    margin-top: 150px;
+    background: rgb(255, 255, 255);
+  }
+  .uform-container {
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .doctor-container {
+      width: 90%;
+    }
+    .update-doctor-container {
+      width: 90%;
+    }
+    .ic {
+      width: 90%;
+    }
+  }

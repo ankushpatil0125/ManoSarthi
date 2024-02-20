@@ -1,0 +1,23 @@
+{
+    "header":{
+        "message":"Welcome",
+        "Home":"Home",
+        "About":"About Us",
+        "Contact":"Contact Us",
+        "Dashboard":"Dashboard",
+        "Profile":"Profile"
+        
+    },
+    "login":{
+        "LOGIN":"LOGIN",
+        "Logout":"Logout",
+        "username":"username",
+        "Password":"Password",
+        "forgot-password":"Forgot-password",
+        "Click_Here":"Click_Here"
+    },
+    "Select_Language":"Select Language",
+    "home":{
+        "body":"A Hospital App"
+    }
+}

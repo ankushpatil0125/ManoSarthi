@@ -1,0 +1,23 @@
+.image {
+    border: 1.5px solid #2a0c37;
+    border-radius: 20px;
+    width: 75px;
+    height: 60px;
+    margin: 3px;
+    margin-left: 10px;
+  }
+  
+  .custom-nav .nav-link {
+    margin-right: 100px;
+  }
+  
+  .rounded-link {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid #2a0c37;
+    margin-left: 10px; /* Adjust margin as needed */
+  }
+  
+  .rounded-link:hover {
+    background-color: #f8f9fa;
+  }

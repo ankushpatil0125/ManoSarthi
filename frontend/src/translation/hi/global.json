@@ -1,0 +1,22 @@
+{
+    "header":{
+        "message":"नमस्ते",
+        "Home":"होम",
+        "About":"अबाउट",
+        "Contact":"कॉन्टैक्ट",
+        "Dashboard":"डैशबोर्ड",
+        "Profile":"प्रोफ़ाइल"
+    },
+    "login":{
+        "LOGIN":"लॉगिन",
+        "Logout":"लॉगआउट",
+        "username":"उपयोगकर्ता नाम",
+        "Password":"पासवर्ड",
+        "forgot-password":"पासवर्ड भूल गए हैं",
+        "Click_Here":"यहाँ क्लिक करें"
+    },
+    "Select_Language":"भाषा चुनें",
+    "home":{
+        "body":"मनोसारथी"
+    }
+}
