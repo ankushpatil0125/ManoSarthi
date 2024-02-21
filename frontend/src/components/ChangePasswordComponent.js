@@ -1,45 +1,53 @@
 import React, { useState } from "react";
 import { PASS_URL } from "../utils/images";
 import "../css/LoginComponent.css";
-const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
+import axios from "axios";
+// const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 
 
 const ChangePasswordComponent = () => {
-  const [password, setPassword] = useState("");
-  const [pass, setPass] = useState("");
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handlePassChange = (e) => {
-    setPass(e.target.value);
+  const [requestData, setRequestData] = useState({
+    oldPassword: "",
+    newPassword: "",
+  });
+  const token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMjExNCwiZXhwIjoxNzA4NTQwMTQwfQ.OQsLrI9AnNXAemq0M3Mw3jZdwBWkVUGVfBPeuw0S1oY";
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRequestData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async () => {
-    if (password === pass) {
-      try {
-        console.log(password);
-        const response = await fetch(CONST_LOGIN_CHECK, {
-          method: "POST",
+    try {
+      console.log(requestData.oldPassword);
+      console.log(requestData.newPassword);
+
+      // Using axios for the POST request
+      const response = await axios.post(
+        "http://192.168.141.199:9090/user/change-password",
+        requestData,
+        {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            // withCredentials:false
           },
-          body: JSON.stringify({ password }),
-        });
-
-        if (response.ok) {
-          // Handle successful login, e.g., redirect to another page
-          alert("Password Successfully Changed");
-        } else {
-          // Handle login failure
-          alert("Failed");
         }
-      } catch (error) {
-        console.error("Error during password change:", error);
+      );
+
+      console.log("response of changePassword",response);
+
+      if (response) {
+        // Handle successful password change, e.g., display a success message
+        alert("Password Successfully Changed");
+      } else {
+        // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
+        alert("Failed");
       }
-    } else {
-      alert("Pasword did not match");
+    } catch (error) {
+      console.error(`Error during password change:", ${error}`);
     }
   };
 
@@ -54,9 +62,10 @@ const ChangePasswordComponent = () => {
           <img className="img" src={PASS_URL} alt="" />
           <input
             type="password"
-            placeholder="Enter New Password"
-            value={password}
-            onChange={handlePasswordChange}
+            placeholder="Enter Old Password"
+            value={requestData.oldPassword}
+            name="oldPassword"
+            onChange={handleChange}
           />
         </div>
 
@@ -64,9 +73,10 @@ const ChangePasswordComponent = () => {
           <img className="img" src={PASS_URL} alt="" />
           <input
             type="pass"
-            placeholder="Confirm Password"
-            value={pass}
-            onChange={handlePassChange}
+            placeholder="Enter New Password"
+            name="newPassword"
+            value={requestData.newPassword}
+            onChange={handleChange}
           />
         </div>
       </div>

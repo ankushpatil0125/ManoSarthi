@@ -102,14 +102,14 @@
 /* Media Queries */
 @media only screen and (max-width: 768px) {
   .login-container{
-    width: 100%;
+    width: 90%;
   }
 
   .input {
-    width: 100%;
+    width: 90%;
   }
 
   .input input {
-    width: calc(100% - 50px); /* Adjust as necessary */
+    width: calc(90% - 50px); /* Adjust as necessary */
   }
 }

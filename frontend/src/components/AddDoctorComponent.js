@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/AddDoctorComponent.css";
 import Header from "./Header";
+import ChangePasswordComponent from "./ChangePasswordComponent";
 // import Header from "./Header";
 // import Footer from "./Footer";
 // import { useTranslation } from "react-i18next";
@@ -64,7 +65,7 @@ const AddDoctorComponent = () => {
   return (
     <div>
       <Header />
-
+      <ChangePasswordComponent/>
       <div className="doctor-container">
         <h4>Fill The Doctor Information :</h4>
         <div className="form-container">

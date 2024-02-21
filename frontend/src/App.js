@@ -15,7 +15,7 @@ const App = () => {
           <Route path="/" element={<LoginComponent/>}/>
           <Route path="/forgot-password" element={<ForgotPasswordComponent/>}/>
           <Route path="/change-password" element={<ChangePasswordComponent/>}/>
-          <Route path="/validate-otp" element={<OTPComponent/>}/>
+          <Route path="/otp" element={<OTPComponent/>}/>
           <Route path="/add-doctor" element={<AddDoctorComponent/>}/>
         </Routes>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { EMAIL_URL, PASS_URL } from "../utils/images";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginService from "../Services/LoginService";
 import "../css/LoginComponent.css";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ const LoginComponent = () => {
     username: "",
     password: "",
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRequestData((prevData) => ({
@@ -29,15 +30,22 @@ const LoginComponent = () => {
       // const response = await axios.post(http://192.168.73.199:9090/auth/login,requestData);
 
       const response = await LoginService.AddUser(requestData);
-
+      
       console.log("response", response);
       if ( response) {
         // Handle successful login, e.g., redirect to another page
         alert("Login successful");
-        navigate("/add-doctor");
+        if(response.data.role === "[ROLE_ADMIN]")
+          navigate("/add-doctor");
+        else  
+          navigate("/change-password")
       } 
     } catch (error) {
-      alert(`Login Failed: ${error.response.data}`);
+      console.log(error.response);
+      if(error.response.data.includes("timeout"))
+        alert("Access restricted. Please log in during operating hours");
+      else
+        alert(`Login Failed : ${error.response.data}`);
     }
   };
 
