@@ -9,5 +9,5 @@ user-
 username=pmanu
 password=123
 doctor-
-username=
-password=changeme
+username=DOC1
+password=123
