@@ -1,0 +1,21 @@
+package com.team9.manosarthi_backend.Repositories;
+
+import com.team9.manosarthi_backend.Entities.District;
+import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Entities.SubDistrict;
+import org.apache.catalina.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface DoctorRepository extends JpaRepository<Doctor,Integer> {
+
+    @Query("select d.id from Doctor d where d.user.username =:username")
+    int findDoctorByUsername(@Param("username") String username);
+
+
+
+}

@@ -23,16 +23,7 @@ public class JwtHelper {
         //requirement :
         //public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-//    String time1 = "16:00:00";
-//    String time2 = "16:01:00";
-//
-//    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-//    Date date1 = format.parse(time1);
-//    Date date2 = format.parse(time2);
-//    long difference = date2.getTime() - date1.getTime();
-//        public long JWT_TOKEN_VALIDITY = difference;
 
-        //    public static final long JWT_TOKEN_VALIDITY =  60;
         private String Secret = "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
 
         byte[] secret=Secret.getBytes();

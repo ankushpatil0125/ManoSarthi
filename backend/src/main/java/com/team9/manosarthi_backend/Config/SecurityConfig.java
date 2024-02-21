@@ -65,10 +65,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
 //                       .requestMatchers("/**").permitAll()
+                        .requestMatchers("/subdistrict/**").permitAll()
+                        .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                      //  .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
 //                        .requestMatchers("/user/**").hasRole("USER")
-//                        .requestMatchers("/user/**").permitAll()
+
                         .requestMatchers("/auth/login").permitAll()
 //
                         .anyRequest().authenticated())
@@ -82,7 +86,7 @@ public class SecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .csrf(csrf-> csrf.disable())
-              //  .cors(cors-> cors.disable());
+               // .cors(cors-> cors.disable());
                 .cors(withDefaults());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

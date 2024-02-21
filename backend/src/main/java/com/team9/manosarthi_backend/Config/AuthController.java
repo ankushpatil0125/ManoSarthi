@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Config;
 
+import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.models.JwtRequest;
 import com.team9.manosarthi_backend.models.JwtResponse;
 import com.team9.manosarthi_backend.security.JwtHelper;
@@ -36,6 +37,9 @@ public class AuthController {
         @Autowired
         private JwtHelper helper;
 
+        @Autowired
+        private DoctorRepository doctorRepository;
+
         private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 
@@ -58,7 +62,7 @@ public class AuthController {
 
             // Convert to milliseconds
             long milliseconds = difference.toMillis();
-            //System.currentTimeMillis()-
+
             System.out.println(milliseconds);
             try {
                 if (milliseconds < 0) {
@@ -66,10 +70,25 @@ public class AuthController {
                     throw new TokenGenerationException("Timeout");
                 } else {
                     String token = this.helper.generateToken(userDetails, milliseconds);
+                    int id=-1;
 
+                    if (userDetails.getAuthorities().stream()
+                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"))) {
+                        System.out.println("Hello Doctor here");
+                        id = doctorRepository.findDoctorByUsername(userDetails.getUsername());
+                        System.out.println(id);
+
+                    } else if(userDetails.getAuthorities().stream()
+                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_WORKER"))) {
+
+                        //like above do for all role to get id
+                        System.out.println("Not Doctor");
+                    }
+                    System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
                     JwtResponse response = JwtResponse.builder()
                             .jwtToken(token)
-                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).build();
+                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).user_id(id).changepass(false).build();
+
 
                     return new ResponseEntity<>(response, HttpStatus.OK);
                 }
@@ -94,10 +113,7 @@ public class AuthController {
 
         }
 
-//        @ExceptionHandler(BadCredentialsException.class)
-//        public String exceptionHandler() {
-//            return "Credentials Invalid !!";
-//        }
+
 @ExceptionHandler(BadCredentialsException.class)
 public ResponseEntity<?> exceptionHandler() {
 
