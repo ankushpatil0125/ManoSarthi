@@ -33,10 +33,12 @@ public class UserService {
         System.out.println(newPassword);
         String userName= principal.getName();
         User currentuser=this.userRepository.findByUsername(userName);
+
         if(this.bCryptPasswordEncoder.matches(oldPassword, currentuser.getPassword()))
         {
             //change password
             currentuser.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+            currentuser.setChangepass(true);
             this.userRepository.save(currentuser);
             return true;
         }

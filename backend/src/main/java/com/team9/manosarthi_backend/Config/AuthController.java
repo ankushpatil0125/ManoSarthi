@@ -87,7 +87,7 @@ public class AuthController {
                     System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
                     JwtResponse response = JwtResponse.builder()
                             .jwtToken(token)
-                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).user_id(id).changepass(false).build();
+                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).user_id(id).build();
 
 
                     return new ResponseEntity<>(response, HttpStatus.OK);

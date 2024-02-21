@@ -64,10 +64,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-//                       .requestMatchers("/**").permitAll()
+                       .requestMatchers("/passwordstatus/**").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
-                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                       //  .requestMatchers("/doctor/**").hasRole("DOCTOR")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")

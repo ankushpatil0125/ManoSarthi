@@ -20,7 +20,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("permitAll()")
     @RequestMapping("/index")
     public String dashboard()
     {
@@ -30,7 +31,8 @@ public class UserController {
 
 
 
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("permitAll()")
     @RequestMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePassword request, Principal principal)
     {
