@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import { PASS_URL } from "../utils/images";
 import "../css/LoginComponent.css";
-import axios from "axios";
+import ChangePasswordService from "../Services/ChangePasswordService";
 // const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 
 
@@ -10,7 +11,7 @@ const ChangePasswordComponent = () => {
     oldPassword: "",
     newPassword: "",
   });
-  const token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMjExNCwiZXhwIjoxNzA4NTQwMTQwfQ.OQsLrI9AnNXAemq0M3Mw3jZdwBWkVUGVfBPeuw0S1oY";
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRequestData((prevData) => ({
@@ -23,25 +24,29 @@ const ChangePasswordComponent = () => {
     try {
       console.log(requestData.oldPassword);
       console.log(requestData.newPassword);
-
+      const response = await ChangePasswordService.ChangePassword(requestData);
       // Using axios for the POST request
-      const response = await axios.post(
-        "http://192.168.141.199:9090/user/change-password",
-        requestData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            // withCredentials:false
-          },
-        }
-      );
+      // const response = await axios.post(
+      //   "http://192.168.141.199:9090/user/change-password",
+      //   requestData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //       // withCredentials:false
+      //     },
+      //   }
+      // );
 
       console.log("response of changePassword",response);
 
       if (response) {
         // Handle successful password change, e.g., display a success message
         alert("Password Successfully Changed");
+
+
+        // navigate("/");
+        
       } else {
         // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
         alert("Failed");

@@ -5,7 +5,9 @@
         "About":"अबाउट",
         "Contact":"कॉन्टैक्ट",
         "Dashboard":"डैशबोर्ड",
-        "Profile":"प्रोफ़ाइल"
+        "Profile":"प्रोफ़ाइल",
+        "Doctor":"डॉक्टर",
+        "Supervisor":"सुपरवाइज़र"
     },
     "login":{
         "LOGIN":"लॉगिन",

@@ -1,71 +1,105 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/AddDoctorComponent.css";
 import Header from "./Header";
-import ChangePasswordComponent from "./ChangePasswordComponent";
-// import Header from "./Header";
-// import Footer from "./Footer";
-// import { useTranslation } from "react-i18next";
 // import DoctorService from "../Services/DoctorService";
+import AdminService from "../Services/AdminService";
+import axios from "axios";
 
 const AddDoctorComponent = () => {
-  // const {t}=useTranslation("gloabal");
   const [district, setDistrict] = useState("");
-  const [subDistrict, setSubDistrict] = useState("");
-  const [name, setName] = useState("");
+  const [subdistrictcode, setSubDistrictcode] = useState({ code: "" });
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
+  const [districtOptions, setDistrictOptions] = useState([]);
+  const [subDistrictOptions, setSubDistrictOptions] = useState([]);
 
-  const handleSubmit = (e) => {
-    const doctordetails = {
-      district,
-      subDistrict,
-      name,
-      mobileNo,
-      email,
-      gender,
-      dob,
-    };
+  // const doctorData = {
+  //   email: email,
+  //   firstname: firstname,
+  //   lastname: lastname,
+  //   subdistrictcode: {
+  //     code: subdistrictcode
+  //   }
+  // };
 
-    console.log(doctordetails);
+  const token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5hc2kiLCJpYXQiOjE3MDg1Mjc4NjUsImV4cCI6MTcwODU0MDE0MH0.oHBoQ05t5z9D0STWxeVTH85F3mLFIdoMEFGGhndyFa8";
 
-    // DoctorService.AddDoctor(doctordetails);
+  useEffect(() => {
+    // Fetch district options
+    AdminService.getDistrict()
+      .then((response) => {
+        setDistrictOptions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching district options:", error);
+      });
+  }, []);
 
+  const handleDistrictChange = (e) => {
+    const selectedDistrict = e.target.value;
+    setDistrict(selectedDistrict);
 
-    e.preventDefault();
-    // Handle form submission logic
+    // Fetch subdistrict options based on selected district
+    AdminService.getSubDistrict(selectedDistrict)
+      .then((response) => {
+        setSubDistrictOptions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching subdistrict options:", error);
+      });
   };
 
-  // Array of district options
-  const districtOptions = [
-    "New York",
-    "Los Angeles",
-    "Chicago",
-    "Houston",
-    "Phoenix",
-    "Philadelphia",
-    "San Antonio",
-    "San Diego",
-    "Dallas",
-    "San Jose",
-  ];
-  const subdistrictOptions = [
-    "New York",
-    "Los Angeles",
-    "Chicago",
-    "Houston",
-    "Phoenix",
-    "Philadelphia",
-    "San Antonio",
-    "San Diego",
-    "Dallas",
-    "San Jose",
-  ];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("hii");
+    // Create doctor object
+    const doctorData = {
+      email: email,
+      firstname: firstname,
+      lastname: lastname,
+      subdistrictcode: {
+        code: subdistrictcode
+      }
+    };
+
+    try {
+      // Using axios for the POST request
+      console.log("doctor data", doctorData);
+      const response = await axios.post(
+        "http://192.168.73.199:9090/admin/doctor",
+        doctorData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            // withCredentials:false
+          },
+        }
+      );
+
+      console.log("response of changePassword", response);
+
+      if (response) {
+        // Handle successful password change, e.g., display a success message
+        alert("Doctor Added Successfully");
+      } else {
+        // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
+        alert("Failed");
+      }
+    } catch (error) {
+      console.error(`Error during adding doctor:", ${error}`);
+    }
+  };
+
   return (
     <div>
       <Header />
-      <ChangePasswordComponent/>
+
       <div className="doctor-container">
         <h4>Fill The Doctor Information :</h4>
         <div className="form-container">
@@ -75,43 +109,50 @@ const AddDoctorComponent = () => {
               <select
                 id="district"
                 value={district}
-                onChange={(e) => setDistrict(e.target.value)}
+                onChange={handleDistrictChange}
               >
                 <option value="">Select</option>
-                {districtOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
+                {districtOptions.map((district, index) => (
+                  <option key={index} value={district.code}>
+                    {district.name}
                   </option>
                 ))}
-                {/* Options for District Dropdown */}
               </select>
             </div>
             <div>
-              <label htmlFor="subDistrict">Subdistrict:</label>
+              <label htmlFor="subdistrictcode">Subdistrict:</label>
               <select
-                id="subDistrict"
-                value={subDistrict}
-                onChange={(e) => setSubDistrict(e.target.value)}
+                id="subdistrictcode"
+                value={subdistrictcode}
+                onChange={(e) => setSubDistrictcode(e.target.value)}
               >
                 <option value="">Select</option>
-                {subdistrictOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
+                {subDistrictOptions.map((subdistrict, index) => (
+                  <option key={index} value={subdistrict.code}>
+                    {subdistrict.name}
                   </option>
                 ))}
-                {/* Options for Subdistrict Dropdown */}
               </select>
             </div>
             <div>
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="firstname">First Name:</label>
               <input
                 type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                id="firstname"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
               />
             </div>
             <div>
+              <label htmlFor="lastname">Last Name:</label>
+              <input
+                type="text"
+                id="lastname"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
+              />
+            </div>
+            {/* <div>
               <label htmlFor="mobileNo">Mobile No:</label>
               <input
                 type="text"
@@ -119,7 +160,7 @@ const AddDoctorComponent = () => {
                 value={mobileNo}
                 onChange={(e) => setMobileNo(e.target.value)}
               />
-            </div>
+            </div> */}
             <div>
               <label htmlFor="email">Email:</label>
               <input
@@ -129,7 +170,7 @@ const AddDoctorComponent = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div>
+            {/* <div>
               <label>Gender:</label>
               <br />
               <div className="ic">
@@ -172,13 +213,12 @@ const AddDoctorComponent = () => {
                 id="dob"
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
-              />
-            </div>
+              /> 
+             </div> */}
             <button type="submit">ADD DOCTOR</button>
           </form>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };

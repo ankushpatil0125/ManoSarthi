@@ -7,6 +7,9 @@ import ForgotPasswordComponent from "./components/ForgotPasswordComponent";
 import ChangePasswordComponent from "./components/ChangePasswordComponent";
 import OTPComponent from "./components/OTPComponent";
 import AddDoctorComponent from "./components/AddDoctorComponent";
+import DoctorHomePage from "./components/DoctorHomePage";
+import ProfileComponent from "./components/ProfileComponent"
+import AdminHomePage from "./components/AdminHomePage"
 const App = () => {
   return (
     <Router>
@@ -17,6 +20,9 @@ const App = () => {
           <Route path="/change-password" element={<ChangePasswordComponent/>}/>
           <Route path="/otp" element={<OTPComponent/>}/>
           <Route path="/add-doctor" element={<AddDoctorComponent/>}/>
+          <Route path="/doctor-home" element={<DoctorHomePage/>}/>
+          <Route path="/doctor-profile" element={<ProfileComponent/>}/> 
+          <Route path="/admin-home" element={<AdminHomePage/>}/>
         </Routes>
       </div>
     </Router>

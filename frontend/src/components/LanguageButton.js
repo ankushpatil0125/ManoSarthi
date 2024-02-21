@@ -10,15 +10,15 @@ const LanguageButton = () => {
   };
   return (
     <div>
-        <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+        <Dropdown >
+            <Dropdown.Toggle className="bg-transparent border-white text-black" variant="secondary" id="dropdown-basic">
               {t("Select_Language")}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
+            <Dropdown.Menu >
               <Dropdown.Item href="#" onClick={()=>handleChangeLanguage("en")}>English</Dropdown.Item>
               <Dropdown.Item href="#"onClick={()=>handleChangeLanguage("hi")}>Hindi</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+        </Dropdown>
     </div>
   )
 }

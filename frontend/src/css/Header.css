@@ -11,12 +11,7 @@
     margin-right: 100px;
   }
   
-  .rounded-link {
-    padding: 5px 10px;
-    border-radius: 20px;
-    border: 1px solid #2a0c37;
-    margin-left: 10px; /* Adjust margin as needed */
-  }
+  
   
   .rounded-link:hover {
     background-color: #f8f9fa;

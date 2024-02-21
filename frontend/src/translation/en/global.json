@@ -5,8 +5,9 @@
         "About":"About Us",
         "Contact":"Contact Us",
         "Dashboard":"Dashboard",
-        "Profile":"Profile"
-        
+        "Profile":"Profile",
+        "Doctor":"Doctor",
+        "Supervisor":"Supervisor"
     },
     "login":{
         "LOGIN":"LOGIN",
