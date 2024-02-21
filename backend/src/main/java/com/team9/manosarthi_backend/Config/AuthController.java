@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -47,7 +48,7 @@ public class AuthController {
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
             //String token = this.helper.generateToken(userDetails);
             // Given time
-            LocalTime givenTime = LocalTime.of(16, 30, 0); // 2:30 PM
+            LocalTime givenTime = LocalTime.of(23, 59, 0); // 2:30 PM
 
             // Current system time
             LocalTime currentTime = LocalTime.now();
@@ -62,13 +63,14 @@ public class AuthController {
             try {
                 if (milliseconds < 0) {
                     System.out.println("Timeout!!!");
-                    throw new TokenGenerationException("Token generation timeout");
+                    throw new TokenGenerationException("Timeout");
                 } else {
                     String token = this.helper.generateToken(userDetails, milliseconds);
 
                     JwtResponse response = JwtResponse.builder()
                             .jwtToken(token)
-                            .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).build();
+                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).build();
+
                     return new ResponseEntity<>(response, HttpStatus.OK);
                 }
             }
@@ -92,10 +94,15 @@ public class AuthController {
 
         }
 
-        @ExceptionHandler(BadCredentialsException.class)
-        public String exceptionHandler() {
-            return "Credentials Invalid !!";
-        }
+//        @ExceptionHandler(BadCredentialsException.class)
+//        public String exceptionHandler() {
+//            return "Credentials Invalid !!";
+//        }
+@ExceptionHandler(BadCredentialsException.class)
+public ResponseEntity<?> exceptionHandler() {
+
+            return new ResponseEntity<>("CREDENTIALS INVALID ! " , HttpStatus.BAD_REQUEST);
+}
 
 
 

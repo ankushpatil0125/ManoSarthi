@@ -64,9 +64,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                       .requestMatchers("/**").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/user/**").hasRole("USER")
+//                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+//
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())
@@ -78,7 +82,8 @@ public class SecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .csrf(csrf-> csrf.disable())
-                .cors(cors-> cors.disable());
+              //  .cors(cors-> cors.disable());
+                .cors(withDefaults());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
