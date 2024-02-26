@@ -6,15 +6,15 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "doctor")
+@Table(name = "subervisor")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Doctor {
+public class Supervisor {
 
-    @Id
+    Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -35,9 +35,6 @@ public class Doctor {
     @JoinColumn(name = "subdistrictcode")
     private SubDistrict subdistrictcode;
 
-    @Column(name = "patient_count")
-    private int patient_count;
-
     @Column(name = "gender")
     private String gender;
 
@@ -46,5 +43,4 @@ public class Doctor {
 
     @Column(name = "active")
     private boolean active;
-
 }

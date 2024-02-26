@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
@@ -48,6 +49,13 @@ public class AdminController {
         Doctor doc =  adminService.adddoctor(doctor);
         return doc;
     }
+
+    @PostMapping("/supervisor")
+    public Supervisor addSupervisor((@RequestBody Supervisor supervisor){
+        Supervisor sup =  adminService.addSupervisor(supervisor);
+        return sup;
+    }
+
 //    public String addDoctor(@RequestBody Doctor doctor){
 //        String userId =  adminService.adddoctor(doctor);
 //        return " Doctor userId :  " + userId;

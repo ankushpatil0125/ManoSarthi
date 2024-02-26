@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Config;
 
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
+import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.models.JwtRequest;
 import com.team9.manosarthi_backend.models.JwtResponse;
 import com.team9.manosarthi_backend.security.JwtHelper;
@@ -40,6 +41,10 @@ public class AuthController {
         @Autowired
         private DoctorRepository doctorRepository;
 
+        @Autowired
+        private SupervisorRepository supervisorRepository;
+
+
         private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 
@@ -78,7 +83,16 @@ public class AuthController {
                         id = doctorRepository.findDoctorByUsername(userDetails.getUsername());
                         System.out.println(id);
 
-                    } else if(userDetails.getAuthorities().stream()
+                    }
+                    else if(userDetails.getAuthorities().stream()       // check for supervisor role
+                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_SUPERVISOR"))){
+
+                        System.out.println("Hello ROLE_SUPERVISOR here");
+                        id = supervisorRepository.findSupervisorByUsername(userDetails.getUsername());
+                        System.out.println(id);
+
+                    }
+                    else if(userDetails.getAuthorities().stream()
                             .anyMatch(authority -> authority.getAuthority().equals("ROLE_WORKER"))) {
 
                         //like above do for all role to get id

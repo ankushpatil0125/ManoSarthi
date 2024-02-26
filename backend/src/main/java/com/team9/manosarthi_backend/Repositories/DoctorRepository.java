@@ -3,6 +3,7 @@ package com.team9.manosarthi_backend.Repositories;
 import com.team9.manosarthi_backend.Entities.District;
 import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.SubDistrict;
+import com.team9.manosarthi_backend.Entities.Supervisor;
 import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,3 +20,5 @@ public interface DoctorRepository extends JpaRepository<Doctor,Integer> {
 
 
 }
+
+
