@@ -5,9 +5,7 @@
         "About":"अबाउट",
         "Contact":"कॉन्टैक्ट",
         "Dashboard":"डैशबोर्ड",
-        "Profile":"प्रोफ़ाइल",
-        "Doctor":"डॉक्टर",
-        "Supervisor":"सुपरवाइज़र"
+        "Profile":"प्रोफ़ाइल"
     },
     "login":{
         "LOGIN":"लॉगिन",
@@ -18,7 +16,32 @@
         "Click_Here":"यहाँ क्लिक करें"
     },
     "Select_Language":"भाषा चुनें",
-    "home":{
-        "body":"मनोसारथी"
+    "Actor":{
+        "Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र",
+        "Admin Dashboard":"एडमिन डैशबोर्ड",
+        "Add Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र जोड़ें",
+        "Update Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र अपडेट करें",
+        "Delete Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र हटाएं"
+    },
+    "addDoctorSupervisor":{
+        "Doctor":"डॉक्टर",
+        "Supervisor":"सुपरवाइजर",
+        "Fill The Doctor Information":"जानकारी भरें",
+        "Select Actor to Add":"जोड़ने के लिए डॉक्टर या सुपरवाइजर चुनें",
+        "Select":"सेलेक्ट करें",
+        "District":"जिला",
+        "Subdistrict":"उपजिला",
+        "First Name":"पहला नाम",
+        "Last Name":"अंतिम नाम",
+        "Email":"ईमेल",
+        "ADD":"जोड़ें"
+    },
+    "Profile": {
+        "ID":"आईडी",
+        "First Name":"पहला नाम",
+        "Last Name":"अंतिम नाम",
+        "Email":"ईमेल",
+        "District":"जिला",
+        "Subdistrict":"उपजिला"
     }
 }

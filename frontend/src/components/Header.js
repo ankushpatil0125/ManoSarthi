@@ -6,10 +6,16 @@ import { LOGO_IMAGE } from "../utils/images";
 import "../css/Header.css";
 import { useTranslation } from "react-i18next";
 import LanguageButton from "./LanguageButton";
+import { useNavigate } from "react-router-dom";
 
 const Header =() => {
+  const navigate = useNavigate();
   const { t } = useTranslation("global");
-
+  const handleLogout = () => {
+    localStorage.removeItem("JWT");
+    localStorage.removeItem("ROLE");
+    navigate("/login");
+  };
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
       <Navbar.Brand href="/home">
@@ -18,11 +24,8 @@ const Header =() => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ms-auto custom-nav ">
-          <Nav.Link href="/Doctor">
-            {t("header.Doctor")}
-          </Nav.Link>
-          <Nav.Link href="/Supervisor">
-            {t("header.Supervisor")}
+          <Nav.Link href="/doctor-supervisor">
+            {t("Actor.Doctor/Supervisor")}
           </Nav.Link>
           <div className="rounded-link mx-5">
             <LanguageButton/>
@@ -30,7 +33,7 @@ const Header =() => {
           <Nav.Link href="/doctor-profile">
             {t("header.Profile")}
           </Nav.Link>
-          <Nav.Link href="/">
+          <Nav.Link href="/" onClick={handleLogout}>
             {t("login.Logout")}
           </Nav.Link>
         </Nav>

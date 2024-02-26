@@ -1,16 +1,19 @@
 import axios from "axios";
-import { BASE_URL } from "../utils/Base_URL";
-import { token } from "../utils/Base_URL";
-
-// const PASSWORD_CHANGE_URL = "http://192.168.141.199:9090/user/change-password";
+import { BASE_URL } from "../utils/Constants";
+import { getToken } from "../utils/Constants";
 
 const ChangePasswordService = {
   ChangePassword: async (requestData) => {
+    // const token = localStorage.getItem("JWT")
+    // const token2 = localStorage.getItem("JWT")
+    // console.log("token",token1);
+    // console.log("token2",token2);
+    console.log("token",getToken());
     const temp = axios.post(BASE_URL + "user/change-password", requestData, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        // withCredentials:false
+        Authorization: `Bearer ${getToken()}`,
+
       },
     });
     // console.log("temp",temp.data);

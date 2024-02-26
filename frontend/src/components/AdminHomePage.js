@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import '../css/AdminHomePage.css'
 import Header from './Header';
-
+import { useTranslation } from 'react-i18next';
 const Dashboard = () => {
+  const {t}=useTranslation("global");
   const [cardData] = useState([
     { title: 'Card 1', content: 'Content for card 1' },
     { title: 'Card 2', content: 'Content for Card 2' },
@@ -13,7 +14,7 @@ const Dashboard = () => {
     <div>
         <Header/>
       <section className='admin-section'>
-        <div className='admin-dashboard-title'><h1>Admin Dashboard</h1></div>
+        <div className='admin-dashboard-title'><h1>{t('Actor.Admin Dashboard')}</h1></div>
         <div className='admin-dashboard-container'>
           <div className='admin-dashboard-cards'>
           {cardData.map((card, index) => (

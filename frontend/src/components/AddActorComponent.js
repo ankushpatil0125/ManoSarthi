@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../css/AddDoctorComponent.css";
+import "../css/AddActorComponent.css";
 import Header from "./Header";
-// import DoctorService from "../Services/DoctorService";
 import AdminService from "../Services/AdminService";
-import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const AddDoctorComponent = () => {
   const [district, setDistrict] = useState("");
@@ -16,18 +15,9 @@ const AddDoctorComponent = () => {
   const [dob, setDob] = useState("");
   const [districtOptions, setDistrictOptions] = useState([]);
   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
+  const [actor, setActor] = useState("");
+  const {t}=useTranslation("global");
 
-  // const doctorData = {
-  //   email: email,
-  //   firstname: firstname,
-  //   lastname: lastname,
-  //   subdistrictcode: {
-  //     code: subdistrictcode
-  //   }
-  // };
-
-  const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5hc2kiLCJpYXQiOjE3MDg1Mjc4NjUsImV4cCI6MTcwODU0MDE0MH0.oHBoQ05t5z9D0STWxeVTH85F3mLFIdoMEFGGhndyFa8";
 
   useEffect(() => {
     // Fetch district options
@@ -58,60 +48,73 @@ const AddDoctorComponent = () => {
     e.preventDefault();
     console.log("hii");
     // Create doctor object
-    const doctorData = {
+    const actorData = {
       email: email,
       firstname: firstname,
       lastname: lastname,
       subdistrictcode: {
         code: subdistrictcode
-      }
+      },
+      gender: gender
     };
-
     try {
       // Using axios for the POST request
-      console.log("doctor data", doctorData);
-      const response = await axios.post(
-        "http://192.168.73.199:9090/admin/doctor",
-        doctorData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            // withCredentials:false
-          },
-        }
-      );
-
-      console.log("response of changePassword", response);
-
-      if (response) {
-        // Handle successful password change, e.g., display a success message
-        alert("Doctor Added Successfully");
-      } else {
-        // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
-        alert("Failed");
+      console.log("doctor data", actorData);
+      if(actor === "Doctor") {
+          const response = AdminService.addDoctor(actorData);
+          if (response) {
+            // Handle successful password change, e.g., display a success message
+            alert("Doctor Added Successfully");
+          } else {
+            // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
+            alert("Failed to Add Doctor");
+          }
       }
+      else{
+        const response = AdminService.addSupervisor(actorData);
+          if (response) {
+            // Handle successful password change, e.g., display a success message
+            alert("Supervisor Added Successfully");
+          } else {
+            // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
+            alert("Failed to Add Supervisor");
+          }
+      }
+
     } catch (error) {
-      console.error(`Error during adding doctor:", ${error}`);
+      console.error(`Error during adding Actor:", ${error}`);
     }
   };
+
 
   return (
     <div>
       <Header />
 
       <div className="doctor-container">
-        <h4>Fill The Doctor Information :</h4>
+        <h4>{t("addDoctorSupervisor.Fill The Doctor Information")} :</h4>
         <div className="form-container">
           <form onSubmit={handleSubmit}>
+          <div>
+              <label htmlFor="actor">{t("addDoctorSupervisor.Select Actor to Add")}:</label>
+              <select
+                id="actor"
+                value={actor}
+                onChange={(e) =>setActor(e.target.value)}
+              >
+                <option value="">{t("addDoctorSupervisor.Select")}</option>
+                <option value="Doctor">{t("addDoctorSupervisor.Doctor")}</option>
+                <option value="Supervisor">{t("addDoctorSupervisor.Supervisor")}</option>
+              </select>
+            </div>
             <div>
-              <label htmlFor="district">District:</label>
+              <label htmlFor="district">{t("addDoctorSupervisor.District")}:</label>
               <select
                 id="district"
                 value={district}
                 onChange={handleDistrictChange}
               >
-                <option value="">Select</option>
+                <option value="">{t("addDoctorSupervisor.Select")}</option>
                 {districtOptions.map((district, index) => (
                   <option key={index} value={district.code}>
                     {district.name}
@@ -120,13 +123,13 @@ const AddDoctorComponent = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="subdistrictcode">Subdistrict:</label>
+              <label htmlFor="subdistrictcode">{t("addDoctorSupervisor.Subdistrict")}:</label>
               <select
                 id="subdistrictcode"
                 value={subdistrictcode}
                 onChange={(e) => setSubDistrictcode(e.target.value)}
               >
-                <option value="">Select</option>
+                <option value="">{t("addDoctorSupervisor.Select")}</option>
                 {subDistrictOptions.map((subdistrict, index) => (
                   <option key={index} value={subdistrict.code}>
                     {subdistrict.name}
@@ -135,7 +138,7 @@ const AddDoctorComponent = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="firstname">First Name:</label>
+              <label htmlFor="firstname">{t("addDoctorSupervisor.First Name")}:</label>
               <input
                 type="text"
                 id="firstname"
@@ -144,7 +147,7 @@ const AddDoctorComponent = () => {
               />
             </div>
             <div>
-              <label htmlFor="lastname">Last Name:</label>
+              <label htmlFor="lastname">{t("addDoctorSupervisor.Last Name")}:</label>
               <input
                 type="text"
                 id="lastname"
@@ -162,7 +165,7 @@ const AddDoctorComponent = () => {
               />
             </div> */}
             <div>
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">{t("addDoctorSupervisor.Email")}:</label>
               <input
                 type="email"
                 id="email"
@@ -170,7 +173,7 @@ const AddDoctorComponent = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {/* <div>
+            <div>
               <label>Gender:</label>
               <br />
               <div className="ic">
@@ -206,7 +209,7 @@ const AddDoctorComponent = () => {
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="dob">Date of Birth:</label>
               <input
                 type="date"
@@ -215,7 +218,7 @@ const AddDoctorComponent = () => {
                 onChange={(e) => setDob(e.target.value)}
               /> 
              </div> */}
-            <button type="submit">ADD DOCTOR</button>
+            <button type="submit">{t("addDoctorSupervisor.ADD")}</button>
           </form>
         </div>
       </div>

@@ -5,9 +5,9 @@ import LoginService from "../Services/LoginService";
 import "../css/LoginComponent.css";
 import { useTranslation } from "react-i18next";
 import LanguageButton from "./LanguageButton";
-import axios from "axios";
-import { token } from "../utils/Base_URL";
-
+import DoctorHomePage from "./DoctorHomePage";
+import AdminHomePage from "./AdminHomePage";
+import IsPasswordChangeService from "../Services/IsPasswordChangeService";
 const LoginComponent = () => {
   const [t] = useTranslation("global");
   const navigate = useNavigate();
@@ -26,10 +26,6 @@ const LoginComponent = () => {
 
   const handleSubmit = async () => {
     try {
-      // console.log(requestData.username);
-      // console.log(requestData.password);
-      // const response = await axios.post(http://192.168.73.199:9090/auth/login,requestData);
-
       const response = await LoginService.AddUser(requestData);
 
       console.log("response jwt", response);
@@ -37,25 +33,16 @@ const LoginComponent = () => {
         // Handle successful login, e.g., redirect to another page
         alert("Login successful");
         localStorage.setItem("JWT", response.data.jwtToken);
+        localStorage.setItem("ROLE", response.data.role);
         console.log("user response.data ", response.data);
 
-        const changepass_response = await axios.get(
-          "http://192.168.73.199:9090/passwordstatus/?username=" +
-            response.data.username,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-              // withCredentials:false
-            },
-          }
-        );
+        const changepass_response = await IsPasswordChangeService.isPasswordChanged(response);
 
         console.log("Change pas", changepass_response);
 
-        if (changepass_response.data === false) navigate("/change-password");
+        if (changepass_response === false) navigate("/change-password");
         else {
-          if (response.data.role === "[ROLE_ADMIN]") navigate("/add-doctor");
+          if (response.data.role === "[ROLE_ADMIN]") navigate("/admin-home");
           else if (response.data.role === "[ROLE_DOCTOR]") {
             navigate("/doctor-home");
           } else {
@@ -70,7 +57,8 @@ const LoginComponent = () => {
       else alert(`Login Failed : ${error.response.data}`);
     }
   };
-
+  if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_ADMIN]")return <AdminHomePage/>;
+  if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_DOCTOR]")return <DoctorHomePage/>;
   return (
     <div>
       <LanguageButton />
@@ -110,13 +98,6 @@ const LoginComponent = () => {
             {t("login.LOGIN")}
           </div>
         </div>
-        {/* <div className="submit-container">
-        <div className="submit" onClick={handleSubmit}>
-          <Link to="/add-doctor" className="submit">
-            Login
-          </Link>
-        </div>
-      </div> */}
       </div>
     </div>
   );

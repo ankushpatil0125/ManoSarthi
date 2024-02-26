@@ -5,9 +5,7 @@
         "About":"About Us",
         "Contact":"Contact Us",
         "Dashboard":"Dashboard",
-        "Profile":"Profile",
-        "Doctor":"Doctor",
-        "Supervisor":"Supervisor"
+        "Profile":"Profile"
     },
     "login":{
         "LOGIN":"LOGIN",
@@ -18,7 +16,33 @@
         "Click_Here":"Click_Here"
     },
     "Select_Language":"Select Language",
-    "home":{
-        "body":"A Hospital App"
+    "Actor":{
+        "Doctor/Supervisor":"Doctor/Supervisor",
+        "Admin Dashboard":"Admin Dashboard",
+        "Add Doctor/Supervisor":"Add  Doctor/Supervisor",
+        "Update Doctor/Supervisor":"Add Doctor/Supervisor",
+        "Delete Doctor/Supervisor":"Add Doctor/Supervisor"
+    },
+    "addDoctorSupervisor":{
+        "Doctor":"Doctor",
+        "Supervisor":"Supervisor",
+        "Fill The Doctor Information":"Fill The Doctor Information",
+        "Select Actor to Add":"Select Actor to Add",
+        "Select":"Select",
+        "District":"District",
+        "Subdistrict":"Subdistrict",
+        "First Name":"First Name",
+        "Last Name":"Last Name",
+        "Email":"Email",
+        "ADD":"ADD"
+    },
+    "Profile":{
+        "ID":"ID",
+        "First Name":"First Name",
+        "Last Name":"Last Name",
+        "Email":"Email",
+        "District":"District",
+        "Subdistrict":"Subdistrict"
     }
+
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {  useNavigate } from "react-router-dom";
 import { PASS_URL } from "../utils/images";
 import "../css/LoginComponent.css";
@@ -7,54 +7,66 @@ import ChangePasswordService from "../Services/ChangePasswordService";
 
 
 const ChangePasswordComponent = () => {
+
   const [requestData, setRequestData] = useState({
     oldPassword: "",
     newPassword: "",
   });
+
+  const [isValid,setIsValid] = useState(true);
   const navigate = useNavigate();
+
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRequestData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+    if(name === "newPassword"){
+        setIsValid(validatePassword(value))
+    }
   };
+
+  //Validate the password
+  const validatePassword =(newPassword) =>{
+    // Regular expression to check if the password contains at least one uppercase letter,
+    // one lowercase letter, one number, and is at least 8 characters long
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return passwordRegex.test(newPassword); 
+  }
 
   const handleSubmit = async () => {
     try {
       console.log(requestData.oldPassword);
       console.log(requestData.newPassword);
-      const response = await ChangePasswordService.ChangePassword(requestData);
-      // Using axios for the POST request
-      // const response = await axios.post(
-      //   "http://192.168.141.199:9090/user/change-password",
-      //   requestData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${token}`,
-      //       // withCredentials:false
-      //     },
-      //   }
-      // );
+      if(isValid===true){
+        const response = await ChangePasswordService.ChangePassword(requestData);
+        console.log("response of changePassword",response);
 
-      console.log("response of changePassword",response);
-
-      if (response) {
-        // Handle successful password change, e.g., display a success message
-        alert("Password Successfully Changed");
+        if (response) {
+          alert("Password Successfully Changed");
 
 
-        // navigate("/");
-        
-      } else {
-        // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
-        alert("Failed");
+          navigate("/");
+          
+        } else {
+          alert("Failed");
+        }
+      }
+      else{
+        alert("Please enter a valid password");
+
       }
     } catch (error) {
       console.error(`Error during password change:", ${error}`);
     }
   };
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <div className="login-container">
@@ -85,7 +97,14 @@ const ChangePasswordComponent = () => {
           />
         </div>
       </div>
-
+      {!isValid && (
+            <div className="password-validation-msg text-center">
+              <p className="text-red-600 ">
+                Password must contain at least one uppercase letter, one
+                lowercase letter, one number, and be at least 8 characters long.
+              </p>
+            </div>
+          )}
       <div className="submit-container">
         <div className="submit" onClick={handleSubmit}>
           Change Password
