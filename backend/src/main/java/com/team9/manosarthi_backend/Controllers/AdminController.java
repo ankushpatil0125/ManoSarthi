@@ -51,7 +51,7 @@ public class AdminController {
     }
 
     @PostMapping("/supervisor")
-    public Supervisor addSupervisor((@RequestBody Supervisor supervisor){
+    public Supervisor addSupervisor(@RequestBody Supervisor supervisor){
         Supervisor sup =  adminService.addSupervisor(supervisor);
         return sup;
     }

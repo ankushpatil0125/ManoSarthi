@@ -14,7 +14,7 @@ import java.util.Date;
 @ToString
 public class Supervisor {
 
-    Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
