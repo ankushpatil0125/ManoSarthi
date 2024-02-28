@@ -16,7 +16,7 @@ const Header = () => {
     localStorage.removeItem("JWT");
     localStorage.removeItem("ROLE");
     localStorage.removeItem("User_Id")
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -27,15 +27,18 @@ const Header = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ms-auto custom-nav">
-          <Link to="/doctor-supervisor" className="nav-link">
+          {localStorage.getItem("ROLE") === "[ROLE_ADMIN]" && <Link to="/doctor-supervisor" className="nav-link">
             {t("Actor.Doctor/Supervisor")}
           </Link>
+          }
           <div className="rounded-link mx-5">
             <LanguageButton />
           </div>
-          <Link to="/doctor-profile" className="nav-link">
+
+          {localStorage.getItem("ROLE") !== "[ROLE_ADMIN]" && <Link to="/profile" className="nav-link">
             {t("header.Profile")}
           </Link>
+          }
           <Link to="/" className="nav-link" onClick={handleLogout}>
             {t("login.Logout")}
           </Link>

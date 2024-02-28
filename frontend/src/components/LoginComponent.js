@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EMAIL_URL, PASS_URL } from "../utils/images";
 import { Link, useNavigate } from "react-router-dom";
 import LoginService from "../Services/LoginService";
@@ -8,6 +8,7 @@ import LanguageButton from "./LanguageButton";
 import DoctorHomePage from "./DoctorHomePage";
 import AdminHomePage from "./AdminHomePage";
 import IsPasswordChangeService from "../Services/IsPasswordChangeService";
+import SupervisorHomePage from "./SupervisorHomepage";
 const LoginComponent = () => {
   const [t] = useTranslation("global");
   const navigate = useNavigate();
@@ -46,24 +47,30 @@ const LoginComponent = () => {
         else {
           if (response.data.role === "[ROLE_ADMIN]") navigate("/admin-home");
           else if (response.data.role === "[ROLE_DOCTOR]") {
-            navigate("/doctor-home");
+            navigate("/doctor-home", {replace: true});
           } else {
-            navigate("/supervisor-home");
+            navigate("/supervisor-home", {replace: true});
           }
         }
       }
     } catch (error) {
       console.log(error.response);
-      if (error.response.data.includes("timeout"))
+      if (error.response.data)
         alert("Access restricted. Please log in during operating hours");
-      else alert(`Login Failed : ${error.response.data}`);
+      else 
+      alert(`Login Failed : ${error.response.data}`);
     }
   };
-  if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_ADMIN]")return <AdminHomePage/>;
-  if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_DOCTOR]")return <DoctorHomePage/>;
+
+  useEffect(() => {
+    if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_ADMIN]")  navigate("/admin-home", {replace: true});
+    if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") navigate("/doctor-home", {replace: true});
+    if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_SUPERVISOR]") navigate("/supervisor-home", {replace: true});
+  }, []);
+  
   return (
     <div className="mb-20">
-      <LanguageButton />
+      <div className="absolute top-0 right-0 mt-4 mr-4"><LanguageButton /></div>
       <div className="login-container ">
         <div className="header">
           <div className="text">{t("login.LOGIN")}</div>

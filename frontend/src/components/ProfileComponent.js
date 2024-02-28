@@ -10,18 +10,27 @@ import ProfileService from "../Services/ProfileService";
 
 const Profile = () => {
   const [user, setUser] = useState({});
-  const [isUserUpdated, setisUserUpdated] = useState(false);
-  const {user_id} = useParams();
+  // const [isUserUpdated, setisUserUpdated] = useState(false);
+  // const {user_id} = useParams();
   const [t] = useTranslation("global");
   useEffect(() => {
+    
     const fetchDoctorData = async () => {
       try {
-        const data = await ProfileService.getDoctorData();
-        setUser(data);
+        if(localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") {
+          const data = await ProfileService.getDoctorData();
+          setUser(data);
+        }
+        else{
+          const data = await ProfileService.getSupervisorData();
+          console.log(data);
+          setUser(data);
+        }
       } catch (error) {
         console.log("Error fetching doctor data:", error);
       }
     };
+    
 
     fetchDoctorData();
   }, []);
@@ -31,6 +40,11 @@ const Profile = () => {
       <Header />
       <div className="profile">
         <div className="body">
+        <div className="key-title" >
+          <p style={{textAlign: "center", fontWeight: "bold", fontSize: "24px"}}>
+            {t("Profile.Supervisor Profile")}
+          </p>
+          </div>
           <p>
             <span className="key">{t("Profile.ID")} :</span>
             <span className="gap"></span>
@@ -64,7 +78,7 @@ const Profile = () => {
             <span className="value">{user?.subdistrictcode?.name}</span>
           </p>
           <p>
-            <span className="key">Gender</span>
+            <span className="key">{t("Profile.Gender")}</span>
             <span className="gap"></span>
             <span className="value">{user?.gender}</span>
           </p>
@@ -89,7 +103,7 @@ const Profile = () => {
 
           <Link to = "/change-password">
             <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded">
-              Change Password
+              {t("Profile.Change Password")}
             </button> 
           </Link>
         </div>

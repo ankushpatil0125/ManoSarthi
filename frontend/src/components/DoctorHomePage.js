@@ -7,6 +7,7 @@ function DoctorHomePage() {
   return (
     <div>
       <Header />
+        {/* <h1 cla>Doctor HomePage</h1> */}
       <div className="container">
         <div className="card-grid">
           <div className="card">

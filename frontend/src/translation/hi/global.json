@@ -42,6 +42,10 @@
         "Last Name":"अंतिम नाम",
         "Email":"ईमेल",
         "District":"जिला",
-        "Subdistrict":"उपजिला"
+        "Subdistrict":"उपजिला",
+        "Gender":"लिंग",
+        "Change Password":"पासवर्ड बदलें",
+        "Doctor Profile":"डॉक्टर प्रोफ़ाइल",
+        "Supervisor Profile":"सुपरवाइजर प्रोफ़ाइल"
     }
 }

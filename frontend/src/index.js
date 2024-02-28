@@ -14,7 +14,7 @@ root.render(
   <I18nextProvider i18n={i18next}>
   <React.StrictMode>
     <App />
-    <Footer/>
+    {/* <Footer/> */}
   </React.StrictMode>
   </I18nextProvider>
 );

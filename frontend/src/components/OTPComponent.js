@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PASS_URL } from "../utils/images";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import "../css/LoginComponent.css"
 const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
@@ -9,7 +9,7 @@ const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 const OTPComponent = () => {
   const [otp, setOtp] = useState("");
 
-
+  const navigate=useNavigate();
   const handleOTPChange = (e) => {
     setOtp(e.target.value);
   };
@@ -31,6 +31,7 @@ const OTPComponent = () => {
         if (response.ok) {
           // Handle successful login, e.g., redirect to another page
           alert("Password Successfully Changed");
+          navigate("/change-password");
         } else {
           // Handle login failure
           alert("Failed");

@@ -29,6 +29,10 @@
   text-align: left;
 }
 
+.body {
+  width: 100%;
+}
+
 .key {
   font-weight: 700;
   justify-content: center;
@@ -36,6 +40,10 @@
   width: 200px; /* Adjust the width of the key as needed */
   text-align: left; /* Aligns the text of the key to the right */
   padding-right: 20px; /* Adjust the gap between key and value as needed */
+}
+
+.key-title {
+  width: 100%;
 }
 
 .value {

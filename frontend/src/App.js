@@ -12,21 +12,23 @@ import AdminHomePage from "./components/AdminHomePage"
 import SupervisorHomePage from "./components/SupervisorHomepage";
 import AdminOperation from "./components/AdminOperation";
 import PrivateRoute from "./components/PrivateRoute";
+import ErrorPage from "./components/ErrorPage";
 const App = () => {
   return (
     <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<LoginComponent/>}/>
-          <Route path="/forgot-password" element={<PrivateRoute> <ForgotPasswordComponent/> </PrivateRoute>}/>
-          <Route path="/change-password" element={<PrivateRoute><ChangePasswordComponent/> </PrivateRoute>}/>
-          <Route path="/otp" element={<PrivateRoute><OTPComponent/> </PrivateRoute>}/>
-          <Route path="/add-doctor-supervisor" element={<PrivateRoute><AddActorComponent/></PrivateRoute>}/>
-          <Route path="/doctor-home" element={<PrivateRoute><DoctorHomePage/></PrivateRoute>}/>
-          <Route path="/doctor-profile" element={<PrivateRoute><ProfileComponent/></PrivateRoute>}/> 
-          <Route path="/admin-home" element={<PrivateRoute><AdminHomePage/></PrivateRoute>}/>
-          <Route path="/supervisor-home" element={<PrivateRoute><SupervisorHomePage/></PrivateRoute>}/>
-          <Route path="/doctor-supervisor" element={<PrivateRoute><AdminOperation/></PrivateRoute>}/>
+          <Route path="/forgot-password" element={<ForgotPasswordComponent/>}/>
+          <Route path="/change-password" element={<PrivateRoute type="changepasswordcomponent"><ChangePasswordComponent/> </PrivateRoute>}/>
+          <Route path="/otp" element={<OTPComponent/>}/>
+          <Route path="/add-doctor-supervisor" element={<PrivateRoute type="addactorcomponent"><AddActorComponent/></PrivateRoute>}/>
+          <Route path="/doctor-home" element={<PrivateRoute type="doctorhomepage"><DoctorHomePage/></PrivateRoute>}/>
+          <Route path="/profile" element={<PrivateRoute type="profilecomponent"><ProfileComponent/></PrivateRoute>}/> 
+          <Route path="/admin-home" element={<PrivateRoute type="adminhomepage"><AdminHomePage/></PrivateRoute>}/>
+          <Route path="/supervisor-home" element={<PrivateRoute type="supervisorhomepage"><SupervisorHomePage/></PrivateRoute>}/>
+          <Route path="/doctor-supervisor" element={<PrivateRoute type="adminoperation"><AdminOperation/></PrivateRoute>}/>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </Router>

@@ -1,8 +1,18 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({children}) =>{
+const PrivateRoute = ({children, type}) =>{
     const JWT = localStorage.getItem('JWT');
-    return JWT ? children : <Navigate to="/"/>;
+    // console.log(children);
+    if(JWT && localStorage.getItem("ROLE") ==="[ROLE_ADMIN]" && type === "addactorcomponent")return  children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_DOCTOR]" && type === "doctorhomepage") return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_DOCTOR]" && type === "profilecomponent") return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_SUPERVISOR]" && type === "profilecomponent") return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_ADMIN]" && type === "adminhomepage")return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_SUPERVISOR]" && type === "supervisorhomepage")return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_ADMIN]" && type==="adminoperation")return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_DOCTOR]" && type==="changepasswordcomponent")return children;
+    else if(JWT && localStorage.getItem("ROLE") ==="[ROLE_SUPERVISOR]" && type==="changepasswordcomponent")return children;
+    else return <Navigate to="/"/>;
 }
 export default PrivateRoute;

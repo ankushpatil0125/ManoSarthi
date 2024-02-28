@@ -76,7 +76,7 @@ const AddDoctorComponent = () => {
         const response = AdminService.addSupervisor(actorData);
           if (response) {
             // Handle successful password change, e.g., display a success message
-            alert("Supervisor Added Successfully");
+            alert(`Supervisor with name ${actorData.firstname} Added Successfully`);
           } else {
             // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
             alert("Failed to Add Supervisor");
@@ -183,8 +183,8 @@ const AddDoctorComponent = () => {
                   type="radio"
                   id="male"
                   name="gender"
-                  value="male"
-                  checked={gender === "male"}
+                  value="Male"
+                  checked={gender === "Male"}
                   onChange={(e) => setGender(e.target.value)}
                 />
                 <label htmlFor="male">Male</label>
@@ -193,21 +193,11 @@ const AddDoctorComponent = () => {
                   type="radio"
                   id="female"
                   name="gender"
-                  value="female"
-                  checked={gender === "female"}
+                  value="Female"
+                  checked={gender === "Female"}
                   onChange={(e) => setGender(e.target.value)}
                 />
                 <label htmlFor="female">Female</label>
-
-                <input
-                  type="radio"
-                  id="other"
-                  name="gender"
-                  value="other"
-                  checked={gender === "other"}
-                  onChange={(e) => setGender(e.target.value)}
-                />
-                <label htmlFor="other">Other</label>
               </div>
             </div>
 

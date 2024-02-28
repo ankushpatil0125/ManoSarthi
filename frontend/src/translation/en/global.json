@@ -42,7 +42,11 @@
         "Last Name":"Last Name",
         "Email":"Email",
         "District":"District",
-        "Subdistrict":"Subdistrict"
+        "Subdistrict":"Subdistrict",
+        "Gender":"Gender",
+        "Change Password":"Change Password",
+        "Doctor Profile":"Doctor Profile",
+        "Supervisor Profile":"Supervisor Profile"
     }
 
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../css/AdminHomePage.css'
+import Header from './Header';
 
-const SupervisorDashboard = () => {
+const SupervisorHomepage = () => {
   const [cardData] = useState([
     { title: 'Card 1', content: 'Content for card 1' },
     { title: 'Card 2', content: 'Content for Card 2' },
@@ -11,6 +12,7 @@ const SupervisorDashboard = () => {
   
   return(
     <div>
+      <Header/>
       <section className='admin-section'>
         <div className='admin-dashboard-title'><h1>Supervisor Dashboard</h1></div>
         <div className='admin-dashboard-container'>
@@ -28,4 +30,4 @@ const SupervisorDashboard = () => {
   );
 };
 
-export default SupervisorDashboard;
+export default SupervisorHomepage;
