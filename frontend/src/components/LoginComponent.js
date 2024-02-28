@@ -34,6 +34,8 @@ const LoginComponent = () => {
         alert("Login successful");
         localStorage.setItem("JWT", response.data.jwtToken);
         localStorage.setItem("ROLE", response.data.role);
+        localStorage.setItem("User_Id",response.data.user_id);
+
         console.log("user response.data ", response.data);
 
         const changepass_response = await IsPasswordChangeService.isPasswordChanged(response);
@@ -60,9 +62,9 @@ const LoginComponent = () => {
   if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_ADMIN]")return <AdminHomePage/>;
   if(localStorage.getItem("JWT")!== null && localStorage.getItem("ROLE") === "[ROLE_DOCTOR]")return <DoctorHomePage/>;
   return (
-    <div>
+    <div className="mb-20">
       <LanguageButton />
-      <div className="login-container">
+      <div className="login-container ">
         <div className="header">
           <div className="text">{t("login.LOGIN")}</div>
           <div className="underline"></div>

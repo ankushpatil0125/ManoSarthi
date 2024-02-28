@@ -3,6 +3,7 @@ import "../css/AddActorComponent.css";
 import Header from "./Header";
 import AdminService from "../Services/AdminService";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const AddDoctorComponent = () => {
   const [district, setDistrict] = useState("");
@@ -17,7 +18,7 @@ const AddDoctorComponent = () => {
   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
   const [actor, setActor] = useState("");
   const {t}=useTranslation("global");
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch district options
@@ -64,7 +65,8 @@ const AddDoctorComponent = () => {
           const response = AdminService.addDoctor(actorData);
           if (response) {
             // Handle successful password change, e.g., display a success message
-            alert("Doctor Added Successfully");
+            alert(`Doctor with name ${actorData.firstname} Added Successfully`);
+            navigate("/doctor-supervisor");
           } else {
             // Handle password change failure"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwbWFudSIsImlhdCI6MTcwODUwMDgxMywiZXhwIjoxNzA4NTQwMTQwfQ.bp6DuaqPBGrJUeLgBJcNGwfNdYKDvFMR2DRtRm8GSaw"
             alert("Failed to Add Doctor");

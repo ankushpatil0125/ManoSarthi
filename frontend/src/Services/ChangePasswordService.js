@@ -8,15 +8,15 @@ const ChangePasswordService = {
     // const token2 = localStorage.getItem("JWT")
     // console.log("token",token1);
     // console.log("token2",token2);
-    console.log("token",getToken());
     const temp = axios.post(BASE_URL + "user/change-password", requestData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
-
+        
       },
     });
     // console.log("temp",temp.data);
+    console.log("token",getToken());
     return temp;
   },
 };

@@ -20,8 +20,8 @@
         "Doctor/Supervisor":"Doctor/Supervisor",
         "Admin Dashboard":"Admin Dashboard",
         "Add Doctor/Supervisor":"Add  Doctor/Supervisor",
-        "Update Doctor/Supervisor":"Add Doctor/Supervisor",
-        "Delete Doctor/Supervisor":"Add Doctor/Supervisor"
+        "Update Doctor/Supervisor":"Update Doctor/Supervisor",
+        "Delete Doctor/Supervisor":"Delete Doctor/Supervisor"
     },
     "addDoctorSupervisor":{
         "Doctor":"Doctor",
