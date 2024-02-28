@@ -68,9 +68,11 @@ public class SecurityConfig {
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
+//                        .requestMatchers("/doctor/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                      //  .requestMatchers("/doctor/**").hasRole("DOCTOR")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                        .requestMatchers("/supervisor/**").hasRole("SUPERVISOR")
+//                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
 //                        .requestMatchers("/user/**").hasRole("USER")
 
                         .requestMatchers("/auth/login").permitAll()
@@ -86,7 +88,7 @@ public class SecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .csrf(csrf-> csrf.disable())
-               // .cors(cors-> cors.disable());
+//                .cors(cors-> cors.disable());
                 .cors(withDefaults());
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
