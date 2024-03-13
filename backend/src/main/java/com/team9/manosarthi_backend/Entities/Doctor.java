@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,9 +30,10 @@ public class Doctor {
 
     @OneToOne(cascade = CascadeType.ALL)        // check for cascade type see all parameters
     @JoinColumn(name = "username")
+    @JsonIgnore                                 //ignore while fetching the data
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "subdistrictcode")
     private SubDistrict subdistrictcode;
 

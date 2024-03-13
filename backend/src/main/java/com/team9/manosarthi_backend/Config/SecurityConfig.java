@@ -65,17 +65,22 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                        .requestMatchers("/passwordstatus/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
+//                        .requestMatchers("/admin/add").permitAll()
 //                        .requestMatchers("/doctor/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("USER")
+
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .requestMatchers(("/admin/**")).permitAll()
+
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
                         .requestMatchers("/supervisor/**").hasRole("SUPERVISOR")
 //                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
 //                        .requestMatchers("/user/**").hasRole("USER")
 
-                        .requestMatchers("/auth/login").permitAll()
+//                        .requestMatchers("/auth/login").permitAll()
 //
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())

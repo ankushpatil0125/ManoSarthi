@@ -25,5 +25,12 @@ public class SubDistrict {
     @JoinColumn(name = "districtcode")
     private District district;
 
+    @Column(name = "doctor_count")
+    private int doctor_count=0;
+
+    @Column(name = "supervisor_count")
+    private int supervisor_count=0;
+
+
 
 }
