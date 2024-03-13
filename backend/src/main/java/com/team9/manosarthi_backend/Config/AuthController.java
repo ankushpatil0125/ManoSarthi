@@ -74,7 +74,7 @@ public class AuthController {
                     System.out.println("Timeout!!!");
                     throw new TokenGenerationException("Timeout");
                 } else {
-                    String token = this.helper.generateToken(userDetails, milliseconds);
+
                     int id=-1;
 
                     if (userDetails.getAuthorities().stream()
@@ -99,9 +99,13 @@ public class AuthController {
                         System.out.println("Not Doctor");
                     }
                     System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
+
+                    String userid=Integer.toString(id);
+                    String token = this.helper.generateToken(userDetails, milliseconds,userid);
+
                     JwtResponse response = JwtResponse.builder()
                             .jwtToken(token)
-                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).user_id(id).build();
+                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).build();
 
 
                     return new ResponseEntity<>(response, HttpStatus.OK);

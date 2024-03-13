@@ -1,22 +1,24 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
-import com.team9.manosarthi_backend.models.DoctorDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.team9.manosarthi_backend.Services.AdminService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER')")
 public class AdminController {
     @Autowired
     private UserService userService;
@@ -95,11 +97,21 @@ public List<Doctor> viewDoctorBySubDistrict(@RequestParam("subdistrictcode") int
 
     //If want to view all doctors
     @GetMapping("/viewdoctor/{pageNumber}")
-    public List<DoctorDto> viewDoctor(@PathVariable ("pageNumber") int pageNumber){
+    public MappingJacksonValue viewDoctor(@PathVariable ("pageNumber") int pageNumber){
 //        System.out.println("hello");
         int pageSize=5;
 //        System.out.println(adminService.viewDocrtor());
-        return adminService.viewDoctor(pageNumber,pageSize);
+        List<Doctor> doctors=adminService.viewAllDoctor();
+
+        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept("firstname");
+        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("Doctor",filter);
+        MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(doctors);
+
+        System.out.println("doctor maping filter"+mappingJacksonValue.getFilters());
+        mappingJacksonValue.setValue(filterProvider);
+        return mappingJacksonValue;
+
+//        return adminService.viewDoctor(pageNumber,pageSize);
     }
 
 

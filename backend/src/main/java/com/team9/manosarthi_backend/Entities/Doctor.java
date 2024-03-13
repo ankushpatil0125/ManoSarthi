@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@JsonFilter("Doctor")
 public class Doctor {
 
     @Id
