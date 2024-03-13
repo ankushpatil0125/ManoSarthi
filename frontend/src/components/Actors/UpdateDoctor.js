@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import "../../css/UpdateDoctor.css";
 import AdminService from "../../Services/AdminService";
 import Header from "../Header/Header";
+import ViewDoctors from "../Doctor/ViewDoctors";
 
 const UpdateDoctor = () => {
   const [district, setDistrict] = useState("");
@@ -129,8 +130,8 @@ const UpdateDoctor = () => {
           </div>
         </div>
       </div>
-
-      <div className="data">
+      <ViewDoctors allDoctor={allDoctor} district={district}/>
+      {/* <div className="data">
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
@@ -161,7 +162,7 @@ const UpdateDoctor = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };
