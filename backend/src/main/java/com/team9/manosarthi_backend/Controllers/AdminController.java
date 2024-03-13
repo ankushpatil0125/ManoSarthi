@@ -5,6 +5,7 @@ import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
+import com.team9.manosarthi_backend.models.DoctorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -62,12 +63,13 @@ public class AdminController {
 //    }
 
     //If want to view all doctors
-//    @GetMapping("/viewdoctor")
-//    public List<Doctor> viewDoctor(){
-//
+    @GetMapping("/viewdoctor/{pageNumber}")
+    public List<DoctorDto> viewDoctor(@PathVariable ("pageNumber") int pageNumber){
+//        System.out.println("hello");
+        int pageSize=5;
 //        System.out.println(adminService.viewDocrtor());
-//        return adminService.viewDocrtor();
-//    }
+        return adminService.viewDoctor(pageNumber,pageSize);
+    }
 
 
 }

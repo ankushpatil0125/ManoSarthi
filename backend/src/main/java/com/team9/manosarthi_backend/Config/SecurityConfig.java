@@ -69,7 +69,7 @@ public class SecurityConfig {
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
 //                        .requestMatchers("/doctor/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("USER")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
                         .requestMatchers("/supervisor/**").hasRole("SUPERVISOR")
 //                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
