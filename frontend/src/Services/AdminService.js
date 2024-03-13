@@ -1,9 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/Constants";
 import { getToken } from "../utils/Constants";
+import { useState } from "react";
 
 const AdminService = {
-
   addDoctor: async (doctorData) => {
     // const token = getToken();
     try{
@@ -80,5 +80,59 @@ const AdminService = {
       throw error;
     }
   },
+
+  getAllDoctors: async () => {
+    try {
+      console.log('before calling getAll')
+      const response = await axios.get(BASE_URL + "admin/doctor", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      console.log("Doctor list",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+  getAllDistrictDoctors: async (code) => {
+    try {
+      
+      const response = await axios.get(BASE_URL + "admin/doctor/district/?districtcode="+code, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      console.log("all district doctor",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+  getAllSubDistrictDoctors: async (code) => {
+    try {
+      
+      const response = await axios.get(BASE_URL + "admin/doctor/subdistrict/?subdistrictcode="+code, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      console.log("all district doctor",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+
 };
 export default AdminService;
+

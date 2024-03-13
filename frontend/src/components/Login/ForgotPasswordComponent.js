@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { PASS_URL } from "../utils/images";
-import "../css/LoginComponent.css"
+import { PASS_URL } from "../../utils/images";
+import "../../css/LoginComponent.css"
 const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 
 const ForgotPasswordComponent = () => {

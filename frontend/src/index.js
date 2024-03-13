@@ -7,7 +7,7 @@ import { I18nextProvider } from "react-i18next";
 import i18next from 'i18next';
 import './i18n'
 // import Header from './components/Header';
-import Footer from './components/Footer';
+// import Footer from '../src/components/Footer/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../css/AdminHomePage.css'
-import Header from './Header';
+import '../../css/AdminHomePage.css'
+import Header from '../Header/Header';
 import { useTranslation } from 'react-i18next';
 const Dashboard = () => {
   const {t}=useTranslation("global");

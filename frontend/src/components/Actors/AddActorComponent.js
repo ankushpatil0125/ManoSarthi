@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../css/AddActorComponent.css";
-import Header from "./Header";
-import AdminService from "../Services/AdminService";
+import "../../css/AddActorComponent.css";
+import Header from "../Header/Header";
+import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 

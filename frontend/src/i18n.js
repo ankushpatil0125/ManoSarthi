@@ -11,7 +11,7 @@ i18next
 // .use(Backend)
   .init({
     interpolation:{escapeValue:false},
-    lng:"en",
+    lng: localStorage.getItem('selectedLanguage') || 'en',
     fallbackLng: 'en',
     resources:{
       en:{

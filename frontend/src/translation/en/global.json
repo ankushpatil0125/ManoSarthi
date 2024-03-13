@@ -19,9 +19,14 @@
     "Actor":{
         "Doctor/Supervisor":"Doctor/Supervisor",
         "Admin Dashboard":"Admin Dashboard",
-        "Add Doctor/Supervisor":"Add  Doctor/Supervisor",
+        "Add Doctor/Supervisor":"Add Doctor/Supervisor",
         "Update Doctor/Supervisor":"Update Doctor/Supervisor",
-        "Delete Doctor/Supervisor":"Delete Doctor/Supervisor"
+        "Delete Doctor/Supervisor":"Delete Doctor/Supervisor",
+        "Add HealthWorker":"Add HealthWorker",
+        "Update HealthWorker":"Update HealthWorker",
+        "Delete HealthWorker":"Delete HealthWorker",
+        "Show Activity":"Show Activity",
+        "HealthWorker":"HealthWorker"
     },
     "addDoctorSupervisor":{
         "Doctor":"Doctor",
@@ -36,6 +41,7 @@
         "Email":"Email",
         "ADD":"ADD"
     },
+
     "Profile":{
         "ID":"ID",
         "First Name":"First Name",

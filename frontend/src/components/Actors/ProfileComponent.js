@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
-import "../css/ProfileComponent.css";
-import Header from "./Header";
-import {getToken} from "../utils/Constants"
+import "../../css/ProfileComponent.css";
+import Header from "../Header/Header";
+import {getToken} from "../../utils/Constants"
 import { useTranslation } from "react-i18next";
-import ProfileService from "../Services/ProfileService";
+import ProfileService from "../../Services/ProfileService";
 // import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Profile = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/DoctorHomePage.css";
-import Header from "./Header";
+import "../../css/DoctorHomePage.css";
+import Header from "../Header/Header";
 
 function DoctorHomePage() {
   return (

@@ -21,7 +21,12 @@
         "Admin Dashboard":"एडमिन डैशबोर्ड",
         "Add Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र जोड़ें",
         "Update Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र अपडेट करें",
-        "Delete Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र हटाएं"
+        "Delete Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र हटाएं",
+        "Add HealthWorker":"स्वास्थ्य कर्मी जोड़ें",
+        "Update HealthWorker":"स्वास्थ्य कर्मी अपडेट करें",
+        "Delete HealthWorker":"स्वास्थ्य कर्मी हटाएं",
+        "Show Activity":"शो एक्टिविटी",
+        "HealthWorker":"स्वास्थ्य कर्मी"
     },
     "addDoctorSupervisor":{
         "Doctor":"डॉक्टर",

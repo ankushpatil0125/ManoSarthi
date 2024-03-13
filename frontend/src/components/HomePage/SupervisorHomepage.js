@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../css/AdminHomePage.css'
-import Header from './Header';
+import '../../css/AdminHomePage.css'
+import Header from '../Header/Header';
 
 const SupervisorHomepage = () => {
   const [cardData] = useState([

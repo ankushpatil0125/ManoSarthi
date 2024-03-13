@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {  useNavigate } from "react-router-dom";
-import { PASS_URL } from "../utils/images";
-import "../css/LoginComponent.css";
-import ChangePasswordService from "../Services/ChangePasswordService";
+import { PASS_URL } from "../../utils/images";
+import "../../css/LoginComponent.css";
+import ChangePasswordService from "../../Services/ChangePasswordService";
 // const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 
 
