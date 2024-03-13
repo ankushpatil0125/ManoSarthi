@@ -1,7 +1,9 @@
 package com.team9.manosarthi_backend.Services;
 
+import com.team9.manosarthi_backend.Entities.SubDistrict;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
+import com.team9.manosarthi_backend.Repositories.SubDistrictRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.Repositories.UserRepository;
 import com.team9.manosarthi_backend.Entities.Doctor;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.team9.manosarthi_backend.Services.AdminService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,23 +23,28 @@ public class AdminServiceImpl implements AdminService{
     private DoctorRepository doctorRepository;
     private SupervisorRepository supervisorRepository;
     private UserRepository userRepository;
-
     private PasswordEncoder passwordEncoder;
+    private SubDistrictRepository subDistrictRepository;
 
     @Override
     public Doctor adddoctor(Doctor doctor) {
 
-
         Doctor newDoctor =  doctorRepository.save(doctor);
 
+        //Add user to user database
         User user = new User();
-
         user.setUsername("DOC"+newDoctor.getId());
         user.setPassword( passwordEncoder.encode( "changeme"));
         user.setRole("ROLE_DOCTOR");
+        User newuser = userRepository.save(user);
 
-         User newuser = userRepository.save(user);
+        //Increase count of doctor in subdistrict
+        Optional<SubDistrict> subDistrict = subDistrictRepository.findById(newDoctor.getSubdistrictcode().getCode());
 
+        subDistrict.ifPresent( subDistricttemp ->{
+            subDistricttemp.setDoctor_count(subDistricttemp.getDoctor_count()+1);
+            subDistrictRepository.save(subDistricttemp);
+        } );
 
         newDoctor.setUser(newuser);
         System.out.println(newDoctor.getSubdistrictcode().getDistrict());
@@ -64,7 +72,19 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<Doctor> viewDocrtor() {
+    public List<Doctor> viewAllDoctor() {
         return doctorRepository.findAll();
     }
+
+    @Override
+    public List<Doctor> viewDoctorByDistrict(int districtcode) {
+        return doctorRepository.findDoctorByDistrict(districtcode);
+    }
+
+    @Override
+    public List<Doctor> viewDoctorBySubDistrict(int subdistrictcode) {
+        return doctorRepository.findDoctorBySubDistrict(subdistrictcode);
+    }
+
+
 }

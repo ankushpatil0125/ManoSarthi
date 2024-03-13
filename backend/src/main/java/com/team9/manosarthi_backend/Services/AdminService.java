@@ -11,5 +11,8 @@ public interface AdminService {
     Doctor adddoctor(Doctor doctor);
 
     Supervisor addSupervisor(Supervisor supervisor);
-    List<Doctor> viewDocrtor();
+    List<Doctor> viewAllDoctor();
+    List<Doctor> viewDoctorByDistrict(int districtcode);
+
+    List<Doctor> viewDoctorBySubDistrict(int subdistrictcode);
 }
