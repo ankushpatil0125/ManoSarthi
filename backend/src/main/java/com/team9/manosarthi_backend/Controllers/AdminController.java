@@ -108,7 +108,9 @@ public List<Doctor> viewDoctorBySubDistrict(@RequestParam("subdistrictcode") int
         MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(doctors);
 
         System.out.println("doctor maping filter"+mappingJacksonValue.getFilters());
-        mappingJacksonValue.setValue(filterProvider);
+        System.out.println("filter"+ filterProvider.toString());
+//        mappingJacksonValue.setValue(filterProvider);
+        mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
 
 //        return adminService.viewDoctor(pageNumber,pageSize);
