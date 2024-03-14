@@ -1,65 +1,60 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL, getToken } from "../../utils/Constants";
+import AdminService from "../../Services/AdminService";
 
-const ViewDoctors = ({ allDoctor,district }) => {
+const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
-  const noOfPages = Math.ceil(allDoctor.length / 5);
-  console.log(noOfPages);
+
   useEffect(() => {
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, district]); // Refetch data when currentPage or district changes
 
   const fetchData = async () => {
     try {
-      console.log("inside fetchdata funtion");
-      const response = await axios.get(
-        BASE_URL + "admin/viewdoctor/" + currentPage,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-          },
-        }
-      );
-
-      setData(response.data);
-      console.log("data", response.data); // Move the log inside the try block
+      console.log("inside fetchdata function");
+      if (district) {
+        // setCurrentPage(0)
+        AdminService.getAllDistrictDoctors(district, currentPageDoctor)
+          .then((response) => {
+            setData(response.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching district doctors:", error);
+          });
+      } else {
+        setCurrentPageDoctor(0);
+        AdminService.getAllDoctors(currentPage).then((response) => {
+          setData(response.data);
+          console.log("data", response.data);
+        });
+      }
     } catch (error) {
       console.error("Error fetching doctor details:", error.message);
     }
   };
-
-//   useEffect(() => {
-//     fetchDistrictDoctor();
-//   }, [district]);
-
-//   const fetchDistrictDoctor = async ()=>{
-//     try {
-//       const response = await axios.get(
-//         BASE_URL + "admin/doctor/district/?districtcode="+district,
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${getToken()}`,
-//           },
-//         }
-//       );
-//       console.log("district doctor",response);
-//       setData(response.data);
-//     } catch (error) {
-//       console.error("Error fetching doctor details:", error.message);
-//     }
-//   }
+  useEffect(() => {
+    if (subdistrictcode) {
+      AdminService.getAllSubDistrictDoctors(subdistrictcode)
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching subdistrict doctors:", error);
+        });
+    }
+  }, [subdistrictcode]);
+  
   const handlePrevPage = () => {
-    console.log("current page", currentPage);
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+    setCurrentPageDoctor((prevPage) => Math.max(prevPage - 1, 0));
   };
 
   const handleNextPage = () => {
-    console.log("current page", currentPage);
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, noOfPages));
+    setCurrentPage((prevPage) => prevPage + 1);
+    setCurrentPageDoctor((prevPage) => prevPage + 1);
   };
 
   return (
@@ -97,28 +92,21 @@ const ViewDoctors = ({ allDoctor,district }) => {
         </table>
       </div>
       <div className="flex gap-2 justify-center">
-        {currentPage === 0 ? (
-          <div></div>
-        ) : (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handlePrevPage}
-            // disabled={currentPage === 0}
-          >
-            Previous
-          </button>
-        )}
-        {currentPage === noOfPages - 1 ? (
-          <div></div>
-        ) : (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleNextPage}
-            // disabled={currentPage === noOfPages}
-          >
-            Next
-          </button>
-        )}
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handlePrevPage}
+          disabled={currentPage === 0}
+        >
+          Previous
+        </button>
+
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleNextPage}
+          disabled={data.length < 5} // Disable next button when data length is less than 5
+        >
+          Next
+        </button>
       </div>
     </div>
   );

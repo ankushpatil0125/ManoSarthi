@@ -81,10 +81,10 @@ const AdminService = {
     }
   },
 
-  getAllDoctors: async () => {
+  getAllDoctors: async (pagenumber) => {
     try {
       console.log('before calling getAll')
-      const response = await axios.get(BASE_URL + "admin/doctor", {
+      const response = await axios.get(BASE_URL + "admin/doctor?pagenumber="+pagenumber, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,
@@ -98,10 +98,10 @@ const AdminService = {
       throw error;
     }
   },
-  getAllDistrictDoctors: async (code) => {
+  getAllDistrictDoctors: async (code,pagenumber) => {
     try {
       
-      const response = await axios.get(BASE_URL + "admin/doctor/district/?districtcode="+code, {
+      const response = await axios.get(BASE_URL + "admin/doctor/district?districtcode="+code+"&pagenumber="+pagenumber, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,

@@ -41,7 +41,19 @@
         "Email":"Email",
         "ADD":"ADD"
     },
-
+    "addHealthWorker":{
+        "Doctor":"Doctor",
+        "Supervisor":"Supervisor",
+        "Fill The Doctor Information":"Fill The Doctor Information",
+        "Select Actor to Add":"Select Actor to Add",
+        "Select":"Select",
+        "Village":"Village",
+        "Subdistrict":"Subdistrict",
+        "First Name":"First Name",
+        "Last Name":"Last Name",
+        "Email":"Email",
+        "ADD":"ADD"
+    },
     "Profile":{
         "ID":"ID",
         "First Name":"First Name",

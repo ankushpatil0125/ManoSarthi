@@ -25,45 +25,45 @@ const UpdateDoctor = () => {
       });
   }, []);
 
-  const fetchDoctorData = async () => {
-    setLoading(true);
-    try {
-      const response = await AdminService.getAllDoctors();
-      setAllDoctor(response.data);
-    } catch (error) {
-      console.error("Error fetching Doctor details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchDoctorData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await AdminService.getAllDoctors();
+  //     setAllDoctor(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching Doctor details:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchDoctorData();
-  }, []);
+  // useEffect(() => {
+  //   fetchDoctorData();
+  // }, []);
 
-  useEffect(() => {
-    if (district) {
-      AdminService.getAllDistrictDoctors(district)
-        .then((response) => {
-          setAllDoctor(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching district doctors:", error);
-        });
-    }
-  }, [district]);
+  // useEffect(() => {
+  //   if (district) {
+  //     AdminService.getAllDistrictDoctors(district,currentPage)
+  //       .then((response) => {
+  //         setAllDoctor(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching district doctors:", error);
+  //       });
+  //   }
+  // }, [district]);
 
-  useEffect(() => {
-    if (subdistrictcode) {
-      AdminService.getAllSubDistrictDoctors(subdistrictcode)
-        .then((response) => {
-          setAllDoctor(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching subdistrict doctors:", error);
-        });
-    }
-  }, [subdistrictcode]);
+  // useEffect(() => {
+  //   if (subdistrictcode) {
+  //     AdminService.getAllSubDistrictDoctors(subdistrictcode)
+  //       .then((response) => {
+  //         setAllDoctor(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching subdistrict doctors:", error);
+  //       });
+  //   }
+  // }, [subdistrictcode]);
 
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
@@ -130,7 +130,7 @@ const UpdateDoctor = () => {
           </div>
         </div>
       </div>
-      <ViewDoctors allDoctor={allDoctor} district={district}/>
+      <ViewDoctors allDoctor={allDoctor} district={district} subdistrictcode={subdistrictcode}/>
       {/* <div className="data">
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">

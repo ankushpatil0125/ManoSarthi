@@ -33,9 +33,9 @@ const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
-    <Navbar.Brand as={Link} to="/home" onClick={handleLogoClick}>
-      <img className="image" src={LOGO_IMAGE} alt="Logo" />
-    </Navbar.Brand>
+      <Navbar.Brand as={Link} to="/home" onClick={handleLogoClick}>
+        <img className="image" src={LOGO_IMAGE} alt="Logo" />
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ms-auto custom-nav">
@@ -65,7 +65,7 @@ const Header = () => {
             </Link>
           )}
           {role === "[ROLE_SUPERVISOR]" && (
-            <Link to="/healthworker" className="nav-link">
+            <Link to="/healthworker-home" className="nav-link">
               {t("Actor.HealthWorker")}
             </Link>
           )}

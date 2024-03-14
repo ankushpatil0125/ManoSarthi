@@ -1,56 +1,69 @@
 {
-    "header":{
-        "message":"नमस्ते",
-        "Home":"होम",
-        "About":"अबाउट",
-        "Contact":"कॉन्टैक्ट",
-        "Dashboard":"डैशबोर्ड",
-        "Profile":"प्रोफ़ाइल"
-    },
-    "login":{
-        "LOGIN":"लॉगिन",
-        "Logout":"लॉगआउट",
-        "username":"उपयोगकर्ता नाम",
-        "Password":"पासवर्ड",
-        "forgot-password":"पासवर्ड भूल गए हैं",
-        "Click_Here":"यहाँ क्लिक करें"
-    },
-    "Select_Language":"भाषा चुनें",
-    "Actor":{
-        "Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र",
-        "Admin Dashboard":"एडमिन डैशबोर्ड",
-        "Add Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र जोड़ें",
-        "Update Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र अपडेट करें",
-        "Delete Doctor/Supervisor":"डॉक्टर/सुपरवाइज़र हटाएं",
-        "Add HealthWorker":"स्वास्थ्य कर्मी जोड़ें",
-        "Update HealthWorker":"स्वास्थ्य कर्मी अपडेट करें",
-        "Delete HealthWorker":"स्वास्थ्य कर्मी हटाएं",
-        "Show Activity":"शो एक्टिविटी",
-        "HealthWorker":"स्वास्थ्य कर्मी"
-    },
-    "addDoctorSupervisor":{
-        "Doctor":"डॉक्टर",
-        "Supervisor":"सुपरवाइजर",
-        "Fill The Doctor Information":"जानकारी भरें",
-        "Select Actor to Add":"जोड़ने के लिए डॉक्टर या सुपरवाइजर चुनें",
-        "Select":"सेलेक्ट करें",
-        "District":"जिला",
-        "Subdistrict":"उपजिला",
-        "First Name":"पहला नाम",
-        "Last Name":"अंतिम नाम",
-        "Email":"ईमेल",
-        "ADD":"जोड़ें"
-    },
-    "Profile": {
-        "ID":"आईडी",
-        "First Name":"पहला नाम",
-        "Last Name":"अंतिम नाम",
-        "Email":"ईमेल",
-        "District":"जिला",
-        "Subdistrict":"उपजिला",
-        "Gender":"लिंग",
-        "Change Password":"पासवर्ड बदलें",
-        "Doctor Profile":"डॉक्टर प्रोफ़ाइल",
-        "Supervisor Profile":"सुपरवाइजर प्रोफ़ाइल"
-    }
+  "header": {
+    "message": "नमस्ते",
+    "Home": "होम",
+    "About": "अबाउट",
+    "Contact": "कॉन्टैक्ट",
+    "Dashboard": "डैशबोर्ड",
+    "Profile": "प्रोफ़ाइल"
+  },
+  "login": {
+    "LOGIN": "लॉगिन",
+    "Logout": "लॉगआउट",
+    "username": "उपयोगकर्ता नाम",
+    "Password": "पासवर्ड",
+    "forgot-password": "पासवर्ड भूल गए हैं",
+    "Click_Here": "यहाँ क्लिक करें"
+  },
+  "Select_Language": "भाषा चुनें",
+  "Actor": {
+    "Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र",
+    "Admin Dashboard": "एडमिन डैशबोर्ड",
+    "Add Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र जोड़ें",
+    "Update Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र अपडेट करें",
+    "Delete Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र हटाएं",
+    "Add HealthWorker": "स्वास्थ्य कर्मी जोड़ें",
+    "Update HealthWorker": "स्वास्थ्य कर्मी अपडेट करें",
+    "Delete HealthWorker": "स्वास्थ्य कर्मी हटाएं",
+    "Show Activity": "शो एक्टिविटी",
+    "HealthWorker": "स्वास्थ्य कर्मी"
+  },
+  "addDoctorSupervisor": {
+    "Doctor": "डॉक्टर",
+    "Supervisor": "सुपरवाइजर",
+    "Fill The Doctor Information": "जानकारी भरें",
+    "Select Actor to Add": "जोड़ने के लिए डॉक्टर या सुपरवाइजर चुनें",
+    "Select": "सेलेक्ट करें",
+    "District": "जिला",
+    "Subdistrict": "उपजिला",
+    "First Name": "पहला नाम",
+    "Last Name": "अंतिम नाम",
+    "Email": "ईमेल",
+    "ADD": "जोड़ें"
+  },
+  "addHealthWorker": {
+    "Doctor": "डॉक्टर",
+    "Supervisor": "सुपरवाइजर",
+    "Fill The Doctor Information": "जानकारी भरें",
+    "Select Actor to Add": "जोड़ने के लिए डॉक्टर या सुपरवाइजर चुनें",
+    "Select": "सेलेक्ट करें",
+    "Village": "गाँव",
+    "Subdistrict": "उपजिला",
+    "First Name": "पहला नाम",
+    "Last Name": "अंतिम नाम",
+    "Email": "ईमेल",
+    "ADD": "जोड़ें"
+  },
+  "Profile": {
+    "ID": "आईडी",
+    "First Name": "पहला नाम",
+    "Last Name": "अंतिम नाम",
+    "Email": "ईमेल",
+    "District": "जिला",
+    "Subdistrict": "उपजिला",
+    "Gender": "लिंग",
+    "Change Password": "पासवर्ड बदलें",
+    "Doctor Profile": "डॉक्टर प्रोफ़ाइल",
+    "Supervisor Profile": "सुपरवाइजर प्रोफ़ाइल"
+  }
 }
