@@ -57,7 +57,7 @@ public class AuthController {
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
             //String token = this.helper.generateToken(userDetails);
             // Given time
-            LocalTime givenTime = LocalTime.of(23, 35, 0); // 2:30 PM
+            LocalTime givenTime = LocalTime.of(23, 59, 59); // 2:30 PM
 
             // Current system time
             LocalTime currentTime = LocalTime.now();

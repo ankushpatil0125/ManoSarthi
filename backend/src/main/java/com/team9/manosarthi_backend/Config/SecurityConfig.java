@@ -69,10 +69,11 @@ public class SecurityConfig {
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
-//                        .requestMatchers("/admin/add").permitAll()
+//                        .requestMatchers("/admin/**").permitAll()
 //                        .requestMatchers("/doctor/**").permitAll()
 
-                        .requestMatchers("/admin/**").hasRole("USER")
+//                        .requestMatchers("/admin/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers(("/admin/**")).permitAll()
 
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")

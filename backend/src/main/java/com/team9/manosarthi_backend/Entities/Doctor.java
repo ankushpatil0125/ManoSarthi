@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@JsonFilter("Doctor")
+//@JsonFilter("Doctor")
 public class Doctor {
 
     @Id
