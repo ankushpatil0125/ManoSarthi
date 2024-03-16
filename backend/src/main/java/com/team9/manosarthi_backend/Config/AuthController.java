@@ -2,6 +2,7 @@ package com.team9.manosarthi_backend.Config;
 
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
+import com.team9.manosarthi_backend.Repositories.WorkerRepository;
 import com.team9.manosarthi_backend.models.JwtRequest;
 import com.team9.manosarthi_backend.models.JwtResponse;
 import com.team9.manosarthi_backend.security.JwtHelper;
@@ -43,6 +44,9 @@ public class AuthController {
 
         @Autowired
         private SupervisorRepository supervisorRepository;
+
+        @Autowired
+        private WorkerRepository workerRepository;
 
 
         private Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -96,7 +100,10 @@ public class AuthController {
                             .anyMatch(authority -> authority.getAuthority().equals("ROLE_WORKER"))) {
 
                         //like above do for all role to get id
-                        System.out.println("Not Doctor");
+
+                        System.out.println("Hello ROLE_WORKER here");
+                        id = workerRepository.findWorkerByUsername(userDetails.getUsername());
+                        System.out.println(id);
                     }
                     System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
 

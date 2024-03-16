@@ -67,6 +67,7 @@ public class SecurityConfig {
                        .requestMatchers("/passwordstatus/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
+                        .requestMatchers("/get-village/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
 //                        .requestMatchers("/admin/add").permitAll()

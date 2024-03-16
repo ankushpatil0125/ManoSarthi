@@ -96,25 +96,25 @@ public List<Doctor> viewDoctorBySubDistrict(@RequestParam("subdistrictcode") int
 //    }
 
     //If want to view all doctors
-    @GetMapping("/viewdoctor/{pageNumber}")
-    public MappingJacksonValue viewDoctor(@PathVariable ("pageNumber") int pageNumber){
-//        System.out.println("hello");
-        int pageSize=5;
-//        System.out.println(adminService.viewDocrtor());
-        List<Doctor> doctors=adminService.viewAllDoctor();
-
-        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept("firstname");
-        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("Doctor",filter);
-        MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(doctors);
-
-        System.out.println("doctor maping filter"+mappingJacksonValue.getFilters());
-        System.out.println("filter"+ filterProvider.toString());
-//        mappingJacksonValue.setValue(filterProvider);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
-
-//        return adminService.viewDoctor(pageNumber,pageSize);
-    }
+//    @GetMapping("/viewdoctor/{pageNumber}")
+//    public MappingJacksonValue viewDoctor(@PathVariable ("pageNumber") int pageNumber){
+////        System.out.println("hello");
+//        int pageSize=5;
+////        System.out.println(adminService.viewDocrtor());
+//        List<Doctor> doctors=adminService.viewAllDoctor();
+//
+//        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept("firstname");
+//        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("Doctor",filter);
+//        MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(doctors);
+//
+//        System.out.println("doctor maping filter"+mappingJacksonValue.getFilters());
+//        System.out.println("filter"+ filterProvider.toString());
+////        mappingJacksonValue.setValue(filterProvider);
+//        mappingJacksonValue.setFilters(filterProvider);
+//        return mappingJacksonValue;
+//
+////        return adminService.viewDoctor(pageNumber,pageSize);
+//    }
 
 
 }

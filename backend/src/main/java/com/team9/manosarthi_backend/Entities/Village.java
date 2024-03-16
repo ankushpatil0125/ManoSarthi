@@ -25,4 +25,6 @@ public class Village {
     @JoinColumn(name = "subdistrictcode")
     private SubDistrict subDistrict;
 
+    @Column(name = "worker_count")
+    private int worker_count=0;
 }
