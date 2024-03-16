@@ -92,7 +92,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-
     public List<DoctorDto> viewDoctor(int pageNumber, int pageSize) {
 
         Pageable p= PageRequest.of(pageNumber,pageSize);
@@ -118,13 +117,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-    public List<Doctor> viewAllDoctor() {
-        return doctorRepository.findAll();
+    public List<Doctor> viewAllDoctor(int pagenumber,int pagesize) {
+        Pageable p= PageRequest.of(pagenumber,pagesize);
+        Page <Doctor> pageDoctor=this.doctorRepository.findAll(p);
+        List<Doctor> allDoctors=pageDoctor.getContent();
+        return allDoctors;
     }
 
     @Override
-    public List<Doctor> viewDoctorByDistrict(int districtcode) {
-        return doctorRepository.findDoctorByDistrict(districtcode);
+    public List<Doctor> viewDoctorByDistrict(int districtcode,int pagenumber,int pagesize) {
+        Pageable p= PageRequest.of(pagenumber,pagesize);
+        Page <Doctor> pageDoctor=doctorRepository.findDoctorByDistrict(districtcode,p);
+        List<Doctor> allDoctors=pageDoctor.getContent();
+        return allDoctors;
     }
 
     @Override
