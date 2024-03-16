@@ -29,121 +29,121 @@ import java.util.stream.Collectors;
 public class AuthController {
 
 
-        @Autowired
-        private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
-        @Autowired
-        private AuthenticationManager manager;
-
-
-        @Autowired
-        private JwtHelper helper;
-
-        @Autowired
-        private DoctorRepository doctorRepository;
-
-        @Autowired
-        private SupervisorRepository supervisorRepository;
-
-        @Autowired
-        private WorkerRepository workerRepository;
+    @Autowired
+    private AuthenticationManager manager;
 
 
-        private Logger logger = LoggerFactory.getLogger(AuthController.class);
+    @Autowired
+    private JwtHelper helper;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
+    private SupervisorRepository supervisorRepository;
+
+    @Autowired
+    private WorkerRepository workerRepository;
 
 
-        @PostMapping("/login")
-        public ResponseEntity<?> login(@RequestBody JwtRequest request) {
-
-            this.doAuthenticate(request.getUsername(), request.getPassword());
+    private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-            //String token = this.helper.generateToken(userDetails);
-            // Given time
-            LocalTime givenTime = LocalTime.of(23, 59, 59); // 2:30 PM
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody JwtRequest request) {
 
-            // Current system time
-            LocalTime currentTime = LocalTime.now();
-
-            // Calculate the time difference
-            Duration difference = Duration.between(currentTime, givenTime);
-
-            // Convert to milliseconds
-            long milliseconds = difference.toMillis();
-
-            System.out.println(milliseconds);
-            try {
-                if (milliseconds < 0) {
-                    System.out.println("Timeout!!!");
-                    throw new TokenGenerationException("Timeout");
-                } else {
-
-                    int id=-1;
-
-                    if (userDetails.getAuthorities().stream()
-                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"))) {
-                        System.out.println("Hello Doctor here");
-                        id = doctorRepository.findDoctorByUsername(userDetails.getUsername());
-                        System.out.println(id);
-
-                    }
-                    else if(userDetails.getAuthorities().stream()       // check for supervisor role
-                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_SUPERVISOR"))){
-
-                        System.out.println("Hello ROLE_SUPERVISOR here");
-                        id = supervisorRepository.findSupervisorByUsername(userDetails.getUsername());
-                        System.out.println(id);
-
-                    }
-                    else if(userDetails.getAuthorities().stream()
-                            .anyMatch(authority -> authority.getAuthority().equals("ROLE_WORKER"))) {
-
-                        //like above do for all role to get id
-
-                        System.out.println("Hello ROLE_WORKER here");
-                        id = workerRepository.findWorkerByUsername(userDetails.getUsername());
-                        System.out.println(id);
-                    }
-                    System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
-
-                    String userid=Integer.toString(id);
-                    String token = this.helper.generateToken(userDetails, milliseconds,userid);
-
-                    JwtResponse response = JwtResponse.builder()
-                            .jwtToken(token)
-                           .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).build();
+        this.doAuthenticate(request.getUsername(), request.getPassword());
 
 
-                    return new ResponseEntity<>(response, HttpStatus.OK);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        //String token = this.helper.generateToken(userDetails);
+        // Given time
+        LocalTime givenTime = LocalTime.of(23, 59, 59); // 2:30 PM
+
+        // Current system time
+        LocalTime currentTime = LocalTime.now();
+
+        // Calculate the time difference
+        Duration difference = Duration.between(currentTime, givenTime);
+
+        // Convert to milliseconds
+        long milliseconds = difference.toMillis();
+
+        System.out.println(milliseconds);
+        try {
+            if (milliseconds < 0) {
+                System.out.println("Timeout!!!");
+                throw new TokenGenerationException("Timeout");
+            } else {
+
+                int id=-1;
+
+                if (userDetails.getAuthorities().stream()
+                        .anyMatch(authority -> authority.getAuthority().equals("ROLE_DOCTOR"))) {
+                    System.out.println("Hello Doctor here");
+                    id = doctorRepository.findDoctorByUsername(userDetails.getUsername());
+                    System.out.println(id);
+
                 }
-            }
-            catch (TokenGenerationException e) {
-                // Handle the exception and return an appropriate response
-                return new ResponseEntity<>("Token generation failed: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-            }
+                else if(userDetails.getAuthorities().stream()       // check for supervisor role
+                        .anyMatch(authority -> authority.getAuthority().equals("ROLE_SUPERVISOR"))){
 
+                    System.out.println("Hello ROLE_SUPERVISOR here");
+                    id = supervisorRepository.findSupervisorByUsername(userDetails.getUsername());
+                    System.out.println(id);
+
+                }
+                else if(userDetails.getAuthorities().stream()
+                        .anyMatch(authority -> authority.getAuthority().equals("ROLE_WORKER"))) {
+
+                    //like above do for all role to get id
+
+                    System.out.println("Hello ROLE_WORKER here");
+                    id = workerRepository.findWorkerByUsername(userDetails.getUsername());
+                    System.out.println(id);
+                }
+                System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
+
+                String userid=Integer.toString(id);
+                String token = this.helper.generateToken(userDetails, milliseconds,userid);
+
+                JwtResponse response = JwtResponse.builder()
+                        .jwtToken(token)
+                        .username(userDetails.getUsername()).role(userDetails.getAuthorities().toString()).build();
+
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
+        catch (TokenGenerationException e) {
+            // Handle the exception and return an appropriate response
+            return new ResponseEntity<>("Token generation failed: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        private void doAuthenticate(String username, String password) {
+    }
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
-            try {
-                manager.authenticate(authentication);
+    private void doAuthenticate(String username, String password) {
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
+        try {
+            manager.authenticate(authentication);
 
 
-            } catch (BadCredentialsException e) {
-                throw new BadCredentialsException(" Invalid Username or Password  !!");
-            }
-
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException(" Invalid Username or Password  !!");
         }
 
+    }
 
-@ExceptionHandler(BadCredentialsException.class)
-public ResponseEntity<?> exceptionHandler() {
 
-            return new ResponseEntity<>("CREDENTIALS INVALID ! " , HttpStatus.BAD_REQUEST);
-}
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> exceptionHandler() {
+
+        return new ResponseEntity<>("CREDENTIALS INVALID ! " , HttpStatus.BAD_REQUEST);
+    }
 
 
 

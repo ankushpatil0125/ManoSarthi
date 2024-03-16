@@ -54,12 +54,12 @@ public class SupervisorServiceImpl implements SupervisorService{
 
         newWorker.setUser(newuser);
 
-         workerRepository.save(newWorker);
+        workerRepository.save(newWorker);
 
-         //to get password in decoded form
-         newuser.setPassword(password);
-         newWorker.setUser(newuser);
-         return newWorker;
+        //to get password in decoded form
+        newuser.setPassword(password);
+        newWorker.setUser(newuser);
+        return newWorker;
     }
 
     @Override
@@ -83,6 +83,17 @@ public class SupervisorServiceImpl implements SupervisorService{
             return workerRepository.findWorkerBySubistrict(subdid);
         } else {
             return Collections.emptyList(); // Return an empty list if supervisor is not found
+        }
+    }
+
+    @Override
+    public Worker getVillWorker(int vilcode)
+    {
+        Optional<Worker> worker=workerRepository.findWorkerByVillage(vilcode);
+        if (worker.isPresent()) {
+            return worker.get();
+        } else {
+            return null;
         }
     }
 

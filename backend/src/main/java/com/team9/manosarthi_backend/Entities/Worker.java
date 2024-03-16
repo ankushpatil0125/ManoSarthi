@@ -27,7 +27,7 @@ public class Worker {
     @Column(name = "last_name")
     private String lastname;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)        // check for cascade type see all parameters

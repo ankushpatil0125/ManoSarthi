@@ -67,7 +67,7 @@ public class SupervisorRestController {
     @PostMapping("/addworker")
     public MappingJacksonValue addWorker(@RequestBody Worker worker){
         System.out.println("worker details"+worker.toString());
-       Worker gotworker =  supervisorService.addworker(worker);
+        Worker gotworker =  supervisorService.addworker(worker);
 //        return gotworker;
         // Replace the actual password with a fixed string "changeme"
 //        gotworker.getUser().setPassword("changeme");
@@ -112,6 +112,21 @@ public class SupervisorRestController {
             return mappingJacksonValue;
         }
         else {
+            return new MappingJacksonValue(Collections.emptyList());
+        }
+    }
+
+    @GetMapping("/get-village-worker")
+    public MappingJacksonValue getVillageWorker(@RequestParam ("villagecode") Integer villagecode){
+
+        Worker worker = supervisorService.getVillWorker(villagecode);
+        if (worker != null) {
+            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email");
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter);
+            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(worker);
+            mappingJacksonValue.setFilters(filterProvider);
+            return mappingJacksonValue;
+        } else {
             return new MappingJacksonValue(Collections.emptyList());
         }
     }

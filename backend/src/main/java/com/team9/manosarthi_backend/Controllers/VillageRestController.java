@@ -21,8 +21,7 @@ public class VillageRestController {
         this.villageRepository = villageRepository;
     }
 
-    //get village details from its id
-    @GetMapping("/get-village")
+    @GetMapping("/get-village/")
     public Optional<Village> getVillage(@RequestParam("code") int code){
 
         return villageRepository.findById(code);

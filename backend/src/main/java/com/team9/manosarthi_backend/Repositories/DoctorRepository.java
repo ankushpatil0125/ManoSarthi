@@ -5,14 +5,15 @@ import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.SubDistrict;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import org.apache.catalina.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface DoctorRepository extends JpaRepository<Doctor,Integer> {
 
