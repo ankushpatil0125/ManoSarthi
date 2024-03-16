@@ -1,0 +1,65 @@
+.handle-actors {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+.actor-card a{
+  text-decoration: none;
+  color: inherit;
+}
+  
+.actor-card {
+  width: 280px;
+  padding: 20px;
+  margin: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.actor-card:hover{
+  background-color: wheat;
+}
+
+.actor-card h2 {
+  color: #333;
+  
+}
+.actor-card p {
+  color: #666;
+}
+.missed-followups-btn{
+  color: #000;
+}
+
+@media only screen and (max-width: 600px) {
+  .handle-actors {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .actor-card{
+    width: 60%;
+    text-align: justify;
+  }
+}
+
+/* Medium screens */
+@media only screen and (min-width: 601px) and (max-width: 960px) {
+  .handle-actors {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .actor-card {
+    width: 60%;
+  }
+}
+
+
+
+
+

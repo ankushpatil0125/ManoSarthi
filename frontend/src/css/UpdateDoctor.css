@@ -1,0 +1,42 @@
+.udcon {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+  }
+  
+  .form-container {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* Space items evenly horizontally */
+  }
+  
+  .form-container div {
+    flex: 1; /* Each dropdown takes equal width */
+    margin-right: 10px; /* Add some space between dropdowns */
+  }
+  
+  .form-container div {
+    margin-bottom: 10px; /* Add vertical gap between form elements */
+  }
+  
+  .form-container label {
+    margin-right: 10px; /* Add gap between label and select */
+  }
+  
+  .form-container select {
+    width: 400px; /* Adjust width of select field */
+  }
+  
+  .data {
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .table-auto {
+    padding: 20px;
+    /* Add any additional styling for the table */
+    width: 100%;
+  }

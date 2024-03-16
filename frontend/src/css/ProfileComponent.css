@@ -1,0 +1,62 @@
+/* Profile */
+
+.profile {
+  margin-top: 15%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 100px;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 3px 10px 15px hsl(0deg 0% 0% / 0.31);
+}
+/* .profile .avatar {
+    width: 125px;
+    height: 125px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .profile .avatar img {
+    width: 100%;
+    height: 125px;
+    border-radius: 100%;
+    border: solid 4px #070707;
+  }
+   */
+.profile .body {
+  text-align: left;
+}
+
+.body {
+  width: 100%;
+}
+
+.key {
+  font-weight: 700;
+  justify-content: center;
+  display: inline-block; /* Ensures that padding works properly */
+  width: 200px; /* Adjust the width of the key as needed */
+  text-align: left; /* Aligns the text of the key to the right */
+  padding-right: 20px; /* Adjust the gap between key and value as needed */
+}
+
+.key-title {
+  width: 100%;
+}
+
+.value {
+  font-weight: 400;
+}
+.gap {
+  display: inline-block;
+  width: 10px; /* Adjust the width of the gap as needed */
+}
+
+@media (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+  }
+}
+/* End */
