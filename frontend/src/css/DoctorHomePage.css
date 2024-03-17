@@ -1,0 +1,32 @@
+.container {
+  margin-top: 150px; /* Adjust according to your Navbar height */
+  display: flex;
+  justify-content: center;
+  height: 700px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 110px;
+}
+.card {
+  margin-top: 50%;
+  height: 200px;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(7, 7, 7, 0.2);
+  transition: 0.9s;
+}
+
+.card:hover {
+  box-shadow: 0 10px 20px 0 rgba(3, 3, 3, 0.2);
+}
+
+.card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust the height as needed */
+  text-align: center;
+}
+

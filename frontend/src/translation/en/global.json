@@ -1,0 +1,70 @@
+{
+    "header":{
+        "message":"Welcome",
+        "Home":"Home",
+        "About":"About Us",
+        "Contact":"Contact Us",
+        "Dashboard":"Dashboard",
+        "Profile":"Profile"
+    },
+    "login":{
+        "LOGIN":"LOGIN",
+        "Logout":"Logout",
+        "username":"username",
+        "Password":"Password",
+        "forgot-password":"Forgot-password",
+        "Click_Here":"Click_Here"
+    },
+    "Select_Language":"Select Language",
+    "Actor":{
+        "Doctor/Supervisor":"Doctor/Supervisor",
+        "Admin Dashboard":"Admin Dashboard",
+        "Add Doctor/Supervisor":"Add Doctor/Supervisor",
+        "Update Doctor/Supervisor":"Update Doctor/Supervisor",
+        "Delete Doctor/Supervisor":"Delete Doctor/Supervisor",
+        "Add HealthWorker":"Add HealthWorker",
+        "Update HealthWorker":"Update HealthWorker",
+        "Delete HealthWorker":"Delete HealthWorker",
+        "Show Activity":"Show Activity",
+        "HealthWorker":"HealthWorker"
+    },
+    "addDoctorSupervisor":{
+        "Doctor":"Doctor",
+        "Supervisor":"Supervisor",
+        "Fill The Doctor Information":"Fill The Doctor Information",
+        "Select Actor to Add":"Select Actor to Add",
+        "Select":"Select",
+        "District":"District",
+        "Subdistrict":"Subdistrict",
+        "First Name":"First Name",
+        "Last Name":"Last Name",
+        "Email":"Email",
+        "ADD":"ADD"
+    },
+    "addHealthWorker":{
+        "Doctor":"Doctor",
+        "Supervisor":"Supervisor",
+        "Fill The Doctor Information":"Fill The Doctor Information",
+        "Select Actor to Add":"Select Actor to Add",
+        "Select":"Select",
+        "Village":"Village",
+        "Subdistrict":"Subdistrict",
+        "First Name":"First Name",
+        "Last Name":"Last Name",
+        "Email":"Email",
+        "ADD":"ADD"
+    },
+    "Profile":{
+        "ID":"ID",
+        "First Name":"First Name",
+        "Last Name":"Last Name",
+        "Email":"Email",
+        "District":"District",
+        "Subdistrict":"Subdistrict",
+        "Gender":"Gender",
+        "Change Password":"Change Password",
+        "Doctor Profile":"Doctor Profile",
+        "Supervisor Profile":"Supervisor Profile"
+    }
+
+}
