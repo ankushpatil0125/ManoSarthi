@@ -9,7 +9,11 @@ import {
   Pressable,
   Alert,
 } from "react-native";
+<<<<<<< Updated upstream
 import React, { useState } from "react";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> Stashed changes
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +25,26 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
+<<<<<<< Updated upstream
+=======
+  //check if user is already logged in
+  useEffect(()=>{
+    const checkLoginStatus= async()=>{
+      try{
+        const token = await AsyncStorage.getItem("JWT");
+        if(token){
+          navigation.replace("Main");
+        }
+        
+      }
+      catch(error){
+        console.log("Error while checking login status",error);
+      }
+    }
+    checkLoginStatus();
+  },[]);
+
+>>>>>>> Stashed changes
   const handleLogin = () => {
     const user = {
         email:email,
