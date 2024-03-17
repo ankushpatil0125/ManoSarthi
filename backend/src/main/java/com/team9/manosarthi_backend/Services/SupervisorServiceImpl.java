@@ -26,7 +26,7 @@ public class SupervisorServiceImpl implements SupervisorService{
 
     @Override
     public Worker addworker(Worker worker) {
-
+        System.out.println("Worker-------------"+ worker +"----------------");
         Worker newWorker =  workerRepository.save(worker);
 
 
@@ -34,17 +34,22 @@ public class SupervisorServiceImpl implements SupervisorService{
         User user = new User();
 
         user.setUsername("WORKER" + newWorker.getId());
-//        user.setPassword(passwordEncoder.encode("changeme"));
+        user.setPassword(passwordEncoder.encode("changeme"));
 
-        String password=PasswordGeneratorService.generatePassword();
-        System.out.println(password);
-        user.setPassword(passwordEncoder.encode(password));
+    //        String password=PasswordGeneratorService.generatePassword();
+    //        System.out.println(password);
+    //        user.setPassword(passwordEncoder.encode(password));
 
         user.setRole("ROLE_WORKER");
-        User newuser = userRepository.save(user);
+//        User newuser = userRepository.save(user);
+        newWorker.setUser(user);
+        workerRepository.save(newWorker);
 
         //Increase count of worker in village
+        System.out.println("Before newWorker.getVillagecode().getCode()");
+        System.out.println("-------------"+ newWorker +"----------------");
         Optional<Village> village = villageRepository.findById(newWorker.getVillagecode().getCode());
+        System.out.println("After newWorker.getVillagecode().getCode()");
 
 
         village.ifPresent( villagetemp ->{
@@ -52,13 +57,11 @@ public class SupervisorServiceImpl implements SupervisorService{
             villageRepository.save(villagetemp);
         } );
 
-        newWorker.setUser(newuser);
 
-        workerRepository.save(newWorker);
 
         //to get password in decoded form
-        newuser.setPassword(password);
-        newWorker.setUser(newuser);
+//        newuser.setPassword(password);
+//        newWorker.setUser(newuser);
         return newWorker;
     }
 
