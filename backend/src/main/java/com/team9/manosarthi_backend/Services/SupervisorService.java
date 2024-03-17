@@ -11,4 +11,6 @@ public interface SupervisorService {
     List<Village> findVillage(int userid);
 
     List<Worker> getSubWorkers(int userid);
+
+    Worker getVillWorker(int vilcode);
 }

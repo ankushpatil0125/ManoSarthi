@@ -9,7 +9,7 @@ public class PasswordGeneratorService {
     private static final String NUMBER = "0123456789";
 //    private static final String OTHER_CHAR = "!@#$%&*()_+-=[]|,./?><";
 
-//    private static final String PASSWORD_ALLOW = CHAR_LOWER + CHAR_UPPER + NUMBER + OTHER_CHAR;
+    //    private static final String PASSWORD_ALLOW = CHAR_LOWER + CHAR_UPPER + NUMBER + OTHER_CHAR;
     private static final String PASSWORD_ALLOW = CHAR_LOWER + CHAR_UPPER + NUMBER;
     private static SecureRandom random = new SecureRandom();
     public static String generatePassword() {
