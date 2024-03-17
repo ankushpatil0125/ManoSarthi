@@ -44,7 +44,7 @@
   "addHealthWorker": {
     "Doctor": "डॉक्टर",
     "Supervisor": "सुपरवाइजर",
-    "Fill The Doctor Information": "जानकारी भरें",
+    "Fill The HealthWorker Information": "जानकारी भरें",
     "Select Actor to Add": "जोड़ने के लिए डॉक्टर या सुपरवाइजर चुनें",
     "Select": "सेलेक्ट करें",
     "Village": "गाँव",
@@ -52,10 +52,30 @@
     "First Name": "पहला नाम",
     "Last Name": "अंतिम नाम",
     "Email": "ईमेल",
-    "ADD": "जोड़ें"
+    "ADD": "जोड़ें",
+    "Gender": "लिंग",
+    "Male": "पुरुष",
+    "Female": "स्त्री"
   },
+  "UpdateDoctorSupervisor":{
+    "District":"जिला",
+    "Subdistrict":"उपजिला",
+    "Select":"सिलेक्ट",
+    "Doctor Name":"डॉक्टर नाम",
+    "Action":"एक्शन",
+    "Next":"आगे",
+    "Previous":"पीछे"
+},
+  "UpdateHealthworker":{
+    "Village":"गाँव",
+    "Select":"सिलेक्ट",
+    "HealthWorker Name":"स्वास्थ्य कर्मी नाम",
+    "Action":"एक्शन",
+    "Next":"आगे",
+    "Previous":"पीछे"
+},
   "Profile": {
-    "ID": "आईडी",
+    "Username": "यूजरनेम",
     "First Name": "पहला नाम",
     "Last Name": "अंतिम नाम",
     "Email": "ईमेल",

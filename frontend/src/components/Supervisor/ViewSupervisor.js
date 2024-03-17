@@ -4,7 +4,7 @@ import { BASE_URL, getToken } from "../../utils/Constants";
 import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 
-const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
+const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
       console.log("inside fetchdata function");
       if (district) {
         // setCurrentPage(0)
-        AdminService.getAllDistrictDoctors(district, currentPageDoctor)
+        AdminService.getAllDistrictSupervisors(district, currentPageDoctor)
           .then((response) => {
             setData(response.data);
           })
@@ -27,7 +27,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
           });
       } else {
         setCurrentPageDoctor(0);
-        AdminService.getAllDoctors(currentPage).then((response) => {
+        AdminService.getAllSupervisors(currentPage).then((response) => {
           setData(response.data);
           console.log("data", response.data);
         });
@@ -38,7 +38,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
   };
   useEffect(() => {
     if (subdistrictcode) {
-      AdminService.getAllSubDistrictDoctors(subdistrictcode)
+      AdminService.getAllSubDistrictSupervisors(subdistrictcode)
         .then((response) => {
           setData(response.data);
         })
@@ -113,4 +113,4 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
   );
 };
 
-export default ViewDoctors;
+export default ViewSupervisor;

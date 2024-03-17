@@ -14,7 +14,7 @@ const AddHealthWorkerComponent = () => {
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
-  const [villageCode,setVillageCode]=useState("");
+  const [villagecode,setVillageCode]=useState("");
   const [subdistrictCode,setSubdistrictCode]=useState("");
   const {t}=useTranslation("global");
   const navigate = useNavigate();
@@ -24,6 +24,20 @@ const AddHealthWorkerComponent = () => {
     SupervisorService.getVillage()
       .then((response) => {
         setVillage(response.data);
+        // console.log("resp.data",response.data.sort());
+
+        function sortDataBy (data, byKey){
+          let sortedData;
+            sortedData = data.sort(function(a,b){
+              let x = a.name;
+              let y = b.name;
+              if(x>y){return 1;}
+              if(x<y){return -1;}
+              return 0;
+            });
+          return sortedData;
+        }
+        sortDataBy(response.data, 'name')
       })
       .catch((error) => {
         console.error("Error fetching district options:", error);
@@ -39,11 +53,13 @@ const AddHealthWorkerComponent = () => {
       firstname: firstname,
       lastname: lastname,
       gender: gender,
-      villageCode:villageCode
+      villagecode:{
+        code:villagecode
+      }
     };
     try {
       // Using axios for the POST request
-      console.log("doctor data", healthWorkerData);
+      console.log("healthWorker data", healthWorkerData);
           const response = SupervisorService.addHealthWorker(healthWorkerData);
           if (response) {
             // Handle successful password change, e.g., display a success message
@@ -66,14 +82,14 @@ const AddHealthWorkerComponent = () => {
       <Header />
 
       <div className="doctor-container">
-        <h4>{t("addDoctorSupervisor.Fill The Doctor Information")} :</h4>
+        <h4>{t("addHealthWorker.Fill The HealthWorker Information")} :</h4>
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="district">{t("addHealthWorker.Village")}:</label>
               <select
                 id="village"
-                value={village}
+                value={villagecode}
                 onChange={(e) => setVillageCode(e.target.value)}
               >
                 <option value="">{t("addHealthWorker.Select")}</option>
@@ -121,7 +137,7 @@ const AddHealthWorkerComponent = () => {
               />
             </div>
             <div>
-              <label>Gender:</label>
+              <label>{t('addHealthWorker.Gender')}:</label>
               <br />
               <div className="ic">
                 <input
@@ -132,7 +148,7 @@ const AddHealthWorkerComponent = () => {
                   checked={gender === "Male"}
                   onChange={(e) => setGender(e.target.value)}
                 />
-                <label htmlFor="male">Male</label>
+                <label htmlFor="male">{t('addHealthWorker.Male')}</label>
 
                 <input
                   type="radio"
@@ -142,7 +158,7 @@ const AddHealthWorkerComponent = () => {
                   checked={gender === "Female"}
                   onChange={(e) => setGender(e.target.value)}
                 />
-                <label htmlFor="female">Female</label>
+                <label htmlFor="female">{t('addHealthWorker.Female')}</label>
               </div>
             </div>
 

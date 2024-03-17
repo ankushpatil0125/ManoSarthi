@@ -13,8 +13,9 @@ import SupervisorHomePage from "./components/HomePage/SupervisorHomepage";
 import AdminOperation from "./components/Actors/AdminOperation";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import ErrorPage from "./components/Error/ErrorPage";
-import UpdateDoctor from "./components/Actors/UpdateDoctor";
+import UpdateDoctor from "./components/Doctor/UpdateDoctor";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker"
+import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
 const App = () => {
   return (
     <Router>
@@ -118,7 +119,7 @@ const App = () => {
             path="/update-healthworker"
             element={
               // <PrivateRoute type="update-healthworker">
-                <AdminOperation />
+                <UpdateHealthWorker />
               // </PrivateRoute>
             }
           />

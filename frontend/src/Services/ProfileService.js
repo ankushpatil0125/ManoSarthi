@@ -4,7 +4,7 @@ import { getUserId } from "../utils/Constants";
 const ProfileService = {
     getDoctorData : async () => {
         try {
-          const response = await axios.get(BASE_URL + "doctor/viewdetails?doctorid="+getUserId(), {
+          const response = await axios.get(BASE_URL + "doctor/viewdetails", {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${getToken()}`,
@@ -20,7 +20,7 @@ const ProfileService = {
 
       getSupervisorData : async () => {
         try {
-          const response = await axios.get(BASE_URL + "supervisor/viewdetails?supervisorid="+getUserId(), {
+          const response = await axios.get(BASE_URL + "supervisor/viewdetails", {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${getToken()}`,
