@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SupervisorService from "../../Services/SupervisorService";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const ViewHealthWorker = ({ allHealWorker,village }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageHealthWorker, setCurrentPageHealthWorker] = useState(0);
   const [data, setData] = useState([]);
   const {t} = useTranslation("global");
+  const navigate = useNavigate();
   useEffect(() => {
     fetchData();
   }, [currentPage, village]); // Refetch data when currentPage or district changes
@@ -34,7 +36,9 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
       console.error("Error fetching doctor details:", error.message);
     }
   };
-
+  const handleUpdate = () =>{
+    navigate("/update")
+  }
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
     setCurrentPageHealthWorker((prevPage) => Math.max(prevPage - 1, 0));
@@ -74,7 +78,7 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
                   {healthworker.villagecode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  <button onClick={handleUpdate} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Update
                   </button>
                 </td>

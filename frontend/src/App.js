@@ -16,6 +16,7 @@ import ErrorPage from "./components/Error/ErrorPage";
 import UpdateDoctor from "./components/Doctor/UpdateDoctor";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker"
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
+import UpdateHealthWorkerpage from "./components/UpdateHealthWorkerpage";
 const App = () => {
   return (
     <Router>
@@ -136,6 +137,14 @@ const App = () => {
             element={
               // <PrivateRoute type="show-activity-healthworker">
                 <AdminOperation />
+              // </PrivateRoute>
+            }
+          />
+          <Route
+            path="/update"
+            element={
+              // <PrivateRoute type="show-activity-healthworker">
+                <UpdateHealthWorkerpage/>
               // </PrivateRoute>
             }
           />
