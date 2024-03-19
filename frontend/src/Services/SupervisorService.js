@@ -26,7 +26,7 @@ const SupervisorService = {
   },
   getVillage: async () => {
     try {
-      const response = await axios.get(BASE_URL + "supervisor/get-subdistrict-village", {
+      const response = await axios.get(BASE_URL + "supervisor/get-no-worker-subd-village", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,
@@ -44,7 +44,7 @@ const SupervisorService = {
   getAllHealthWorkers: async (pagenumber) => {
     try {
       console.log('before calling getAll')
-      const response = await axios.get(BASE_URL + "admin/healthworker?pagenumber="+pagenumber, {
+      const response = await axios.get(BASE_URL + "supervisor/get-subdistrict-workers?pagenumber="+pagenumber, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,
@@ -61,7 +61,7 @@ const SupervisorService = {
   getAllVillageHealthWorker: async (code,pagenumber) => {
     try {
       
-      const response = await axios.get(BASE_URL + "admin/health/district?districtcode="+code+"&pagenumber="+pagenumber, {
+      const response = await axios.get(BASE_URL + "admin/healthworker/village?villagecode="+code+"&pagenumber="+pagenumber, {
         headers: {
           "Content-Type":"application/json",
           Authorization: `Bearer ${getToken()}`,

@@ -51,7 +51,9 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.HealthWorker Name')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.HealthWorker Firstname')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.HealthWorker Lastname')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.Email')}</th>
               <th className="border border-gray-400 px-4 py-2">{t("UpdateHealthworker.Village")}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.Action')}</th>
             </tr>
@@ -63,7 +65,13 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
                   {healthworker.firstname}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {healthworker.village?.name || "N/A"}
+                  {healthworker.lastname || "N/A"}
+                </td>
+                <td className="border border-gray-400 px-4 py-2">
+                  {healthworker.email || "N/A"}
+                </td>
+                <td className="border border-gray-400 px-4 py-2">
+                  {healthworker.villagecode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

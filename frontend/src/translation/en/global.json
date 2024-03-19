@@ -70,10 +70,12 @@
     "UpdateHealthworker":{
         "Village":"Village",
         "Select":"Select",
-        "HealthWorker Name":"HealthWorker Name",
+        "HealthWorker Firstname":"HealthWorker Firstname",
         "Action":"Action",
         "Next":"Next",
-        "Previous":"Previous"
+        "Previous":"Previous",
+        "Email":"Email",
+        "HealthWorker Lastname":"HealthWorker Lastname"
     },
     "Profile":{
         "Username":"Username",

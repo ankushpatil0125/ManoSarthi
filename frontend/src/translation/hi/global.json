@@ -69,10 +69,12 @@
   "UpdateHealthworker":{
     "Village":"गाँव",
     "Select":"सिलेक्ट",
-    "HealthWorker Name":"स्वास्थ्य कर्मी नाम",
+    "HealthWorker Firstname":"स्वास्थ्य कर्मी पहला नाम",
     "Action":"एक्शन",
     "Next":"आगे",
-    "Previous":"पीछे"
+    "Previous":"पीछे",
+    "Email":"ईमेल",
+    "HealthWorker Lastname":"स्वास्थ्य कर्मी अंतिम नाम"
 },
   "Profile": {
     "Username": "यूजरनेम",
