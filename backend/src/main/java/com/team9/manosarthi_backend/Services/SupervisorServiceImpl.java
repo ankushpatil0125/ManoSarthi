@@ -26,7 +26,6 @@ public class SupervisorServiceImpl implements SupervisorService{
 
     @Override
     public Worker addworker(Worker worker) {
-        System.out.println("Worker-------------"+ worker +"----------------");
         Worker newWorker =  workerRepository.save(worker);
 
 
@@ -34,34 +33,32 @@ public class SupervisorServiceImpl implements SupervisorService{
         User user = new User();
 
         user.setUsername("WORKER" + newWorker.getId());
-        user.setPassword(passwordEncoder.encode("changeme"));
 
-    //        String password=PasswordGeneratorService.generatePassword();
-    //        System.out.println(password);
-    //        user.setPassword(passwordEncoder.encode(password));
+        String password=PasswordGeneratorService.generatePassword();
+        System.out.println(password);
+        user.setPassword(passwordEncoder.encode(password));
 
         user.setRole("ROLE_WORKER");
-//        User newuser = userRepository.save(user);
-        newWorker.setUser(user);
-        workerRepository.save(newWorker);
+        User newuser = userRepository.save(user);
+
 
         //Increase count of worker in village
-        System.out.println("Before newWorker.getVillagecode().getCode()");
-        System.out.println("-------------"+ newWorker +"----------------");
         Optional<Village> village = villageRepository.findById(newWorker.getVillagecode().getCode());
-        System.out.println("After newWorker.getVillagecode().getCode()");
 
 
         village.ifPresent( villagetemp ->{
             villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
             villageRepository.save(villagetemp);
+            newWorker.setVillagecode(villagetemp);
         } );
 
 
+        newWorker.setUser(user);
+        workerRepository.save(newWorker);
 
         //to get password in decoded form
-//        newuser.setPassword(password);
-//        newWorker.setUser(newuser);
+        newuser.setPassword(password);
+        newWorker.setUser(newuser);
         return newWorker;
     }
 

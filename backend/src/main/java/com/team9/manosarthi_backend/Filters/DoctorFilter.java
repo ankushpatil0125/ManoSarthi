@@ -30,7 +30,7 @@ public class DoctorFilter<T> {
         SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept(doctorFilterProperties);
         SimpleBeanPropertyFilter SubDistrictFilter = SimpleBeanPropertyFilter.filterOutAllExcept(subDistrictFilterProperties);
         SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.filterOutAllExcept(userFilterProperties);
-    
+
         FilterProvider filterProvider=new SimpleFilterProvider().addFilter("DoctorJSONFilter",filter)
                 .addFilter("SubDistrictJSONFilter",SubDistrictFilter)
                 .addFilter("UserJSONFilter",userFilter);

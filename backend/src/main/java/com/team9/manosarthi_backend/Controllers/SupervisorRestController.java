@@ -145,7 +145,7 @@ public class SupervisorRestController {
         String password=gotworker.getUser().getPassword();
 
         String subject="Login Credentials for Manosarthi";
-        String msg="Hello "+gotworker.getFirstname() + " " +gotworker.getLastname()+"\nYou are assigned as Health Worker for Manosarthi Scheme. Please login in Manosarthi app with following credentials. "+"\nUsername = "+gotworker.getUser().getUsername()+"\nPassword = "+password+"\nPlease change password after login.";
+        String msg="Hello "+gotworker.getFirstname() + " " +gotworker.getLastname()+"\nYou are assigned as Health Worker for Manosarthi Scheme for  " +gotworker.getVillagecode().getName()+ " Please login in Manosarthi app with following credentials. "+"\nUsername = "+gotworker.getUser().getUsername()+"\nPassword = "+password+"\nPlease change password after login.";
         String to=gotworker.getEmail();
         if(emailService.sendEmail(subject,msg,to)) {
             System.out.println("mail success");
@@ -183,6 +183,7 @@ public class SupervisorRestController {
             String userid = helper.getIDFromToken(token);
 
             List<Worker> workers = supervisorService.getSubWorkers(Integer.parseInt(userid));
+
 
             SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email");
             FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter);
