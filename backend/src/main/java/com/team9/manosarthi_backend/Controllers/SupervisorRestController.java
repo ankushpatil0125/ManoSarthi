@@ -114,9 +114,9 @@ public class SupervisorRestController {
 
 //        mappingJacksonValue.setValue(filterProvider);
         mappingJacksonValue.setFilters(filterProvider);
-        System.out.println(mappingJacksonValue.getValue());
+        //for sending email
         String subject="Login Credentials for Manosarthi";
-        String msg="Hello "+gotworker.getFirstname() + " " +gotworker.getLastname()+"\nYou are assigned as Health Worker for Manosarthi Scheme for " +gotworker.getVillagecode().getName()+ "   Please login in Manosarthi app with following credentials. "+"\nUsername = "+gotworker.getUser().getUsername()+"\nPassword = "+password+"\nPlease change password after login.";
+        String msg="Hello "+gotworker.getFirstname() + " " +gotworker.getLastname()+"\nYou are assigned as Health Worker for Manosarthi Scheme for " +gotworker.getVillagecode().getName()+ "\nPlease login in Manosarthi app with following credentials. "+"\nUsername = "+gotworker.getUser().getUsername()+"\nPassword = "+password+"\nPlease change password after login.";
         String to=gotworker.getEmail();
         if(emailService.sendEmail(subject,msg,to)) {
             System.out.println("mail success");
@@ -156,7 +156,7 @@ public class SupervisorRestController {
 
         Worker worker = supervisorService.getVillWorker(villagecode);
         if (worker != null) {
-            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email");
+            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email","id");
             FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter);
             MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(worker);
             mappingJacksonValue.setFilters(filterProvider);
@@ -166,11 +166,11 @@ public class SupervisorRestController {
         }
     }
 
+    //use same api for reassigning user and updating his profile by giving reassign parameter
     @PostMapping("/updateworker")
-//    public ResponseEntity<String> updateWorker(@RequestBody Worker updatedWorker) {
-    public ResponseEntity<MappingJacksonValue> updateWorker(@RequestBody Worker updatedWorker) {
+    public ResponseEntity<MappingJacksonValue> updateWorker(@RequestBody Worker updatedWorker, @RequestParam ("reassign") Boolean reassign) {
 
-        ResponseEntity<Worker>  responseEntity = supervisorService.updateWorker(updatedWorker);
+        ResponseEntity<Worker>  responseEntity = supervisorService.updateWorker(updatedWorker,reassign);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             Worker updatedworker = responseEntity.getBody();
             SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email","villagecode");
@@ -178,6 +178,17 @@ public class SupervisorRestController {
             FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter",villagefilter);
             MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(updatedworker);
             mappingJacksonValue.setFilters(filterProvider);
+            if(reassign) {
+                //for sending email
+                String subject = "You are reassigned for Manosarthi scheme";
+                String msg = "Hello " + updatedworker.getFirstname() + " " + updatedworker.getLastname() + "\nYou are reassigned as Health Worker for Manosarthi Scheme for " + updatedworker.getVillagecode().getName();
+                String to = updatedworker.getEmail();
+                if (emailService.sendEmail(subject, msg, to)) {
+                    System.out.println("mail success");
+                } else {
+                    System.out.println("mail failed");
+                }
+            }
             return ResponseEntity.ok(mappingJacksonValue);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

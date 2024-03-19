@@ -126,43 +126,48 @@ public class SupervisorServiceImpl implements SupervisorService{
     }
 
     @Override
-    public ResponseEntity<Worker> updateWorker(Worker updatedWorker) {
+    public ResponseEntity<Worker> updateWorker(Worker updatedWorker, Boolean reassign) {
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
-        if(existingWorker!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
+        System.out.println("updated details"+updatedWorker.getFirstname());
+        if(existingWorker!=null)
         {
-            int oldvillagecode=existingWorker.getVillagecode().getCode();
-            Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
-            oldvillage.ifPresent( villagetemp ->{
-                villagetemp.setWorker_count(0);
-                villageRepository.save(villagetemp);
-            } );
-            int newvillagecode=updatedWorker.getVillagecode().getCode();
-            Optional<Village> newvillage=villageRepository.findById(newvillagecode);
-            newvillage.ifPresent( villagetemp ->{
-                villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
-                villageRepository.save(villagetemp);
-            } );
+        //you can update village code only in reassignment
+            if(reassign && updatedWorker.getVillagecode()!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
+            {
+                int oldvillagecode=existingWorker.getVillagecode().getCode();
+                Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
+                oldvillage.ifPresent( villagetemp ->{
+                    villagetemp.setWorker_count(0);
+                    villageRepository.save(villagetemp);
+                } );
+                int newvillagecode=updatedWorker.getVillagecode().getCode();
+                Optional<Village> newvillage=villageRepository.findById(newvillagecode);
+                newvillage.ifPresent( villagetemp ->{
+                    villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
+                    villageRepository.save(villagetemp);
+                    existingWorker.setVillagecode(villagetemp);
+                } );
 
-        }
-
-        if (existingWorker != null) {
-            try {
-                // Copy non-null properties from updatedWorker to existingWorker
-                BeanUtils.copyProperties(existingWorker, updatedWorker);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                // Handle any exceptions
-                e.printStackTrace(); // Print stack trace for simplicity; handle it as needed
             }
-
+            //you can update other fields in update profile
+            else if(!reassign) {
+            //update non null properties
+            if (updatedWorker.getFirstname() != null) {
+                existingWorker.setFirstname(updatedWorker.getFirstname());
+            }
+            if (updatedWorker.getLastname() != null) {
+                existingWorker.setLastname(updatedWorker.getLastname());
+            }
+            if (updatedWorker.getEmail() != null) {
+                existingWorker.setEmail(updatedWorker.getEmail());
+            }
+            }
             // Save the updated worker to the database
             Worker updatedworker= workerRepository.save(existingWorker);
             return ResponseEntity.ok(updatedworker);
 
         } else {
-            // Handle the case where the worker with the provided ID is not found
-            // This could be done by throwing an exception or logging a message
-            // For simplicity, we'll print a message to the console
             System.out.println("Worker not found with ID: " + updatedWorker.getId());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

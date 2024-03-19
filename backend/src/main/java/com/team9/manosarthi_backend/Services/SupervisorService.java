@@ -15,7 +15,7 @@ public interface SupervisorService {
 
     Worker getVillWorker(int vilcode);
 
-    ResponseEntity<Worker> updateWorker(Worker updatedWorker);
+    ResponseEntity<Worker> updateWorker(Worker updatedWorker,Boolean reassign);
 
     List<Village> findSubVillage(int userid);
 
