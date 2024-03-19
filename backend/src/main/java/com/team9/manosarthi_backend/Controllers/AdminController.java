@@ -9,6 +9,7 @@ import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -18,8 +19,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*")
-//@PreAuthorize("hasRole('USER')")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")   
 public class AdminController {
     @Autowired
     private UserService userService;

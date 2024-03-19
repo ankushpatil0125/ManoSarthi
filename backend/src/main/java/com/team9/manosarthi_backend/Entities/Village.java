@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-//@JsonFilter("VillageJSONFilter")
+@JsonFilter("VillageJSONFilter")
 public class Village {
 
     @Id
