@@ -73,7 +73,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/doctor/**").permitAll()
 
 
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("USER")
 //                        .requestMatchers(("/admin/**")).permitAll()
 
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
