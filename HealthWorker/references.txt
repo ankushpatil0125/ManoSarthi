@@ -15,6 +15,7 @@ AsyncStorage => npx expo install @react-native-async-storage/async-storage
 
 
 ****Install NativeWind****
+https://www.nativewind.dev/quick-starts/expo
 1)npm install nativewind
 2)npm install --save-dev tailwindcss@3.3.2
 3)npx tailwindcss init
@@ -40,3 +41,9 @@ module.exports = function(api) {
 *******Slider Box *******
  npm install react-native-image-slider-box
  npm install --save-dev @types/react-native-image-slider-box
+
+
+Table
+npm install react-native-table-component
+npm i react-native-paper
+npm install react-native-elements
