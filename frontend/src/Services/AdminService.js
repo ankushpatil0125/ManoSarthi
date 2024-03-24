@@ -103,7 +103,7 @@ const AdminService = {
       
       const response = await axios.get(BASE_URL + "admin/doctor/district?districtcode="+code+"&pagenumber="+pagenumber, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type":"application/json",
           Authorization: `Bearer ${getToken()}`,
           // withCredentials:false
         },
@@ -132,6 +132,60 @@ const AdminService = {
       throw error;
     }
   },
+
+  getAllSuperVisors: async (pagenumber) => {
+    try {
+      console.log('before calling getAll')
+      const response = await axios.get(BASE_URL + "admin/supervisor?pagenumber="+pagenumber, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      console.log("Doctor list",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+  getAllDistrictSuperVisors: async (code,pagenumber) => {
+    try {
+      
+      const response = await axios.get(BASE_URL + "admin/supervisor/district?districtcode="+code+"&pagenumber="+pagenumber, {
+        headers: {
+          "Content-Type":"application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      console.log("all district doctor",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+  getAllSSuperVisors: async (code) => {
+    try {
+      
+      const response = await axios.get(BASE_URL + "admin/supervisor/subdistrict/?subdistrictcode="+code, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      console.log("all district doctor",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+
+
 
 };
 export default AdminService;

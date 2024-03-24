@@ -9,7 +9,7 @@ import com.team9.manosarthi_backend.Repositories.*;
 import lombok.AllArgsConstructor;
 
 
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,67 +37,82 @@ public class SupervisorServiceImpl implements SupervisorService{
 
     @Override
     public Worker addworker(Worker worker) {
-        Worker newWorker =  workerRepository.save(worker);
 
 
-        //Add user to user database
-        User user = new User();
-
-        user.setUsername("WORKER" + newWorker.getId());
-
-        String password=PasswordGeneratorService.generatePassword();
-        System.out.println(password);
-        user.setPassword(passwordEncoder.encode(password));
-
-        user.setRole("ROLE_WORKER");
-        User newuser = userRepository.save(user);
+        Optional<Village> villageOptional = villageRepository.findById(worker.getVillagecode().getCode());
 
 
-        //Increase count of worker in village
-        Optional<Village> village = villageRepository.findById(newWorker.getVillagecode().getCode());
 
 
-        village.ifPresent( villagetemp ->{
-            villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
-            villageRepository.save(villagetemp);
-            newWorker.setVillagecode(villagetemp);
-        } );
+        Village village = villageOptional.orElseThrow(() -> new RuntimeException("Cannot add worker: Village not found."));
 
 
-        newWorker.setUser(user);
-        workerRepository.save(newWorker);
+        if (village.getSubDistrict().getDoctor_count() > 0) {
+            Worker newWorker = workerRepository.save(worker);
+            //Add user to user database
+            User user = new User();
 
-        //to get password in decoded form
-        newuser.setPassword(password);
-        newWorker.setUser(newuser);
-        return newWorker;
+            user.setUsername("WORKER" + newWorker.getId());
+//        user.setPassword(passwordEncoder.encode("changeme"));
+
+
+            String password=PasswordGeneratorService.generatePassword();
+            System.out.println(password);
+            user.setPassword(passwordEncoder.encode(password));
+
+            user.setRole("ROLE_WORKER");
+            User newuser = userRepository.save(user);
+
+
+            //Increase count of worker in village
+            village.setWorker_count(village.getWorker_count() + 1);
+            villageRepository.save(village);
+            newWorker.setVillagecode(village);
+            newWorker.setUser(newuser);
+
+            workerRepository.save(newWorker);
+
+            //to get password in decoded form
+            newuser.setPassword(password);
+            newWorker.setUser(newuser);
+            return newWorker;
+
+        }
+        else {
+            throw new RuntimeException("Cannot add worker: Doctor count in the subdistrict is not greater than zero.");
+        }
+
+
+
     }
 
     //find villages under subdistrict where worker not assigned
     @Override
-    public List<Village> findNoWorkerSubVillage(int userid)
+    public List<Village> findSubVillage(int userid,boolean assigned)
     {
         Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
         if (supervisor.isPresent()) {
             int subdid = supervisor.get().getSubdistrictcode().getCode();
-            return villageRepository.findnoworkerVillBySubdistrict(subdid);
+            if(!assigned)
+                return villageRepository.findnoworkerVillBySubdistrict(subdid);
+            return villageRepository.findassworkerVillBySubdistrict(subdid);
         } else {
             return Collections.emptyList(); // Return an empty list if supervisor is not found
         }
     }
 
     //find all villages under subdistrict
-    @Override
-    public List<Village> findSubVillage(int userid)
-    {
-        Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
-        if (supervisor.isPresent()) {
-            int subdid = supervisor.get().getSubdistrictcode().getCode();
-            return villageRepository.findVillBySubdistrict(subdid);
-        } else {
-            return Collections.emptyList(); // Return an empty list if supervisor is not found
-        }
-    }
+//    @Override
+//    public List<Village> findSubAllVillage(int userid)
+//    {
+//        Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
+//        if (supervisor.isPresent()) {
+//            int subdid = supervisor.get().getSubdistrictcode().getCode();
+//            return villageRepository.findVillBySubdistrict(subdid);
+//        } else {
+//            return Collections.emptyList(); // Return an empty list if supervisor is not found
+//        }
+//    }
     @Override
     public List<Worker> getSubWorkers(int userid,int pagenumber,int pagesize)
     {
@@ -114,54 +130,44 @@ public class SupervisorServiceImpl implements SupervisorService{
     }
 
     @Override
-    public Worker getVillWorker(int vilcode)
+    public List<Worker> getVillWorker(int vilcode)
     {
-        Optional<Worker> worker=workerRepository.findWorkerByVillage(vilcode);
-        if (worker.isPresent()) {
-            return worker.get();
-        } else {
-            return null;
-        }
+        List<Worker> Workers=workerRepository.findWorkerByVillage(vilcode);
+        return Workers;
     }
 
     @Override
-    public ResponseEntity<Worker> updateWorker(Worker updatedWorker) {
+    public ResponseEntity<Worker> ReassignWorker(Worker updatedWorker) {
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
-        if(existingWorker!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
+        System.out.println("updated details"+updatedWorker.getFirstname());
+        if(existingWorker!=null)
         {
-            int oldvillagecode=existingWorker.getVillagecode().getCode();
-            Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
-            oldvillage.ifPresent( villagetemp ->{
-                villagetemp.setWorker_count(0);
-                villageRepository.save(villagetemp);
-            } );
-            int newvillagecode=updatedWorker.getVillagecode().getCode();
-            Optional<Village> newvillage=villageRepository.findById(newvillagecode);
-            newvillage.ifPresent( villagetemp ->{
-                villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
-                villageRepository.save(villagetemp);
-            } );
+        //you can update village code only in reassignment
+            if(updatedWorker.getVillagecode()!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
+            {
+                int oldvillagecode=existingWorker.getVillagecode().getCode();
+                Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
+                oldvillage.ifPresent( villagetemp ->{
+                    villagetemp.setWorker_count(0);
+                    villageRepository.save(villagetemp);
+                } );
+                int newvillagecode=updatedWorker.getVillagecode().getCode();
+                Optional<Village> newvillage=villageRepository.findById(newvillagecode);
+                newvillage.ifPresent( villagetemp ->{
+                    villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
+                    villageRepository.save(villagetemp);
+                    existingWorker.setVillagecode(villagetemp);
+                } );
 
-        }
-
-        if (existingWorker != null) {
-            try {
-                // Copy non-null properties from updatedWorker to existingWorker
-                BeanUtils.copyProperties(existingWorker, updatedWorker);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                // Handle any exceptions
-                e.printStackTrace(); // Print stack trace for simplicity; handle it as needed
             }
 
             // Save the updated worker to the database
             Worker updatedworker= workerRepository.save(existingWorker);
+
             return ResponseEntity.ok(updatedworker);
 
         } else {
-            // Handle the case where the worker with the provided ID is not found
-            // This could be done by throwing an exception or logging a message
-            // For simplicity, we'll print a message to the console
             System.out.println("Worker not found with ID: " + updatedWorker.getId());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

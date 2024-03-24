@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import "../../css/UpdateDoctor.css";
 import AdminService from "../../Services/AdminService";
 import Header from "../Header/Header";
-import ViewDoctors from "../Doctor/ViewDoctors";
-
+import ViewDoctors from "./ViewDoctors";
+import ViewSupervisor from "../Supervisor/ViewSupervisor";
 const UpdateDoctor = () => {
   const [district, setDistrict] = useState("");
   const [subdistrictcode, setSubDistrictcode] = useState("");
@@ -12,6 +12,7 @@ const UpdateDoctor = () => {
   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
   const [allDoctor, setAllDoctor] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [actor, setActor] = useState("");
   const { t } = useTranslation("global");
 
   useEffect(() => {
@@ -24,46 +25,6 @@ const UpdateDoctor = () => {
         console.error("Error fetching district options:", error);
       });
   }, []);
-
-  // const fetchDoctorData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await AdminService.getAllDoctors();
-  //     setAllDoctor(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching Doctor details:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchDoctorData();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (district) {
-  //     AdminService.getAllDistrictDoctors(district,currentPage)
-  //       .then((response) => {
-  //         setAllDoctor(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching district doctors:", error);
-  //       });
-  //   }
-  // }, [district]);
-
-  // useEffect(() => {
-  //   if (subdistrictcode) {
-  //     AdminService.getAllSubDistrictDoctors(subdistrictcode)
-  //       .then((response) => {
-  //         setAllDoctor(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching subdistrict doctors:", error);
-  //       });
-  //   }
-  // }, [subdistrictcode]);
 
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
@@ -95,15 +56,32 @@ const UpdateDoctor = () => {
         <h4> Choose District and Subdistrict :</h4>
         <div className="form-container">
           <div>
+            <label htmlFor="actor">
+              {t("addDoctorSupervisor.Select Actor to Add")}:
+            </label>
+            <select
+              id="actor"
+              value={actor}
+              onChange={(e) => setActor(e.target.value)}
+            >
+              <option value="">{t("addDoctorSupervisor.Select")}</option>
+              <option value="Doctor">{t("addDoctorSupervisor.Doctor")}</option>
+              <option value="Supervisor">
+                {t("addDoctorSupervisor.Supervisor")}
+              </option>
+            </select>
+          </div>
+          <div>
             <label htmlFor="district">
-              {t("addDoctorSupervisor.District")}:
+              {t("UpdateDoctorSupervisor.District")}:
             </label>
             <select
               id="district"
+              UpdateDoctorSupervisor
               value={district}
               onChange={handleDistrictChange}
             >
-              <option value="">{t("addDoctorSupervisor.Select")}</option>
+              <option value="">Select</option>
               {districtOptions.map((district, index) => (
                 <option key={index} value={district.code}>
                   {district.name}
@@ -113,14 +91,14 @@ const UpdateDoctor = () => {
           </div>
           <div>
             <label htmlFor="subdistrictcode">
-              {t("addDoctorSupervisor.Subdistrict")}:
+              {t("UpdateDoctorSupervisor.Subdistrict")}:
             </label>
             <select
               id="subdistrictcode"
               value={subdistrictcode}
               onChange={handleSubDistrictChange}
             >
-              <option value="">{t("addDoctorSupervisor.Select")}</option>
+              <option value="">Select</option>
               {subDistrictOptions.map((subdistrict, index) => (
                 <option key={index} value={subdistrict.code}>
                   {subdistrict.name}
@@ -130,7 +108,19 @@ const UpdateDoctor = () => {
           </div>
         </div>
       </div>
-      <ViewDoctors allDoctor={allDoctor} district={district} subdistrictcode={subdistrictcode}/>
+      {actor === "Doctor" ? (
+        <ViewDoctors
+          allDoctor={allDoctor}
+          district={district}
+          subdistrictcode={subdistrictcode}
+        />
+      ) : (
+        <ViewSupervisor
+          allDoctor={allDoctor}
+          district={district}
+          subdistrictcode={subdistrictcode}
+        />
+      )}
       {/* <div className="data">
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">

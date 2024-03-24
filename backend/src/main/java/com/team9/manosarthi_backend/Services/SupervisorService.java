@@ -6,17 +6,18 @@ import com.team9.manosarthi_backend.Entities.Worker;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SupervisorService {
     Worker addworker(Worker worker);
-    List<Village> findNoWorkerSubVillage(int userid);
+    List<Village> findSubVillage(int userid,boolean assigned);
 
     List<Worker> getSubWorkers(int userid,int pagenumber, int pagesize);
 
-    Worker getVillWorker(int vilcode);
+    List<Worker> getVillWorker(int vilcode);
 
-    ResponseEntity<Worker> updateWorker(Worker updatedWorker);
+    ResponseEntity<Worker> ReassignWorker(Worker updatedWorker);
 
-    List<Village> findSubVillage(int userid);
+//    List<Village> findSubAllVillage(int userid);
 
 }

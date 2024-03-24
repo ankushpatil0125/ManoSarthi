@@ -3,9 +3,14 @@ package com.team9.manosarthi_backend.Entities;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
+//import javax.validation.Valid;
 
 @Entity
 @Table(name = "doctor")
@@ -21,33 +26,44 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
+    @NotBlank(message = "first_name cannot be blank")
+    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
     @Column(name = "first_name")
     private String firstname;
 
+    @NotBlank(message = "last_name cannot be blank")
+    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
     @Column(name = "last_name")
     private String lastname;
 
-    @Column(name = "email")
+    @Email(message = "Enter valid email")
+    @Column(name = "email",unique = true)
     private String email;
+
 
     @OneToOne(cascade = CascadeType.ALL)        // check for cascade type see all parameters
     @JoinColumn(name = "username")
     private User user;
 
+
     @ManyToOne
     @JoinColumn(name = "subdistrictcode")
     private SubDistrict subdistrictcode;
 
+
     @Column(name = "patient_count")
-    private int patient_count;
+    private int patient_count=0;
+
 
     @Column(name = "gender")
     private String gender;
 
-//    @Column(name = "dob")
-//    private Date dob;
+    @NotNull(message = "DOB cannot be null")
+    @Column(name = "dob")
+    private Date dob;
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active=true;
 
 }

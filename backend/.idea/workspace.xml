@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/devices.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/assert/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/async_hooks/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/buffer/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/child_process/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/cluster/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/console/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/constants/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/crypto/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/dgram/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/diagnostics_channel/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/dns/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/domain/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/events/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/fs/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/fs/promises/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/http/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/http2/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/https/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/inspector/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/module/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/net/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/os/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/path/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/perf_hooks/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/process/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/punycode/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/querystring/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/readline/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/repl/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/stream/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/string_decoder/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/timers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/tls/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/trace_events/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/tty/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/url/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/util/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/v8/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/vm/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/wasi/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/worker_threads/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/externals/zlib/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/polyfill.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/polyfill.native.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/shims/react-native-web/dist/cjs/exports/AppRegistry/AppContainer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/shims/react-native-web/dist/cjs/exports/BackHandler/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/shims/react-native-web/dist/exports/AppRegistry/AppContainer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/metro/shims/react-native-web/dist/exports/BackHandler/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/assets/avatar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/components/Table.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/references.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/screens/Drawer/DashboardScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/screens/Drawer/PrescriptionScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/screens/Drawer/ProfileScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/screens/MissedFollowUpsScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/SupervisorFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/UserFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/WorkerFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/SupervisorFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/UserFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/WorkerFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/components/HealthWorker/UpdateHealthWorker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/components/HealthWorker/viewHealthWorker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/components/Supervisor/ViewSupervisor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/components/UpdateHealthWorkerpage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/css/modal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/navigation/StackNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/navigation/StackNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/DoctorFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/DoctorFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/DoctorRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/DoctorRestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/SupervisorRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/SupervisorRestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Village.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Village.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/DoctorFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/DoctorFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/SupervisorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/SupervisorService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/AdminService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/AdminService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/ProfileService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/ProfileService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/SupervisorService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/SupervisorService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/ProfileComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/ProfileComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/UpdateDoctor.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Doctor/UpdateDoctor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Doctor/ViewDoctors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Doctor/ViewDoctors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Supervisor/AddHealthWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Supervisor/AddHealthWorker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/translation/en/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/translation/en/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/translation/hi/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/translation/hi/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2dooJiisiNFfQdy3aF2Evy3Vwad" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging Manasi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="" />
+      <created>1710683728553</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710683728553</updated>
+      <workItem from="1710683734148" duration="3951000" />
+      <workItem from="1710771361562" duration="8857000" />
+      <workItem from="1710855553504" duration="12550000" />
+      <workItem from="1711012582332" duration="8510000" />
+      <workItem from="1711032513409" duration="632000" />
+      <workItem from="1711033223467" duration="730000" />
+      <workItem from="1711037816116" duration="1141000" />
+      <workItem from="1711041884720" duration="3606000" />
+      <workItem from="1711110312690" duration="11334000" />
+      <workItem from="1711261958750" duration="12063000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
