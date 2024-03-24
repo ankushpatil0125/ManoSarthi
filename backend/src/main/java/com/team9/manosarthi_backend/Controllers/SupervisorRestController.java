@@ -12,7 +12,7 @@ import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.Worker;
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
-import com.team9.manosarthi_backend.security.JwtHelper;
+import com.team9.manosarthi_backend.securit y.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
