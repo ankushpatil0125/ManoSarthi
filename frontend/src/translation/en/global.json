@@ -44,7 +44,7 @@
     "addHealthWorker":{
         "Doctor":"Doctor",
         "Supervisor":"Supervisor",
-        "Fill The Doctor Information":"Fill The Doctor Information",
+        "Fill The HealthWorker Information":"Fill The HealthWorker Information",
         "Select Actor to Add":"Select Actor to Add",
         "Select":"Select",
         "Village":"Village",
@@ -52,10 +52,33 @@
         "First Name":"First Name",
         "Last Name":"Last Name",
         "Email":"Email",
-        "ADD":"ADD"
+        "ADD":"ADD",
+        "Gender":"Gender",
+        "Male": "Male",
+        "Female": "Female"
+    },
+    "UpdateDoctorSupervisor":{
+        "District":"District",
+        "Subdistrict":"Subdistrict",
+        "Select":"Select",
+        "Doctor Name":"Doctor Name",
+        "Action":"Action",
+        "Next":"Next",
+        "Previous":"Previous"
+
+    },
+    "UpdateHealthworker":{
+        "Village":"Village",
+        "Select":"Select",
+        "HealthWorker Firstname":"HealthWorker Firstname",
+        "Action":"Action",
+        "Next":"Next",
+        "Previous":"Previous",
+        "Email":"Email",
+        "HealthWorker Lastname":"HealthWorker Lastname"
     },
     "Profile":{
-        "ID":"ID",
+        "Username":"Username",
         "First Name":"First Name",
         "Last Name":"Last Name",
         "Email":"Email",

@@ -42,8 +42,8 @@ const LoginScreen = () => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
-      <View>
-        <Image
+      <View >
+        <Image 
           style={{ width: 150, height: 150 }}
           source={require("../assets/logo.png")}
         />
