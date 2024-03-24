@@ -48,6 +48,6 @@ public class Worker {
     private Date dob;
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active=true;
 
 }

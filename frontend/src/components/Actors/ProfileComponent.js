@@ -20,10 +20,11 @@ const Profile = () => {
         if(localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") {
           const data = await ProfileService.getDoctorData();
           setUser(data);
+          console.log(data);
+    
         }
         else{
           const data = await ProfileService.getSupervisorData();
-          console.log(data);
           setUser(data);
         }
       } catch (error) {
@@ -42,13 +43,13 @@ const Profile = () => {
         <div className="body">
         <div className="key-title" >
           <p style={{textAlign: "center", fontWeight: "bold", fontSize: "24px"}}>
-            {t("Profile.Supervisor Profile")}
+            {localStorage.getItem("ROLE")==="[ROLE_DOCTOR]"?t("Profile.Doctor Profile"):t("Profile.Supervisor Profile")}
           </p>
           </div>
           <p>
-            <span className="key">{t("Profile.ID")} :</span>
+            <span className="key">{t("Profile.Username")} :</span>
             <span className="gap"></span>
-            <span className="value">{user?.id}</span>
+            <span className="value">{user?.user?.username}</span>
           </p>
           <p>
             <span className="key">{t("Profile.First Name")} :</span>
