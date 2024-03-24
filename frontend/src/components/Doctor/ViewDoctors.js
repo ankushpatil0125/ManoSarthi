@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL, getToken } from "../../utils/Constants";
 import AdminService from "../../Services/AdminService";
+import { useTranslation } from "react-i18next";
 
 const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
-
+  const {t} = useTranslation("global");
   useEffect(() => {
     fetchData();
   }, [currentPage, district]); // Refetch data when currentPage or district changes
@@ -63,10 +64,10 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">Doctor Name</th>
-              <th className="border border-gray-400 px-4 py-2">District</th>
-              <th className="border border-gray-400 px-4 py-2">Subdistrict</th>
-              <th className="border border-gray-400 px-4 py-2">Action</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Doctor Name')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.District')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Subdistrict')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Action')}</th>
             </tr>
           </thead>
           <tbody>
@@ -97,7 +98,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
-          Previous
+          {t('UpdateDoctorSupervisor.Previous')}
         </button>
 
         <button
@@ -105,7 +106,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
-          Next
+          {t('UpdateDoctorSupervisor.Next')}
         </button>
       </div>
     </div>

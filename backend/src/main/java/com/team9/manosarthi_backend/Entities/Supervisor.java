@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
+@JsonFilter("SupervisorJSONFilter")
 public class Supervisor {
 
     @Id

@@ -38,10 +38,14 @@ public class SupervisorServiceImpl implements SupervisorService{
     @Override
     public Worker addworker(Worker worker) {
 
+
         Optional<Village> villageOptional = villageRepository.findById(worker.getVillagecode().getCode());
 
 
+
+
         Village village = villageOptional.orElseThrow(() -> new RuntimeException("Cannot add worker: Village not found."));
+
 
         if (village.getSubDistrict().getDoctor_count() > 0) {
             Worker newWorker = workerRepository.save(worker);
@@ -51,12 +55,14 @@ public class SupervisorServiceImpl implements SupervisorService{
             user.setUsername("WORKER" + newWorker.getId());
 //        user.setPassword(passwordEncoder.encode("changeme"));
 
+
             String password=PasswordGeneratorService.generatePassword();
             System.out.println(password);
             user.setPassword(passwordEncoder.encode(password));
 
             user.setRole("ROLE_WORKER");
             User newuser = userRepository.save(user);
+
 
             //Increase count of worker in village
             village.setWorker_count(village.getWorker_count() + 1);
@@ -75,6 +81,7 @@ public class SupervisorServiceImpl implements SupervisorService{
         else {
             throw new RuntimeException("Cannot add worker: Doctor count in the subdistrict is not greater than zero.");
         }
+
 
 
     }
