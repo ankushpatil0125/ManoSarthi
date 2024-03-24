@@ -1,24 +1,45 @@
 import React, { useEffect, useState } from "react";
 import SupervisorService from "../../Services/SupervisorService";
+import "../../css/modal.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-const ViewHealthWorker = ({ allHealWorker,village }) => {
+const ViewHealthWorker = ({ allHealWorker, village }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageHealthWorker, setCurrentPageHealthWorker] = useState(0);
+  const [villageOptions, setVillageOptions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedVillage, setSelectedVillage] = useState("");
+  const [selectedHealthWorkerId, setSelectedHealthWorkerId] = useState(null);
+
+
   const [data, setData] = useState([]);
-  const {t} = useTranslation("global");
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
   useEffect(() => {
     fetchData();
   }, [currentPage, village]); // Refetch data when currentPage or district changes
 
+  useEffect(() => {
+    if (showModal) {
+      // Fetch village options
+      SupervisorService.getVillageWithNoWorker()
+        .then((response) => {
+          setVillageOptions(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching villages options:", error);
+        });
+    }
+  }, [showModal]);
+
   const fetchData = async () => {
     try {
       console.log("inside fetchdata function");
       if (village) {
+        console.log("Village: ", village);
         // setCurrentPage(0)
-        SupervisorService.getAllVillageHealthWorker(village, currentPageHealthWorker)
+        SupervisorService.getAllVillageHealthWorker(village)
           .then((response) => {
             setData(response.data);
           })
@@ -36,9 +57,32 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
       console.error("Error fetching doctor details:", error.message);
     }
   };
-  const handleUpdate = () =>{
-    navigate("/update")
-  }
+
+  // const handleUpdate = () =>{
+  //   navigate("/update")
+  // }
+
+  const handleUpdate = (healthWorkerId) => {
+    setShowModal(true);
+    setSelectedHealthWorkerId(healthWorkerId);
+
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleUpdateWorker = () => {
+    // Call update worker API with selected village code
+    console.log("Selected Village:", selectedVillage);
+    console.log("HealthWorker ID:", selectedHealthWorkerId);
+
+    SupervisorService.updateHealthWorker(selectedVillage, data.id);
+
+    // Your update worker API call here
+    setShowModal(false); // Close modal after updating
+  };
+
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
     setCurrentPageHealthWorker((prevPage) => Math.max(prevPage - 1, 0));
@@ -55,11 +99,21 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.HealthWorker Firstname')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.HealthWorker Lastname')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.Email')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t("UpdateHealthworker.Village")}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateHealthworker.Action')}</th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateHealthworker.HealthWorker Firstname")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateHealthworker.HealthWorker Lastname")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateHealthworker.Email")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateHealthworker.Village")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateHealthworker.Action")}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -78,7 +132,10 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
                   {healthworker.villagecode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button onClick={handleUpdate} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  <button
+                    onClick={handleUpdate(healthworker.id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
                     Update
                   </button>
                 </td>
@@ -104,6 +161,33 @@ const ViewHealthWorker = ({ allHealWorker,village }) => {
           Next
         </button>
       </div>
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleCloseModal}>
+              &times;
+            </span>
+            <h2>Select Village for Reassignment:</h2>
+            <select
+              value={selectedVillage}
+              onChange={(e) => setSelectedVillage(e.target.value)}
+            >
+              <option value="">Select Village</option>
+              {villageOptions.map((village) => (
+                <option key={village.id} value={village.code}>
+                  {village.name}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={handleUpdateWorker}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

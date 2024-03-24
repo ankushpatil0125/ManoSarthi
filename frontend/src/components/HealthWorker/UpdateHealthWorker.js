@@ -7,16 +7,16 @@ import SupervisorService from "../../Services/SupervisorService";
 
 const UpdateHealthWorker = () => {
   const [village, setVillage] = useState("");
-//   const [subdistrictcode, setSubDistrictcode] = useState("");
+  //   const [subdistrictcode, setSubDistrictcode] = useState("");
   const [villageOptions, setVillageOptions] = useState([]);
-//   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
+  //   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
   const [allHealWorker, setAllHealthWorker] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("global");
 
   useEffect(() => {
     // Fetch district options
-    SupervisorService.getVillage()
+    SupervisorService.getVillageWithWorker()
       .then((response) => {
         setVillageOptions(response.data);
       })
@@ -30,7 +30,6 @@ const UpdateHealthWorker = () => {
     setVillage(selectedVillage);
   };
 
-
   return (
     <div>
       <Header />
@@ -39,14 +38,8 @@ const UpdateHealthWorker = () => {
         <h4> Choose Village:</h4>
         <div className="form-container">
           <div>
-            <label htmlFor="village">
-              {t("UpdateHealthworker.Village")}:
-            </label>
-            <select
-              id="village"
-              value={village}
-              onChange={handleVillageChange}
-            >
+            <label htmlFor="village">{t("UpdateHealthworker.Village")}:</label>
+            <select id="village" value={village} onChange={handleVillageChange}>
               <option value="">Select</option>
               {villageOptions.map((village, index) => (
                 <option key={index} value={village.code}>
@@ -55,10 +48,9 @@ const UpdateHealthWorker = () => {
               ))}
             </select>
           </div>
-          
         </div>
       </div>
-      <ViewHealthWorker allHealWorker={allHealWorker} village={village}/>
+      <ViewHealthWorker allHealWorker={allHealWorker} village={village} />
     </div>
   );
 };

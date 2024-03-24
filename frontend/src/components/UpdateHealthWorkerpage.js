@@ -6,7 +6,7 @@ const UpdateHealthWorkerpage = () => {
   const [villageOptions,setVillageOptions] = useState([]);
   useEffect(() => {
     // Fetch district options
-    SupervisorService.getVillage()
+    SupervisorService.getVillageWithNoWorker()
       .then((response) => {
         setVillageOptions(response.data);
       })

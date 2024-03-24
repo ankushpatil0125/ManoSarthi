@@ -21,7 +21,7 @@ const AddHealthWorkerComponent = () => {
 
   useEffect(() => {
     // Fetch district options
-    SupervisorService.getVillage()
+    SupervisorService.getVillageWithNoWorker()
       .then((response) => {
         setVillage(response.data);
         // console.log("resp.data",response.data.sort());
