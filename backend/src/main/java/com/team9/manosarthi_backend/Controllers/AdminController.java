@@ -4,6 +4,7 @@ import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
+import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('USER')")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")   
 public class AdminController {
     @Autowired
     private UserService userService;
@@ -137,9 +137,25 @@ public class AdminController {
     }
 
     @PostMapping("/supervisor")
-    public Supervisor addSupervisor(@RequestBody Supervisor supervisor){
+    public MappingJacksonValue addSupervisor(@RequestBody Supervisor supervisor){
         Supervisor sup =  adminService.addSupervisor(supervisor);
-        return sup;
+
+        Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("firstname");
+        supervisorFilterProperties.add("lastname");
+        supervisorFilterProperties.add("email");
+        supervisorFilterProperties.add("subdistrictcode");
+
+
+
+        Set<String> subDistrictFilterProperties = new HashSet<>();
+        subDistrictFilterProperties.add("code");
+        subDistrictFilterProperties.add("name");
+        subDistrictFilterProperties.add("district");
+
+        SupervisorFilter<Supervisor> supervisorFilter = new SupervisorFilter<>(sup);
+
+        return supervisorFilter.getSupervisorrFilter(supervisorFilterProperties,subDistrictFilterProperties);
     }
 
 

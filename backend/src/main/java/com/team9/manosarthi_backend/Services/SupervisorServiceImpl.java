@@ -36,7 +36,6 @@ public class SupervisorServiceImpl implements SupervisorService{
 
     @Override
     public Worker addworker(Worker worker) {
-
         Worker newWorker =  workerRepository.save(worker);
 
 
@@ -44,7 +43,6 @@ public class SupervisorServiceImpl implements SupervisorService{
         User user = new User();
 
         user.setUsername("WORKER" + newWorker.getId());
-//        user.setPassword(passwordEncoder.encode("changeme"));
 
         String password=PasswordGeneratorService.generatePassword();
         System.out.println(password);
@@ -52,6 +50,7 @@ public class SupervisorServiceImpl implements SupervisorService{
 
         user.setRole("ROLE_WORKER");
         User newuser = userRepository.save(user);
+
 
         //Increase count of worker in village
         Optional<Village> village = villageRepository.findById(newWorker.getVillagecode().getCode());
@@ -63,8 +62,8 @@ public class SupervisorServiceImpl implements SupervisorService{
             newWorker.setVillagecode(villagetemp);
         } );
 
-        newWorker.setUser(newuser);
 
+        newWorker.setUser(user);
         workerRepository.save(newWorker);
 
         //to get password in decoded form
