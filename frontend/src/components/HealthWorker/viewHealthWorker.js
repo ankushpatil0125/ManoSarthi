@@ -41,6 +41,9 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
         // setCurrentPage(0)
         SupervisorService.getAllVillageHealthWorker(village)
           .then((response) => {
+            console.log("VillageVVV: ", response.data);
+            data.push( response.data)
+
             setData(response.data);
           })
           .catch((error) => {
@@ -65,7 +68,6 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
   const handleUpdate = (healthWorkerId) => {
     setShowModal(true);
     setSelectedHealthWorkerId(healthWorkerId);
-
   };
 
   const handleCloseModal = () => {
@@ -77,7 +79,14 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
     console.log("Selected Village:", selectedVillage);
     console.log("HealthWorker ID:", selectedHealthWorkerId);
 
-    SupervisorService.updateHealthWorker(selectedVillage, data.id);
+    const reasignHealthWorker = {
+      id: selectedHealthWorkerId,
+      villagecode: {
+        code: selectedVillage,
+      },
+    };
+
+    SupervisorService.updateHealthWorker(reasignHealthWorker);
 
     // Your update worker API call here
     setShowModal(false); // Close modal after updating
@@ -133,7 +142,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   <button
-                    onClick={handleUpdate(healthworker.id)}
+                    onClick={() => handleUpdate(healthworker.id)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   >
                     Update

@@ -114,16 +114,20 @@ const SupervisorService = {
       throw error;
     }
   },
-  updateHealthWorker: async (userId, villagecode) => {
+  updateHealthWorker: async (reasignHealthWorker) => {
     // const token = getToken();
     // console.log("data afsd",healthWorkerData)
     try {
-      const response = await axios.post(BASE_URL + "supervisor/updateworker", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
+      const response = await axios.put(
+        BASE_URL + "supervisor/reassignworker",
+        reasignHealthWorker,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
       return response;
     } catch (error) {
       console.error("Error Adding Doctor:", error);
