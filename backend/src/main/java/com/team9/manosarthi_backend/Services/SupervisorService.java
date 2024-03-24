@@ -6,6 +6,7 @@ import com.team9.manosarthi_backend.Entities.Worker;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SupervisorService {
     Worker addworker(Worker worker);
@@ -13,7 +14,7 @@ public interface SupervisorService {
 
     List<Worker> getSubWorkers(int userid,int pagenumber, int pagesize);
 
-    Worker getVillWorker(int vilcode);
+    List<Worker> getVillWorker(int vilcode);
 
     ResponseEntity<Worker> ReassignWorker(Worker updatedWorker);
 

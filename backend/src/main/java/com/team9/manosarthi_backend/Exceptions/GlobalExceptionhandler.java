@@ -43,4 +43,9 @@ public class GlobalExceptionhandler {
         String errorMessage = "Error: " + "You are trying to save an entity that references another entity which hasn't been saved yet\n" +ex.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        String errorMessage = "An unexpected error occurred: " + ex.getMessage();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+    }
 }

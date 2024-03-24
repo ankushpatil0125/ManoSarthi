@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 //import javax.validation.Valid;
 
 @Entity
@@ -38,7 +38,7 @@ public class Doctor {
     private String lastname;
 
     @Email(message = "Enter valid email")
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
 
@@ -60,7 +60,7 @@ public class Doctor {
     @Column(name = "gender")
     private String gender;
 
-    @NotBlank(message = "DOB cannot be blank")
+    @NotNull(message = "DOB cannot be null")
     @Column(name = "dob")
     private Date dob;
 

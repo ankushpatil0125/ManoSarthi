@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -37,40 +38,45 @@ public class SupervisorServiceImpl implements SupervisorService{
     @Override
     public Worker addworker(Worker worker) {
 
-        Worker newWorker =  workerRepository.save(worker);
+        Optional<Village> villageOptional = villageRepository.findById(worker.getVillagecode().getCode());
 
 
-        //Add user to user database
-        User user = new User();
+        Village village = villageOptional.orElseThrow(() -> new RuntimeException("Cannot add worker: Village not found."));
 
-        user.setUsername("WORKER" + newWorker.getId());
+        if (village.getSubDistrict().getDoctor_count() > 0) {
+            Worker newWorker = workerRepository.save(worker);
+            //Add user to user database
+            User user = new User();
+
+            user.setUsername("WORKER" + newWorker.getId());
 //        user.setPassword(passwordEncoder.encode("changeme"));
 
-        String password=PasswordGeneratorService.generatePassword();
-        System.out.println(password);
-        user.setPassword(passwordEncoder.encode(password));
+            String password=PasswordGeneratorService.generatePassword();
+            System.out.println(password);
+            user.setPassword(passwordEncoder.encode(password));
 
-        user.setRole("ROLE_WORKER");
-        User newuser = userRepository.save(user);
+            user.setRole("ROLE_WORKER");
+            User newuser = userRepository.save(user);
 
-        //Increase count of worker in village
-        Optional<Village> village = villageRepository.findById(newWorker.getVillagecode().getCode());
+            //Increase count of worker in village
+            village.setWorker_count(village.getWorker_count() + 1);
+            villageRepository.save(village);
+            newWorker.setVillagecode(village);
+            newWorker.setUser(newuser);
+
+            workerRepository.save(newWorker);
+
+            //to get password in decoded form
+            newuser.setPassword(password);
+            newWorker.setUser(newuser);
+            return newWorker;
+
+        }
+        else {
+            throw new RuntimeException("Cannot add worker: Doctor count in the subdistrict is not greater than zero.");
+        }
 
 
-        village.ifPresent( villagetemp ->{
-            villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
-            villageRepository.save(villagetemp);
-            newWorker.setVillagecode(villagetemp);
-        } );
-
-        newWorker.setUser(newuser);
-
-        workerRepository.save(newWorker);
-
-        //to get password in decoded form
-        newuser.setPassword(password);
-        newWorker.setUser(newuser);
-        return newWorker;
     }
 
     //find villages under subdistrict where worker not assigned
@@ -117,14 +123,10 @@ public class SupervisorServiceImpl implements SupervisorService{
     }
 
     @Override
-    public Worker getVillWorker(int vilcode)
+    public List<Worker> getVillWorker(int vilcode)
     {
-        Optional<Worker> worker=workerRepository.findWorkerByVillage(vilcode);
-        if (worker.isPresent()) {
-            return worker.get();
-        } else {
-            return null;
-        }
+        List<Worker> Workers=workerRepository.findWorkerByVillage(vilcode);
+        return Workers;
     }
 
     @Override
@@ -155,6 +157,7 @@ public class SupervisorServiceImpl implements SupervisorService{
 
             // Save the updated worker to the database
             Worker updatedworker= workerRepository.save(existingWorker);
+
             return ResponseEntity.ok(updatedworker);
 
         } else {

@@ -110,38 +110,43 @@ public class SupervisorRestController {
 //        }
 //    }
     @PostMapping("/addworker")
-    public MappingJacksonValue addWorker(@Valid @RequestBody Worker worker, BindingResult bindingresult){
-        if(bindingresult.hasErrors())
-        {
-            System.out.println(bindingresult);
-        }
+    public MappingJacksonValue addWorker(@Valid @RequestBody Worker worker) throws Exception{
+
         System.out.println("worker details"+worker.toString());
-        Worker gotworker =  supervisorService.addworker(worker);
-//        return gotworker;
-        // Replace the actual password with a fixed string "changeme"
-//        gotworker.getUser().setPassword("changeme");
-        String password=gotworker.getUser().getPassword();
-        SimpleBeanPropertyFilter workerfilter= SimpleBeanPropertyFilter.filterOutAllExcept("firstname","lastname","email","id");
+
+            Worker gotworker = supervisorService.addworker(worker);
+            String password=gotworker.getUser().getPassword();
+            SimpleBeanPropertyFilter workerfilter= SimpleBeanPropertyFilter.filterOutAllExcept("firstname","lastname","email","id");
 //        SimpleBeanPropertyFilter userfilter= SimpleBeanPropertyFilter.filterOutAllExcept("username","password");
 //        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("WorkerJSONFilter",workerfilter).addFilter("UserJSONFilter",userfilter);
-        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("WorkerJSONFilter",workerfilter);
-        MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(gotworker);
+            FilterProvider filterProvider=new SimpleFilterProvider().addFilter("WorkerJSONFilter",workerfilter);
+            MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(gotworker);
 
 
 //        mappingJacksonValue.setValue(filterProvider);
-        mappingJacksonValue.setFilters(filterProvider);
-        //for sending email
-        String subject="Login Credentials for Manosarthi";
-        String msg="Hello "+gotworker.getFirstname() + " " +gotworker.getLastname()+"\nYou are assigned as Health Worker for Manosarthi Scheme for " +gotworker.getVillagecode().getName()+ "\nPlease login in Manosarthi app with following credentials. "+"\nUsername = "+gotworker.getUser().getUsername()+"\nPassword = "+password+"\nPlease change password after login.";
-        String to=gotworker.getEmail();
-        if(emailService.sendEmail(subject,msg,to)) {
-            System.out.println("mail success");
-        }
-        else
-        {
-            System.out.println("mail failed");
-        }
-        return mappingJacksonValue;
+            mappingJacksonValue.setFilters(filterProvider);
+            //for sending email
+            String subject="Login Credentials for Manosarthi";
+            String msg="Hello "+gotworker.getFirstname() + " " +gotworker.getLastname()+"\nYou are assigned as Health Worker for Manosarthi Scheme for " +gotworker.getVillagecode().getName()+ "\nPlease login in Manosarthi app with following credentials. "+"\nUsername = "+gotworker.getUser().getUsername()+"\nPassword = "+password+"\nPlease change password after login.";
+            String to=gotworker.getEmail();
+            if(emailService.sendEmail(subject,msg,to)) {
+                System.out.println("mail success");
+            }
+            else
+            {
+                System.out.println("mail failed");
+            }
+            return mappingJacksonValue;
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//            return new MappingJacksonValue(Collections.emptyList());
+//        }
+
+
+
+
     }
 
     @GetMapping("/get-subdistrict-workers")
@@ -157,7 +162,7 @@ public class SupervisorRestController {
 
             SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email","villagecode","id");
             SimpleBeanPropertyFilter VillageFilter = SimpleBeanPropertyFilter.filterOutAllExcept("name");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter",VillageFilter);;
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter",VillageFilter);
             MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(workers);
             mappingJacksonValue.setFilters(filterProvider);
             return mappingJacksonValue;
@@ -170,10 +175,11 @@ public class SupervisorRestController {
     @GetMapping("/get-village-worker")
     public MappingJacksonValue getVillageWorker(@RequestParam ("villagecode") Integer villagecode){
 
-        Worker worker = supervisorService.getVillWorker(villagecode);
+        List<Worker> worker = supervisorService.getVillWorker(villagecode);
         if (worker != null) {
-            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email","id");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter);
+            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email","id","villagecode");
+            SimpleBeanPropertyFilter VillageFilter = SimpleBeanPropertyFilter.filterOutAllExcept("name");
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter",VillageFilter);;
             MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(worker);
             mappingJacksonValue.setFilters(filterProvider);
             return mappingJacksonValue;
@@ -183,7 +189,7 @@ public class SupervisorRestController {
     }
 
     //For reassigning worker to another village
-    @PostMapping("/reassignworker")
+    @PutMapping("/reassignworker")
     public ResponseEntity<MappingJacksonValue> ReassignWorker(@RequestBody Worker updatedWorker) {
 
         ResponseEntity<Worker>  responseEntity = supervisorService.ReassignWorker(updatedWorker);
@@ -196,6 +202,7 @@ public class SupervisorRestController {
             mappingJacksonValue.setFilters(filterProvider);
 
                 //for sending email
+
                 String subject = "You are reassigned for Manosarthi scheme";
                 String msg = "Hello " + updatedworker.getFirstname() + " " + updatedworker.getLastname() + "\nYou are reassigned as Health Worker for Manosarthi Scheme for " + updatedworker.getVillagecode().getName();
                 String to = updatedworker.getEmail();
