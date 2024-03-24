@@ -9,7 +9,7 @@ import com.team9.manosarthi_backend.Repositories.*;
 import lombok.AllArgsConstructor;
 
 
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -75,29 +75,31 @@ public class SupervisorServiceImpl implements SupervisorService{
 
     //find villages under subdistrict where worker not assigned
     @Override
-    public List<Village> findNoWorkerSubVillage(int userid)
+    public List<Village> findSubVillage(int userid,boolean assigned)
     {
         Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
         if (supervisor.isPresent()) {
             int subdid = supervisor.get().getSubdistrictcode().getCode();
-            return villageRepository.findnoworkerVillBySubdistrict(subdid);
+            if(!assigned)
+                return villageRepository.findnoworkerVillBySubdistrict(subdid);
+            return villageRepository.findassworkerVillBySubdistrict(subdid);
         } else {
             return Collections.emptyList(); // Return an empty list if supervisor is not found
         }
     }
 
     //find all villages under subdistrict
-    @Override
-    public List<Village> findSubVillage(int userid)
-    {
-        Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
-        if (supervisor.isPresent()) {
-            int subdid = supervisor.get().getSubdistrictcode().getCode();
-            return villageRepository.findVillBySubdistrict(subdid);
-        } else {
-            return Collections.emptyList(); // Return an empty list if supervisor is not found
-        }
-    }
+//    @Override
+//    public List<Village> findSubAllVillage(int userid)
+//    {
+//        Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
+//        if (supervisor.isPresent()) {
+//            int subdid = supervisor.get().getSubdistrictcode().getCode();
+//            return villageRepository.findVillBySubdistrict(subdid);
+//        } else {
+//            return Collections.emptyList(); // Return an empty list if supervisor is not found
+//        }
+//    }
     @Override
     public List<Worker> getSubWorkers(int userid,int pagenumber,int pagesize)
     {
@@ -126,14 +128,14 @@ public class SupervisorServiceImpl implements SupervisorService{
     }
 
     @Override
-    public ResponseEntity<Worker> updateWorker(Worker updatedWorker, Boolean reassign) {
+    public ResponseEntity<Worker> ReassignWorker(Worker updatedWorker) {
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
         System.out.println("updated details"+updatedWorker.getFirstname());
         if(existingWorker!=null)
         {
         //you can update village code only in reassignment
-            if(reassign && updatedWorker.getVillagecode()!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
+            if(updatedWorker.getVillagecode()!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
             {
                 int oldvillagecode=existingWorker.getVillagecode().getCode();
                 Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
@@ -150,19 +152,7 @@ public class SupervisorServiceImpl implements SupervisorService{
                 } );
 
             }
-            //you can update other fields in update profile
-            else if(!reassign) {
-            //update non null properties
-            if (updatedWorker.getFirstname() != null) {
-                existingWorker.setFirstname(updatedWorker.getFirstname());
-            }
-            if (updatedWorker.getLastname() != null) {
-                existingWorker.setLastname(updatedWorker.getLastname());
-            }
-            if (updatedWorker.getEmail() != null) {
-                existingWorker.setEmail(updatedWorker.getEmail());
-            }
-            }
+
             // Save the updated worker to the database
             Worker updatedworker= workerRepository.save(existingWorker);
             return ResponseEntity.ok(updatedworker);

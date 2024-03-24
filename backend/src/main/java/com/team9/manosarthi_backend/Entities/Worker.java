@@ -3,8 +3,10 @@ package com.team9.manosarthi_backend.Entities;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+//import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -21,6 +23,7 @@ public class Worker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     @Column(name = "first_name")
     private String firstname;
 

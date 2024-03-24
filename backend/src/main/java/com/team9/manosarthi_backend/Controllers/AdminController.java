@@ -6,19 +6,25 @@ import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+//import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Validated
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasRole('ADMIN')")
 //@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     @Autowired
@@ -33,11 +39,6 @@ public class AdminController {
     }
 
 //    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/add")
-    public String addUser(@RequestBody User user) {
-        userService.addUser(user);
-        return "user_success";
-    }
 
 
     //Add doctor
@@ -49,8 +50,10 @@ public class AdminController {
     }
 
     //Doctor
+    @Validated
     @PostMapping("/doctor")
-    public MappingJacksonValue addDoctor(@RequestBody Doctor doctor){
+    public ResponseEntity<MappingJacksonValue> addDoctor(@Valid @RequestBody Doctor doctor){
+
         System.out.println("doctor detauils"+doctor.toString());
         Doctor doc =  adminService.adddoctor(doctor);
 
@@ -68,8 +71,10 @@ public class AdminController {
         DoctorFilter<Doctor> doctorFilter = new DoctorFilter<Doctor>(doc);
 
 
-        return doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties);
 
+
+        // Proceed with valid data
+        return ResponseEntity.ok(doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties));
     }
 
     @GetMapping("/doctor")

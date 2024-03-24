@@ -9,14 +9,14 @@ import java.util.List;
 
 public interface SupervisorService {
     Worker addworker(Worker worker);
-    List<Village> findNoWorkerSubVillage(int userid);
+    List<Village> findSubVillage(int userid,boolean assigned);
 
     List<Worker> getSubWorkers(int userid,int pagenumber, int pagesize);
 
     Worker getVillWorker(int vilcode);
 
-    ResponseEntity<Worker> updateWorker(Worker updatedWorker,Boolean reassign);
+    ResponseEntity<Worker> ReassignWorker(Worker updatedWorker);
 
-    List<Village> findSubVillage(int userid);
+//    List<Village> findSubAllVillage(int userid);
 
 }
