@@ -1,11 +1,15 @@
 package com.team9.manosarthi_backend.Services;
 
+import com.team9.manosarthi_backend.Entities.Patient;
 import com.team9.manosarthi_backend.Entities.Worker;
+import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Repositories.WorkerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -13,6 +17,8 @@ public class WorkerServiceImpl implements WorkerService{
 
 
     private WorkerRepository workerRepository;
+
+    private PatientRepository patientRepository;
     @Override
     public ResponseEntity<Worker> UpdateWorkerProfile(Worker updatedWorker) {
         // Retrieve the existing worker from the database
@@ -37,4 +43,13 @@ public class WorkerServiceImpl implements WorkerService{
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
          }
     }
+
+    @Override
+    public List<Patient> registerPatient(List<Patient> patients) {
+        List<Patient> patientList= patientRepository.saveAll(patients);
+
+        return patientList;
+    }
+
+
 }
