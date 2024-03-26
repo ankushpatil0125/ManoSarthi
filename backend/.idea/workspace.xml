@@ -4,29 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Config/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Config/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/SupervisorRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/SupervisorRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/WorkerRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/WorkerRestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Village.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Village.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Worker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Worker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/AdminService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/AdminServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/AdminServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.class" afterDir="false" />
-    </list>
+    <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,7 +141,7 @@
       <workItem from="1711291863170" duration="1065000" />
       <workItem from="1711292970326" duration="866000" />
       <workItem from="1711383128829" duration="12850000" />
-      <workItem from="1711431563524" duration="1923000" />
+      <workItem from="1711431563524" duration="2238000" />
     </task>
     <servers />
   </component>

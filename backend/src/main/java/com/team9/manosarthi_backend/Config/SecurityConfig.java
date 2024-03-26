@@ -64,7 +64,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                       .requestMatchers("/passwordstatus/**").permitAll()
+                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/passwordstatus/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()

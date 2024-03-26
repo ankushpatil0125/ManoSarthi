@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.Questionarrie;
 import com.team9.manosarthi_backend.Entities.Questionarrie_ans;
+import com.team9.manosarthi_backend.Entities.Patient;
 import com.team9.manosarthi_backend.Entities.Worker;
+import com.team9.manosarthi_backend.Filters.PatientFilter;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
@@ -17,12 +19,13 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-@Validated
 @RestController
-@PreAuthorize("hasRole('WORKER')")
+@Validated
+//@PreAuthorize("hasRole('WORKER')")
 @RequestMapping("/worker")
 @CrossOrigin(origins = "*")
 public class WorkerRestController {
@@ -72,4 +75,18 @@ public class WorkerRestController {
     }
 
 
+    @PostMapping("/register-patient")
+    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
+        System.out.println("/register-patient");
+
+        System.out.println("patient"+patient.toString());
+
+        Patient newPatient = workerService.registerPatient(patient);
+        Set<String> patientFilterProperties = new HashSet<>();
+        patientFilterProperties.add("aabhaId");
+
+        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
+
+        return patientFilter.getPatientFilter(patientFilterProperties);
+    }
 }
