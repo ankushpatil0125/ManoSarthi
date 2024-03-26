@@ -3,10 +3,7 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.team9.manosarthi_backend.Entities.Questionarrie;
-import com.team9.manosarthi_backend.Entities.Questionarrie_ans;
-import com.team9.manosarthi_backend.Entities.Patient;
-import com.team9.manosarthi_backend.Entities.Worker;
+import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
@@ -74,7 +71,28 @@ public class WorkerRestController {
         return mappingJacksonValue;
     }
 
-
+    @GetMapping("/get-medical-questionarrie")
+    public MappingJacksonValue getmedquestionarrie() {
+        List<MedicalQue> questions = questionarrieService.getmedicalquestions();
+        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueJSONFilter", questionfilter);
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
+    @PostMapping("/medical-questionans")
+    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
+    {
+        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
+        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
+        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
+        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
+//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
     @PostMapping("/register-patient")
     public MappingJacksonValue registerpatient(@RequestBody Patient patient){
         System.out.println("/register-patient");

@@ -3,10 +3,7 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.team9.manosarthi_backend.Entities.Doctor;
-import com.team9.manosarthi_backend.Entities.Questionarrie;
-import com.team9.manosarthi_backend.Entities.Supervisor;
-import com.team9.manosarthi_backend.Entities.User;
+import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
 import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Services.AdminService;
@@ -178,6 +175,16 @@ public class AdminController {
         Questionarrie que =  adminService.addQuestionarrie(questionarrie);
         SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question", "default_ans", "type");
         FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionJSONFilter", questionfilter);
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(que);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
+    @PostMapping("/med-questionarrie")
+    public MappingJacksonValue addMedQuestionarrie(@Valid @RequestBody MedicalQue medquest) throws Exception
+    {
+        MedicalQue que =  adminService.addMedicalQuestionarrie(medquest);
+        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueJSONFilter", questionfilter);
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(que);
         mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
