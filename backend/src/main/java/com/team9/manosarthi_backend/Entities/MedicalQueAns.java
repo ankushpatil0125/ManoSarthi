@@ -7,21 +7,28 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Entity
-@Table(name = "medicalques")
+@Table(name = "medicalques_ans")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@JsonFilter("MedicalQueJSONFilter")
-public class MedicalQue {
+@JsonFilter("MedicalQueAnsJSONFilter")
+public class MedicalQueAns {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int question_id;
+    private int answer_id;
 
-    @NotBlank(message = "question cannot be blank")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "question_id")
+    private MedicalQue medicalquest;
+
+    @NotBlank(message = "ans cannot be blank")
     @Pattern(regexp="[a-zA-Z0-9]+", message="Only characters are allowed")
-    private String question;
+    private String question_ans;
 
-    private boolean active=true;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="patient_id")
+    private Patient patient;
+
 }
