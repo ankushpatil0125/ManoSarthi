@@ -27,11 +27,11 @@ public class Questionarrie {
     private int maxage;
 
     @NotBlank(message = "question cannot be blank")
-    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
+    @Pattern(regexp="[a-zA-Z0-9]+", message="Only characters are allowed")
     private String question;
 
     @NotBlank(message = "default_ans cannot be blank")
-    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
+    @Pattern(regexp="[a-zA-Z0-9]+", message="Only characters are allowed")
 //    @Pattern(regexp = "^(yes|no)$", message = "Type must be either 'yes' or 'no'")
     private String default_ans;
 
