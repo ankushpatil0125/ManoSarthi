@@ -25,7 +25,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     @Autowired
     private UserService userService;
@@ -39,6 +39,11 @@ public class AdminController {
     }
 
 //    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/add")
+    public String addUser(@RequestBody User user) {
+        userService.addUser(user);
+        return "user_success";
+    }
 
 
     //Add doctor
