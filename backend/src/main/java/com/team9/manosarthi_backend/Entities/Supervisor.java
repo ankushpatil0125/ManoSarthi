@@ -49,9 +49,9 @@ public class Supervisor {
     @Column(name = "gender")
     private String gender;
 
-//    @NotNull(message = "DOB cannot be null")
-//    @Column(name = "dob")
-//    private Date dob;
+    @NotNull(message = "DOB cannot be null")
+    @Column(name = "dob")
+    private Date dob;
 
     @Column(name = "active")
     private boolean active=true;

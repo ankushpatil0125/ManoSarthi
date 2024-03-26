@@ -3,7 +3,10 @@ package com.team9.manosarthi_backend.Entities;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 //import javax.validation.constraints.NotNull;
@@ -23,13 +26,17 @@ public class Worker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    @NotBlank(message = "first_name cannot be blank")
+    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
     @Column(name = "first_name")
     private String firstname;
 
+    @NotBlank(message = "last_name cannot be blank")
+    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
     @Column(name = "last_name")
     private String lastname;
 
+    @Email(message = "Enter valid email")
     @Column(name = "email", unique = true)
     private String email;
 
@@ -42,11 +49,12 @@ public class Worker {
     private Village villagecode;
 
     @Column(name = "patient_count")
-    private int patient_count;
+    private int patient_count=0;
 
     @Column(name = "gender")
     private String gender;
 
+    @NotNull(message = "DOB cannot be null")
     @Column(name = "dob")
     private Date dob;
 
