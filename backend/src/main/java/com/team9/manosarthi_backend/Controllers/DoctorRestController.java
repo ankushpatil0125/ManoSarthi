@@ -1,8 +1,11 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.Entities.Patient;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
+import com.team9.manosarthi_backend.Filters.PatientFilter;
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Services.DoctorService;
 import com.team9.manosarthi_backend.security.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -22,6 +25,13 @@ public class DoctorRestController {
 
     @Autowired
     DoctorRepository doctorRepository;
+
+    DoctorService doctorService;
+
+    @Autowired
+    public DoctorRestController(DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
 
     @Autowired
     private JwtHelper helper;
@@ -52,12 +62,38 @@ public class DoctorRestController {
             Set<String> userFilterProperties = new HashSet<>();
             userFilterProperties.add("username");
 
-            DoctorFilter<Optional<Doctor>> doctorFilter = new DoctorFilter<Optional<Doctor>>(doc);
+            DoctorFilter<Optional<Doctor>> doctorFilter = new DoctorFilter<>(doc);
 
 
             return doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties,userFilterProperties);
         }
 
+        return null;
+    }
+
+
+    @GetMapping("/new-patient-details")
+    public MappingJacksonValue getNewPatientDetails(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
+        int pagesize=5;
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+
+            String token = authorizationHeader.substring(7);
+            String doctorId = helper.getIDFromToken(token);
+
+            List<Patient> patientList= doctorService.getNewPatientDetails(Integer.parseInt(doctorId), pagenumber,pagesize);
+
+            Set<String> patientFilterProperties = new HashSet<>();
+            patientFilterProperties.add("firstname");
+            patientFilterProperties.add("lastname");
+            patientFilterProperties.add("email");
+            patientFilterProperties.add("village");
+
+            Set<String> villageFilterProperties = new HashSet<>();
+            villageFilterProperties.add("name");
+
+            PatientFilter<List<Patient>> patientFilter= new PatientFilter<>(patientList);
+            return patientFilter.getPatientFilter(patientFilterProperties,villageFilterProperties);
+        }
         return null;
     }
 

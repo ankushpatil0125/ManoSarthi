@@ -25,4 +25,17 @@ public class PatientFilter<T> {
         mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
     }
+
+    public MappingJacksonValue getPatientFilter(Set<String> patientFilterProperties, Set<String> villageFilterProperties)
+    {
+        SimpleBeanPropertyFilter patientFilter= SimpleBeanPropertyFilter.filterOutAllExcept(patientFilterProperties);
+        SimpleBeanPropertyFilter villageFilter= SimpleBeanPropertyFilter.filterOutAllExcept(villageFilterProperties);
+
+
+        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("PatientJSONFilter",patientFilter)
+                .addFilter("VillageJSONFilter",villageFilter);
+        MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(patient);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
 }

@@ -45,16 +45,16 @@ public class WorkerRestController {
     }
 
     @PostMapping("/register-patient")
-    public MappingJacksonValue registerpatient(@RequestBody List<Patient> patient){
+    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
         System.out.println("/register-patient");
 
-        System.out.println("patient list"+patient.toString());
+        System.out.println("patient"+patient.toString());
 
-        List<Patient> patientList = workerService.registerPatient(patient);
+        Patient newPatient = workerService.registerPatient(patient);
         Set<String> patientFilterProperties = new HashSet<>();
         patientFilterProperties.add("aabhaId");
 
-        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
+        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
 
         return patientFilter.getPatientFilter(patientFilterProperties);
     }

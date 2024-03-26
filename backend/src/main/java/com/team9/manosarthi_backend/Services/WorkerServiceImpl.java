@@ -45,8 +45,8 @@ public class WorkerServiceImpl implements WorkerService{
     }
 
     @Override
-    public List<Patient> registerPatient(List<Patient> patients) {
-        List<Patient> patientList= patientRepository.saveAll(patients);
+    public Patient registerPatient(Patient patients) {
+        Patient patientList= patientRepository.save(patients);
 
         return patientList;
     }

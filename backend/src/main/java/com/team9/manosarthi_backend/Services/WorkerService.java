@@ -9,5 +9,5 @@ import java.util.List;
 public interface WorkerService {
     ResponseEntity<Worker> UpdateWorkerProfile(Worker updatedWorker);
 
-    List<Patient> registerPatient(List<Patient> patients);
+    Patient registerPatient(Patient patients);
 }

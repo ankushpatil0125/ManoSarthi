@@ -2,10 +2,7 @@ package com.team9.manosarthi_backend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.sql.Date;
@@ -25,7 +22,9 @@ public class Patient {
     private int id;
 
     @Column(name = "aabha_id",unique = true)
-    private int aabhaId;
+    @NotBlank(message = "aabhaId cannot be blank")
+    @Pattern(regexp="[0-9]+", message="Only numbers are allowed")
+    private String aabhaId;
 
     @NotBlank(message = "first_name cannot be blank")
     @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
@@ -63,9 +62,6 @@ public class Patient {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "new_patient")
-    private boolean new_patient=true;
-
-    @Column(name = "treated")
-    private boolean treated=false;
+    @Column(name = "status")
+    private String status="NEW";
 }
