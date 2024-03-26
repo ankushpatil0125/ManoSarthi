@@ -71,7 +71,7 @@ function HomeScreen({ navigation }) {
 
   useEffect(() => {
     fetchDataFromDatabase();
-    //  DeleteService.deleteAllPatients();
+    
     
   }, []);
 

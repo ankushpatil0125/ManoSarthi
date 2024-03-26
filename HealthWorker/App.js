@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,10 +11,18 @@ import CreateService from "./Services/DatabaseServices/CreateService";
 import HomeScreen from "./Screens/HomeScreen";
 import RegisterPatientScreen from "./Screens/RegisterPatientScreen";
 import PatientDetailsScreen from "./Screens/PatientDetailsScreen";
-import QuestionnaireScreen from "./Screens/QuestionnaireScreen"
+import QuestionnaireScreen from "./Screens/QuestionnaireScreen";
+import InsertService from "./Services/DatabaseServices/InsertService";
+import SurveyQuestionsService from "./Services/SurveyQuestionsService";
+import db from "./Services/DatabaseServices/DatabaseServiceInit";
+import DropService from "./Services/DatabaseServices/DropService";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+
+const ForwardedToast = React.forwardRef((props, ref) => (
+  <Toast ref={ref} {...props} />
+));
 
 const checkNetworkConnectivity = async () => {
   const state = await NetInfo.fetch();
@@ -49,8 +57,14 @@ const PrescriptionScreen = () => (
 const HomeStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="HomeScreen" component={HomeScreen} />
-    <Stack.Screen name="RegisterPatientScreen" component={RegisterPatientScreen} />
-    <Stack.Screen name="PatientDetailsScreen" component={PatientDetailsScreen} />
+    <Stack.Screen
+      name="RegisterPatientScreen"
+      component={RegisterPatientScreen}
+    />
+    <Stack.Screen
+      name="PatientDetailsScreen"
+      component={PatientDetailsScreen}
+    />
     <Stack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
   </Stack.Navigator>
 );
@@ -86,24 +100,67 @@ export default function App() {
       }
     });
 
-    // Initialize database and create tables
-    CreateService.createTables().then(() => {
-      console.log("Database and tables initialized successfully.");
-    }).catch((error) => {
-      console.error("Error initializing database:", error);
-    });
+    // // return () => unsubscribe();
+    // // Cleanup function to close the database connection
+    // return () => {
+    //   db.close(); // Close the database connection
+    // };
+  }, []);
 
-    // return () => unsubscribe();
-    // Cleanup function to close the database connection
+  useEffect(() => {
+    const initializeDatabase = async () => {
+      // const dropResponse = DropService.dropSurveyQuestionTable();
+      // console.log("Drop status", dropResponse);
+      let databaseInitialized = false;
+      try {
+        // Initialize database and create tables
+        await CreateService.createTables();
+        console.log("Database and tables initialized successfully.");
+        databaseInitialized = true;
+      } catch (error) {
+        console.error("Error initializing database:", error);
+        // Handle the error here, such as showing a message to the user
+        // Set a flag to indicate that the database initialization failed
+        databaseInitialized = false;
+      }
+
+      if (databaseInitialized) {
+        try {
+          // Fetch questions from the service
+          const questionsResponse = await SurveyQuestionsService.getQuestions();
+          if (questionsResponse) {
+            const questions = questionsResponse.data;
+            console.log("Fetched Questions : ", questions);
+
+            // Insert fetched questions into the database
+            await InsertService.insertSurveyQuestion(questions);
+            console.log("SurveyQuestions inserted successfully.");
+          } else {
+            // Handle failure to fetch questions
+            console.log("Failed to fetch questions");
+          }
+        } catch (error) {
+          console.error("Error during question insertion:", error);
+          // Handle the error here, such as showing a message to the user
+        }
+      } else {
+        // Database initialization failed, handle accordingly
+        console.log("Database initialization failed.");
+        // You can show an error message to the user or take other actions
+      }
+    };
+
+    initializeDatabase();
+
     return () => {
-      db.close(); // Close the database connection
+      db.closeSync(); // Close the database connection
     };
   }, []);
 
   return (
     <NavigationContainer>
       <MainDrawerNavigator />
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <ForwardedToast />
     </NavigationContainer>
   );
 }

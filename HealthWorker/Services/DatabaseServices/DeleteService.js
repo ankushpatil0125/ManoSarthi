@@ -35,6 +35,22 @@ const DeleteService = {
       });
     });
   },
+  deleteAllQuestions: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM SurveyQuestion",
+          [],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from PatientDetails");
+          },
+          (_, error) => {
+            reject("Error deleting patients: " + error);
+          }
+        );
+      });
+    });
+  },
 };
 
 export default DeleteService;

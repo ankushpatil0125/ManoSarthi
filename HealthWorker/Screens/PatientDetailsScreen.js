@@ -53,9 +53,21 @@ const PatientDetailsScreen = ({ navigation }) => {
       console.error("Error fetching data from database:", error);
     }
   };
+  const fetchQuestionsFromDatabase = async () => {
+    try {
+      const data = await SelectService.getAllQuestions();
+      // setPatients(data);
+      console.log("Questions: ",data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+
 
   useEffect(() => {
     fetchDataFromDatabase();
+    fetchQuestionsFromDatabase();
+    
   }, []);
 
   const handleDateChange = (event, selectedDate) => {

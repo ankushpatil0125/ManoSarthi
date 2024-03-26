@@ -1,9 +1,10 @@
 // CreateService.js
-import db from "../DatabaseServices/DatabaseServiceInit"
+import db from "../DatabaseServices/DatabaseServiceInit";
 
 const CreateService = {
   createTables: async () => {
     await CreateService.createPatientDetailsTable();
+    await CreateService.createSurveyQuestionTable();
     // Add more table creation functions here if needed
   },
 
@@ -37,31 +38,34 @@ const CreateService = {
         );
       });
     });
-  }
-  ,
+  },
   createSurveyQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS SurveyQuestion (
-            aabhaId TEXT,
-                       
+            question_id INTEGER,
+            minage INTEGER,
+            maxage INTEGER,
+            question TEXT,
+            default_ans TEXT,
+            type TEXT                       
           );`,
           [],
           (_, result) => {
             if (result.rowsAffected > 0) {
-              resolve("PatientDetails table created successfully");
+              resolve("SurveyQuestion table created successfully");
             } else {
-              resolve("PatientDetails table already exists");
+              resolve("SurveyQuestion table already exists");
             }
           },
           (_, error) => {
-            reject("Error creating PatientDetails table: " + error);
+            reject("Error creating SurveyQuestion table: " + error);
           }
         );
       });
     });
-  }
+  },
 };
 
 export default CreateService;
