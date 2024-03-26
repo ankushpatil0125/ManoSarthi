@@ -1,6 +1,10 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Entities.Questionarrie;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
@@ -168,5 +172,15 @@ public class AdminController {
         return supervisorFilter.getSupervisorrFilter(supervisorFilterProperties,subDistrictFilterProperties);
     }
 
+    @PostMapping("/questionarrie")
+    public MappingJacksonValue addQuestionarrie(@Valid @RequestBody Questionarrie questionarrie) throws Exception
+    {
+        Questionarrie que =  adminService.addQuestionarrie(questionarrie);
+        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question", "default_ans", "type");
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionJSONFilter", questionfilter);
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(que);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
 
 }
