@@ -14,9 +14,6 @@ import lombok.Setter;
 @JsonFilter("UserJSONFilter")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @NotBlank (message = "Username cannot be blank")
     private String username;
 

@@ -1,16 +1,10 @@
 package com.team9.manosarthi_backend.Services;
+import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Repositories.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.team9.manosarthi_backend.Entities.SubDistrict;
-import com.team9.manosarthi_backend.Entities.Supervisor;
-import com.team9.manosarthi_backend.Repositories.DoctorRepository;
-import com.team9.manosarthi_backend.Repositories.SubDistrictRepository;
-import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
-import com.team9.manosarthi_backend.Repositories.UserRepository;
-import com.team9.manosarthi_backend.Entities.Doctor;
-import com.team9.manosarthi_backend.Entities.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +24,8 @@ public class AdminServiceImpl implements AdminService {
     private PasswordEncoder passwordEncoder;
 
     private SubDistrictRepository subDistrictRepository;
+
+    private QuestionarrieRepo questionarrieRepo;
 
     @Override
     public Doctor adddoctor(Doctor doctor) {
@@ -97,6 +93,10 @@ public class AdminServiceImpl implements AdminService {
             return doctorRepository.findDoctorBySubDistrict(subdistrictcode);
         }
 
-
+        @Override
+        public Questionarrie addQuestionarrie(Questionarrie que)
+        {
+            return questionarrieRepo.save(que);
+        }
 
 }
