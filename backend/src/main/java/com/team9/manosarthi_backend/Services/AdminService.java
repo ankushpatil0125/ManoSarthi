@@ -4,6 +4,8 @@ package com.team9.manosarthi_backend.Services;
 
 import java.util.List;
 import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Entities.MedicalQue;
+import com.team9.manosarthi_backend.Entities.Questionarrie;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 
 public interface AdminService {
@@ -16,5 +18,9 @@ public interface AdminService {
     List<Doctor> viewDoctorByDistrict(int districtcode, int pagenumber, int pagesize);
 
     List<Doctor> viewDoctorBySubDistrict(int subdistrictcode);
+
+    Questionarrie addQuestionarrie(Questionarrie questionarrie);
+
+    MedicalQue addMedicalQuestionarrie(MedicalQue medicalques);
 
 }
