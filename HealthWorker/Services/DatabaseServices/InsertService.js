@@ -64,23 +64,25 @@ const InsertService = {
     });
   },
 
-  insertMedicalQuestions: (questions) => {
+  insertMedicalQuestions: (MedicalQuestions) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
-        tx.executeSql(
-          "INSERT INTO medical_questionarrie (question_id, question) VALUES (?, ?)",
-          [questions.question_id, questions.question],
-          (_, { rowsAffected }) => {
-            if (rowsAffected > 0) {
-              resolve("Data inserted into medical_questionarrie successfully");
-            } else {
-              reject("Failed to insert data into medical_questionarrie");
+        MedicalQuestions.forEach((question) => {
+          tx.executeSql(
+            "INSERT INTO medical_questionarrie (question_id, question) VALUES (?, ?)",
+            [question.question_id, question.question],
+            (_, { rowsAffected }) => {
+              if (rowsAffected > 0) {
+                resolve("Data inserted into Medical Questions successfully");
+              } else {
+                reject("Failed to insert data into Medical Questions");
+              }
+            },
+            (_, error) => {
+              reject("Error inserting data into Medical Questions: " + error);
             }
-          },
-          (_, error) => {
-            reject("Error inserting data into medical_questionarrie: " + error);
-          }
-        );
+          );
+        });
       });
     });
   },
@@ -105,7 +107,8 @@ const InsertService = {
       });
     });
   },
-  insertMedicalHistoryAnswers: (answers, comment) => {
+
+  insertMedicalHistoryAnswers: (medicalQuestions, answers, comment) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         for (let index = 0; index < answers.length; index++) {
@@ -125,7 +128,7 @@ const InsertService = {
         }
         tx.executeSql(
           "INSERT INTO medical_history_answers (question_id, question_ans) VALUES (?, ?)",
-          [medicalQuestions.length + 1, comment],
+          [medicalQuestions[medicalQuestions.length - 1].question_id, comment],
           (_, result) => {
             console.log("Comment saved successfully");
             resolve(); // Resolve the promise after successful execution
