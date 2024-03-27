@@ -19,7 +19,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int patient_id;
 
     @Column(name = "aabha_id",unique = true)
     @NotBlank(message = "aabhaId cannot be blank")

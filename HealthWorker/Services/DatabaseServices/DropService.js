@@ -21,6 +21,48 @@ const DropService = {
       });
     });
   },
+
+  dropMedicalQuestionsTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS medical_questionarrie;`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("medical_questionarrie table dropped successfully");
+            } else {
+              resolve("medical_questionarrie table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping medical_questionarrie table: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  dropMedicalHistoryAnswersTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS medical_history_answers;`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("medical_history_answers table dropped successfully");
+            } else {
+              resolve("medical_history_answers table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping medical_history_answers table: " + error);
+          }
+        );
+      });
+    });
+  },
 };
 
 export default DropService;

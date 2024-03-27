@@ -23,10 +23,10 @@ public class Questionarrie_ans {
     private int followup_id;
 
     @NotBlank(message = "ans cannot be blank")
-    @Pattern(regexp="[a-zA-Z]+", message="Only characters are allowed")
+    @Pattern(regexp="[a-zA-Z0-9]+", message="Only characters are allowed")
     private String question_ans;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private Questionarrie questionarrie;
 

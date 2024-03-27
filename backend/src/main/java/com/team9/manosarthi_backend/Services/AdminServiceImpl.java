@@ -27,6 +27,8 @@ public class AdminServiceImpl implements AdminService {
 
     private QuestionarrieRepo questionarrieRepo;
 
+    private MedicalQueRepo medicalQueRepo;
+
     @Override
     public Doctor adddoctor(Doctor doctor) {
 
@@ -97,6 +99,12 @@ public class AdminServiceImpl implements AdminService {
         public Questionarrie addQuestionarrie(Questionarrie que)
         {
             return questionarrieRepo.save(que);
+        }
+
+        @Override
+        public MedicalQue addMedicalQuestionarrie(MedicalQue medicalque)
+        {
+            return medicalQueRepo.save(medicalque);
         }
 
 }

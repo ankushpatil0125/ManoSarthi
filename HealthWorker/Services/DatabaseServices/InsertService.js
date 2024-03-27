@@ -63,6 +63,61 @@ const InsertService = {
       });
     });
   },
+
+  insertMedicalQuestions: (questions) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT INTO medical_questionarrie (question_id, question) VALUES (?, ?)",
+          [questions.question_id, questions.question],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve("Data inserted into medical_questionarrie successfully");
+            } else {
+              reject("Failed to insert data into medical_questionarrie");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting data into medical_questionarrie: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  insertMedicalHistoryAnswers: (answers, comment) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        for (let index = 0; index < answers.length; index++) {
+          tx.executeSql(
+            "INSERT INTO medical_history_answers (question_id, question_ans) VALUES (?, ?)",
+            [medicalQuestions[index].question_id, answers[index]],
+            (_, result) => {
+              console.log(`Data for question ${index + 1} saved successfully`);
+            },
+            (_, error) => {
+              console.error(
+                `Error saving data for question ${index + 1}`,
+                error
+              );
+            }
+          );
+        }
+        tx.executeSql(
+          "INSERT INTO medical_history_answers (question_id, question_ans) VALUES (?, ?)",
+          [medicalQuestions.length + 1, comment],
+          (_, result) => {
+            console.log("Comment saved successfully");
+            resolve(); // Resolve the promise after successful execution
+          },
+          (_, error) => {
+            console.error("Error saving comment", error);
+            reject(error); // Reject the promise if there's an error
+          }
+        );
+      });
+    });
+  },
 };
 
 export default InsertService;

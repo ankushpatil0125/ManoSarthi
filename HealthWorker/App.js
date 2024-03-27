@@ -7,15 +7,18 @@ import { StyleSheet, Text, View } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import Toast from "react-native-toast-message";
 import CreateService from "./Services/DatabaseServices/CreateService";
-
 import HomeScreen from "./Screens/HomeScreen";
 import RegisterPatientScreen from "./Screens/RegisterPatientScreen";
 import PatientDetailsScreen from "./Screens/PatientDetailsScreen";
 import QuestionnaireScreen from "./Screens/QuestionnaireScreen";
+import ReferNotRefer from "./Screens/ReferNotRefer";
+import MedicalDetails from "./Screens/MedicalDetails";
+import Preview from "./Screens/Preview";
 import InsertService from "./Services/DatabaseServices/InsertService";
 import SurveyQuestionsService from "./Services/SurveyQuestionsService";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
+import MedicalQuestionarrieService from "./Services/MedicalQuestionarrieService";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -66,6 +69,9 @@ const HomeStack = () => (
       component={PatientDetailsScreen}
     />
     <Stack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
+    <Stack.Screen name="ReferNotRefer" component={ReferNotRefer} />
+    <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
+    <Stack.Screen name="Preview" component={Preview} />
   </Stack.Navigator>
 );
 
@@ -99,12 +105,6 @@ export default function App() {
         });
       }
     });
-
-    // // return () => unsubscribe();
-    // // Cleanup function to close the database connection
-    // return () => {
-    //   db.close(); // Close the database connection
-    // };
   }, []);
 
   useEffect(() => {
@@ -128,13 +128,23 @@ export default function App() {
         try {
           // Fetch questions from the service
           const questionsResponse = await SurveyQuestionsService.getQuestions();
-          if (questionsResponse) {
+          const medicalQuestionsResponse =
+            await MedicalQuestionarrieService.getMedicalQuestionarrie();
+
+          if (questionsResponse && medicalQuestionsResponse) {
             const questions = questionsResponse.data;
-            console.log("Fetched Questions : ", questions);
+            const medicalQuestions = medicalQuestionsResponse.data;
+
+            console.log("Fetched Questions:", questions);
+            console.log("Fetched Medical Questions:", medicalQuestions);
 
             // Insert fetched questions into the database
             await InsertService.insertSurveyQuestion(questions);
             console.log("SurveyQuestions inserted successfully.");
+
+            // Insert fetched medical questions into the database
+            await InsertService.insertMedicalQuestions(medicalQuestions);
+            console.log("MedicalQuestions inserted successfully.");
           } else {
             // Handle failure to fetch questions
             console.log("Failed to fetch questions");
