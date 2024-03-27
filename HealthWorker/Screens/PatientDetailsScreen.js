@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext} from "react";
 import {
   View,
   Text,
@@ -16,9 +16,10 @@ import RegisterPatientService from "../Services/RegisterPatientService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
+import PatientContext from "../Context/PatientContext"; // Import PatientContext here
 
 const PatientDetailsScreen = ({ navigation }) => {
-  const [aabhaId, setAabhaId] = useState("");
+  // const [aabhaId, setAabhaId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +33,8 @@ const PatientDetailsScreen = ({ navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [patients, setPatients] = useState([]);
+  const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+
 
 
   useEffect(() => {
@@ -49,25 +52,16 @@ const PatientDetailsScreen = ({ navigation }) => {
     try {
       const data = await SelectService.getAllPatients();
       setPatients(data);
-      console.log("Patients: ",data);
+      console.log("Patients Fetched from Database: ",patients);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
   };
-  const fetchQuestionsFromDatabase = async () => {
-    try {
-      const data = await SelectService.getAllQuestions();
-      // setPatients(data);
-      console.log("Survey Questions: ",data);
-    } catch (error) {
-      console.error("Error fetching data from database:", error);
-    }
-  };
-
-
+  
+  
   useEffect(() => {
     fetchDataFromDatabase();
-    fetchQuestionsFromDatabase();
+    // fetchQuestionsFromDatabase();
     // DeleteService.deleteAllQuestions();
     
   }, []);
@@ -80,7 +74,6 @@ const PatientDetailsScreen = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (
-      !aabhaId ||
       !firstName ||
       !lastName ||
       !email ||
@@ -97,7 +90,7 @@ const PatientDetailsScreen = ({ navigation }) => {
 
     if (isConnected) {
       // Send data to server using POST request
-      await sendDataToServer();
+     await sendDataToServer();
       // await storeDataLocally();
     } else {
       // Store data locally in SQLite database
@@ -132,7 +125,7 @@ const PatientDetailsScreen = ({ navigation }) => {
     try {
       // Using axios for the POST request
       console.log("Patient Data", patientData);
-      const response = await RegisterPatientService.addPatient(patientData);
+      // const response = await RegisterPatientService.addPatient(patientData);
       if (response) {
         // Handle successful password change, e.g., display a success message
         alert(
@@ -175,13 +168,7 @@ const PatientDetailsScreen = ({ navigation }) => {
       style={{ flex: 1 }}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.label}>Aabha ID:</Text>
-        <TextInput
-          style={styles.input}
-          value={aabhaId}
-          onChangeText={setAabhaId}
-          placeholder="Enter Aabha ID"
-        />
+        
         <Text style={styles.label}>First Name:</Text>
         <TextInput
           style={styles.input}
@@ -265,7 +252,6 @@ const PatientDetailsScreen = ({ navigation }) => {
           title="Submit"
           onPress={handleSubmit}
           disabled={
-            !aabhaId ||
             !firstName ||
             !lastName ||
             !email ||

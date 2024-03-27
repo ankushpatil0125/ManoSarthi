@@ -7,6 +7,7 @@ const CreateService = {
     await CreateService.createSurveyQuestionTable();
     await CreateService.createMedicalQuestionTable();
     await CreateService.createMedicalHistoryAnswersTable();
+    await CreateService.createSurveyQuestionAnswerTable();
     // Add more table creation functions here if needed
   },
 

@@ -84,7 +84,27 @@ const InsertService = {
       });
     });
   },
-
+  insertSurveyQuestionAnswer: (aabhaId, questionId, answer) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `INSERT INTO SurveyQuestionAnswer (aabhaId, question_id, answer) VALUES (?, ?, ?);`,
+          [aabhaId, questionId, answer],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              console.log("Survey question answer inserted successfully");
+              resolve("Survey question answer inserted successfully");
+            } else {
+              reject("Failed to insert survey question answer");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting survey question answer: " + error);
+          }
+        );
+      });
+    });
+  },
   insertMedicalHistoryAnswers: (answers, comment) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

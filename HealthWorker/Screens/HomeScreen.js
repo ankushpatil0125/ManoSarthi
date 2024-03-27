@@ -70,7 +70,7 @@ const fetchData = async () => {
       console.log("Fetched Medical Questions:", medicalQuestions);
 
       // Delete old questions from the SurveyQuestion table
-      await DeleteService.deleteAllQuestions();
+      await DeleteService.deleteAllSurveyQuestions();
       console.log("SurveyQuestions deleted successfully.");
 
        // Delete old medical questions from the MedicalQuestions table
