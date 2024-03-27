@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -7,37 +7,63 @@ import {
   ScrollView,
 } from "react-native";
 import "../Services/SurveyQuestionsService";
-// import SurveyQuestionsService from "../Services/SurveyQuestionsService";
+import SelectService from "../Services/DatabaseServices/SelectService";
+import PatientContext from "../Context/PatientContext"; // Import PatientContext here
+import InsertService from "../Services/DatabaseServices/InsertService";
+
 
 const QuestionnaireScreen = ({ navigation }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
-  // Sample questions
-  const questions = [
-    "Are you feeling well today?",
-    "Did you sleep well last night?",
-    "Have you experienced any pain in the last 24 hours?",
-    "Did you consume alcohol in the last 24 hours?",
-    "Have you taken any medication today?",
-    "Did you exercise today?",
-    "Have you been following a healthy diet?",
-    "Did you experience any stress today?",
-    "Have you been smoking recently?",
-    "Did you drink enough water today?",
-  ];
-
-  // useEffect(() => {
-  //   // Fetch district options
-  //   SurveyQuestionsService.getQuestions()
-  //     .then((response) => {
-  //       setsurveyquestions(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching Survey Questions:", error);
-  //     });
-  // }, []);
-
   // State to hold the answers for each question
-  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [answers, setAnswers] = useState(
+    Array(surveyquestions.length).fill(null)
+  );
+  const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+
+  // Sample questions
+  // const questions = [
+  //   "Are you feeling well today?",
+  //   "Did you sleep well last night?",
+  //   "Have you experienced any pain in the last 24 hours?",
+  //   "Did you consume alcohol in the last 24 hours?",
+  //   "Have you taken any medication today?",
+  //   "Did you exercise today?",
+  //   "Have you been following a healthy diet?",
+  //   "Did you experience any stress today?",
+  //   "Have you been smoking recently?",
+  //   "Did you drink enough water today?",
+  // ];
+
+  const fetchSurveyQuestionsFromDatabase = async () => {
+    try {
+      const data = await SelectService.getAllQuestions();
+      setsurveyquestions(data);
+
+      console.log("Survey Questions Need To Render: ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+
+  const fetchSurveyQuestionsAnswersFromDatabase = async () => {
+    try {
+      const data = await SelectService.getAllSurveyQuestionAnswers();
+      
+
+      console.log("Response of Survey Questions : ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+
+
+  
+
+  useEffect(() => {
+    fetchSurveyQuestionsFromDatabase();
+     fetchSurveyQuestionsAnswersFromDatabase();
+    // DeleteService.deleteAllSurveyQuestions();
+  }, []);
 
   // Function to handle radio button selection
   const handleAnswerSelect = (index, value) => {
@@ -47,20 +73,36 @@ const QuestionnaireScreen = ({ navigation }) => {
   };
 
   // Function to handle navigation to next screen
-  const handleNext = () => {
+  const handleNext = async() => {
     // Perform any necessary validation before proceeding
     // For example, you can check if all questions are answered
+    if (answers.some((answer) => answer === null)) {
+      console.log("Please answer all questions.");
+      return;
+    }
+
     console.log("Answers: ", answers);
-    // Navigate to the next screen
-    navigation.navigate("ReferNotRefer");
+    try {
+      const promises = surveyquestions.map(async (question, index) => {
+        const answer = answers[index];
+        await InsertService.insertSurveyQuestionAnswer(aabhaId, question.question_id, answer);
+      });
+      await Promise.all(promises);
+
+      // Navigate to the next screen
+      navigation.navigate("ReferNotRefer");
+    } catch (error) {
+      console.error("Error inserting survey answers:", error);
+    }
+   
   };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        {questions.map((question, index) => (
+        {surveyquestions.map((item, index) => (
           <View key={index} style={styles.questionContainer}>
-            <Text style={styles.questionText}>{question}</Text>
+            <Text style={styles.questionText}>{item.question}</Text>
             <View style={styles.radioButtonContainer}>
               <TouchableOpacity
                 style={[
