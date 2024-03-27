@@ -90,28 +90,6 @@ const InsertService = {
     });
   },
 
-  // insertMedicalQuestions: (questions) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.transaction((tx) => {
-  //       tx.executeSql(
-  //         "INSERT INTO medical_questionarrie (question_id, question) VALUES (?, ?)",
-  //         [questions.question_id, questions.question],
-  //         (_, { rowsAffected }) => {
-  //           if (rowsAffected > 0) {
-  //             resolve("Data inserted into medical_questionarrie successfully");
-  //             console.log("Data inserted into medical_questionarrie successfully by insertMedicalQuestions()")
-  //           } else {
-  //             reject("Failed to insert data into medical_questionarrie");
-  //           }
-  //         },
-  //         (_, error) => {
-  //           reject("Error inserting data into medical_questionarrie: " + error);
-  //         }
-  //       );
-  //     });
-  //   });
-  // },
-
   insertMedicalHistoryAnswers: (medicalQuestions, answers, comment) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
