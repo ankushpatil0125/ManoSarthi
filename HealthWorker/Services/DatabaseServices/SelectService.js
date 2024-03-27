@@ -1,7 +1,6 @@
 // SelectService.js
 import db from "../DatabaseServices/DatabaseServiceInit";
 
-
 const SelectService = {
   getAllPatients: () => {
     return new Promise((resolve, reject) => {
@@ -42,7 +41,7 @@ const SelectService = {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM medical_questionarrie',
+          "SELECT * FROM medical_questionarrie",
           [],
           (_, { rows }) => {
             const medical_questions = rows._array;
@@ -60,7 +59,7 @@ const SelectService = {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM medical_history_answers',
+          "SELECT * FROM medical_history_answers",
           [],
           (_, { rows }) => {
             const medical_history = rows._array;
@@ -72,8 +71,7 @@ const SelectService = {
         );
       });
     });
-  }
-
+  },
 };
 
 export default SelectService;

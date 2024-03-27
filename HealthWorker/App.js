@@ -14,12 +14,8 @@ import QuestionnaireScreen from "./Screens/QuestionnaireScreen";
 import ReferNotRefer from "./Screens/ReferNotRefer";
 import MedicalDetails from "./Screens/MedicalDetails";
 import Preview from "./Screens/Preview";
-import InsertService from "./Services/DatabaseServices/InsertService";
-import SurveyQuestionsService from "./Services/SurveyQuestionsService";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
-import MedicalQuestionarrieService from "./Services/MedicalQuestionarrieService";
-
 
 
 
@@ -72,10 +68,9 @@ const HomeStack = () => (
       component={PatientDetailsScreen}
     />
     <Stack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
-    <Stack.Screen name="ReferNotRefer" component={ReferNotRefer}/>
+    <Stack.Screen name="ReferNotRefer" component={ReferNotRefer} />
     <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
     <Stack.Screen name="Preview" component={Preview} />
-
   </Stack.Navigator>
 );
 
@@ -113,62 +108,27 @@ export default function App() {
 
   useEffect(() => {
     const initializeDatabase = async () => {
-      // const dropResponse = DropService.dropSurveyQuestionTable();
-      // console.log("Drop status", dropResponse);
-      let databaseInitialized = false;
       try {
         // Initialize database and create tables
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
-        databaseInitialized = true;
+        // Perform additional actions if database initialized successfully
+        // For example, you can fetch data from the database or perform other operations
       } catch (error) {
         console.error("Error initializing database:", error);
         // Handle the error here, such as showing a message to the user
-        // Set a flag to indicate that the database initialization failed
-        databaseInitialized = false;
+        // You can also perform additional actions, such as reattempting initialization or showing an error message
       }
-
-      if (databaseInitialized) {
-        try {
-          // Fetch questions from the service
-          const questionsResponse = await SurveyQuestionsService.getQuestions();
-          const medicalQuestionsResponse = await MedicalQuestionarrieService.getMedicalQuestionarrie();
-      
-          if (questionsResponse && medicalQuestionsResponse) {
-            const questions = questionsResponse.data;
-            const medicalQuestions = medicalQuestionsResponse.data;
-            
-            console.log("Fetched Questions:", questions);
-            console.log("Fetched Medical Questions:", medicalQuestions);
-      
-            // Insert fetched questions into the database
-            await InsertService.insertSurveyQuestion(questions);
-            console.log("SurveyQuestions inserted successfully.");
-      
-            // Insert fetched medical questions into the database
-            await InsertService.insertMedicalQuestions(medicalQuestions);
-            console.log("MedicalQuestions inserted successfully.");
-          } else {
-            // Handle failure to fetch questions
-            console.log("Failed to fetch questions");
-          }
-        } catch (error) {
-          console.error("Error during question insertion:", error);
-          // Handle the error here, such as showing a message to the user
-        }
-      } else {
-        // Database initialization failed, handle accordingly
-        console.log("Database initialization failed.");
-        // You can show an error message to the user or take other actions
-      };      
     };
-
+  
     initializeDatabase();
-
+  
+    // Clean up function to close the database connection
     return () => {
       db.closeSync(); // Close the database connection
     };
-  }, []);
+  }, []); // Empty dependency array to ensure this effect runs only once on component mount
+  
 
   return (
     <NavigationContainer>
