@@ -35,7 +35,7 @@ const DeleteService = {
       });
     });
   },
-  deleteAllQuestions: () => {
+  deleteAllSurveyQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(

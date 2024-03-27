@@ -16,7 +16,7 @@ import MedicalDetails from "./Screens/MedicalDetails";
 import Preview from "./Screens/Preview";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
-
+import PatientContext,{PatientProvider} from "./Context/PatientContext";
 
 
 const Drawer = createDrawerNavigator();
@@ -57,6 +57,8 @@ const PrescriptionScreen = () => (
 
 // Define a function to render the home stack
 const HomeStack = () => (
+  <PatientProvider>
+    
   <Stack.Navigator>
     <Stack.Screen name="HomeScreen" component={HomeScreen} />
     <Stack.Screen
@@ -72,6 +74,7 @@ const HomeStack = () => (
     <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
     <Stack.Screen name="Preview" component={Preview} />
   </Stack.Navigator>
+  </PatientProvider>
 );
 
 // Define the main drawer navigator

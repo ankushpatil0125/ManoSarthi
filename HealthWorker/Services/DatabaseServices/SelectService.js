@@ -54,6 +54,27 @@ const SelectService = {
       });
     });
   },
+  getAllSurveyQuestionAnswers: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM SurveyQuestionAnswer;`,
+          [],
+          (_, result) => {
+            const len = result.rows.length;
+            const surveyQuestionAnswers = [];
+            for (let i = 0; i < len; i++) {
+              surveyQuestionAnswers.push(result.rows.item(i));
+            }
+            resolve(surveyQuestionAnswers);
+          },
+          (_, error) => {
+            reject("Error fetching survey question answers: " + error);
+          }
+        );
+      });
+    });
+  },
 
   getAllMedicalHistoryAnswers: () => {
     return new Promise((resolve, reject) => {

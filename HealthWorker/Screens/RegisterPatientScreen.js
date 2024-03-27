@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import PatientContext from "../Context/PatientContext";
+
 import {
   View,
   Text,
@@ -10,12 +12,15 @@ import {
 
 function RegisterPatientScreen({ navigation }) {
   const [abhaId, setAbhaId] = useState("");
+  const { setAabhaId } = useContext(PatientContext); // Accessing setAabhaId from context
+
 
   const handleRegister = () => {
     if (abhaId.trim() === "") {
       Alert.alert("Error", "Please enter ABHA ID");
       return;
     }
+    setAabhaId(abhaId); // Setting the value of aabhaId in context
     // Perform registration logic here...
     console.log("ABHA ID registered:", abhaId);
     navigation.navigate("PatientDetailsScreen");

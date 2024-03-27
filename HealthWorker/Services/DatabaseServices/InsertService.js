@@ -70,10 +70,7 @@ const InsertService = {
         MedicalQuestions.forEach((question) => {
           tx.executeSql(
             "INSERT INTO medical_questionarrie (question_id, question) VALUES (?, ?)",
-            [
-              question.question_id,
-              question.question
-            ],
+            [question.question_id, question.question],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
                 resolve("Data inserted into Medical Questions successfully");
@@ -89,28 +86,27 @@ const InsertService = {
       });
     });
   },
-
-  // insertMedicalQuestions: (questions) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.transaction((tx) => {
-  //       tx.executeSql(
-  //         "INSERT INTO medical_questionarrie (question_id, question) VALUES (?, ?)",
-  //         [questions.question_id, questions.question],
-  //         (_, { rowsAffected }) => {
-  //           if (rowsAffected > 0) {
-  //             resolve("Data inserted into medical_questionarrie successfully");
-  //             console.log("Data inserted into medical_questionarrie successfully by insertMedicalQuestions()")
-  //           } else {
-  //             reject("Failed to insert data into medical_questionarrie");
-  //           }
-  //         },
-  //         (_, error) => {
-  //           reject("Error inserting data into medical_questionarrie: " + error);
-  //         }
-  //       );
-  //     });
-  //   });
-  // },
+  insertSurveyQuestionAnswer: (aabhaId, questionId, answer) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `INSERT INTO SurveyQuestionAnswer (aabhaId, question_id, answer) VALUES (?, ?, ?);`,
+          [aabhaId, questionId, answer],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              console.log("Survey question answer inserted successfully");
+              resolve("Survey question answer inserted successfully");
+            } else {
+              reject("Failed to insert survey question answer");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting survey question answer: " + error);
+          }
+        );
+      });
+    });
+  },
 
   insertMedicalHistoryAnswers: (medicalQuestions, answers, comment) => {
     return new Promise((resolve, reject) => {
@@ -132,7 +128,7 @@ const InsertService = {
         }
         tx.executeSql(
           "INSERT INTO medical_history_answers (question_id, question_ans) VALUES (?, ?)",
-          [medicalQuestions[ medicalQuestions.length-1 ].question_id, comment],
+          [medicalQuestions[medicalQuestions.length - 1].question_id, comment],
           (_, result) => {
             console.log("Comment saved successfully");
             resolve(); // Resolve the promise after successful execution
