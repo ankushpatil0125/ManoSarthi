@@ -51,24 +51,33 @@ const Preview = () => {
         <Text style={styles.header}>Preview and Submit</Text>
 
         <View style={styles.detailsContainer}>
-          <Text>Name: {patientDetails.name}</Text>
-          <Text>Age: {patientDetails.age}</Text>
-          <Text>Mobile No.: {patientDetails.mobileNo}</Text>
+          <View style={styles.detailSection}>
+            <Text style={styles.detailTitle}>Patient Details:</Text>
+            <Text>Name: {patientDetails.name}</Text>
+            <Text>Age: {patientDetails.age}</Text>
+            <Text>Mobile No.: {patientDetails.mobileNo}</Text>
+          </View>
 
-          <Text>Questinarrie answers:</Text>
-          {patientDetails.questionnaireAnswers.map((detail, index) => (
-            <Text key={index}>{detail.question}: {detail.answer}</Text>
-          ))}
+          <View style={styles.detailSection}>
+            <Text style={styles.detailTitle}>Questionnaire Answers:</Text>
+            {patientDetails.questionnaireAnswers.map((detail, index) => (
+              <Text key={index}>{detail.question}: {detail.answer}</Text>
+            ))}
+          </View>
 
-          <Text>Medical Details:</Text>
-          {patientDetails.medicalDetails.map((detail, index) => (
-            <Text key={index}>{detail.question}: {detail.answer}</Text>
-          ))}
+          <View style={styles.detailSection}>
+            <Text style={styles.detailTitle}>Medical Details:</Text>
+            {patientDetails.medicalDetails.map((detail, index) => (
+              <Text key={index}>{detail.question}: {detail.answer}</Text>
+            ))}
+          </View>
 
-          <Text>Additional Details:</Text>
-          {Object.entries(patientDetails.additionalDetails).map(([key, value]) => (
-            <Text key={key}>{key}: {value}</Text>
-          ))}
+          <View style={styles.detailSection}>
+            <Text style={styles.detailTitle}>Additional Details:</Text>
+            {Object.entries(patientDetails.additionalDetails).map(([key, value]) => (
+              <Text key={key}>{key}: {value}</Text>
+            ))}
+          </View>
         </View>
 
         <View style={styles.checkboxContainer}>
@@ -89,30 +98,40 @@ const Preview = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingLeft:"8%",
+    paddingBottom: 40,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
   },
   detailsContainer: {
     marginBottom: 20,
   },
+  detailSection: {
+    marginBottom: 20,
+  },
+  detailTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
   button: {
     marginTop: 20,
-    padding: 10,
+    paddingVertical: 12,
     backgroundColor: 'blue',
     borderRadius: 5,
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
@@ -121,6 +140,7 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:"center",
     marginBottom: 20,
   },
   checkbox: {
