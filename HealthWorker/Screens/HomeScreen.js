@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import RegisterPatientService from "../Services/RegisterPatientService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
+import InsertService from "../Services/DatabaseServices/InsertService";
+import SurveyQuestionsService from "../Services/SurveyQuestionsService";
+import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService";
+
 // const [sendPatient, setSendPatient] = useState([]);
 
 const syncData = async () => {
@@ -10,40 +14,35 @@ const syncData = async () => {
     const patients = await SelectService.getAllPatients();
 
     for (const patient of patients) {
-      const patientData = 
-        {
-          aabhaId: patient.aabhaId,
-          firstname: patient.firstName,
-          lastname: patient.lastName,
-          email: patient.email,
-          gender: patient.gender,
-          dob: patient.dob,
-          village: {
-            code: patient.village,
-          },
-          register_worker: {
-            id: patient.register_worker,
-          },
-          doctor: {
-            id: patient.doctor,
-          },
-          address: patient.address,
-        }
-      ;
-
+      const patientData = {
+        aabhaId: patient.aabhaId,
+        firstname: patient.firstName,
+        lastname: patient.lastName,
+        email: patient.email,
+        gender: patient.gender,
+        dob: patient.dob,
+        village: {
+          code: patient.village,
+        },
+        register_worker: {
+          id: patient.register_worker,
+        },
+        doctor: {
+          id: patient.doctor,
+        },
+        address: patient.address,
+      };
       try {
         const response = await RegisterPatientService.addPatient(patientData);
-        console.log("Response : ",
-          response.data 
-        );
+        console.log("Response : ", response.data);
         if (response) {
-
           console.log(
             `Patient with name ${patientData.firstname} added successfully`
           );
-          const status = await DeleteService.deletePatientByAabhaId(response.data.aabhaId);
-          console.log("status ",status);
-        
+          const status = await DeleteService.deletePatientByAabhaId(
+            response.data.aabhaId
+          );
+          console.log("status ", status);
         } else {
           console.error("Failed to add patient");
         }
@@ -54,6 +53,47 @@ const syncData = async () => {
   } catch (error) {
     console.error("Error fetching patient data:", error);
   }
+};
+
+const fetchData = async () => {
+  try {
+    // Fetch questions from the service
+    const questionsResponse = await SurveyQuestionsService.getQuestions();
+    const medicalQuestionsResponse =
+      await MedicalQuestionarrieService.getMedicalQuestionarrie();
+
+    if (questionsResponse && medicalQuestionsResponse) {
+      const questions = questionsResponse.data;
+      const medicalQuestions = medicalQuestionsResponse.data;
+
+      console.log("Fetched Questions:", questions);
+      console.log("Fetched Medical Questions:", medicalQuestions);
+
+      // Delete old questions from the SurveyQuestion table
+      await DeleteService.deleteAllQuestions();
+      console.log("SurveyQuestions deleted successfully.");
+
+       // Delete old medical questions from the MedicalQuestions table
+       await DeleteService.deleteAllMedicalQuestions();
+       console.log("MedicalQuestions deleted successfully.");
+ 
+
+      // Insert fetched questions into the database
+      await InsertService.insertSurveyQuestion(questions);
+      console.log("SurveyQuestions inserted successfully.");
+
+      // Insert fetched medical questions into the database
+      await InsertService.insertMedicalQuestions(medicalQuestions);
+      console.log("MedicalQuestions inserted successfully.");
+    } else {
+      // Handle failure to fetch questions
+      console.log("Failed to fetch questions");
+    }
+  } catch (error) {
+    console.error("Error during question insertion:", error);
+    // Handle the error here, such as showing a message to the user
+  }
+ 
 };
 
 function HomeScreen({ navigation }) {
@@ -71,8 +111,6 @@ function HomeScreen({ navigation }) {
 
   useEffect(() => {
     fetchDataFromDatabase();
-    //  DeleteService.deleteAllPatients();
-    
   }, []);
 
   const handleRegisterPatient = () => {
@@ -88,6 +126,11 @@ function HomeScreen({ navigation }) {
     syncData();
   };
 
+  const handleFetch = () => {
+    fetchData();
+  };
+
+
   return (
     <View style={styles.screen}>
       <View style={styles.topButtonsContainer}>
@@ -98,9 +141,14 @@ function HomeScreen({ navigation }) {
           <Text style={styles.buttonText}>Missed Followup</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.syncButton} onPress={handleSync}>
-        <Text style={styles.syncButtonText}>Sync</Text>
-      </TouchableOpacity>
+      <View style={styles.topButtonsContainer}>
+        <TouchableOpacity style={styles.syncButton} onPress={handleSync}>
+          <Text style={styles.syncButtonText}>Sync Data</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.syncButton} onPress={handleFetch}>
+          <Text style={styles.syncButtonText}>Fetch Data</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

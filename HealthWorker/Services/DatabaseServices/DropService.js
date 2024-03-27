@@ -62,7 +62,7 @@ const DropService = {
         );
       });
     });
-  }
+  },
 };
 
 export default DropService;

@@ -42,10 +42,10 @@ const DeleteService = {
           "DELETE FROM SurveyQuestion",
           [],
           (_, { rowsAffected }) => {
-            resolve(rowsAffected + " rows deleted from PatientDetails");
+            resolve(rowsAffected + " rows deleted from SurveyQuestion");
           },
           (_, error) => {
-            reject("Error deleting patients: " + error);
+            reject("Error deleting SurveyQuestion: " + error);
           }
         );
       });
@@ -76,7 +76,9 @@ const DeleteService = {
           "DELETE FROM medical_history_answers",
           [],
           (_, { rowsAffected }) => {
-            resolve(rowsAffected + " rows deleted from medical_history_answers");
+            resolve(
+              rowsAffected + " rows deleted from medical_history_answers"
+            );
           },
           (_, error) => {
             reject("Error deleting medical_history_answers: " + error);
@@ -84,7 +86,7 @@ const DeleteService = {
         );
       });
     });
-  }
+  },
 };
 
 export default DeleteService;

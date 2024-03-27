@@ -6,14 +6,15 @@ import { useState } from "react";
 const SurveyQuestionsService = {
   getQuestions: async () => {
     try {
-      const response = await axios.get(BASE_URL + "worker/getquestionarrie"
-      //  {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${getToken()}`,
-      //     // withCredentials:false
-      //   },
-      // }
+      const response = await axios.get(
+        BASE_URL + "worker/getquestionarrie"
+        //  {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${getToken()}`,
+        //     // withCredentials:false
+        //   },
+        // }
       );
 
       return response;
@@ -22,6 +23,5 @@ const SurveyQuestionsService = {
       throw error;
     }
   },
-
- };
+};
 export default SurveyQuestionsService;
