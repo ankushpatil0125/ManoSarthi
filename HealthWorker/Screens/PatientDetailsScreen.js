@@ -15,6 +15,7 @@ import NetInfo from "@react-native-community/netinfo";
 import RegisterPatientService from "../Services/RegisterPatientService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import SelectService from "../Services/DatabaseServices/SelectService";
+import DeleteService from "../Services/DatabaseServices/DeleteService";
 
 const PatientDetailsScreen = ({ navigation }) => {
   const [aabhaId, setAabhaId] = useState("");
@@ -57,7 +58,7 @@ const PatientDetailsScreen = ({ navigation }) => {
     try {
       const data = await SelectService.getAllQuestions();
       // setPatients(data);
-      console.log("Questions: ",data);
+      console.log("Survey Questions: ",data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -67,6 +68,7 @@ const PatientDetailsScreen = ({ navigation }) => {
   useEffect(() => {
     fetchDataFromDatabase();
     fetchQuestionsFromDatabase();
+    // DeleteService.deleteAllQuestions();
     
   }, []);
 

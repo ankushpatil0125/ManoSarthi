@@ -15,7 +15,7 @@ const CreateService = {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS PatientDetails (
-            aabhaId TEXT,
+            aabhaId TEXT PRIMARY KEY,
             firstName TEXT,
             lastName TEXT,
             email TEXT,
@@ -41,12 +41,13 @@ const CreateService = {
       });
     });
   },
+  
   createSurveyQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS SurveyQuestion (
-            question_id INTEGER,
+            question_id INTEGER PRIMARY KEY,
             minage INTEGER,
             maxage INTEGER,
             question TEXT,
@@ -69,6 +70,32 @@ const CreateService = {
     });
   },
 
+  createSurveyQuestionAnswerTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS SurveyQuestionAnswer (
+            aabhaId TEXT,
+            question_id INTEGER,
+            answer TEXT,
+            PRIMARY KEY (aabhaId, question_id)
+          );`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("SurveyQuestionAnswer table created successfully");
+            } else {
+              resolve("SurveyQuestionAnswer table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating SurveyQuestionAnswer table: " + error);
+          }
+        );
+      });
+    });
+  },
+   
   createMedicalQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

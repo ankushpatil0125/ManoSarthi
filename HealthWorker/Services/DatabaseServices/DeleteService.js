@@ -42,10 +42,10 @@ const DeleteService = {
           "DELETE FROM SurveyQuestion",
           [],
           (_, { rowsAffected }) => {
-            resolve(rowsAffected + " rows deleted from PatientDetails");
+            resolve(rowsAffected + " rows deleted from SurveyQuestion");
           },
           (_, error) => {
-            reject("Error deleting patients: " + error);
+            reject("Error deleting SurveyQuestion: " + error);
           }
         );
       });
