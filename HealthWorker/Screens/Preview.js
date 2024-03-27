@@ -10,10 +10,10 @@ const Preview = () => {
     setConsentChecked(!consentChecked);
   };
 
-  const showAlert = () => {
+  const showAlert = async () => {
     if (consentChecked) {
-      const res = SelectService.getAllMedicalHistoryAnswers();
-      console.log("All data entries in medical_history_answers table: ", res);
+      const res = await SelectService.getAllMedicalHistoryAnswers();
+      console.log("All data entries in  table: ", res);
     } else {
       Alert.alert('Please provide consent!', 'You need to provide consent before submitting.', [{ text: 'OK' }]);
     }

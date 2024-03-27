@@ -97,7 +97,7 @@ const PatientDetailsScreen = ({ navigation }) => {
 
     if (isConnected) {
       // Send data to server using POST request
-      await sendDataToServer();
+      // await sendDataToServer();
       // await storeDataLocally();
     } else {
       // Store data locally in SQLite database

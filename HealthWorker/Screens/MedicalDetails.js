@@ -33,7 +33,9 @@ const MedicalDetails = () => {
     try{
       const data = await SelectService.getAllMedicalQuestions();
       setMedicalQuestions(data);
-      console.log("Medical Questions", data);
+      console.log("Medical Questions(IN MedicalDetails Screen): ", data);
+      console.log("Medical Questions(IN MedicalDetails Screen): ", medicalQuestions);
+
     }
     catch(error){
       console.error("Error fetching from DB: ", error);
@@ -67,9 +69,9 @@ const MedicalDetails = () => {
     if (allQuestionsAnswered && commentNotEmpty) {
       if (isConnected) {
         try {
-          // saveDataToDatabase(answers, comment);
-          await sendDataToServer(answers, comment);
-          console.log('Data submitted to server successfully');
+          await saveDataToDatabase(answers, comment);
+          // await sendDataToServer(answers, comment);
+          console.log('Data submitted to local DB successfully');
         } catch (error) {
           console.error('Error submitting data to server:', error);
         }
@@ -108,8 +110,9 @@ const MedicalDetails = () => {
 
   const saveDataToDatabase = async (answers, comment) => {
    try{
-    const res = await InsertService.insertMedicalHistoryAnswers(answers, comment);
-    console.log(res);
+    console.log("before res: ");
+    const res = await InsertService.insertMedicalHistoryAnswers(medicalQuestions, answers, comment);
+    console.log("res: ", res);
    }
    catch(error){
     console.error("Error while storing data locally", error);
@@ -125,7 +128,7 @@ const MedicalDetails = () => {
         />
       </View>
       <View style={{ marginTop: 30, paddingLeft: 10 }}>
-        {medicalQuestions.map((question, index) => (
+        {medicalQuestions.slice(0, -1).map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}:</Text>
             <View style={{ paddingTop: 5, flexDirection: 'row' }}>
