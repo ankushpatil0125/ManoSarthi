@@ -3,11 +3,11 @@ import { BASE_URL } from "../utils/Constants";
 import { getToken } from "../utils/Constants";
 import { useState } from "react";
 
-const SurveyQuestionsService = {
-  getQuestions: async () => {
+const MedicalQuestionarrieService = {
+  getMedicalQuestionarrie: async () => {
     try {
-      const response = await axios.get(BASE_URL + "worker/getquestionarrie"
-      //  {
+      const response = await axios.get(BASE_URL + "worker/get-medical-questionarrie"
+      // {
       //   headers: {
       //     "Content-Type": "application/json",
       //     Authorization: `Bearer ${getToken()}`,
@@ -18,10 +18,12 @@ const SurveyQuestionsService = {
 
       return response;
     } catch (error) {
-      console.error("Error fetching survey questions options:", error);
+      console.error("Error fetching medical questions options:", error);
       throw error;
     }
   },
 
+
+
  };
-export default SurveyQuestionsService;
+export default MedicalQuestionarrieService;

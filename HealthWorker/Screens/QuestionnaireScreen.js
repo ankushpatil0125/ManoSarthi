@@ -52,7 +52,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     // For example, you can check if all questions are answered
     console.log("Answers: ", answers);
     // Navigate to the next screen
-    navigation.navigate("NextScreen");
+    navigation.navigate("ReferNotRefer");
   };
 
   return (
