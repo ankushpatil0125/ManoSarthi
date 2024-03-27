@@ -110,6 +110,8 @@ export default function App() {
     const initializeDatabase = async () => {
       try {
         // Initialize database and create tables
+        // await DropService.dropMedicalQuestionsTable();
+        // await DropService.dropMedicalHistoryAnswersTable();
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
         // Perform additional actions if database initialized successfully

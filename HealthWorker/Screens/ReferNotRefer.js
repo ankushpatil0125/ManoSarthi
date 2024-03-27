@@ -15,35 +15,32 @@ const ReferNotRefer = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, alignItems: 'center', paddingTop: 10 }}>
+      <View style={{ flex: 1, alignItems: 'center', paddingTop: 20 }}>
         <Image
           source={require('../assets/saarthi.png')}
-          style={{ borderRadius: 8, width: 85, height: 85, borderColor: 'black', borderWidth: 0.8 }}
+          style={{ borderRadius: 8, width: 120, height: 120, borderColor: 'black', borderWidth: 1 }}
         />
       </View>
-      <View style={tw`pb-30 pl-10`}>
-         <Text style={tw`text-3xl`}>Count: </Text>
+      <View style={tw`items-center mb-8`}>
+         <Text style={tw`text-2xl`}>Yes/No Count: </Text>
       </View>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-         <View style={{paddingBottom: '30%', flexDirection: 'row', justifyContent: 'space-between', width: '50%' }}>
-         
-         {/* <View> */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%', maxWidth: 600 }}>
           <TouchableOpacity
             onPress={handleReferPress}
-            style={{ backgroundColor: 'lightblue', padding: 20, borderRadius: 10 }}
+            style={{ backgroundColor: 'lightblue', paddingVertical: 15, paddingHorizontal: 30, borderRadius: 10 }}
           >
-            <Text style={{ fontSize: 35 }}>Refer</Text>
+            <Text style={{ fontSize: 24 }}>Refer</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={handleNotReferPress}
-            style={{ backgroundColor: 'lightblue', padding: 20, borderRadius: 10 }}
+            style={{ backgroundColor: 'lightblue', paddingVertical: 15, paddingHorizontal: 30, borderRadius: 10 }}
           >
-            <Text style={{ fontSize: 35 }}>Not Refer</Text>
+            <Text style={{ fontSize: 24 }}>Not Refer</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ paddingBottom: 35, width: 100, paddingLeft: 25 }}>
+      <View style={{ paddingBottom: 20, paddingHorizontal: 20, width: '100%', maxWidth: 600, alignSelf: 'center' }}>
         <Button title="Back" onPress={() => console.log('Button 2 pressed')} />
       </View>
     </SafeAreaView>
