@@ -102,7 +102,7 @@ function HomeScreen({ navigation }) {
 
   const fetchPatientDataFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllSurveyQuestionAnswers();
+      const data = await SelectService.getAllPatients();
       setPatients(data);
       console.log("Homescreen Patients: ", data);
     } catch (error) {

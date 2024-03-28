@@ -1,6 +1,27 @@
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const DropService = {
+  dropPatientDetailsTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS PatientDetails;`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("PatientDetails table dropped successfully");
+            } else {
+              resolve("PatientDetails table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping PatientDetails table: " + error);
+          }
+        );
+      });
+    });
+  },
+
   dropSurveyQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -58,6 +79,26 @@ const DropService = {
           },
           (_, error) => {
             reject("Error dropping medical_history_answers table: " + error);
+          }
+        );
+      });
+    });
+  },
+  dropSurveyQuestionAnswerTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS SurveyQuestionAnswer;`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("SurveyQuestionAnswer table dropped successfully");
+            } else {
+              resolve("SurveyQuestionAnswer table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping SurveyQuestionAnswer table: " + error);
           }
         );
       });

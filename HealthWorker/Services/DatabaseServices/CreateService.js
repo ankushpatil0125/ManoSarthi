@@ -22,9 +22,6 @@ const CreateService = {
             email TEXT,
             gender TEXT,
             dob TEXT,
-            village TEXT,
-            register_worker TEXT,
-            doctor TEXT,
             address TEXT
           );`,
           [],
@@ -124,10 +121,10 @@ const CreateService = {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS medical_history_answers (
-            answer_id INTEGER PRIMARY KEY AUTOINCREMENT,
             question_id INTEGER,
             question_ans TEXT,
-            aabha_id INTEGER
+            aabha_id INTEGER,
+            PRIMARY KEY (aabha_id, question_id)
           )`,
           [],
           (_, result) => {

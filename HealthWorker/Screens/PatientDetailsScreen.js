@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -25,17 +25,12 @@ const PatientDetailsScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState(new Date()); // Initialize dob with current date
-  const [village, setVillage] = useState("");
-  const [register_worker, setRegister_worker] = useState("");
-  const [doctor, setDoctor] = useState("");
   const [address, setAddress] = useState("");
   const [formError, setFormError] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [patients, setPatients] = useState([]);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
-
-
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
@@ -52,18 +47,16 @@ const PatientDetailsScreen = ({ navigation }) => {
     try {
       const data = await SelectService.getAllPatients();
       setPatients(data);
-      console.log("Patients Fetched from Database: ",patients);
+      console.log("Patients Fetched from Database: ", patients);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
   };
-  
-  
+
   useEffect(() => {
     fetchDataFromDatabase();
     // fetchQuestionsFromDatabase();
     // DeleteService.deleteAllQuestions();
-    
   }, []);
 
   const handleDateChange = (event, selectedDate) => {
@@ -73,24 +66,14 @@ const PatientDetailsScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !gender ||
-      !dob ||
-      !village ||
-      !register_worker ||
-      !doctor ||
-      !address
-    ) {
+    if (!firstName || !lastName || !email || !gender || !dob || !address) {
       setFormError("Please fill in all fields");
       return;
     }
 
     if (isConnected) {
       // Send data to server using POST request
-      // await sendDataToServer();
+      await sendDataToServer();
       // await storeDataLocally();
     } else {
       // Store data locally in SQLite database
@@ -101,36 +84,22 @@ const PatientDetailsScreen = ({ navigation }) => {
   };
 
   const sendDataToServer = async () => {
-    const patientData = 
-      {
-        aabhaId: aabhaId,
-        firstname: firstName,
-        lastname: lastName,
-        email: email,
-        gender: gender,
-        dob: dob,
-        village: {
-          code: village,
-        },
-        register_worker: {
-          id: register_worker,
-        },
-        doctor: {
-          id: doctor,
-        },
-        address: address,
-      }
-    ;
-
+    const patientData = {
+      aabhaId: aabhaId,
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      gender: gender,
+      dob: dob,
+      address: address,
+    };
     try {
       // Using axios for the POST request
       console.log("Patient Data", patientData);
-      // const response = await RegisterPatientService.addPatient(patientData);
+      const response = await RegisterPatientService.addPatient(patientData);
       if (response) {
         // Handle successful password change, e.g., display a success message
-        alert(
-          `Patient with name ${patientData.firstname} Added Successfully`
-        );
+        alert(`Patient with name ${patientData.firstname} Added Successfully`);
       } else {
         // Handle password change failure
         alert("Failed to Add Patient");
@@ -148,9 +117,6 @@ const PatientDetailsScreen = ({ navigation }) => {
         email,
         gender,
         dob: dob.toISOString(), // Convert date to ISO string
-        village,
-        register_worker,
-        doctor,
         address,
       };
 
@@ -168,7 +134,6 @@ const PatientDetailsScreen = ({ navigation }) => {
       style={{ flex: 1 }}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        
         <Text style={styles.label}>First Name:</Text>
         <TextInput
           style={styles.input}
@@ -215,27 +180,7 @@ const PatientDetailsScreen = ({ navigation }) => {
             />
           )}
         </View>
-        <Text style={styles.label}>Village:</Text>
-        <TextInput
-          style={styles.input}
-          value={village}
-          onChangeText={setVillage}
-          placeholder="Enter village"
-        />
-        <Text style={styles.label}>Register Worker:</Text>
-        <TextInput
-          style={styles.input}
-          value={register_worker}
-          onChangeText={setRegister_worker}
-          placeholder="Enter register worker"
-        />
-        <Text style={styles.label}>Doctor:</Text>
-        <TextInput
-          style={styles.input}
-          value={doctor}
-          onChangeText={setDoctor}
-          placeholder="Enter doctor"
-        />
+
         <Text style={styles.label}>Address:</Text>
         <TextInput
           style={[styles.input]}
@@ -252,15 +197,7 @@ const PatientDetailsScreen = ({ navigation }) => {
           title="Submit"
           onPress={handleSubmit}
           disabled={
-            !firstName ||
-            !lastName ||
-            !email ||
-            !gender ||
-            !dob ||
-            !village ||
-            !register_worker ||
-            !doctor ||
-            !address
+            !firstName || !lastName || !email || !gender || !dob || !address
           }
         />
       </ScrollView>
