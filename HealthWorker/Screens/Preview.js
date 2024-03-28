@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Alert, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import SelectService from '../Services/DatabaseServices/SelectService';
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
 
-
 const Preview = () => {
   const [consentChecked, setConsentChecked] = useState(false);
+  const [medicalDetails, setMedicalDetails] = useState([]);
+  const [medicalQuestions, setMedicalQuestions] = useState([]);
 
   const handleCheckboxChange = () => {
     setConsentChecked(!consentChecked);
@@ -14,15 +15,35 @@ const Preview = () => {
 
   const showAlert = async () => {
     if (consentChecked) {
-      const res = await SelectService.getAllMedicalHistoryAnswers();
-      Alert.alert('Data saved in local DB sucessesfully!', [{ text: 'OK' }]);
-      console.log("All data entries in  table: ", res);
+      try {
+        const res = await SelectService.getMedicalHistoryAnswers();
+        Alert.alert('Data saved in local DB successfully!', 'OK');
+        console.log("All data entries in table: ", res);
+      } catch (error) {
+        Alert.alert('Error!', 'Failed to fetch data from local DB.', [{ text: 'OK' }]);
+        console.error(error);
+      }
     } else {
       Alert.alert('Please provide consent!', 'You need to provide consent before submitting.', [{ text: 'OK' }]);
     }
   };
 
-  const { aabha_id } = useContext(PatientContext); // Access aabhaId from the context
+  const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const medicalDetailsRes = await SelectService.getMedicalHistoryAnswers(aabhaId);
+        setMedicalDetails(medicalDetailsRes);
+
+        const medicalQuestionsRes = await SelectService.getAllMedicalQuestions();
+        setMedicalQuestions(medicalQuestionsRes);
+      } catch (error) {
+        console.error("Error fetching medical details or questions:", error);
+      }
+    }
+    fetchData();
+  }, [aabhaId]);
 
   const patientDetails = {
     name: 'Sanket Patil',
@@ -34,9 +55,6 @@ const Preview = () => {
       { question: 'Chronic conditions', answer: 'Answer 2' },
       { question: 'Allergies (medications, food, environmental)', answer: 'Answer 3' },
     ],
-
-    medicalDetails: SelectService.getMedicalHistoryAnswers(aabha_id),
-    medicalQuestions: SelectService.getAllMedicalQuestions(),
 
     additionalDetails: {
       address: '123 Main Street',
@@ -51,7 +69,6 @@ const Preview = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.header}>Preview and Submit</Text>
-
         <View style={styles.detailsContainer}>
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Patient Details:</Text>
@@ -69,8 +86,8 @@ const Preview = () => {
 
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Medical Details:</Text>
-            {patientDetails.medicalDetails.map((detail, index) => (
-              <Text key={index}>{patientDetails.medicalQuestions[index].question}: {detail.question_ans}</Text>
+            {medicalDetails.map((detail, index) => (
+              <Text key={index}>{medicalQuestions[index]?.question}: {detail.question_ans}</Text>
             ))}
           </View>
 
@@ -108,7 +125,7 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingLeft:"8%",
+    paddingLeft: "8%",
     paddingBottom: 40,
   },
   header: {
@@ -142,7 +159,7 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:"center",
+    justifyContent: "center",
     marginBottom: 20,
   },
   checkbox: {

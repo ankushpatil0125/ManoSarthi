@@ -109,13 +109,13 @@ const InsertService = {
     });
   },
 
-  insertMedicalHistoryAnswers: (medicalQuestions, answers, comment) => {
+  insertMedicalHistoryAnswers: (medicalQuestions, answers, comment, aabha_id) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         for (let index = 0; index < answers.length; index++) {
           tx.executeSql(
-            "INSERT INTO medical_history_answers (question_id, question_ans) VALUES (?, ?)",
-            [medicalQuestions[index].question_id, answers[index]],
+            "INSERT INTO medical_history_answers (aabha_id, question_id, question_ans) VALUES (?, ?, ?)",
+            [aabha_id, medicalQuestions[index].question_id, answers[index]],
             (_, result) => {
               console.log(`Data for question ${index + 1} saved successfully`);
             },
@@ -128,8 +128,8 @@ const InsertService = {
           );
         }
         tx.executeSql(
-          "INSERT INTO medical_history_answers (question_id, question_ans) VALUES (?, ?)",
-          [medicalQuestions[medicalQuestions.length - 1].question_id, comment],
+          "INSERT INTO medical_history_answers (aabha_id, question_id, question_ans) VALUES (?, ?, ?)",
+          [aabha_id, medicalQuestions[medicalQuestions.length - 1].question_id, comment],
           (_, result) => {
             console.log("Comment saved successfully");
             resolve(); // Resolve the promise after successful execution
