@@ -42,7 +42,7 @@ public class Doctor {
     private String email;
 
 
-    @OneToOne(cascade = CascadeType.ALL)        // check for cascade type see all parameters
+    @OneToOne
     @JoinColumn(name = "username")
     private User user;
 

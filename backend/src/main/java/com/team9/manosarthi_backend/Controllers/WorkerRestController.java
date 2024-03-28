@@ -3,8 +3,10 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
+import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.team9.manosarthi_backend.security.JwtHelper;
 
 @RestController
 @Validated
@@ -26,11 +29,16 @@ import java.util.Set;
 @RequestMapping("/worker")
 @CrossOrigin(origins = "*")
 public class WorkerRestController {
-    @Autowired
     private WorkerService workerService;
+    private QuestionarrieService questionarrieService;
+    private JwtHelper helper;
 
     @Autowired
-    private QuestionarrieService questionarrieService;
+    public WorkerRestController(WorkerService workerService, QuestionarrieService questionarrieService, JwtHelper helper) {
+        this.workerService = workerService;
+        this.questionarrieService = questionarrieService;
+        this.helper = helper;
+    }
 
     @PutMapping("/updateworker")
     public ResponseEntity<MappingJacksonValue> UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
@@ -93,18 +101,91 @@ public class WorkerRestController {
         mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
     }
+//    @PostMapping("/register-patient")
+//    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
+//        System.out.println("/register-patient");
+//
+//        System.out.println("patient"+patient.toString());
+//
+//        Patient newPatient = workerService.registerPatient(patient);
+//        Set<String> patientFilterProperties = new HashSet<>();
+//        patientFilterProperties.add("aabhaId");
+//
+//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
+//
+//        return patientFilter.getPatientFilter(patientFilterProperties);
+//    }
+
     @PostMapping("/register-patient")
-    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
+    public MappingJacksonValue registerpatient(@RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
         System.out.println("/register-patient");
+        System.out.println("patient"+registerPatientDTO.toString());
 
-        System.out.println("patient"+patient.toString());
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
-        Patient newPatient = workerService.registerPatient(patient);
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+
+            Patient newPatient = workerService.registerPatient(registerPatientDTO,Integer.parseInt(workerId));
+            Set<String> patientFilterProperties = new HashSet<>();
+            patientFilterProperties.add("aabhaId");
+
+            PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
+
+            return patientFilter.getPatientFilter(patientFilterProperties);
+        }
+
+        return null;
+    }
+
+//    @PostMapping("/register-patient")
+//    public MappingJacksonValue registerPatient(@RequestBody Patient patient){
+//        System.out.println("/register-patient");
+//
+//        System.out.println("patient"+patient.toString());
+//
+//        Patient newPatient = workerService.registerPatient(patient);
+//        Set<String> patientFilterProperties = new HashSet<>();
+//        patientFilterProperties.add("aabhaId");
+//
+//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
+//
+//        return patientFilter.getPatientFilter(patientFilterProperties);
+//    }
+
+    @Autowired
+    PatientRepository patientRepository;
+    @GetMapping("/get-patient")
+    public MappingJacksonValue getPatient()
+    {
+
+
+        List<Patient> patientList = patientRepository.findAll();
+
         Set<String> patientFilterProperties = new HashSet<>();
         patientFilterProperties.add("aabhaId");
+        patientFilterProperties.add("followUpDetailsList");
+        patientFilterProperties.add("medicalQueAnsList");
 
-        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
+        Set<String> followUpFilterProperties = new HashSet<>();
+        followUpFilterProperties.add("followupDate");
+        followUpFilterProperties.add("followUpNo");
+        followUpFilterProperties.add("worker");
+        followUpFilterProperties.add("doctor");
+        followUpFilterProperties.add("questionarrieAnsList");
 
-        return patientFilter.getPatientFilter(patientFilterProperties);
+        Set<String> workerFilterProperties = new HashSet<>();
+        workerFilterProperties.add("firstname");
+
+        Set<String> doctorFilterProperties = new HashSet<>();
+        doctorFilterProperties.add("firstname");
+
+
+        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
+
+        return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
+
+
+
     }
 }
