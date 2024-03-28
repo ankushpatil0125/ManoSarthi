@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.Village;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Filters.WorkerFilter;
 import com.team9.manosarthi_backend.Repositories.VillageRepository;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@PreAuthorize("hasRole('SUPERVISOR')")
+//@PreAuthorize("hasRole('SUPERVISOR')")
 @RequestMapping("/supervisor")
 @CrossOrigin(origins = "*")
 public class SupervisorRestController {
@@ -72,6 +73,7 @@ public class SupervisorRestController {
             return supervisorFilter.getSupervisorFilter(supervisorFilterProperties,subDistrictFilterProperties,userFilterProperties);
 
         }
+//        throw new APIRequestException("Error while adding the doctor.");
         return null;
     }
 
@@ -188,12 +190,14 @@ public class SupervisorRestController {
 
         List<Worker> worker = supervisorService.getVillWorker(villagecode);
         if (worker != null) {
-            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email","id","villagecode");
+            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "id", "villagecode");
             SimpleBeanPropertyFilter VillageFilter = SimpleBeanPropertyFilter.filterOutAllExcept("name");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter",VillageFilter);;
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter", VillageFilter);
+
             MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(worker);
             mappingJacksonValue.setFilters(filterProvider);
             return mappingJacksonValue;
+
         } else {
             return new MappingJacksonValue(Collections.emptyList());
         }

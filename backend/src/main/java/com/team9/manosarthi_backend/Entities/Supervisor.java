@@ -34,6 +34,7 @@ public class Supervisor {
     @Column(name = "last_name")
     private String lastname;
 
+    @NotBlank(message = "Email cannot be blank")
     @Email(message = "Enter valid email")
     @Column(name = "email",unique = true)
     private String email;
