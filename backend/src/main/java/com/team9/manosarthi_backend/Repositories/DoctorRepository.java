@@ -26,6 +26,9 @@ public interface DoctorRepository extends JpaRepository<Doctor,Integer> {
     @Query("SELECT d from Doctor d where d.subdistrictcode.code =:subdistrictcode")
     List<Doctor> findDoctorBySubDistrict(@Param("subdistrictcode") int subdistrictcode);
 
+    @Query("SELECT d from Doctor d where d.subdistrictcode.code =:subdistrictcode and d.patient_count=(select MIN(d2.patient_count) from Doctor d2 WHERE d2.subdistrictcode.code = :subdistrictcode)")
+    List<Doctor> findDoctorWithMinimumPatient(@Param("subdistrictcode") int subdistrictcode);
+
 
 
 }
