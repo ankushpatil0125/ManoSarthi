@@ -1,11 +1,14 @@
 package com.team9.manosarthi_backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "patient")
@@ -64,4 +67,19 @@ public class Patient {
 
     @Column(name = "status")
     private String status="NEW";
+
+
+    @Column(name = "follow_up_Number")
+    private int followUpNumber=0;
+
+    @Column(name = "referred_during_follow_up")
+    private boolean referred;
+
+    @OneToMany(mappedBy = "patient")
+    @JsonManagedReference
+    private List<FollowUpDetails> followUpDetailsList;
+
+    @OneToMany(mappedBy = "patient")
+    @JsonManagedReference
+    private List<MedicalQueAns> medicalQueAnsList;
 }

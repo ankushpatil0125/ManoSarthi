@@ -41,7 +41,7 @@ public class Worker {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)        // check for cascade type see all parameters
+    @OneToOne
     @JoinColumn(name = "username")
     private User user;
 

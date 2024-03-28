@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity} from 'react-native'
+import React from 'react'
 
 const ProfileScreen = () => {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ flex: 1, padding: 20, alignItems: 'center', justifyContent: 'center' }}>
         <Image
-          source={require('../../assets/logo.png')}
+          source={require('../assets/logo.png')}
           style={{ width: 150, height: 150, borderRadius: 75, marginBottom: 20 }}
         />
         <Image
-          source={require('../../assets/avatar.png')}
+          source={require('../assets/avatar.png')}
           style={{ width: 150, height: 150, borderRadius: 75, marginBottom: 20 }}
         />
         <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 10 }}>John Doe</Text>
@@ -30,7 +30,9 @@ const ProfileScreen = () => {
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
-export default ProfileScreen;
+export default ProfileScreen
+
+const styles = StyleSheet.create({})

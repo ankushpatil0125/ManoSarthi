@@ -5,21 +5,84 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/%ProgramData%/Microsoft/Windows/UUS/State/_active.uusver" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/.expo/web/cache/production/images/favicon/favicon-24272cdaeff82cc5facdaccd982a6f05b60c4504704bbf94c19a6388659880bb-contain-transparent/favicon-48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Context/PatientContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/HomeScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/MedicalDetails.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/PatientDetailsScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/Preview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/QuestionnaireScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/ReferNotRefer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Screens/RegisterPatientScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/DatabaseServices/CreateService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/DatabaseServices/DatabaseServiceInit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/DatabaseServices/DeleteService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/DatabaseServices/DropService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/DatabaseServices/InsertService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/DatabaseServices/SelectService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/MedicalQuestionarrieService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/RegisterPatientService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/Services/SurveyQuestionsService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/assets/adaptive-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/assets/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/assets/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/assets/saarthi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/assets/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HealthWorker/utils/Constants.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../appLog.log.2024-03-26.0.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../appLog.log.2024-03-27.0.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/RegisterPatientDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpDetailsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/navigation/StackNavigator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/references.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/Drawer/DashboardScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/Drawer/PrescriptionScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/Drawer/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/Screens/ProfileScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/HomeScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/Screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/MissedFollowUpsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/Screens/MissedFollowUpsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/screens/RegisterScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/tailwind.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/../appLog.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQueAns.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQueAns.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie_ans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie_ans.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Exceptions/GlobalExceptionhandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Exceptions/GlobalExceptionhandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/models/APIResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/models/ApiException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/PatientFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Filters/PatientFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/DoctorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/DoctorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Exceptions/GlobalExceptionhandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Exceptions/GlobalExceptionhandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/QuestionarrieServImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/QuestionarrieServImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/WorkerRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Controllers/WorkerRestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/MedicalQue.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/MedicalQue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Patient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Questionarrie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Questionarrie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Questionarrie_ans.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Questionarrie_ans.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Worker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Entities/Worker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/PatientFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Filters/PatientFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Repositories/DoctorRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Repositories/DoctorRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Repositories/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/WorkerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/WorkerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/WorkerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Services/WorkerServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,29 +119,29 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Manasi&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend/src/main/java/com/team9/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging Manasi",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
+    "last_opened_file_path": "/home/manasi/Documents/GitHub/ManoSarthi/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "onboarding.tips.debug.path": "/home/manasi/Documents/GitHub/ManoSarthi/backend/src/main/java/com/team9/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication (1)">
     <configuration name="ManosarthiBackendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
@@ -158,7 +221,7 @@
       <workItem from="1711292970326" duration="866000" />
       <workItem from="1711383128829" duration="12850000" />
       <workItem from="1711431563524" duration="13672000" />
-      <workItem from="1711606814496" duration="19461000" />
+      <workItem from="1711606814496" duration="19750000" />
     </task>
     <servers />
   </component>
