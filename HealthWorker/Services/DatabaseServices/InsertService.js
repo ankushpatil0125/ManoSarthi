@@ -6,7 +6,7 @@ const InsertService = {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "INSERT INTO PatientDetails (aabhaId, firstName, lastName, email, gender, dob, village, register_worker, doctor, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "INSERT INTO PatientDetails (aabhaId, firstName, lastName, email, gender, dob, address) VALUES (?, ?, ?, ?, ?, ?, ?)",
           [
             patientDetails.aabhaId,
             patientDetails.firstName,
@@ -14,9 +14,6 @@ const InsertService = {
             patientDetails.email,
             patientDetails.gender,
             patientDetails.dob,
-            patientDetails.village,
-            patientDetails.register_worker,
-            patientDetails.doctor,
             patientDetails.address,
           ],
           (_, { rowsAffected }) => {

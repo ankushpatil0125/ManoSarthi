@@ -14,42 +14,59 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SecureStore } from "expo";
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
+
+async function getValueFor(key) {
+  let result = await SecureStore.getItemAsync(key);
+  console.log("get key: ", result);
+  if (result) {
+    alert("🔐 Here's your value 🔐 \n" + result);
+  } else {
+    alert("No values stored under that key.");
+  }
+}
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const user = {
-        email:email,
-        password:password
+      username: username,
+      password: password,
     };
-    Alert.alert("Email " + email + "Password " + password);
-    navigation.replace("HomeScreen")
-    // axios.post("http://localhost:8080/login",user).then((response) => {
-    //     console.log(response);
-    //     const token = response.data.token;
-    //     AsyncStorage.setItem("JWT", token);
-    //     navigation.replace("Main");
-    // }).catch((error) => {
-    //     Alert.alert("Login Failure");
-    //     console.log("Login Failure",error);
-    // });
+    Alert.alert("Username " + username + "Password " + password);
+    axios
+      .post("http://192.168.73.188:9090/auth/login", user)
+      .then((response) => {
+        console.log("Login Response: ", response.data);
+        console.log("Login Response jwt: ", response.data.jwtToken);
+        const token = response.data.jwtToken;
+        save("jwt", token);
+        getValueFor("jwt");
+      })
+      .catch((error) => {
+        Alert.alert("Login Failure");
+        console.log("Login Failure", error);
+      });
   };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
-      <View >
-        <Image 
+      <View>
+        <Image
           style={{ width: 150, height: 150 }}
           source={require("../assets/logo.png")}
         />
       </View>
       <KeyboardAvoidingView>
-      {/* Login to Your Account */}
+        {/* Login to Your Account */}
         <View style={{ alignItems: "center" }}>
           <Text style={{ fontSize: 17, fontWeight: "bold", color: "#007FFF" }}>
             Login to Your Account
@@ -71,20 +88,20 @@ const LoginScreen = () => {
           >
             <MaterialIcons
               style={{ marginLeft: 10 }}
-              name="email"
+              name="username"
               size={24}
               color="gray"
             />
             <TextInput
-              value={email}
-              onChangeText={(text) => setEmail(text)}
+              value={username}
+              onChangeText={(text) => setUserName(text)}
               style={{
                 color: "gray",
                 marginVertical: 10,
                 width: 280,
                 fontSize: 16,
               }}
-              placeholder="Enter your Email"
+              placeholder="Enter your Username"
             />
           </View>
         </View>
@@ -138,7 +155,7 @@ const LoginScreen = () => {
 
         <View style={{ marginTop: 80 }}>
           <Pressable
-          onPress={handleLogin}
+            onPress={handleLogin}
             style={{
               width: 200,
               backgroundColor: "#007FFF",

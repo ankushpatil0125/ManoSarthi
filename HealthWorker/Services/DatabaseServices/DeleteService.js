@@ -51,6 +51,23 @@ const DeleteService = {
       });
     });
   },
+  deleteAllSurveyQuestionAnswers: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DELETE FROM SurveyQuestionAnswer;`,
+          [],
+          (_, result) => {
+            resolve("All entries deleted from SurveyQuestionAnswer table");
+          },
+          (_, error) => {
+            reject("Error deleting entries from SurveyQuestionAnswer table: " + error);
+          }
+        );
+      });
+    });
+  },
+
 
   deleteAllMedicalQuestions: () => {
     return new Promise((resolve, reject) => {

@@ -50,7 +50,7 @@ const QuestionnaireScreen = ({ navigation }) => {
       const data = await SelectService.getAllSurveyQuestionAnswers();
       
 
-      console.log("Response of Survey Questions : ", data);
+      console.log("Response of Survey Questions Answers : ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }

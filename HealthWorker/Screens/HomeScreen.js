@@ -100,7 +100,7 @@ function HomeScreen({ navigation }) {
   const [patients, setPatients] = useState([]);
   const [medical_history_ans, setMedical_history_ans] = useState([]);
 
-  const fetchDataFromDatabase = async () => {
+  const fetchPatientDataFromDatabase = async () => {
     try {
       const patient_data = await SelectService.getAllPatients();
       const medical_history = await SelectService.getMedicalHistoryAnswers();
@@ -116,6 +116,28 @@ function HomeScreen({ navigation }) {
     }
   };
 
+  const fetchSurveyQuestionAnswerFromDatabase = async () => {
+    try {
+      const data = await SelectService.getAllSurveyQuestionAnswers();
+      console.log("Homescreen SurveyQuestionAnswers: ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+
+
+  const deleteDataFromDatabase = async () => {
+    try {
+      await DeleteService.deleteAllSurveyQuestionAnswers();
+      console.log("All survey Question answer response deleted");
+    } catch (error) {
+      console.error("Error deleting data from database:", error);
+    }
+  };
+
+
+    
+    // deleteDataFromDatabase();
 
   const deleteAllMedicalHistoryAnswers = async () => {
     try {
@@ -138,7 +160,8 @@ function HomeScreen({ navigation }) {
   // };
 
   useEffect(() => {
-    fetchDataFromDatabase();
+    fetchPatientDataFromDatabase();
+    fetchSurveyQuestionAnswerFromDatabase();
     // deleteAllMedicalHistoryAnswers();
   }, []);
 

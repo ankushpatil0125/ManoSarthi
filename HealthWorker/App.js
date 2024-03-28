@@ -16,11 +16,11 @@ import MedicalDetails from "./Screens/MedicalDetails";
 import Preview from "./Screens/Preview";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
-import PatientContext,{PatientProvider} from "./Context/PatientContext";
-import ProfileScreen from './Screens/ProfileScreen'
+import PatientContext, { PatientProvider } from "./Context/PatientContext";
+import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
-
+import * as SQLite from "expo-sqlite";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -32,7 +32,6 @@ const checkNetworkConnectivity = async () => {
   const state = await NetInfo.fetch();
   return state.isConnected;
 };
-
 
 const DashboardScreen = () => (
   <View style={styles.screen}>
@@ -55,27 +54,33 @@ const PrescriptionScreen = () => (
 // Define a function to render the home stack
 const HomeStack = () => (
   <PatientProvider>
-    
-  <Stack.Navigator>
-    <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-    <Stack.Screen name="HomeScreen" component={HomeScreen} />
-    <Stack.Screen
-      name="RegisterPatientScreen"
-      component={RegisterPatientScreen}
-    />
-    <Stack.Screen
-      name="PatientDetailsScreen"
-      component={PatientDetailsScreen}
-    />
-    <Stack.Screen
-      name="MissedFollowupScreen"
-      component={MissedFollowUpsScreen}
-    />
-    <Stack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
-    <Stack.Screen name="ReferNotRefer" component={ReferNotRefer} />
-    <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
-    <Stack.Screen name="Preview" component={Preview} />
-  </Stack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen
+        name="RegisterPatientScreen"
+        component={RegisterPatientScreen}
+      />
+      <Stack.Screen
+        name="PatientDetailsScreen"
+        component={PatientDetailsScreen}
+      />
+      <Stack.Screen
+        name="MissedFollowupScreen"
+        component={MissedFollowUpsScreen}
+      />
+      <Stack.Screen
+        name="QuestionnaireScreen"
+        component={QuestionnaireScreen}
+      />
+      <Stack.Screen name="ReferNotRefer" component={ReferNotRefer} />
+      <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
+      <Stack.Screen name="Preview" component={Preview} />
+    </Stack.Navigator>
   </PatientProvider>
 );
 
@@ -114,9 +119,15 @@ export default function App() {
   useEffect(() => {
     const initializeDatabase = async () => {
       try {
-        // Initialize database and create tables
+        // await SQLite.deleteDatabaseSync("HealthWorker.db");
+        // console.log("Database Dropped..");
+        // await SQLite.deleteDatabaseAsync("HealthWorker.db");
         // await DropService.dropMedicalQuestionsTable();
         // await DropService.dropMedicalHistoryAnswersTable();
+        // await DropService.dropSurveyQuestionTable();
+        // await DropService.dropPatientDetailsTable();
+        // await DropService.dropSurveyQuestionAnswerTable();
+        // Initialize database and create tables
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
         // Perform additional actions if database initialized successfully
@@ -127,15 +138,14 @@ export default function App() {
         // You can also perform additional actions, such as reattempting initialization or showing an error message
       }
     };
-  
+
     initializeDatabase();
-  
+
     // Clean up function to close the database connection
     return () => {
       db.closeSync(); // Close the database connection
     };
   }, []); // Empty dependency array to ensure this effect runs only once on component mount
-  
 
   return (
     <NavigationContainer>
