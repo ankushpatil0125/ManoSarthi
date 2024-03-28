@@ -17,7 +17,9 @@ import Preview from "./Screens/Preview";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
 import PatientContext,{PatientProvider} from "./Context/PatientContext";
-
+import ProfileScreen from './Screens/ProfileScreen'
+import LoginScreen from "./Screens/LoginScreen";
+import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -31,11 +33,6 @@ const checkNetworkConnectivity = async () => {
   return state.isConnected;
 };
 
-const ProfileScreen = () => (
-  <View style={styles.screen}>
-    <Text>Profile Screen</Text>
-  </View>
-);
 
 const DashboardScreen = () => (
   <View style={styles.screen}>
@@ -60,6 +57,7 @@ const HomeStack = () => (
   <PatientProvider>
     
   <Stack.Navigator>
+    <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
     <Stack.Screen name="HomeScreen" component={HomeScreen} />
     <Stack.Screen
       name="RegisterPatientScreen"
@@ -68,6 +66,10 @@ const HomeStack = () => (
     <Stack.Screen
       name="PatientDetailsScreen"
       component={PatientDetailsScreen}
+    />
+    <Stack.Screen
+      name="MissedFollowupScreen"
+      component={MissedFollowUpsScreen}
     />
     <Stack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
     <Stack.Screen name="ReferNotRefer" component={ReferNotRefer} />
