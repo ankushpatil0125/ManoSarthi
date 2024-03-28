@@ -6,7 +6,8 @@ import DeleteService from "../Services/DatabaseServices/DeleteService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import SurveyQuestionsService from "../Services/SurveyQuestionsService";
 import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService";
-
+import Table from "../components/Table";
+import { ScrollView } from "react-native";
 // const [sendPatient, setSendPatient] = useState([]);
 
 const syncData = async () => {
@@ -120,6 +121,7 @@ function HomeScreen({ navigation }) {
 
   const handleMissedFollowup = () => {
     // Navigate or perform action for missed followup
+    navigation.navigate("MissedFollowupScreen");
   };
 
   const handleSync = () => {
@@ -132,6 +134,7 @@ function HomeScreen({ navigation }) {
 
 
   return (
+    <ScrollView>
     <View style={styles.screen}>
       <View style={styles.topButtonsContainer}>
         <TouchableOpacity style={styles.button} onPress={handleRegisterPatient}>
@@ -150,6 +153,8 @@ function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </View>
+    <View style={{marginTop:50}}><Table/></View>
+    </ScrollView>
   );
 }
 
