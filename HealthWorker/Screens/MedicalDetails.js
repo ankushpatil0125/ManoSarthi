@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Image, ScrollView, Text, TextInput, View, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import SelectService from '../Services/DatabaseServices/SelectService';
 import MedicalQuestionarrieService from '../Services/MedicalQuestionarrieService';
 import InsertService from '../Services/DatabaseServices/InsertService';
+import PatientContext from "../Context/PatientContext"; // Import PatientContext here
 
 
 const MedicalDetails = () => {
@@ -15,6 +16,9 @@ const MedicalDetails = () => {
   const navigation = useNavigation();
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
+
+  const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+
 
   useEffect(() => {
     fetchQuestionsFromDatabase();
@@ -111,7 +115,7 @@ const MedicalDetails = () => {
   const saveDataToDatabase = async (answers, comment) => {
    try{
     console.log("before res: ");
-    const res = await InsertService.insertMedicalHistoryAnswers(medicalQuestions, answers, comment);
+    const res = await InsertService.insertMedicalHistoryAnswers(medicalQuestions, answers, comment, aabhaId);
     console.log("res: ", res);
    }
    catch(error){

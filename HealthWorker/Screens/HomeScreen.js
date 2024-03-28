@@ -93,25 +93,53 @@ const fetchData = async () => {
   } catch (error) {
     console.error("Error during question insertion:", error);
     // Handle the error here, such as showing a message to the user
-  }
- 
+  } 
 };
 
 function HomeScreen({ navigation }) {
   const [patients, setPatients] = useState([]);
+  const [medical_history_ans, setMedical_history_ans] = useState([]);
 
   const fetchDataFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllPatients();
-      setPatients(data);
-      console.log("Homescreen Patients: ", data);
+      const patient_data = await SelectService.getAllPatients();
+      const medical_history = await SelectService.getMedicalHistoryAnswers();
+
+      setPatients(patient_data);
+      setMedical_history_ans(medical_history);
+
+      console.log("Homescreen Patients: ", patient_data);
+      console.log("Homescreen medical_history_ans: ", medical_history);
+
     } catch (error) {
-      console.error("Error fetching data from database:", error);
+      console.error("Error fetching data from database(HomeScreen):", error);
     }
   };
 
+
+  const deleteAllMedicalHistoryAnswers = async () => {
+    try {
+      await DeleteService.deleteAllMedicalHistoryAnswers();
+      console.log("AllMedicalHistoryAnswers deleted successfully.");
+
+    } catch (error) {
+      console.error("Error deleting AllMedicalHistoryAnswers:", error);
+    }
+  };
+
+  // const fetchDataFromDatabase = async () => {
+  //   try {
+  //     const data = await SelectService.getAllPatients();
+  //     setPatients(data);
+  //     console.log("Homescreen Patients: ", data);
+  //   } catch (error) {
+  //     console.error("Error fetching data from database:", error);
+  //   }
+  // };
+
   useEffect(() => {
     fetchDataFromDatabase();
+    // deleteAllMedicalHistoryAnswers();
   }, []);
 
   const handleRegisterPatient = () => {
@@ -131,7 +159,6 @@ function HomeScreen({ navigation }) {
   const handleFetch = () => {
     fetchData();
   };
-
 
   return (
     <ScrollView>

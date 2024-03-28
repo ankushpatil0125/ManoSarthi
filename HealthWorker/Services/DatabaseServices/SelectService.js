@@ -76,12 +76,20 @@ const SelectService = {
     });
   },
 
-  getAllMedicalHistoryAnswers: () => {
+  getMedicalHistoryAnswers: (aabha_id = null) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
+        let query = "SELECT * FROM medical_history_answers";
+        let params = [];
+  
+        if (aabha_id !== null) {
+          query += " WHERE aabha_id = ?";
+          params.push(aabha_id);
+        }
+  
         tx.executeSql(
-          "SELECT * FROM medical_history_answers",
-          [],
+          query,
+          params,
           (_, { rows }) => {
             const medical_history = rows._array;
             resolve(medical_history);
@@ -93,6 +101,7 @@ const SelectService = {
       });
     });
   },
+  
 };
 
 export default SelectService;

@@ -124,10 +124,10 @@ const CreateService = {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS medical_history_answers (
-            answer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            answer_id INTEGER PRIMARY KEY,
             question_id INTEGER,
             question_ans TEXT,
-            aabha_id INTEGER
+            aabha_id TEXT
           )`,
           [],
           (_, result) => {
