@@ -8,7 +8,7 @@ import com.team9.manosarthi_backend.Entities.MedicalQue;
 import com.team9.manosarthi_backend.Entities.Questionarrie;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 
-public interface AdminService {
+public interface AdminService  {
 
     Doctor adddoctor(Doctor doctor);
 
