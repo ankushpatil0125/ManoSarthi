@@ -66,18 +66,18 @@ public class WorkerRestController {
         return mappingJacksonValue;
     }
 
-    @PostMapping("/questionans")
-    public MappingJacksonValue postquestans(@Valid @RequestBody Questionarrie_ans questionarrie_ans)
-    {
-        Questionarrie_ans queans= questionarrieService.postqueans(questionarrie_ans);
-        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id");
-//        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter).addFilter("QuestionJSONFilter",questionfilter);
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
-    }
+//    @PostMapping("/questionans")
+//    public MappingJacksonValue postquestans(@Valid @RequestBody Questionarrie_ans questionarrie_ans)
+//    {
+//        Questionarrie_ans queans= questionarrieService.postqueans(questionarrie_ans);
+//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id");
+////        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
+////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter).addFilter("QuestionJSONFilter",questionfilter);
+//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
+//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
+//        mappingJacksonValue.setFilters(filterProvider);
+//        return mappingJacksonValue;
+//    }
 
     @GetMapping("/get-medical-questionarrie")
     public MappingJacksonValue getmedquestionarrie() {
@@ -88,19 +88,19 @@ public class WorkerRestController {
         mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
     }
-    @PostMapping("/medical-questionans")
-    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
-    {
-        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
-        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
-        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
-    }
+//    @PostMapping("/medical-questionans")
+//    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
+//    {
+//        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
+//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
+//        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
+//        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
+//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
+////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
+//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
+//        mappingJacksonValue.setFilters(filterProvider);
+//        return mappingJacksonValue;
+//    }
 //    @PostMapping("/register-patient")
 //    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
 //        System.out.println("/register-patient");
@@ -138,20 +138,7 @@ public class WorkerRestController {
         return null;
     }
 
-//    @PostMapping("/register-patient")
-//    public MappingJacksonValue registerPatient(@RequestBody Patient patient){
-//        System.out.println("/register-patient");
-//
-//        System.out.println("patient"+patient.toString());
-//
-//        Patient newPatient = workerService.registerPatient(patient);
-//        Set<String> patientFilterProperties = new HashSet<>();
-//        patientFilterProperties.add("aabhaId");
-//
-//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
-//
-//        return patientFilter.getPatientFilter(patientFilterProperties);
-//    }
+
 
     @Autowired
     PatientRepository patientRepository;

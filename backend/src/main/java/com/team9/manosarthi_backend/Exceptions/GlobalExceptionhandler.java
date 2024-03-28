@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Exceptions;
 
+import com.team9.manosarthi_backend.models.ApiException;
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.TransientPropertyValueException;
 import org.springframework.http.HttpStatus;
@@ -15,15 +16,25 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionhandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,String>> handleMethodArgsNotValidException(MethodArgumentNotValidException ex)
+    public ResponseEntity<Object> handleMethodArgsNotValidException(MethodArgumentNotValidException ex)
     {
-        Map<String,String> resp=new HashMap<>();
+//        Map<String,String> resp=new HashMap<>();
+//        ex.getBindingResult().getAllErrors().forEach((error)->{
+//            String fieldname=((FieldError) error).getField();
+//            String message= error.getDefaultMessage();
+//            resp.put(fieldname,message);
+//        });
+        StringBuilder errorMessageBuilder = new StringBuilder();
         ex.getBindingResult().getAllErrors().forEach((error)->{
-            String fieldname=((FieldError) error).getField();
             String message= error.getDefaultMessage();
-            resp.put(fieldname,message);
+            errorMessageBuilder.append(message).append(", ");
+
         });
-        return new ResponseEntity<Map<String,String>>(resp, HttpStatus.BAD_REQUEST);
+        String errorMessage = errorMessageBuilder.toString();
+
+//        return new ResponseEntity<Map<String,String>>(resp, HttpStatus.BAD_REQUEST);
+        ApiException apiException= new  ApiException(errorMessage, null,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
