@@ -99,9 +99,9 @@ const fetchData = async () => {
 function HomeScreen({ navigation }) {
   const [patients, setPatients] = useState([]);
 
-  const fetchDataFromDatabase = async () => {
+  const fetchPatientDataFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllPatients();
+      const data = await SelectService.getAllSurveyQuestionAnswers();
       setPatients(data);
       console.log("Homescreen Patients: ", data);
     } catch (error) {
@@ -109,8 +109,29 @@ function HomeScreen({ navigation }) {
     }
   };
 
+  const fetchSurveyQuestionAnswerFromDatabase = async () => {
+    try {
+      const data = await SelectService.getAllSurveyQuestionAnswers();
+      console.log("Homescreen SurveyQuestionAnswers: ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+
+
+  const deleteDataFromDatabase = async () => {
+    try {
+      await DeleteService.deleteAllSurveyQuestionAnswers();
+      console.log("All survey Question answer response deleted");
+    } catch (error) {
+      console.error("Error deleting data from database:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchDataFromDatabase();
+    fetchPatientDataFromDatabase();
+    fetchSurveyQuestionAnswerFromDatabase();
+    // deleteDataFromDatabase();
   }, []);
 
   const handleRegisterPatient = () => {
