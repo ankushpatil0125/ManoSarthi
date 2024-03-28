@@ -1,13 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Alert, ScrollView } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-import SelectService from '../Services/DatabaseServices/SelectService';
+import React, { useState, useContext, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Alert,
+  ScrollView,
+} from "react-native";
+import { CheckBox } from "react-native-elements";
+import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
+import { useNavigation } from "@react-navigation/native";
 
 const Preview = () => {
   const [consentChecked, setConsentChecked] = useState(false);
   const [medicalDetails, setMedicalDetails] = useState([]);
   const [medicalQuestions, setMedicalQuestions] = useState([]);
+
+  const navigation = useNavigation();
 
   const handleCheckboxChange = () => {
     setConsentChecked(!consentChecked);
@@ -17,14 +28,29 @@ const Preview = () => {
     if (consentChecked) {
       try {
         const res = await SelectService.getMedicalHistoryAnswers();
-        Alert.alert('Data saved in local DB successfully!', 'OK');
+        Alert.alert("Data saved in local DB successfully!", "OK", [
+          {
+            text: "OK",
+            onPress: () => {
+              console.log("All data entries in table: ", res);
+              navigation.navigate("HomeScreen");
+            },
+          },
+        ]);
         console.log("All data entries in table: ", res);
+        navigation.navigate("HomeScreen");
       } catch (error) {
-        Alert.alert('Error!', 'Failed to fetch data from local DB.', [{ text: 'OK' }]);
+        Alert.alert("Error!", "Failed to fetch data from local DB.", [
+          { text: "OK" },
+        ]);
         console.error(error);
       }
     } else {
-      Alert.alert('Please provide consent!', 'You need to provide consent before submitting.', [{ text: 'OK' }]);
+      Alert.alert(
+        "Please provide consent!",
+        "You need to provide consent before submitting.",
+        [{ text: "OK" }]
+      );
     }
   };
 
@@ -33,10 +59,13 @@ const Preview = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const medicalDetailsRes = await SelectService.getMedicalHistoryAnswers(aabhaId);
+        const medicalDetailsRes = await SelectService.getMedicalHistoryAnswers(
+          aabhaId
+        );
         setMedicalDetails(medicalDetailsRes);
 
-        const medicalQuestionsRes = await SelectService.getAllMedicalQuestions();
+        const medicalQuestionsRes =
+          await SelectService.getAllMedicalQuestions();
         setMedicalQuestions(medicalQuestionsRes);
       } catch (error) {
         console.error("Error fetching medical details or questions:", error);
@@ -46,23 +75,25 @@ const Preview = () => {
   }, [aabhaId]);
 
   const patientDetails = {
-    name: 'Sanket Patil',
+    name: "Sanket Patil",
     age: 23,
-    mobileNo: '123394949499',
+    mobileNo: "123394949499",
 
     questionnaireAnswers: [
-      { question: 'Past illnesses and surgeries', answer: 'Answer 1' },
-      { question: 'Chronic conditions', answer: 'Answer 2' },
-      { question: 'Allergies (medications, food, environmental)', answer: 'Answer 3' },
+      { question: "Past illnesses and surgeries", answer: "Answer 1" },
+      { question: "Chronic conditions", answer: "Answer 2" },
+      {
+        question: "Allergies (medications, food, environmental)",
+        answer: "Answer 3",
+      },
     ],
 
     additionalDetails: {
-      address: '123 Main Street',
-      city: 'New York',
-      country: 'USA',
-      email: 'example@example.com'
-    }
-
+      address: "123 Main Street",
+      city: "New York",
+      country: "USA",
+      email: "example@example.com",
+    },
   };
 
   return (
@@ -80,22 +111,30 @@ const Preview = () => {
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Questionnaire Answers:</Text>
             {patientDetails.questionnaireAnswers.map((detail, index) => (
-              <Text key={index}>{detail.question}: {detail.answer}</Text>
+              <Text key={index}>
+                {detail.question}: {detail.answer}
+              </Text>
             ))}
           </View>
 
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Medical Details:</Text>
             {medicalDetails.map((detail, index) => (
-              <Text key={index}>{medicalQuestions[index]?.question}: {detail.question_ans}</Text>
+              <Text key={index}>
+                {medicalQuestions[index]?.question}: {detail.question_ans}
+              </Text>
             ))}
           </View>
 
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Additional Details:</Text>
-            {Object.entries(patientDetails.additionalDetails).map(([key, value]) => (
-              <Text key={key}>{key}: {value}</Text>
-            ))}
+            {Object.entries(patientDetails.additionalDetails).map(
+              ([key, value]) => (
+                <Text key={key}>
+                  {key}: {value}
+                </Text>
+              )
+            )}
           </View>
         </View>
 
@@ -117,7 +156,6 @@ const Preview = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -130,9 +168,9 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   detailsContainer: {
     marginBottom: 20,
@@ -142,23 +180,23 @@ const styles = StyleSheet.create({
   },
   detailTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   button: {
     marginTop: 20,
     paddingVertical: 12,
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
   },
@@ -166,7 +204,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     borderWidth: 0,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   consentText: {
     fontSize: 16,

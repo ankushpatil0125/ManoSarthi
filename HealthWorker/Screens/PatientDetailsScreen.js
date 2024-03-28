@@ -17,6 +17,7 @@ import InsertService from "../Services/DatabaseServices/InsertService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
+import { RadioButton } from 'react-native-paper'; // Import RadioButton component
 
 const PatientDetailsScreen = ({ navigation }) => {
   // const [aabhaId, setAabhaId] = useState("");
@@ -73,8 +74,8 @@ const PatientDetailsScreen = ({ navigation }) => {
 
     if (isConnected) {
       // Send data to server using POST request
-      await sendDataToServer();
-      // await storeDataLocally();
+      // await sendDataToServer();
+      await storeDataLocally();
     } else {
       // Store data locally in SQLite database
       await storeDataLocally();
@@ -157,12 +158,33 @@ const PatientDetailsScreen = ({ navigation }) => {
           keyboardType="email-address"
         />
         <Text style={styles.label}>Gender:</Text>
-        <TextInput
-          style={styles.input}
-          value={gender}
-          onChangeText={setGender}
-          placeholder="Enter gender"
-        />
+        <View style={styles.radioContainer}>
+          <View style={styles.radioButton}>
+            <Text>Male</Text>
+            <RadioButton
+              value="male"
+              status={gender === 'male' ? 'checked' : 'unchecked'}
+              onPress={() => setGender('male')}
+            />
+          </View>
+          <View style={styles.radioButton}>
+            <Text>Female</Text>
+            <RadioButton
+              value="female"
+              status={gender === 'female' ? 'checked' : 'unchecked'}
+              onPress={() => setGender('female')}
+            />
+          </View>
+          <View style={styles.radioButton}>
+            <Text>Other</Text>
+            <RadioButton
+              value="other"
+              status={gender === 'other' ? 'checked' : 'unchecked'}
+              onPress={() => setGender('other')}
+            />
+          </View>
+        </View>
+    
         <Text style={styles.label}>Date Of Birth:</Text>
         <View>
           <Button
@@ -231,6 +253,15 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     marginBottom: 10,
+  },
+  radioContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  radioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

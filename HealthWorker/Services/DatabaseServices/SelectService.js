@@ -76,17 +76,62 @@ const SelectService = {
     });
   },
 
+  getAllSurveyQuestionAnswersByAabhaId: (aabhaId) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT question_id ,answer FROM SurveyQuestionAnswer WHERE aabhaId=?`,
+          [aabhaId],
+          (_, result) => {
+            const len = result.rows.length;
+            const surveyQuestionAnswers = [];
+            console.log("result.rows._array ", result.rows._array);
+
+            resolve(result.rows._array);
+          },
+          (_, error) => {
+            reject("Error fetching survey question answers: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  getAllMedicalQuestionAnswersByAabhaId: (aabhaId) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT question_id,
+          question_ans
+           FROM medical_history_answers WHERE aabha_id=?`,
+          [aabhaId],
+          (_, result) => {
+            const len = result.rows.length;
+            const surveyQuestionAnswers = [];
+            for (let i = 0; i < len; i++) {
+              surveyQuestionAnswers.push(result.rows.item(i));
+            }
+            resolve(surveyQuestionAnswers);
+          },
+          (_, error) => {
+            reject("Error fetching medical question answers: " + error);
+          }
+        );
+      });
+    });
+  },
+
   getMedicalHistoryAnswers: (aabha_id = null) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         let query = "SELECT * FROM medical_history_answers";
         let params = [];
-  
+
         if (aabha_id !== null) {
           query += " WHERE aabha_id = ?";
           params.push(aabha_id);
         }
-  
+
         tx.executeSql(
           query,
           params,
@@ -101,7 +146,6 @@ const SelectService = {
       });
     });
   },
-  
 };
 
 export default SelectService;
