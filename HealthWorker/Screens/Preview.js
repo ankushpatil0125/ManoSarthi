@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Alert, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import SelectService from '../Services/DatabaseServices/SelectService';
+import PatientContext from "../Context/PatientContext"; // Import PatientContext here
+
 
 const Preview = () => {
   const [consentChecked, setConsentChecked] = useState(false);
@@ -13,36 +15,36 @@ const Preview = () => {
   const showAlert = async () => {
     if (consentChecked) {
       const res = await SelectService.getAllMedicalHistoryAnswers();
+      Alert.alert('Data saved in local DB sucessesfully!', [{ text: 'OK' }]);
       console.log("All data entries in  table: ", res);
     } else {
       Alert.alert('Please provide consent!', 'You need to provide consent before submitting.', [{ text: 'OK' }]);
     }
   };
 
-  // Sample patient details
+  const { aabha_id } = useContext(PatientContext); // Access aabhaId from the context
+
   const patientDetails = {
     name: 'Sanket Patil',
     age: 23,
     mobileNo: '123394949499',
+
     questionnaireAnswers: [
       { question: 'Past illnesses and surgeries', answer: 'Answer 1' },
       { question: 'Chronic conditions', answer: 'Answer 2' },
       { question: 'Allergies (medications, food, environmental)', answer: 'Answer 3' },
-      // Add more medical details questions and answers as needed
     ],
-    medicalDetails: [
-      { question: 'Past illnesses and surgeries', answer: 'Answer 1' },
-      { question: 'Chronic conditions', answer: 'Answer 2' },
-      { question: 'Allergies (medications, food, environmental)', answer: 'Answer 3' },
-      // Add more medical details questions and answers as needed
-    ],
+
+    medicalDetails: SelectService.getMedicalHistoryAnswers(aabha_id),
+    medicalQuestions: SelectService.getAllMedicalQuestions(),
+
     additionalDetails: {
       address: '123 Main Street',
       city: 'New York',
       country: 'USA',
-      email: 'example@example.com',
-      // Add more personal details as needed
-    },
+      email: 'example@example.com'
+    }
+
   };
 
   return (
@@ -68,7 +70,7 @@ const Preview = () => {
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Medical Details:</Text>
             {patientDetails.medicalDetails.map((detail, index) => (
-              <Text key={index}>{detail.question}: {detail.answer}</Text>
+              <Text key={index}>{patientDetails.medicalQuestions[index].question}: {detail.question_ans}</Text>
             ))}
           </View>
 

@@ -86,6 +86,7 @@ const InsertService = {
       });
     });
   },
+  
   insertSurveyQuestionAnswer: (aabhaId, questionId, answer) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
