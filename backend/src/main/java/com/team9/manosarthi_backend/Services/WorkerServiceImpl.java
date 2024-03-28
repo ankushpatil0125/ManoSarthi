@@ -72,7 +72,6 @@ public class WorkerServiceImpl implements WorkerService{
             //AddDoctor
             registerPatientDTO.getPatient().setDoctor(doctor);
             doctor.setPatient_count(doctor.getPatient_count()+1);
-            doctorRepository.save(doctor);
 
             //Add registered worker
             registerPatientDTO.getPatient().setRegister_worker(worker1);
@@ -81,8 +80,10 @@ public class WorkerServiceImpl implements WorkerService{
 
             registerPatientDTO.getPatient().setFollowUpNumber(0);
             registerPatientDTO.getPatient().setStatus("NEW");
+
             Patient patient = patientRepository.save(registerPatientDTO.getPatient());
 
+            doctorRepository.save(doctor);
 
             FollowUpDetails followUpDetails = new FollowUpDetails();
             followUpDetails.setPatient(patient);
