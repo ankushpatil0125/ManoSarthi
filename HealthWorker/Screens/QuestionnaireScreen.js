@@ -90,7 +90,7 @@ const QuestionnaireScreen = ({ navigation }) => {
       await Promise.all(promises);
 
       // Navigate to the next screen
-      navigation.navigate("ReferNotRefer");
+      navigation.navigate('ReferNotRefer', { answers });
     } catch (error) {
       console.error("Error inserting survey answers:", error);
     }

@@ -21,6 +21,7 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
 import * as SQLite from "expo-sqlite";
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 

@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import tw from 'twrnc'
 
 const ReferNotRefer = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [yesCount, setYesCount] = useState(0);
+
+  useEffect(() => {
+    if (route.params && route.params.answers) {
+      const count = route.params.answers.reduce((acc, answer) => {
+        if (answer === 'Yes') {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+      setYesCount(count);
+    }
+  }, [route.params]);
 
   const handleReferPress = () => {
     navigation.navigate('MedicalDetails');
@@ -22,7 +36,7 @@ const ReferNotRefer = () => {
         />
       </View>
       <View style={tw`items-center mb-8`}>
-         <Text style={tw`text-2xl`}>Yes/No Count: </Text>
+         <Text style={tw`text-2xl`}>Yes/No Count: {yesCount}</Text>
       </View>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%', maxWidth: 600 }}>
