@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
 import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.Services.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -60,27 +62,30 @@ public class AdminController {
     @PostMapping("/doctor")
     public ResponseEntity<MappingJacksonValue> addDoctor(@Valid @RequestBody Doctor doctor){
 
-        System.out.println("doctor detauils"+doctor.toString());
-        Doctor doc =  adminService.adddoctor(doctor);
+       try {
 
-        Set<String> doctorFilterProperties = new HashSet<>();
-        doctorFilterProperties.add("firstname");
-        doctorFilterProperties.add("lastname");
-        doctorFilterProperties.add("email");
-        doctorFilterProperties.add("subdistrictcode");
+            Doctor doc =  adminService.adddoctor(doctor);
 
-        Set<String> subDistrictFilterProperties = new HashSet<>();
-        subDistrictFilterProperties.add("code");
-        subDistrictFilterProperties.add("name");
-        subDistrictFilterProperties.add("district");
+            Set<String> doctorFilterProperties = new HashSet<>();
+            doctorFilterProperties.add("firstname");
+            doctorFilterProperties.add("lastname");
+            doctorFilterProperties.add("email");
+            doctorFilterProperties.add("subdistrictcode");
 
-        DoctorFilter<Doctor> doctorFilter = new DoctorFilter<Doctor>(doc);
+            Set<String> subDistrictFilterProperties = new HashSet<>();
+            subDistrictFilterProperties.add("code");
+            subDistrictFilterProperties.add("name");
+            subDistrictFilterProperties.add("district");
 
+            DoctorFilter<Doctor> doctorFilter = new DoctorFilter<Doctor>(doc);
+            // Proceed with valid data
+            return ResponseEntity.ok(doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties));
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while adding the doctor.",ex.getMessage());
+        }
 
-
-
-        // Proceed with valid data
-        return ResponseEntity.ok(doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties));
     }
 
     @GetMapping("/doctor")
@@ -89,6 +94,10 @@ public class AdminController {
 
         List<Doctor> doctors = adminService.viewAllDoctor(pagenumber,pagesize);
 
+        if(doctors== null)
+        {
+            throw new APIRequestException("No doctors found");
+        }
         Set<String> doctorFilterProperties = new HashSet<>();
         doctorFilterProperties.add("firstname");
         doctorFilterProperties.add("lastname");
@@ -111,7 +120,10 @@ public class AdminController {
     public MappingJacksonValue viewDoctorByDistrict(@RequestParam("districtcode") int districtcode,@RequestParam("pagenumber") int pagenumber){
         int pagesize=5;
         List<Doctor> doctors= adminService.viewDoctorByDistrict(districtcode, pagenumber, pagesize);
-
+        if(doctors== null)
+        {
+            throw new APIRequestException("No doctors found");
+        }
         Set<String> doctorFilterProperties = new HashSet<>();
         doctorFilterProperties.add("firstname");
         doctorFilterProperties.add("lastname");
@@ -131,7 +143,10 @@ public class AdminController {
     @GetMapping("/doctor/subdistrict/")
     public MappingJacksonValue viewDoctorBySubDistrict(@RequestParam("subdistrictcode") int subdistrictcode){
         List<Doctor> doctors = adminService.viewDoctorBySubDistrict(subdistrictcode);
-
+        if(doctors.isEmpty())
+        {
+            throw new APIRequestException("No doctors found");
+        }
         Set<String> doctorFilterProperties = new HashSet<>();
         doctorFilterProperties.add("firstname");
         doctorFilterProperties.add("lastname");
@@ -147,28 +162,35 @@ public class AdminController {
         return doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties);
     }
 
+    @Validated
     @PostMapping("/supervisor")
-    public MappingJacksonValue addSupervisor(@RequestBody Supervisor supervisor){
-        Supervisor sup =  adminService.addSupervisor(supervisor);
+    public MappingJacksonValue addSupervisor(@Valid @RequestBody Supervisor supervisor){
+        try {
+            Supervisor sup = adminService.addSupervisor(supervisor);
 
-        Set<String> supervisorFilterProperties = new HashSet<>();
-        supervisorFilterProperties.add("firstname");
-        supervisorFilterProperties.add("lastname");
-        supervisorFilterProperties.add("email");
-        supervisorFilterProperties.add("subdistrictcode");
+            Set<String> supervisorFilterProperties = new HashSet<>();
+            supervisorFilterProperties.add("firstname");
+            supervisorFilterProperties.add("lastname");
+            supervisorFilterProperties.add("email");
+            supervisorFilterProperties.add("subdistrictcode");
 
 
+            Set<String> subDistrictFilterProperties = new HashSet<>();
+            subDistrictFilterProperties.add("code");
+            subDistrictFilterProperties.add("name");
+            subDistrictFilterProperties.add("district");
 
-        Set<String> subDistrictFilterProperties = new HashSet<>();
-        subDistrictFilterProperties.add("code");
-        subDistrictFilterProperties.add("name");
-        subDistrictFilterProperties.add("district");
+            SupervisorFilter<Supervisor> supervisorFilter = new SupervisorFilter<>(sup);
 
-        SupervisorFilter<Supervisor> supervisorFilter = new SupervisorFilter<>(sup);
-
-        return supervisorFilter.getSupervisorrFilter(supervisorFilterProperties,subDistrictFilterProperties);
+            return supervisorFilter.getSupervisorrFilter(supervisorFilterProperties, subDistrictFilterProperties);
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while adding the supervisor.",ex.getMessage());
+        }
     }
 
+    @Validated
     @PostMapping("/questionarrie")
     public MappingJacksonValue addQuestionarrie(@Valid @RequestBody Questionarrie questionarrie) throws Exception
     {
@@ -179,6 +201,8 @@ public class AdminController {
         mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
     }
+
+    @Validated
     @PostMapping("/med-questionarrie")
     public MappingJacksonValue addMedQuestionarrie(@Valid @RequestBody MedicalQue medquest) throws Exception
     {

@@ -11,7 +11,7 @@ import lombok.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "subervisor")
+@Table(name = "supervisor")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -34,11 +34,12 @@ public class Supervisor {
     @Column(name = "last_name")
     private String lastname;
 
+    @NotBlank(message = "Email cannot be blank")
     @Email(message = "Enter valid email")
     @Column(name = "email",unique = true)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)        // check for cascade type see all parameters
+    @OneToOne
     @JoinColumn(name = "username")
     private User user;
 

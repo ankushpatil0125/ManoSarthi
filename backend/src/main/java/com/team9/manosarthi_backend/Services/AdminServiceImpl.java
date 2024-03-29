@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Services;
 import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

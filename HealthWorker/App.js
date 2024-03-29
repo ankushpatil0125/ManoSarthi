@@ -20,7 +20,9 @@ import PatientContext, { PatientProvider } from "./Context/PatientContext";
 import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
-import * as SQLite from "expo-sqlite";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Pressable } from 'react-native';
+
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -56,11 +58,7 @@ const PrescriptionScreen = () => (
 const HomeStack = () => (
   <PatientProvider>
     <Stack.Navigator>
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
+     
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen
         name="RegisterPatientScreen"
@@ -93,10 +91,12 @@ const MainDrawerNavigator = () => (
     <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
     <Drawer.Screen name="AlertScreen" component={AlertScreen} />
     <Drawer.Screen name="PrescriptionScreen" component={PrescriptionScreen} />
+   
   </Drawer.Navigator>
 );
 export default function App() {
   const [isConnected, setIsConnected] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
@@ -117,22 +117,20 @@ export default function App() {
     });
   }, []);
 
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+
   useEffect(() => {
     const initializeDatabase = async () => {
       try {
-        // await SQLite.deleteDatabaseSync("HealthWorker.db");
-        // console.log("Database Dropped..");
-        // await SQLite.deleteDatabaseAsync("HealthWorker.db");
-        // await DropService.dropMedicalQuestionsTable();
-        // await DropService.dropMedicalHistoryAnswersTable();
-        // await DropService.dropSurveyQuestionTable();
-        // await DropService.dropPatientDetailsTable();
-        // await DropService.dropSurveyQuestionAnswerTable();
+        // Drop All Tables
+        // await DropService.dropTables();
+
         // Initialize database and create tables
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
-        // Perform additional actions if database initialized successfully
-        // For example, you can fetch data from the database or perform other operations
       } catch (error) {
         console.error("Error initializing database:", error);
         // Handle the error here, such as showing a message to the user
@@ -150,7 +148,19 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <MainDrawerNavigator />
+      {!isLoggedIn ? (
+        <Stack.Navigator>
+        {!isLoggedIn ? (
+          <Stack.Screen name="Login" options={{ headerShown: false }}>
+            {(props) => <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />}
+          </Stack.Screen>
+        ) : (
+          <Stack.Screen name="Home" component={HomeScreen} />
+        )}
+      </Stack.Navigator>
+      ) : (
+        <MainDrawerNavigator />
+      )}
       <ForwardedToast />
     </NavigationContainer>
   );

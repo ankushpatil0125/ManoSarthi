@@ -1,6 +1,15 @@
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const DropService = {
+  dropTables: async () => {
+    await DropService.dropMedicalQuestionsTable();
+    await DropService.dropMedicalHistoryAnswersTable();
+    await DropService.dropSurveyQuestionTable();
+    await DropService.dropPatientDetailsTable();
+    await DropService.dropSurveyQuestionAnswerTable();
+    // Add more table drop functions here if needed
+  },
+
   dropPatientDetailsTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

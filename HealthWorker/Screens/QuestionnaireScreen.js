@@ -11,7 +11,6 @@ import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
 import InsertService from "../Services/DatabaseServices/InsertService";
 
-
 const QuestionnaireScreen = ({ navigation }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
   // State to hold the answers for each question
@@ -48,7 +47,6 @@ const QuestionnaireScreen = ({ navigation }) => {
   const fetchSurveyQuestionsAnswersFromDatabase = async () => {
     try {
       const data = await SelectService.getAllSurveyQuestionAnswers();
-      
 
       console.log("Response of Survey Questions Answers : ", data);
     } catch (error) {
@@ -56,12 +54,9 @@ const QuestionnaireScreen = ({ navigation }) => {
     }
   };
 
-
-  
-
   useEffect(() => {
     fetchSurveyQuestionsFromDatabase();
-     fetchSurveyQuestionsAnswersFromDatabase();
+    fetchSurveyQuestionsAnswersFromDatabase();
     // DeleteService.deleteAllSurveyQuestions();
   }, []);
 
@@ -73,7 +68,7 @@ const QuestionnaireScreen = ({ navigation }) => {
   };
 
   // Function to handle navigation to next screen
-  const handleNext = async() => {
+  const handleNext = async () => {
     // Perform any necessary validation before proceeding
     // For example, you can check if all questions are answered
     if (answers.some((answer) => answer === null)) {
@@ -85,7 +80,11 @@ const QuestionnaireScreen = ({ navigation }) => {
     try {
       const promises = surveyquestions.map(async (question, index) => {
         const answer = answers[index];
-        await InsertService.insertSurveyQuestionAnswer(aabhaId, question.question_id, answer);
+        await InsertService.insertSurveyQuestionAnswer(
+          aabhaId,
+          question.question_id,
+          answer
+        );
       });
       await Promise.all(promises);
 
@@ -94,7 +93,6 @@ const QuestionnaireScreen = ({ navigation }) => {
     } catch (error) {
       console.error("Error inserting survey answers:", error);
     }
-   
   };
 
   return (
