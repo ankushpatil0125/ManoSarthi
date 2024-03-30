@@ -19,6 +19,29 @@ const SelectService = {
       });
     });
   },
+
+  getPatientDetailsByID: (aabhaId) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM PatientDetails WHERE aabhaId=?`,
+          [aabhaId],
+          (_, result) => {
+            const len = result.rows.length;
+            const surveyQuestionAnswers = [];
+            console.log("result.rows._array ", result.rows._array);
+
+            resolve(result.rows._array);
+          },
+          (_, error) => {
+            reject("Error fetching PatientDetails: " + error);
+          }
+        );
+      });
+    });
+  },
+
+
   getAllQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

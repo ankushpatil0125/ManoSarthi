@@ -8,15 +8,19 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import { CheckBox } from "react-native-elements";
+import { Card, CheckBox } from "react-native-elements";
 import SelectService from "../Services/DatabaseServices/SelectService";
-import PatientContext from "../Context/PatientContext"; // Import PatientContext here
+import PatientContext from "../Context/PatientContext"; // Import PatientContext here 
 import { useNavigation } from "@react-navigation/native";
 
 const Preview = () => {
   const [consentChecked, setConsentChecked] = useState(false);
   const [medicalDetails, setMedicalDetails] = useState([]);
   const [medicalQuestions, setMedicalQuestions] = useState([]);
+  const [surveyQuestions, setSurveyQuestions] = useState([]);
+  const [surveyQuestionsAnswers, setSurveyQuestionsAnswers] = useState([]);
+  const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
+  
 
   const navigation = useNavigation();
 
@@ -27,7 +31,7 @@ const Preview = () => {
   const showAlert = async () => {
     if (consentChecked) {
       try {
-        const res = await SelectService.getMedicalHistoryAnswers();
+        const res = await SelectService.getAllQuestions();
         Alert.alert("Data saved in local DB successfully!", "OK", [
           {
             text: "OK",
@@ -54,7 +58,14 @@ const Preview = () => {
     }
   };
 
-  const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  };
+  
+
+  const { aabhaId } = useContext(PatientContext); 
 
   useEffect(() => {
     async function fetchData() {
@@ -67,52 +78,52 @@ const Preview = () => {
         const medicalQuestionsRes =
           await SelectService.getAllMedicalQuestions();
         setMedicalQuestions(medicalQuestionsRes);
+
+        const surveyQuestionsRes =
+          await SelectService.getAllQuestions();
+        setSurveyQuestions(surveyQuestionsRes);
+
+        const surveyQuestionsAnswers =
+          await SelectService.getAllSurveyQuestionAnswersByAabhaId(aabhaId);
+        setSurveyQuestionsAnswers(surveyQuestionsAnswers);
+
+        const patient_details =
+          await SelectService.getPatientDetailsByID(aabhaId);
+        setPatientPersonalDeatils(patient_details);
+        console.log("Patient details array: ",patientPersonalDetails);
+
       } catch (error) {
-        console.error("Error fetching medical details or questions:", error);
+        console.error("Error fetching data for preview:", error);
       }
     }
     fetchData();
   }, [aabhaId]);
 
-  const patientDetails = {
-    name: "Sanket Patil",
-    age: 23,
-    mobileNo: "123394949499",
-
-    questionnaireAnswers: [
-      { question: "Past illnesses and surgeries", answer: "Answer 1" },
-      { question: "Chronic conditions", answer: "Answer 2" },
-      {
-        question: "Allergies (medications, food, environmental)",
-        answer: "Answer 3",
-      },
-    ],
-
-    additionalDetails: {
-      address: "123 Main Street",
-      city: "New York",
-      country: "USA",
-      email: "example@example.com",
-    },
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+
         <Text style={styles.header}>Preview and Submit</Text>
         <View style={styles.detailsContainer}>
+     
           <View style={styles.detailSection}>
             <Text style={styles.detailTitle}>Patient Details:</Text>
-            <Text>Name: {patientDetails.name}</Text>
-            <Text>Age: {patientDetails.age}</Text>
-            <Text>Mobile No.: {patientDetails.mobileNo}</Text>
+            {patientPersonalDetails.map((detail, index) => (
+              <View key={index}>
+                {Object.keys(detail).map((key) => (
+                  <Text key={key}>
+                    {key}: {key === 'dob' ? formatDate(detail[key]) : detail[key]}
+                  </Text>
+                  ))}
+              </View>
+            ))}
           </View>
 
           <View style={styles.detailSection}>
-            <Text style={styles.detailTitle}>Questionnaire Answers:</Text>
-            {patientDetails.questionnaireAnswers.map((detail, index) => (
+            <Text style={styles.detailTitle}>Survey Questionarrie:</Text>
+            {surveyQuestionsAnswers.map((detail, index) => (
               <Text key={index}>
-                {detail.question}: {detail.answer}
+                {surveyQuestions[index]?.question}: {detail.answer}
               </Text>
             ))}
           </View>
@@ -125,17 +136,6 @@ const Preview = () => {
               </Text>
             ))}
           </View>
-
-          <View style={styles.detailSection}>
-            <Text style={styles.detailTitle}>Additional Details:</Text>
-            {Object.entries(patientDetails.additionalDetails).map(
-              ([key, value]) => (
-                <Text key={key}>
-                  {key}: {value}
-                </Text>
-              )
-            )}
-          </View>
         </View>
 
         <View style={styles.checkboxContainer}>
@@ -145,7 +145,7 @@ const Preview = () => {
             checkedColor="blue"
             containerStyle={styles.checkbox}
           />
-          <Text style={styles.consentText}>Consent of patient</Text>
+          <Text style={styles.consentText}>Consent of patient</Text> 
         </View>
 
         <TouchableOpacity onPress={showAlert} style={styles.button}>
@@ -159,6 +159,18 @@ const Preview = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  card: {
+    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   scrollViewContent: {
     paddingHorizontal: 20,
