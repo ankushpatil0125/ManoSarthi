@@ -74,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
         subDistrict.ifPresent(temp -> {
             temp.setSupervisor_count(temp.getSupervisor_count()+1);
             subDistrictRepository.save(temp);
-        }); 
+        });
         supervisor.setUser(newuser);
 
         return supervisorRepository.save(newSupervisor);
