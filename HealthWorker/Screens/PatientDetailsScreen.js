@@ -67,6 +67,7 @@ const PatientDetailsScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    
     if (!firstName || !lastName || !email || !gender || !dob || !address) {
       setFormError("Please fill in all fields");
       return;
@@ -76,11 +77,11 @@ const PatientDetailsScreen = ({ navigation }) => {
       // Send data to server using POST request
       // await sendDataToServer();
       await storeDataLocally();
+
     } else {
       // Store data locally in SQLite database
       await storeDataLocally();
     }
-
     navigation.navigate("QuestionnaireScreen");
   };
 

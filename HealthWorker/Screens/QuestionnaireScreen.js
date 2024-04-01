@@ -87,12 +87,26 @@ const QuestionnaireScreen = ({ navigation }) => {
         );
       });
       await Promise.all(promises);
+      
+      // Matching the answers with the default ans
+      const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
+      console.log("Unmatched count:", unmatchedCount);
 
       // Navigate to the next screen
       navigation.navigate('ReferNotRefer');
     } catch (error) {
       console.error("Error inserting survey answers:", error);
     }
+  };
+
+  const countUnmatchedAnswers = (questions, answers) => {
+    let unmatchedCount = 0;
+    questions.forEach((question, index) => {
+      if (answers[index] !== question.default_ans) {
+        unmatchedCount++;
+      }
+    });
+    return unmatchedCount;
   };
 
   return (

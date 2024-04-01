@@ -7,8 +7,9 @@ import {
   SafeAreaView,
   Alert,
   ScrollView,
+  Card
 } from "react-native";
-import { Card, CheckBox } from "react-native-elements";
+import {CheckBox } from "react-native-elements";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here 
 import { useNavigation } from "@react-navigation/native";
@@ -67,6 +68,16 @@ const Preview = () => {
 
   const { aabhaId } = useContext(PatientContext); 
 
+  const fieldNames = {
+    "aabhaId": "Aabha ID",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "gender": "Gender",
+    "dob": "Date of Birth",
+    "address": "Address"
+};
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -106,36 +117,48 @@ const Preview = () => {
         <Text style={styles.header}>Preview and Submit</Text>
         <View style={styles.detailsContainer}>
      
-          <View style={styles.detailSection}>
-            <Text style={styles.detailTitle}>Patient Details:</Text>
-            {patientPersonalDetails.map((detail, index) => (
-              <View key={index}>
-                {Object.keys(detail).map((key) => (
-                  <Text key={key}>
-                    {key}: {key === 'dob' ? formatDate(detail[key]) : detail[key]}
-                  </Text>
-                  ))}
-              </View>
-            ))}
-          </View>
+         {/* Patient Details */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Patient Details:</Text>
+          {patientPersonalDetails.map((detail, index) => (
+            <View key={index}>
+              {Object.keys(detail).map((key) => (
+                <Text key={key}>
+                  {fieldNames[key]}: {key === 'dob' ? formatDate(detail[key]) : detail[key]}
+                </Text>
+              ))}
+            </View>
+          ))}
+        </View>
 
-          <View style={styles.detailSection}>
-            <Text style={styles.detailTitle}>Survey Questionarrie:</Text>
-            {surveyQuestionsAnswers.map((detail, index) => (
-              <Text key={index}>
-                {surveyQuestions[index]?.question}: {detail.answer}
-              </Text>
-            ))}
-          </View>
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>Survey Questionnaire:</Text>
+          {surveyQuestionsAnswers.map((detail, index) => (
+            <Text key={index}>
+              {surveyQuestions[index]?.question}: {detail.answer}
+            </Text>
+          ))}
+        </View>
 
-          <View style={styles.detailSection}>
-            <Text style={styles.detailTitle}>Medical Details:</Text>
-            {medicalDetails.map((detail, index) => (
-              <Text key={index}>
-                {medicalQuestions[index]?.question}: {detail.question_ans}
-              </Text>
-            ))}
-          </View>
+          {/* Medical Details */}
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>Medical Details:</Text>
+          {medicalQuestions.map((question, index) => {
+            // Find the corresponding detail in medicalDetails based on question_id
+            const detail = medicalDetails.find(detail => detail.question_id === question.question_id);
+            // If detail exists, display the question and answer
+            if (detail) {
+              return (
+                <Text key={index}>
+                  {question.question}: {detail.question_ans}
+                </Text>
+              );
+            } else {
+              return null; // If detail doesn't exist, return null
+            }
+          })}
+        </View>
+
         </View>
 
         <View style={styles.checkboxContainer}>
@@ -161,16 +184,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    elevation: 5,
-    borderRadius: 10,
     backgroundColor: "#fff",
-    shadowColor: "#000",
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    elevation: 2, // for Android
+    shadowColor: "#000", // for iOS
+    shadowOpacity: 0.1, // for iOS
+    shadowRadius: 2, // for iOS
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
   scrollViewContent: {
     paddingHorizontal: 20,
@@ -186,14 +216,6 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     marginBottom: 20,
-  },
-  detailSection: {
-    marginBottom: 20,
-  },
-  detailTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
   },
   button: {
     marginTop: 20,

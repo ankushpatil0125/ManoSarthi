@@ -28,12 +28,14 @@ const LoginScreen = ({ onLoginSuccess }) => {
     console.log(user);
 
     try {
-      const response = await axios.post(BASE_URL + "auth/login", user, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(BASE_URL + "auth/login", user 
+      // {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
+      );
       if (response) {
         console.log(response.data);
         Alert.alert("Login Successful");
