@@ -31,7 +31,7 @@ public class WorkerServiceImpl implements WorkerService{
     private FollowUpDetailsRepository followUpDetailsRepository;
 
     @Override
-    public ResponseEntity<Worker> UpdateWorkerProfile(Worker updatedWorker) {
+    public Worker UpdateWorkerProfile(Worker updatedWorker) {
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
         if(existingWorker!=null) {
@@ -46,12 +46,12 @@ public class WorkerServiceImpl implements WorkerService{
             }
 
         // Save the updated worker to the database
-        Worker updatedworker= workerRepository.save(existingWorker);
-        return ResponseEntity.ok(updatedworker);
+        return workerRepository.save(existingWorker);
+
         }
         else {
         System.out.println("Worker not found with ID: " + updatedWorker.getId());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return null;
          }
     }
 
