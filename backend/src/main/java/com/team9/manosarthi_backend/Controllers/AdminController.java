@@ -182,13 +182,120 @@ public class AdminController {
 
             SupervisorFilter<Supervisor> supervisorFilter = new SupervisorFilter<>(sup);
 
-            return supervisorFilter.getSupervisorrFilter(supervisorFilterProperties, subDistrictFilterProperties);
+            return supervisorFilter.getSupervisorFilter(supervisorFilterProperties, subDistrictFilterProperties);
         }
         catch (Exception ex)
         {
             throw new APIRequestException("Error while adding the supervisor.",ex.getMessage());
         }
     }
+
+    @GetMapping("/supervisor")
+    public MappingJacksonValue viewAllSupervisor(@RequestParam("pagenumber") int pagenumber){
+        int pagesize = 5;
+
+//        List<Doctor> doctors = adminService.viewAllDoctor(pagenumber,pagesize);
+        List<Supervisor> supervisorList=adminService.viewAllSupervisor(pagenumber,pagesize);
+
+        if(supervisorList== null)
+        {
+            throw new APIRequestException("No Supervisor found");
+        }
+        Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("firstname");
+        supervisorFilterProperties.add("lastname");
+        supervisorFilterProperties.add("email");
+        supervisorFilterProperties.add("subdistrictcode");
+
+        Set<String> subDistrictFilterProperties = new HashSet<>();
+        subDistrictFilterProperties.add("code");
+        subDistrictFilterProperties.add("name");
+        subDistrictFilterProperties.add("district");
+
+        SupervisorFilter<List<Supervisor>> supervisorFilter = new SupervisorFilter<>(supervisorList);
+
+        return supervisorFilter.getSupervisorFilter(supervisorFilterProperties,subDistrictFilterProperties);
+    }
+
+
+
+    @GetMapping("/supervisor/district")
+    public MappingJacksonValue viewSupervisorByDistrict(@RequestParam("districtcode") int districtcode,@RequestParam("pagenumber") int pagenumber){
+        int pagesize=5;
+//        List<Doctor> doctors= adminService.viewDoctorByDistrict(districtcode, pagenumber, pagesize);
+        List<Supervisor> supervisorList=adminService.viewSupervisorByDistrict(districtcode,pagenumber,pagesize);
+        if(supervisorList== null)
+        {
+            throw new APIRequestException("No Supervisor found");
+        }
+        Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("firstname");
+        supervisorFilterProperties.add("lastname");
+        supervisorFilterProperties.add("email");
+        supervisorFilterProperties.add("subdistrictcode");
+
+        Set<String> subDistrictFilterProperties = new HashSet<>();
+        subDistrictFilterProperties.add("code");
+        subDistrictFilterProperties.add("name");
+        subDistrictFilterProperties.add("district");
+
+        SupervisorFilter<List<Supervisor>> supervisorFilter = new SupervisorFilter<>(supervisorList);
+        return supervisorFilter.getSupervisorFilter(supervisorFilterProperties,subDistrictFilterProperties);
+
+    }
+
+    @GetMapping("/supervisor/subdistrict/")
+    public MappingJacksonValue viewSupervisorBySubDistrict(@RequestParam("subdistrictcode") int subdistrictcode){
+
+        List<Supervisor> supervisorList=adminService.viewSupervisorBySubDistrict(subdistrictcode);
+        if(supervisorList.isEmpty())
+        {
+            throw new APIRequestException("No Supervisor found");
+        }
+        Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("firstname");
+        supervisorFilterProperties.add("lastname");
+        supervisorFilterProperties.add("email");
+        supervisorFilterProperties.add("subdistrictcode");
+
+        Set<String> subDistrictFilterProperties = new HashSet<>();
+        subDistrictFilterProperties.add("code");
+        subDistrictFilterProperties.add("name");
+        subDistrictFilterProperties.add("district");
+
+        SupervisorFilter<List<Supervisor>> supervisorFilter = new SupervisorFilter<List<Supervisor>>(supervisorList);
+        return supervisorFilter.getSupervisorFilter(supervisorFilterProperties,subDistrictFilterProperties);
+    }
+
+    @DeleteMapping("/supervisor")
+    public MappingJacksonValue deleteSupervisor(@RequestParam Supervisor supervisor)
+    {
+        Supervisor deletedSupervisor = adminService.deleteSupervisor(supervisor);
+
+        if (deletedSupervisor!=null)
+        {
+            Set<String> supervisorFilterProperties = new HashSet<>();
+            supervisorFilterProperties.add("firstname");
+            supervisorFilterProperties.add("lastname");
+            supervisorFilterProperties.add("email");
+            supervisorFilterProperties.add("subdistrictcode");
+
+            Set<String> subDistrictFilterProperties = new HashSet<>();
+            subDistrictFilterProperties.add("code");
+            subDistrictFilterProperties.add("name");
+            subDistrictFilterProperties.add("district");
+
+            SupervisorFilter<Supervisor> supervisorFilter = new SupervisorFilter<Supervisor>(deletedSupervisor);
+            return supervisorFilter.getSupervisorFilter(supervisorFilterProperties,subDistrictFilterProperties);
+        }
+        else
+        {
+            throw new APIRequestException("Supervisor not found");
+        }
+
+    }
+
+    
 
     @Validated
     @PostMapping("/questionarrie")

@@ -101,20 +101,6 @@ public class WorkerRestController {
         mappingJacksonValue.setFilters(filterProvider);
         return mappingJacksonValue;
     }
-//    @PostMapping("/register-patient")
-//    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
-//        System.out.println("/register-patient");
-//
-//        System.out.println("patient"+patient.toString());
-//
-//        Patient newPatient = workerService.registerPatient(patient);
-//        Set<String> patientFilterProperties = new HashSet<>();
-//        patientFilterProperties.add("aabhaId");
-//
-//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
-//
-//        return patientFilter.getPatientFilter(patientFilterProperties);
-//    }
 
     @PostMapping("/register-patient")
     public MappingJacksonValue registerpatient(@RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
@@ -138,54 +124,7 @@ public class WorkerRestController {
         return null;
     }
 
-//    @PostMapping("/register-patient")
-//    public MappingJacksonValue registerPatient(@RequestBody Patient patient){
-//        System.out.println("/register-patient");
-//
-//        System.out.println("patient"+patient.toString());
-//
-//        Patient newPatient = workerService.registerPatient(patient);
-//        Set<String> patientFilterProperties = new HashSet<>();
-//        patientFilterProperties.add("aabhaId");
-//
-//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
-//
-//        return patientFilter.getPatientFilter(patientFilterProperties);
-//    }
-
     @Autowired
     PatientRepository patientRepository;
-    @GetMapping("/get-patient")
-    public MappingJacksonValue getPatient()
-    {
 
-
-        List<Patient> patientList = patientRepository.findAll();
-
-        Set<String> patientFilterProperties = new HashSet<>();
-        patientFilterProperties.add("aabhaId");
-        patientFilterProperties.add("followUpDetailsList");
-        patientFilterProperties.add("medicalQueAnsList");
-
-        Set<String> followUpFilterProperties = new HashSet<>();
-        followUpFilterProperties.add("followupDate");
-        followUpFilterProperties.add("followUpNo");
-        followUpFilterProperties.add("worker");
-        followUpFilterProperties.add("doctor");
-        followUpFilterProperties.add("questionarrieAnsList");
-
-        Set<String> workerFilterProperties = new HashSet<>();
-        workerFilterProperties.add("firstname");
-
-        Set<String> doctorFilterProperties = new HashSet<>();
-        doctorFilterProperties.add("firstname");
-
-
-        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
-
-        return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
-
-
-
-    }
 }

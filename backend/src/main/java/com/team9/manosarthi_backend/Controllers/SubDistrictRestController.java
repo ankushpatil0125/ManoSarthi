@@ -12,10 +12,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @PreAuthorize("permitAll()")
@@ -32,11 +29,31 @@ public class SubDistrictRestController {
     }
 
     @GetMapping("/")        // gives the list of subdistrict in a district
-    public MappingJacksonValue getSubDistrict(@RequestParam("districtcode") int districtcode){
+    public MappingJacksonValue getSubDistrict(@RequestParam("districtcode") int districtcode, @RequestParam("role") String role,@RequestParam("assigned") boolean assigned){
 
-        Optional<District> district = districtRepository.findById(districtcode);
+//        Optional<District> district = districtRepository.findById(districtcode);
+//
+//        List<SubDistrict>  subDistricts = subDistrictRepository.findSubDistrictof(district);
 
-        List<SubDistrict>  subDistricts = subDistrictRepository.findSubDistrictof(district);
+        Set<SubDistrict> subDistricts;
+
+        if(Objects.equals(role, "DOCTOR") && assigned)
+        {
+            subDistricts = subDistrictRepository.getAssignedDoctorSubDistinct(districtcode);
+        }
+        else if ( Objects.equals(role, "DOCTOR") && !assigned )
+        {
+            subDistricts = subDistrictRepository.getNotAssignedDoctorSubDistinct(districtcode);
+        }
+
+        else if(Objects.equals(role, "SUPERVISOR") && assigned)
+        {
+            subDistricts = subDistrictRepository.getAssignedSupervisorSubDistinct(districtcode);
+        }
+        else
+        {
+            subDistricts = subDistrictRepository.getNotAssignedSupervisorSubDistinct(districtcode);
+        }
 
         Set<String> subDistrictFilterProperties = new HashSet<>();
         subDistrictFilterProperties.add("code");

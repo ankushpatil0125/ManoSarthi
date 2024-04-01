@@ -5,6 +5,7 @@ import com.team9.manosarthi_backend.Filters.DoctorFilter;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Services.DoctorService;
 import com.team9.manosarthi_backend.security.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,19 @@ import java.util.Set;
 @RequestMapping("/doctor")
 @CrossOrigin(origins = "*")
 public class DoctorRestController {
-
-    @Autowired
     DoctorRepository doctorRepository;
-
     DoctorService doctorService;
+    private JwtHelper helper;
 
     @Autowired
-    public DoctorRestController(DoctorService doctorService) {
+    public DoctorRestController(DoctorRepository doctorRepository, DoctorService doctorService, JwtHelper helper) {
+        this.doctorRepository = doctorRepository;
         this.doctorService = doctorService;
+        this.helper = helper;
     }
 
-    @Autowired
-    private JwtHelper helper;
+
+
     @GetMapping("/viewdetails")
 //    public Optional<Doctor> getDetails(@RequestParam("doctorid") int doctorid){
     public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
@@ -70,12 +71,11 @@ public class DoctorRestController {
 
         return null;
     }
-
-
-    @GetMapping("/new-patient-details")
+    @GetMapping("/new-patient")
     public MappingJacksonValue getNewPatientDetails(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
         int pagesize=5;
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+//            System.out.println("/doctor/new-patient");
 
             String token = authorizationHeader.substring(7);
             String doctorId = helper.getIDFromToken(token);
@@ -83,9 +83,11 @@ public class DoctorRestController {
             List<Patient> patientList= doctorService.getNewPatientDetails(Integer.parseInt(doctorId), pagenumber,pagesize);
 
             Set<String> patientFilterProperties = new HashSet<>();
+            patientFilterProperties.add("patient_id");
             patientFilterProperties.add("firstname");
             patientFilterProperties.add("lastname");
             patientFilterProperties.add("email");
+            patientFilterProperties.add("gender");
             patientFilterProperties.add("village");
 
             Set<String> villageFilterProperties = new HashSet<>();
@@ -93,6 +95,65 @@ public class DoctorRestController {
 
             PatientFilter<List<Patient>> patientFilter= new PatientFilter<>(patientList);
             return patientFilter.getPatientFilter(patientFilterProperties,villageFilterProperties);
+        }
+        return null;
+    }
+    @GetMapping("/patient")
+    public MappingJacksonValue getPatient(@RequestParam int patientId,@RequestHeader("Authorization") String authorizationHeader)
+    {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
+        {
+            String token = authorizationHeader.substring(7);
+            String doctorId = helper.getIDFromToken(token);
+
+            Patient patient = doctorService.getPatient(Integer.parseInt(doctorId),patientId);
+
+
+            Set<String> patientFilterProperties = new HashSet<>();
+            patientFilterProperties.add("firstname");
+            patientFilterProperties.add("lastname");
+            patientFilterProperties.add("gender");
+            patientFilterProperties.add("village");
+            patientFilterProperties.add("followUpDetailsList");
+            patientFilterProperties.add("medicalQueAnsList");
+
+            Set<String> villageFilterProperties = new HashSet<>();
+            villageFilterProperties.add("name");
+
+            Set<String> followUpFilterProperties = new HashSet<>();
+            followUpFilterProperties.add("followupDate");
+            followUpFilterProperties.add("followUpNo");
+            followUpFilterProperties.add("worker");
+            followUpFilterProperties.add("doctor");
+            followUpFilterProperties.add("questionarrieAnsList");
+
+            Set<String> questionarrieAnsFilterProperties = new HashSet<>();
+            questionarrieAnsFilterProperties.add("question_ans");
+            questionarrieAnsFilterProperties.add("questionarrie");
+
+            Set<String> questionarrieFilterProperties = new HashSet<>();
+            questionarrieFilterProperties.add("question");
+            questionarrieFilterProperties.add("default_ans");
+
+            Set<String> workerFilterProperties = new HashSet<>();
+            workerFilterProperties.add("firstname");
+            workerFilterProperties.add("lastname");
+
+            Set<String> doctorFilterProperties = new HashSet<>();
+            doctorFilterProperties.add("firstname");
+            doctorFilterProperties.add("lastname");
+
+            Set<String> medicalQueAnsFilterProperties = new HashSet<>();
+            medicalQueAnsFilterProperties.add("medicalquest");
+            medicalQueAnsFilterProperties.add("question_ans");
+
+            Set<String> medicalQueFilterProperties = new HashSet<>();
+            medicalQueFilterProperties.add("question");
+
+            PatientFilter<Patient> patientFilter = new PatientFilter<>(patient);
+
+            return patientFilter.getPatientFilter(patientFilterProperties, villageFilterProperties, workerFilterProperties, doctorFilterProperties, followUpFilterProperties, questionarrieAnsFilterProperties, questionarrieFilterProperties, medicalQueAnsFilterProperties, medicalQueFilterProperties);
+
         }
         return null;
     }
