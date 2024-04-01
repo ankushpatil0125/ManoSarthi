@@ -4,10 +4,12 @@ import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Services.UserService;
 import com.team9.manosarthi_backend.models.ChangePassword;
 import com.team9.manosarthi_backend.models.JwtRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,14 +24,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //@PreAuthorize("hasRole('USER')")
-
-    @RequestMapping("/index")
-    public String dashboard()
-    {
-        System.out.println("step1");
-        return "user_dashboard";
-    }
 
     @PostMapping("/add")
     public String addUser(@RequestBody User user) {
@@ -37,13 +31,9 @@ public class UserController {
         return "user_success";
     }
 
-
-
-
-    //    @PreAuthorize("hasRole('USER')")
-    @PreAuthorize("permitAll()")
+   @Validated
     @RequestMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePassword request, Principal principal)
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePassword request, Principal principal)
     {
         String oldPassword= request.getOldPassword();
         String newPassword= request.getNewPassword();

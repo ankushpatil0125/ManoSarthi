@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.Entities.User;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.UserRepository;
 import com.team9.manosarthi_backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,13 @@ public class ChangePassController {
     @CrossOrigin(origins = "*")
     public Boolean getpassstatus(@RequestParam("username") String username)
     {
-        //System.out.println("userRepository"+userRepository.findByUsername(username).isChangepass());
-        return  userRepository.findByUsername(username).isChangepass();
+        try {
+            return userRepository.findByUsername(username).isChangepass();
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting password status",ex.getMessage());
+        }
     }
 
 }

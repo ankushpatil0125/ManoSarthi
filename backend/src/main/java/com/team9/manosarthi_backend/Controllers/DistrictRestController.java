@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.Entities.District;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.DistrictRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,12 @@ public class DistrictRestController {
 
     @GetMapping("/")
     public List<District> getDistricts(){
-        return districtRepository.findAll();
+        try {
+            return districtRepository.findAll();
+        }catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting districts",ex.getMessage());
+        }
     }
 
 
