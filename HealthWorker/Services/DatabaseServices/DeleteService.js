@@ -68,7 +68,23 @@ const DeleteService = {
     });
   },
 
-
+  deleteSurveyQuestionAnswersByAabhaId: (aabhaId) => {
+    console.log("delete, id", aabhaId);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM SurveyQuestionAnswer WHERE aabhaId=?",
+          [aabhaId],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from SurveyQuestionAnswer");
+          },
+          (_, error) => {
+            reject("Error deleting SurveyQuestionAnswer: " + error);
+          }
+        );
+      });
+    });
+  },
   deleteAllMedicalQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -96,6 +112,23 @@ const DeleteService = {
             resolve(
               rowsAffected + " rows deleted from medical_history_answers"
             );
+          },
+          (_, error) => {
+            reject("Error deleting medical_history_answers: " + error);
+          }
+        );
+      });
+    });
+  },
+  deleteMedicalHistoryAnswersByAabhaId: (aabhaId) => {
+    console.log("delete, id", aabhaId);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM medical_history_answers WHERE aabha_id=?",
+          [aabhaId],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from medical_history_answers");
           },
           (_, error) => {
             reject("Error deleting medical_history_answers: " + error);
