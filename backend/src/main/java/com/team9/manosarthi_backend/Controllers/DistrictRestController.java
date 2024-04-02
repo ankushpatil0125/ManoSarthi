@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.Entities.District;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.DistrictRepository;
 
 import com.team9.manosarthi_backend.Repositories.SubDistrictRepository;
@@ -31,22 +32,29 @@ public class DistrictRestController {
     @GetMapping("/")
     public Set<District> getDistricts(@RequestParam("role") String role, @RequestParam("assigned") boolean assigned){
 //        return districtRepository.findAll();
+        try {
+        Set<District> districts=null;
         if(Objects.equals(role, "DOCTOR") && assigned)
         {
-            return subDistrictRepository.getAssignedDoctorDistinct();
+            districts =  subDistrictRepository.getAssignedDoctorDistinct();
         }
         else if ( Objects.equals(role, "DOCTOR") && !assigned )
         {
-            return subDistrictRepository.getNotAssignedDoctorDistinct();
+            districts = subDistrictRepository.getNotAssignedDoctorDistinct();
         }
 
         else if(Objects.equals(role, "SUPERVISOR") && assigned)
         {
-            return subDistrictRepository.getAssignedSupervisorDistinct();
+            districts = subDistrictRepository.getAssignedSupervisorDistinct();
         }
-        else
+        else if(Objects.equals(role, "SUPERVISOR") &&  !assigned)
         {
-            return subDistrictRepository.getNotAssignedSupervisorDistinct();
+            districts = subDistrictRepository.getNotAssignedSupervisorDistinct();
+        }
+            return districts;
+        }catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting districts",ex.getMessage());
         }
     }
 

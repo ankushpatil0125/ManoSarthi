@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface WorkerService {
-    ResponseEntity<Worker> UpdateWorkerProfile(Worker updatedWorker);
+    Worker UpdateWorkerProfile(Worker updatedWorker);
 
     Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId);
 //    Patient registerPatient(Patient patient);

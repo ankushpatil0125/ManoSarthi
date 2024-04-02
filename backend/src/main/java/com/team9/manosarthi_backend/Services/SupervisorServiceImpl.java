@@ -137,7 +137,7 @@ public class SupervisorServiceImpl implements SupervisorService{
     }
 
     @Override
-    public ResponseEntity<Worker> ReassignWorker(Worker updatedWorker) {
+    public Worker ReassignWorker(Worker updatedWorker) {
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
         System.out.println("updated details"+updatedWorker.getFirstname());
@@ -149,7 +149,7 @@ public class SupervisorServiceImpl implements SupervisorService{
                 int oldvillagecode=existingWorker.getVillagecode().getCode();
                 Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
                 oldvillage.ifPresent( villagetemp ->{
-                    villagetemp.setWorker_count(0);
+                    villagetemp.setWorker_count(villagetemp.getWorker_count()-1);
                     villageRepository.save(villagetemp);
                 } );
                 int newvillagecode=updatedWorker.getVillagecode().getCode();
@@ -163,13 +163,12 @@ public class SupervisorServiceImpl implements SupervisorService{
             }
 
             // Save the updated worker to the database
-            Worker updatedworker= workerRepository.save(existingWorker);
+            return workerRepository.save(existingWorker);
 
-            return ResponseEntity.ok(updatedworker);
 
         } else {
             System.out.println("Worker not found with ID: " + updatedWorker.getId());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return null;
         }
     }
 }

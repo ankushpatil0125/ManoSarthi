@@ -40,7 +40,7 @@ public class Patient {
     private String lastname;
 
     @Email(message = "Enter valid email")
-    @Column(name = "email",unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "gender")

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.District;
 import com.team9.manosarthi_backend.Entities.SubDistrict;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.DistrictRepository;
 import com.team9.manosarthi_backend.Repositories.SubDistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,12 @@ public class SubDistrictRestController {
 //
 //        List<SubDistrict>  subDistricts = subDistrictRepository.findSubDistrictof(district);
 
-        Set<SubDistrict> subDistricts;
+        try {
+            Optional<District> district = districtRepository.findById(districtcode);
+            if (district.isEmpty()) {
+                throw new APIRequestException("District cannot found");
+            }
+        Set<SubDistrict> subDistricts=null;
 
         if(Objects.equals(role, "DOCTOR") && assigned)
         {
@@ -50,20 +56,28 @@ public class SubDistrictRestController {
         {
             subDistricts = subDistrictRepository.getAssignedSupervisorSubDistinct(districtcode);
         }
-        else
+        else if(Objects.equals(role, "SUPERVISOR") && !assigned)
         {
             subDistricts = subDistrictRepository.getNotAssignedSupervisorSubDistinct(districtcode);
         }
+            if (subDistricts == null) {
+                throw new APIRequestException("SubDistrict cannot found");
+            }
 
-        Set<String> subDistrictFilterProperties = new HashSet<>();
-        subDistrictFilterProperties.add("code");
-        subDistrictFilterProperties.add("name");
-        subDistrictFilterProperties.add("district");
+            Set<String> subDistrictFilterProperties = new HashSet<>();
+            subDistrictFilterProperties.add("code");
+            subDistrictFilterProperties.add("name");
+            subDistrictFilterProperties.add("district");
 
-        SimpleBeanPropertyFilter SubDistrictFilter = SimpleBeanPropertyFilter.filterOutAllExcept(subDistrictFilterProperties);
-        FilterProvider filterProvider=new SimpleFilterProvider().addFilter("SubDistrictJSONFilter",SubDistrictFilter);
-        MappingJacksonValue mappingJacksonValue= new MappingJacksonValue(subDistricts);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+            SimpleBeanPropertyFilter SubDistrictFilter = SimpleBeanPropertyFilter.filterOutAllExcept(subDistrictFilterProperties);
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("SubDistrictJSONFilter", SubDistrictFilter);
+            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(subDistricts);
+            mappingJacksonValue.setFilters(filterProvider);
+            return mappingJacksonValue;
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting subdistrict",ex.getMessage());
+        }
     }
 }

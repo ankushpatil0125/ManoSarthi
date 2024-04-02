@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,10 @@ public class AdminServiceImpl implements AdminService {
         //Add user to user database
         User user = new User();
         user.setUsername("DOC" + newDoctor.getId());
-        user.setPassword(passwordEncoder.encode("changeme"));
+//        user.setPassword(passwordEncoder.encode("changeme"));
+
+        String password=PasswordGeneratorService.generatePassword();
+        user.setPassword(passwordEncoder.encode(password));
 
         user.setRole("ROLE_DOCTOR");
         User newuser = userRepository.save(user);
@@ -64,7 +69,9 @@ public class AdminServiceImpl implements AdminService {
         User user = new User();
 
         user.setUsername("SUP" + newSupervisor.getId());
-        user.setPassword(passwordEncoder.encode("changeme"));
+//        user.setPassword(passwordEncoder.encode("changeme"));
+        String password=PasswordGeneratorService.generatePassword();
+        user.setPassword(passwordEncoder.encode(password));
         user.setRole("ROLE_SUPERVISOR");
 
         User newuser = userRepository.save(user);
@@ -141,9 +148,43 @@ public class AdminServiceImpl implements AdminService {
         }
         return null;
     }
-
-
+    
     @Override
+    public Supervisor ReassignSupervisor(Supervisor updatedSupervisor) {
+        // Retrieve the existing worker from the database
+        Supervisor existingSupervisor = supervisorRepository.findById(updatedSupervisor.getId()).orElse(null);
+        System.out.println("updated details"+updatedSupervisor.getFirstname());
+        if(existingSupervisor!=null)
+        {
+            //you can update subdistrict code only in reassignment
+            if(updatedSupervisor.getSubdistrictcode()!=null && updatedSupervisor.getSubdistrictcode().getCode() != existingSupervisor.getSubdistrictcode().getCode())
+            {
+                int oldsubdistcode=existingSupervisor.getSubdistrictcode().getCode();
+                Optional<SubDistrict> oldsubdist=subDistrictRepository.findById(oldsubdistcode);
+                oldsubdist.ifPresent( subdisttemp ->{
+                    subdisttemp.setSupervisor_count(subdisttemp.getSupervisor_count()-1);
+                    subDistrictRepository.save(subdisttemp);
+                } );
+                int newsubdistcode=updatedSupervisor.getSubdistrictcode().getCode();
+                Optional<SubDistrict> newsubdist=subDistrictRepository.findById(newsubdistcode);
+                newsubdist.ifPresent( subdisttemp ->{
+                    subdisttemp.setSupervisor_count(subdisttemp.getSupervisor_count()+1);
+                    subDistrictRepository.save(subdisttemp);
+                    existingSupervisor.setSubdistrictcode(subdisttemp);
+                } );
+            }
+
+            // Save the updated worker to the database
+            return supervisorRepository.save(existingSupervisor);
+
+
+
+        } else {
+            System.out.println("Supervisor not found with ID: " + updatedSupervisor.getId());
+            return null;
+        }
+    }
+        @Override
         public Questionarrie addQuestionarrie(Questionarrie que)
         {
             return questionarrieRepo.save(que);
