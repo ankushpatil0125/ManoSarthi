@@ -7,4 +7,6 @@ import java.util.List;
 public interface DoctorService {
 
     List<Patient> getNewPatientDetails(int doctorId,int pagenumber,int pagesize);
+
+    Patient getPatient(int doctorId,int patientId);
 }
