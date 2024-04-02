@@ -119,7 +119,7 @@ function HomeScreen() {
 
   const handleRegisterPatient = () => {
     // Navigate or perform action for registering patient
-    navigation.navigate("ReferNotRefer");
+    navigation.navigate("RegisterPatientScreen");
   };
 
   const handleMissedFollowup = () => {

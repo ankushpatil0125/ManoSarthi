@@ -20,10 +20,11 @@ import PatientContext, { PatientProvider } from "./Context/PatientContext";
 import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-const Drawer = createDrawerNavigator();
+import CustomDrawer from "./components/CustomDrawer";
+import { Entypo } from "@expo/vector-icons";
+import MainDrawerNavigator from "./navigation/MainDrawerNavigator";
+
 const Stack = createStackNavigator();
 
 const ForwardedToast = React.forwardRef((props, ref) => (
@@ -35,26 +36,8 @@ const checkNetworkConnectivity = async () => {
   return state.isConnected;
 };
 
-const DashboardScreen = () => (
-  <View style={styles.screen}>
-    <Text>Dashboard Screen</Text>
-  </View>
-);
-
-const AlertScreen = () => (
-  <View style={styles.screen}>
-    <Text>Alert Screen</Text>
-  </View>
-);
-
-const PrescriptionScreen = () => (
-  <View style={styles.screen}>
-    <Text>Prescription Screen</Text>
-  </View>
-);
-
 // Define a function to render the home stack
-const HomeStack = () => (
+export const HomeStack = () => (
   <PatientProvider>
     <Stack.Navigator>
       <Stack.Screen
@@ -103,38 +86,6 @@ const HomeStack = () => (
 
 // Define the main drawer navigator
 // Define the main drawer navigator
-const MainDrawerNavigator = () => (
-
-  <Drawer.Navigator initialRouteName="HomeScreen">
-    <Drawer.Screen
-      name="Home"
-      component={HomeStack}
-      options={({ navigation }) => ({
-        headerRight: () => (
-          <Pressable >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 5,
-                marginRight: 5,
-              }}
-            >
-              <AntDesign name="sync" size={24} color="black" />
-              <Text style={{ fontWeight: "bold" }}>Sync</Text>
-            </View>
-          </Pressable>
-        ),
-      })}
-    />
-    <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
-    <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
-    <Drawer.Screen name="AlertScreen" component={AlertScreen} />
-    <Drawer.Screen name="PrescriptionScreen" component={PrescriptionScreen} />
-    {/* <Drawer.Screen name="Sync" component={SyncButton}/> */}
-  </Drawer.Navigator>
-);
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(true);
