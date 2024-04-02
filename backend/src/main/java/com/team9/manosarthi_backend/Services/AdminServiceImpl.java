@@ -148,7 +148,7 @@ public class AdminServiceImpl implements AdminService {
         }
         return null;
     }
-    
+
     @Override
     public Supervisor ReassignSupervisor(Supervisor updatedSupervisor) {
         // Retrieve the existing worker from the database

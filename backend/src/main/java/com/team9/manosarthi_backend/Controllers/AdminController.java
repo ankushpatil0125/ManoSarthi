@@ -242,7 +242,7 @@ public class AdminController {
                 System.out.println("mail failed");
                 throw new APIRequestException("Sending mail failed");
             }
-            return supervisorFilter.getSupervisorrFilter(supervisorFilterProperties, subDistrictFilterProperties);
+            return supervisorFilter.getSupervisorFilter(supervisorFilterProperties, subDistrictFilterProperties);
         }
         catch (DataIntegrityViolationException ex) {
             String errorMessage = ex.getCause().getMessage();
