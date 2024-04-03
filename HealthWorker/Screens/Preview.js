@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingLeft: "8%",
+    // paddingLeft: "8%",
     paddingBottom: 40,
   },
   header: {
@@ -218,13 +218,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
+    width:"40%",
     marginTop: 20,
     paddingVertical: 12,
     backgroundColor: "blue",
     borderRadius: 5,
-    alignItems: "center",
+    alignSelf: "center",
+    justifyContent:"center"
   },
   buttonText: {
+    textAlign: "center",
     color: "white",
     fontSize: 16,
   },
