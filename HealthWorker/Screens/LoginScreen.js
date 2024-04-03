@@ -40,40 +40,29 @@ const LoginScreen = ({ onLoginSuccess }) => {
       password: password,
     };
     console.log(user);
-
+    onLoginSuccess();
     // try {
-    //   console.log("Before sending Request");
     //   const response = await axios.post(BASE_URL + "auth/login", user, {
     //     headers: {
     //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ` + token,
+    //       Authorization: `Bearer ${token}`,
     //     },
     //   });
     //   if (response) {
     //     console.log(response.data);
-    //     Alert.alert(i18n.t("Login Successful"));
+    //     Alert.alert("Login Successful");
     //     onLoginSuccess();
     //   } else {
-    //     Alert.alert(i18n.t("Login Failure"));
+    //     Alert.alert("Login Failure");
     //   }
     // } catch (error) {
     //   console.error("Error during login:", error);
-    //   Alert.alert(i18n.t("Login Failure"), i18n.t("An error occurred during login."));
+    //   Alert.alert("Login Failure", "An error occurred during login.");
     // }
-    onLoginSuccess();
   };
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
-    >
-      <View>
-        <Image
-          style={{ width: 150, height: 150, marginTop: "8%" }}
-          source={require("../assets/logo.png")}
-        />
-      </View>
-
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center",flex:1,justifyContent:"center"}}>
       <KeyboardAvoidingView>
         {/* Language Toggle Button */}
         <View style={{ marginTop: 10 }}>

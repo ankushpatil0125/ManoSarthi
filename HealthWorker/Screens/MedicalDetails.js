@@ -16,8 +16,8 @@ const MedicalDetails = () => {
   const navigation = useNavigation();
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
-
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+  var commentID;
 
 
   useEffect(() => {
@@ -33,18 +33,29 @@ const MedicalDetails = () => {
     };
   }, []);
 
-  const fetchQuestionsFromDatabase = async() => {
-    try{
+  const fetchQuestionsFromDatabase = async () => {
+    try {
       const data = await SelectService.getAllMedicalQuestions();
-      setMedicalQuestions(data);
-      console.log("Medical Questions(IN MedicalDetails Screen): ", data);
-      console.log("Medical Questions(IN MedicalDetails Screen): ", medicalQuestions);
-
-    }
-    catch(error){
+      // setMedicalQuestions(data);
+      console.log("Medical Questions res data (IN MedicalDetails Screen): ", data);
+      
+      // Find the index of the question with the "comment" value
+      const commentIndex = data.findIndex(question => question.question === "comment");
+      
+      // If the "comment" question exists, remove it from the medicalQuestions array
+      if (commentIndex !== -1) {
+        commentID = data[commentIndex].question_id;
+        console.log("CommentID:", commentID);
+        const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
+        setMedicalQuestions(updatedMedicalQuestions);
+      }
+  
+      console.log("Medical Questions after removing comment: ", medicalQuestions);
+    } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
   };
+  
 
   const handleAnswerChange = (index, answer) => {
     const newAnswers = [...answers];
@@ -115,7 +126,7 @@ const MedicalDetails = () => {
   const saveDataToDatabase = async (answers, comment) => {
    try{
     console.log("before res: ");
-    const res = await InsertService.insertMedicalHistoryAnswers(medicalQuestions, answers, comment, aabhaId);
+    const res = await InsertService.insertMedicalHistoryAnswers(medicalQuestions, answers, comment, commentID, aabhaId);
     console.log("res: ", res);
    }
    catch(error){
@@ -125,13 +136,7 @@ const MedicalDetails = () => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View style={{ alignItems: 'center', paddingTop: 15 }}>
-        <Image
-          source={require('../assets/saarthi.png')}
-          style={{ borderRadius: 8, width: 85, height: 85, borderColor: 'black', borderWidth: 0.8 }}
-        />
-      </View>
-      <View style={{ marginTop: 30, paddingLeft: 10 }}>
+      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,alignItems:'center',justifyContent:'center' }}>
         {medicalQuestions.slice(0, -1).map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}:</Text>
@@ -171,7 +176,7 @@ const MedicalDetails = () => {
         />
         <View style={{width:200, marginBottom:20}}>
           <TouchableOpacity
-            style={{ backgroundColor: 'lightblue', padding: 10, borderRadius: 5 }}
+            style={{ backgroundColor: 'lightblue', padding: 10, borderRadius: 5,alignItems:'center',justifyContent:'center' }}
             onPress={handleFormSubmit}
           >
             <Text style={{ fontSize: 16 }}>Submit</Text>

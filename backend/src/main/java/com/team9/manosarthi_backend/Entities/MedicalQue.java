@@ -20,7 +20,7 @@ public class MedicalQue {
     private int question_id;
 
     @NotBlank(message = "question cannot be blank")
-    @Pattern(regexp="[a-zA-Z0-9]+", message="Only characters are allowed")
+    @Pattern(regexp="[a-zA-Z0-9\\s]+", message="Only characters are allowed")
     private String question;
 
     private boolean active=true;

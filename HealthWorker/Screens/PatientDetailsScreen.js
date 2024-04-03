@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import NetInfo from "@react-native-community/netinfo";
@@ -17,21 +18,19 @@ import InsertService from "../Services/DatabaseServices/InsertService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
-import { RadioButton } from 'react-native-paper'; // Import RadioButton component
 
 const PatientDetailsScreen = ({ navigation }) => {
-  // const [aabhaId, setAabhaId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const [dob, setDob] = useState(new Date()); // Initialize dob with current date
+  const [dob, setDob] = useState(new Date());
   const [address, setAddress] = useState("");
   const [formError, setFormError] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [patients, setPatients] = useState([]);
-  const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+  const { aabhaId } = useContext(PatientContext);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
@@ -43,7 +42,6 @@ const PatientDetailsScreen = ({ navigation }) => {
     };
   }, []);
 
-  // Define a function to fetch data from the database
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllPatients();
@@ -56,8 +54,6 @@ const PatientDetailsScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchDataFromDatabase();
-    // fetchQuestionsFromDatabase();
-    // DeleteService.deleteAllQuestions();
   }, []);
 
   const handleDateChange = (event, selectedDate) => {
@@ -67,48 +63,22 @@ const PatientDetailsScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    
     if (!firstName || !lastName || !email || !gender || !dob || !address) {
       setFormError("Please fill in all fields");
       return;
     }
 
     if (isConnected) {
-      // Send data to server using POST request
-      // await sendDataToServer();
+      console.log(firstName+" "+lastName+" "+email+" "+dob+" "+address+" "+gender);
       await storeDataLocally();
+
     } else {
-      // Store data locally in SQLite database
       await storeDataLocally();
     }
-
     navigation.navigate("QuestionnaireScreen");
   };
 
-  const sendDataToServer = async () => {
-    const patientData = {
-      aabhaId: aabhaId,
-      firstname: firstName,
-      lastname: lastName,
-      email: email,
-      gender: gender,
-      dob: dob,
-      address: address,
-    };
-    try {
-      // Using axios for the POST request
-      console.log("Patient Data", patientData);
-      const response = await RegisterPatientService.addPatient(patientData);
-      if (response) {
-        // Handle successful password change, e.g., display a success message
-        alert(`Patient with name ${patientData.firstname} Added Successfully`);
-      } else {
-        // Handle password change failure
-        alert("Failed to Add Patient");
-      }
-    } catch (error) {
-      console.error(`Error during adding Patient:", ${error}`);
-    }
-  };
   const storeDataLocally = async () => {
     try {
       const patientDetails = {
@@ -117,18 +87,17 @@ const PatientDetailsScreen = ({ navigation }) => {
         lastName,
         email,
         gender,
-        dob: dob.toISOString(), // Convert date to ISO string
+        dob: dob.toISOString(),
         address,
       };
 
       const result = await InsertService.insertPatientDetails(patientDetails);
-      console.log(result); // Log the result
-
-      // Handle success or error accordingly
+      console.log(result);
     } catch (error) {
       console.error("Error storing data locally:", error);
     }
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -158,40 +127,43 @@ const PatientDetailsScreen = ({ navigation }) => {
           keyboardType="email-address"
         />
         <Text style={styles.label}>Gender:</Text>
-        <View style={styles.radioContainer}>
-          <View style={styles.radioButton}>
-            <Text>Male</Text>
-            <RadioButton
-              value="male"
-              status={gender === 'male' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('male')}
-            />
-          </View>
-          <View style={styles.radioButton}>
-            <Text>Female</Text>
-            <RadioButton
-              value="female"
-              status={gender === 'female' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('female')}
-            />
-          </View>
-          <View style={styles.radioButton}>
-            <Text>Other</Text>
-            <RadioButton
-              value="other"
-              status={gender === 'other' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('other')}
-            />
-          </View>
+        <View style={styles.genderContainer}>
+          <TouchableOpacity
+            style={[
+              styles.genderOption,
+              gender === "male" && styles.selectedGender,
+            ]}
+            onPress={() => setGender("male")}
+          >
+            <Text style={styles.genderText}>Male</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.genderOption,
+              gender === "female" && styles.selectedGender,
+            ]}
+            onPress={() => setGender("female")}
+          >
+            <Text style={styles.genderText}>Female</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.genderOption,
+              gender === "other" && styles.selectedGender,
+            ]}
+            onPress={() => setGender("other")}
+          >
+            <Text style={styles.genderText}>Other</Text>
+          </TouchableOpacity>
         </View>
-    
+
         <Text style={styles.label}>Date Of Birth:</Text>
-        <View>
-          <Button
+        <View style={{alignItems:"center",justifyContent:"center"}}>
+          {/* <Button
             onPress={() => setShowDatePicker(true)}
-            title={dob.toLocaleDateString()} // Display selected date
-          />
-          {showDatePicker && (
+            title={dob.toLocaleDateString()}
+          /> */}
+          {true && (
             <DateTimePicker
               testID="dateTimePicker"
               value={dob}
@@ -230,38 +202,48 @@ const PatientDetailsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    paddingBottom: 20,
+    paddingHorizontal: 30,
+    paddingTop: 20,
+    paddingBottom: 30,
     justifyContent: "center",
   },
   label: {
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: 18,
+    marginBottom: 10,
   },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 15,
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginBottom: 20,
     color: "#000",
+    width: "100%",
+    fontSize: 16,
   },
-  multilineInput: {
-    height: 100,
+  genderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  genderOption: {
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: "#ccc",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+  },
+  selectedGender: {
+    backgroundColor: "#3498db",
+  },
+  genderText: {
+    fontSize: 16,
   },
   errorText: {
     color: "red",
-    marginBottom: 10,
-  },
-  radioContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 15,
-  },
-  radioButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    fontSize: 16,
   },
 });
 

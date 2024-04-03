@@ -1,10 +1,12 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.Entities.Patient;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
 import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.Entities.Doctor;
+import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Services.DoctorService;
 import com.team9.manosarthi_backend.security.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,77 +24,149 @@ import java.util.Set;
 @RequestMapping("/doctor")
 @CrossOrigin(origins = "*")
 public class DoctorRestController {
-
-    @Autowired
     DoctorRepository doctorRepository;
-
     DoctorService doctorService;
-
-    @Autowired
-    public DoctorRestController(DoctorService doctorService) {
-        this.doctorService = doctorService;
-    }
-
-    @Autowired
     private JwtHelper helper;
-    @GetMapping("/viewdetails")
-//    public Optional<Doctor> getDetails(@RequestParam("doctorid") int doctorid){
-    public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            // Extract the token part after "Bearer "
-            String token = authorizationHeader.substring(7);
-            String userid = helper.getIDFromToken(token);
-//        return doctorRepository.findById(doctorid);
-            Optional<Doctor> doc = doctorRepository.findById(Integer.parseInt(userid));
 
-
-            Set<String> doctorFilterProperties = new HashSet<>();
-            doctorFilterProperties.add("firstname");
-            doctorFilterProperties.add("lastname");
-            doctorFilterProperties.add("email");
-            doctorFilterProperties.add("subdistrictcode");
-            doctorFilterProperties.add("user");
-            doctorFilterProperties.add("gender");
-
-            Set<String> subDistrictFilterProperties = new HashSet<>();
-            subDistrictFilterProperties.add("code");
-            subDistrictFilterProperties.add("name");
-            subDistrictFilterProperties.add("district");
-
-            Set<String> userFilterProperties = new HashSet<>();
-            userFilterProperties.add("username");
-
-            DoctorFilter<Optional<Doctor>> doctorFilter = new DoctorFilter<>(doc);
-
-
-            return doctorFilter.getDoctorFilter(doctorFilterProperties,subDistrictFilterProperties,userFilterProperties);
-        }
-
-        return null;
+    @Autowired
+    public DoctorRestController(DoctorRepository doctorRepository, DoctorService doctorService, JwtHelper helper) {
+        this.doctorRepository = doctorRepository;
+        this.doctorService = doctorService;
+        this.helper = helper;
     }
 
 
-    @GetMapping("/new-patient-details")
-    public MappingJacksonValue getNewPatientDetails(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
-        int pagesize=5;
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
 
+    @GetMapping("/viewdetails")
+    public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                // Extract the token part after "Bearer "
+                String token = authorizationHeader.substring(7);
+                String userid = helper.getIDFromToken(token);
+
+                Optional<Doctor> doc = doctorRepository.findById(Integer.parseInt(userid));
+
+
+                Set<String> doctorFilterProperties = new HashSet<>();
+                doctorFilterProperties.add("firstname");
+                doctorFilterProperties.add("lastname");
+                doctorFilterProperties.add("email");
+                doctorFilterProperties.add("subdistrictcode");
+                doctorFilterProperties.add("user");
+                doctorFilterProperties.add("gender");
+
+                Set<String> subDistrictFilterProperties = new HashSet<>();
+                subDistrictFilterProperties.add("code");
+                subDistrictFilterProperties.add("name");
+                subDistrictFilterProperties.add("district");
+
+                Set<String> userFilterProperties = new HashSet<>();
+                userFilterProperties.add("username");
+
+                DoctorFilter<Optional<Doctor>> doctorFilter = new DoctorFilter<>(doc);
+
+
+                return doctorFilter.getDoctorFilter(doctorFilterProperties, subDistrictFilterProperties, userFilterProperties);
+            }
+            else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting doctors of district",ex.getMessage());
+        }
+    }
+    @GetMapping("/new-patient")
+    public MappingJacksonValue getNewPatientDetails(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
+
+        int pagesize = 5;
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+                String token = authorizationHeader.substring(7);
+                String doctorId = helper.getIDFromToken(token);
+                List<Patient> patientList = doctorService.getNewPatientDetails(Integer.parseInt(doctorId), pagenumber, pagesize);
+
+                Set<String> patientFilterProperties = new HashSet<>();
+                patientFilterProperties.add("patient_id");
+                patientFilterProperties.add("firstname");
+                patientFilterProperties.add("lastname");
+                patientFilterProperties.add("gender");
+                patientFilterProperties.add("village");
+
+                Set<String> villageFilterProperties = new HashSet<>();
+                villageFilterProperties.add("name");
+
+                PatientFilter<List<Patient>> patientFilter = new PatientFilter<>(patientList);
+                return patientFilter.getPatientFilter(patientFilterProperties, villageFilterProperties);
+            }
+            else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting new patients",ex.getMessage());
+        }
+    }
+    @GetMapping("/patient")
+    public MappingJacksonValue getPatient(@RequestParam int patientId,@RequestHeader("Authorization") String authorizationHeader)
+    {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
+        {
             String token = authorizationHeader.substring(7);
             String doctorId = helper.getIDFromToken(token);
 
-            List<Patient> patientList= doctorService.getNewPatientDetails(Integer.parseInt(doctorId), pagenumber,pagesize);
+            Patient patient = doctorService.getPatient(Integer.parseInt(doctorId),patientId);
+
 
             Set<String> patientFilterProperties = new HashSet<>();
             patientFilterProperties.add("firstname");
             patientFilterProperties.add("lastname");
-            patientFilterProperties.add("email");
+            patientFilterProperties.add("gender");
             patientFilterProperties.add("village");
+            patientFilterProperties.add("followUpDetailsList");
+            patientFilterProperties.add("medicalQueAnsList");
 
             Set<String> villageFilterProperties = new HashSet<>();
             villageFilterProperties.add("name");
 
-            PatientFilter<List<Patient>> patientFilter= new PatientFilter<>(patientList);
-            return patientFilter.getPatientFilter(patientFilterProperties,villageFilterProperties);
+            Set<String> followUpFilterProperties = new HashSet<>();
+            followUpFilterProperties.add("followupDate");
+            followUpFilterProperties.add("followUpNo");
+            followUpFilterProperties.add("worker");
+            followUpFilterProperties.add("doctor");
+            followUpFilterProperties.add("questionarrieAnsList");
+
+            Set<String> questionarrieAnsFilterProperties = new HashSet<>();
+            questionarrieAnsFilterProperties.add("question_ans");
+            questionarrieAnsFilterProperties.add("questionarrie");
+
+            Set<String> questionarrieFilterProperties = new HashSet<>();
+            questionarrieFilterProperties.add("question");
+            questionarrieFilterProperties.add("default_ans");
+
+            Set<String> workerFilterProperties = new HashSet<>();
+            workerFilterProperties.add("firstname");
+            workerFilterProperties.add("lastname");
+
+            Set<String> doctorFilterProperties = new HashSet<>();
+            doctorFilterProperties.add("firstname");
+            doctorFilterProperties.add("lastname");
+
+            Set<String> medicalQueAnsFilterProperties = new HashSet<>();
+            medicalQueAnsFilterProperties.add("medicalquest");
+            medicalQueAnsFilterProperties.add("question_ans");
+
+            Set<String> medicalQueFilterProperties = new HashSet<>();
+            medicalQueFilterProperties.add("question");
+
+            PatientFilter<Patient> patientFilter = new PatientFilter<>(patient);
+
+            return patientFilter.getPatientFilter(patientFilterProperties, villageFilterProperties, workerFilterProperties, doctorFilterProperties, followUpFilterProperties, questionarrieAnsFilterProperties, questionarrieFilterProperties, medicalQueAnsFilterProperties, medicalQueFilterProperties);
+
         }
         return null;
     }

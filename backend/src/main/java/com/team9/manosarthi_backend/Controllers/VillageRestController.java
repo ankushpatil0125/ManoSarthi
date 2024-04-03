@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.VillageRepository;
 import com.team9.manosarthi_backend.Entities.Village;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,12 @@ public class VillageRestController {
 
     @GetMapping("/get-village/")
     public Optional<Village> getVillage(@RequestParam("code") int code){
-
-        return villageRepository.findById(code);
+        try {
+            return villageRepository.findById(code);
+        } catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting village",ex.getMessage());
+        }
     }
 
 }
