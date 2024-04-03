@@ -13,10 +13,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @PreAuthorize("permitAll()")
@@ -33,14 +30,36 @@ public class SubDistrictRestController {
     }
 
     @GetMapping("/")        // gives the list of subdistrict in a district
-    public MappingJacksonValue getSubDistrict(@RequestParam("districtcode") int districtcode){
+    public MappingJacksonValue getSubDistrict(@RequestParam("districtcode") int districtcode, @RequestParam("role") String role,@RequestParam("assigned") boolean assigned){
+
+//        Optional<District> district = districtRepository.findById(districtcode);
+//
+//        List<SubDistrict>  subDistricts = subDistrictRepository.findSubDistrictof(district);
+
         try {
             Optional<District> district = districtRepository.findById(districtcode);
-            if (district == null) {
+            if (district.isEmpty()) {
                 throw new APIRequestException("District cannot found");
             }
+        Set<SubDistrict> subDistricts=null;
 
-            List<SubDistrict> subDistricts = subDistrictRepository.findSubDistrictof(district);
+        if(Objects.equals(role, "DOCTOR") && assigned)
+        {
+            subDistricts = subDistrictRepository.getAssignedDoctorSubDistinct(districtcode);
+        }
+        else if ( Objects.equals(role, "DOCTOR") && !assigned )
+        {
+            subDistricts = subDistrictRepository.getNotAssignedDoctorSubDistinct(districtcode);
+        }
+
+        else if(Objects.equals(role, "SUPERVISOR") && assigned)
+        {
+            subDistricts = subDistrictRepository.getAssignedSupervisorSubDistinct(districtcode);
+        }
+        else if(Objects.equals(role, "SUPERVISOR") && !assigned)
+        {
+            subDistricts = subDistrictRepository.getNotAssignedSupervisorSubDistinct(districtcode);
+        }
             if (subDistricts == null) {
                 throw new APIRequestException("SubDistrict cannot found");
             }

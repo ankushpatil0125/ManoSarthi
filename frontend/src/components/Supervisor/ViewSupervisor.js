@@ -1,10 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BASE_URL, getToken } from "../../utils/Constants";
 import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 
-const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
+const ViewSupervisor = ({district,subdistrictcode }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
@@ -15,7 +13,7 @@ const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
 
   const fetchData = async () => {
     try {
-      console.log("inside fetchdata function");
+      console.log("Inside fetchdata function");
       if (district) {
         // setCurrentPage(0)
         AdminService.getAllDistrictSupervisors(district, currentPageDoctor)
@@ -23,7 +21,7 @@ const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
             setData(response.data);
           })
           .catch((error) => {
-            console.error("Error fetching district doctors:", error);
+            console.error("Error Fetching Selected District Supervisors:", error);
           });
       } else {
         setCurrentPageDoctor(0);
@@ -33,7 +31,7 @@ const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
         });
       }
     } catch (error) {
-      console.error("Error fetching doctor details:", error.message);
+      console.error("Error Fetching All Supervisors In All Districts :", error.message);
     }
   };
   useEffect(() => {
@@ -43,7 +41,8 @@ const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
           setData(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching subdistrict doctors:", error);
+          console.error("Error Fetching Selected Subdistrict Supervisor:", error);
+          alert(error)
         });
     }
   }, [subdistrictcode]);
@@ -64,7 +63,7 @@ const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Doctor Name')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Supervisor Name')}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.District')}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Subdistrict')}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Action')}</th>

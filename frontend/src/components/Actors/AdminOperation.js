@@ -24,7 +24,7 @@ const AdminOperation = () => {
             <div className="card">
               <div className="card-body">
                 <h4 className="no-underline">
-                  {t("Actor.Add Doctor/Supervisor")}
+                  {t("Actor.Add")}
                 </h4>
               </div>
             </div>
@@ -38,7 +38,7 @@ const AdminOperation = () => {
           >
             <div className="card">
               <div className="card-body">
-                <h4>{t("Actor.Update Doctor/Supervisor")}</h4>
+                <h4>{t("Actor.Update")}</h4>
               </div>
             </div>
           </Link>
@@ -51,7 +51,7 @@ const AdminOperation = () => {
           >
             <div className="card">
               <div className="card-body">
-                <h4>{t("Actor.Delete Doctor/Supervisor")}</h4>
+                <h4>{t("Actor.Delete")}</h4>
               </div>
             </div>
           </Link>
@@ -122,3 +122,7 @@ const AdminOperation = () => {
 };
 
 export default AdminOperation;
+
+
+
+

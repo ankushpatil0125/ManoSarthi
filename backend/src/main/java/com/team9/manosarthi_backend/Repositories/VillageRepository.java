@@ -11,7 +11,7 @@ import java.util.List;
 public interface VillageRepository extends JpaRepository<Village,Integer> {
     //get villages from subdistrict where worker is not assigned
     @Query("SELECT v from Village v where v.subDistrict.code =:subdistrictcode and v.worker_count=0")
-    List<Village> findnoworkerVillBySubdistrict(@Param("subdistrictcode") int subdistrictcode);
+    List<Village>   findnoworkerVillBySubdistrict(@Param("subdistrictcode") int subdistrictcode);
 
     @Query("SELECT v from Village v where v.subDistrict.code =:subdistrictcode and v.worker_count=1")
     List<Village> findassworkerVillBySubdistrict(@Param("subdistrictcode") int subdistrictcode);

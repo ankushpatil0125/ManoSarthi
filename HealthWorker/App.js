@@ -3,7 +3,7 @@ import React, { useEffect, useState, forwardRef } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import Toast from "react-native-toast-message";
 import CreateService from "./Services/DatabaseServices/CreateService";
@@ -20,8 +20,16 @@ import PatientContext, { PatientProvider } from "./Context/PatientContext";
 import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
-import * as SQLite from "expo-sqlite";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
+import { LanguageProvider } from "./Context/LanguageProvider";
+
 const Drawer = createDrawerNavigator();
+import { AntDesign } from "@expo/vector-icons";
+import CustomDrawer from "./components/CustomDrawer";
+import { Entypo } from "@expo/vector-icons";
+import MainDrawerNavigator from "./navigation/MainDrawerNavigator";
+
 const Stack = createStackNavigator();
 
 const ForwardedToast = React.forwardRef((props, ref) => (
@@ -33,70 +41,61 @@ const checkNetworkConnectivity = async () => {
   return state.isConnected;
 };
 
-const DashboardScreen = () => (
-  <View style={styles.screen}>
-    <Text>Dashboard Screen</Text>
-  </View>
-);
-
-const AlertScreen = () => (
-  <View style={styles.screen}>
-    <Text>Alert Screen</Text>
-  </View>
-);
-
-const PrescriptionScreen = () => (
-  <View style={styles.screen}>
-    <Text>Prescription Screen</Text>
-  </View>
-);
-
 // Define a function to render the home stack
-const HomeStack = () => (
+export const HomeStack = () => (
   <PatientProvider>
     <Stack.Navigator>
       <Stack.Screen
-        name="Login"
-        component={LoginScreen}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen
         name="RegisterPatientScreen"
         component={RegisterPatientScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PatientDetailsScreen"
         component={PatientDetailsScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="MissedFollowupScreen"
         component={MissedFollowUpsScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="QuestionnaireScreen"
         component={QuestionnaireScreen}
+        options={{ headerShown: false }}
       />
-      <Stack.Screen name="ReferNotRefer" component={ReferNotRefer} />
-      <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
-      <Stack.Screen name="Preview" component={Preview} />
+      <Stack.Screen
+        name="ReferNotRefer"
+        component={ReferNotRefer}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MedicalDetails"
+        component={MedicalDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Preview"
+        component={Preview}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   </PatientProvider>
 );
 
 // Define the main drawer navigator
-const MainDrawerNavigator = () => (
-  <Drawer.Navigator initialRouteName="HomeScreen">
-    <Drawer.Screen name="Home" component={HomeStack} />
-    <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
-    <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
-    <Drawer.Screen name="AlertScreen" component={AlertScreen} />
-    <Drawer.Screen name="PrescriptionScreen" component={PrescriptionScreen} />
-  </Drawer.Navigator>
-);
+// Define the main drawer navigator
+
 export default function App() {
   const [isConnected, setIsConnected] = useState(true);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [syncButton,setsyncButton] = useState(true);
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
       const connected = await checkNetworkConnectivity();
@@ -115,23 +114,113 @@ export default function App() {
       }
     });
   }, []);
+  useEffect(()=>{
+    const syncData = async () => {
+      // try {
+        console.log("Hello")
+      const patients = await SelectService.getAllPatients();
+    
+      for (const patient of patients) {
+        const SurveyQuestionAnswerData =
+          await SelectService.getAllSurveyQuestionAnswersByAabhaId(patient.aabhaId);
+        const MedicalHistoryAnswersData =
+          await SelectService.getAllMedicalQuestionAnswersByAabhaId(
+            patient.aabhaId
+          );
+        const sendSurvevyQuestion = [];
+    
+        for (const temp of SurveyQuestionAnswerData) {
+          const ques = {
+            question_ans: temp.answer,
+            questionarrie: {
+              question_id: temp.question_id,
+            },
+          };
+          sendSurvevyQuestion.push(ques);
+        }
+    
+        const sendMedicalHistoryAnswers = [];
+    
+        for (const temp of MedicalHistoryAnswersData) {
+          const ques = {
+            question_ans: temp.question_ans,
+            medicalquest: {
+              question_id: temp.question_id,
+            },
+          };
+          console.log("ques", ques);
+          sendMedicalHistoryAnswers.push(ques);
+        }
+        console.log("sendMedicalHistoryAnswers", sendMedicalHistoryAnswers);
+        // console.log("SurveyQuestionAnswerData: ", SurveyQuestionAnswerData);
+        // console.log("MedicalHistoryAnswersData: ", MedicalHistoryAnswersData);
+    
+        const patientData = {
+          patient: {
+            aabhaId: patient.aabhaId,
+            firstname: patient.firstName,
+            lastname: patient.lastName,
+            email: patient.email,
+            gender: patient.gender,
+            dob: patient.dob,
+            address: patient.address,
+          },
+          questionarrieAnsList: sendSurvevyQuestion,
+          medicalQueAnsList: sendMedicalHistoryAnswers,
+        };
+        console.log("patient data", patientData);
+        try {
+          const response = await RegisterPatientService.addPatient(patientData);
+          console.log("Response : ", response.data);
+          if (response) {
+            console.log(
+              `Patient with name ${patientData.patient.firstname} added successfully`
+            );
+    
+            const status1 = await DeleteService.deletePatientByAabhaId(
+              response.data.aabhaId
+            );
+            console.log("deletePatientByAabhaId Status ", status1);
+    
+            const status2 =
+              await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
+                response.data.aabhaId
+              );
+            console.log("deleteSurveyQuestionAnswersByAabhaId Status ", status2);
+    
+            const status3 =
+              await DeleteService.deleteMedicalHistoryAnswersByAabhaId(
+                response.data.aabhaId
+              );
+            console.log("deleteMedicalHistoryAnswersByAabhaId Status ", status3);
+          }
+          // const status = await DeleteService.deletePatientByAabhaId(
+          //   response.data.aabhaId
+          // );
+          // console.log("status ", status);
+          else {
+            console.error("Failed to add patient");
+          }
+        } catch (error) {
+          console.error("Error during adding patient:", error);
+        }
+      }
+    };
+  }, [syncButton])
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    NavigationContainer.navigate("HomeScreen");
+  };
 
   useEffect(() => {
     const initializeDatabase = async () => {
       try {
-        // await SQLite.deleteDatabaseSync("HealthWorker.db");
-        // console.log("Database Dropped..");
-        // await SQLite.deleteDatabaseAsync("HealthWorker.db");
-        // await DropService.dropMedicalQuestionsTable();
-        // await DropService.dropMedicalHistoryAnswersTable();
-        // await DropService.dropSurveyQuestionTable();
-        // await DropService.dropPatientDetailsTable();
-        // await DropService.dropSurveyQuestionAnswerTable();
+        // Drop All Tables
+        // await DropService.dropTables();
+
         // Initialize database and create tables
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
-        // Perform additional actions if database initialized successfully
-        // For example, you can fetch data from the database or perform other operations
       } catch (error) {
         console.error("Error initializing database:", error);
         // Handle the error here, such as showing a message to the user
@@ -148,10 +237,26 @@ export default function App() {
   }, []); // Empty dependency array to ensure this effect runs only once on component mount
 
   return (
+    <LanguageProvider>
     <NavigationContainer>
-      <MainDrawerNavigator />
+      {!isLoggedIn ? (
+        <Stack.Navigator>
+          {!isLoggedIn ? (
+            <Stack.Screen name="Login" options={{ headerShown: false }}>
+              {(props) => (
+                <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />
+              )}
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen name="Home" component={HomeScreen} />
+          )}
+        </Stack.Navigator>
+      ) : (
+        <MainDrawerNavigator />
+      )}
       <ForwardedToast />
     </NavigationContainer>
+  </LanguageProvider>
   );
 }
 

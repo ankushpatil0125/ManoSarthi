@@ -1,6 +1,4 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BASE_URL, getToken } from "../../utils/Constants";
 import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +21,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
             setData(response.data);
           })
           .catch((error) => {
-            console.error("Error fetching district doctors:", error);
+            console.error("Error Fetching Selected District Doctors:", error);
           });
       } else {
         setCurrentPageDoctor(0);
@@ -33,7 +31,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
         });
       }
     } catch (error) {
-      console.error("Error fetching doctor details:", error.message);
+      console.error("Error Fetching All Doctors in all Districts:", error.message);
     }
   };
   useEffect(() => {
@@ -43,7 +41,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
           setData(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching subdistrict doctors:", error);
+          console.error("Error Fetching Selected Subdistrict Doctor:", error);
         });
     }
   }, [subdistrictcode]);

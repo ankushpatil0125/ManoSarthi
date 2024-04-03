@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,67 +10,72 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { SecureStore } from "expo";
+import { BASE_URL, token } from "../utils/Constants";
+import i18n from "../i18n";
+import LanguageToggleButton from "../Multilingual/LanguageButton";
+import { useLanguageContext } from "../Context/LanguageProvider";
 
-async function save(key, value) {
-  await SecureStore.setItemAsync(key, value);
-}
 
-async function getValueFor(key) {
-  let result = await SecureStore.getItemAsync(key);
-  console.log("get key: ", result);
-  if (result) {
-    alert("🔐 Here's your value 🔐 \n" + result);
-  } else {
-    alert("No values stored under that key.");
-  }
-}
-
-const LoginScreen = () => {
+const LoginScreen = ({ onLoginSuccess }) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
+  // const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
+
   const navigation = useNavigation();
+
+  // const handleLanguageToggle = () => {
+  //   const newLanguage = selectedLanguage === "en" ? "hi" : "en";
+  //   setSelectedLanguage(newLanguage);
+  //   i18n.locale = newLanguage;
+  // };
 
   const handleLogin = async () => {
     const user = {
       username: username,
       password: password,
     };
-    Alert.alert("Username " + username + "Password " + password);
-    axios
-      .post("http://192.168.73.188:9090/auth/login", user)
-      .then((response) => {
-        console.log("Login Response: ", response.data);
-        console.log("Login Response jwt: ", response.data.jwtToken);
-        const token = response.data.jwtToken;
-        save("jwt", token);
-        getValueFor("jwt");
-      })
-      .catch((error) => {
-        Alert.alert("Login Failure");
-        console.log("Login Failure", error);
-      });
+    console.log(user);
+    onLoginSuccess();
+    // try {
+    //   const response = await axios.post(BASE_URL + "auth/login", user, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
+    //   if (response) {
+    //     console.log(response.data);
+    //     Alert.alert("Login Successful");
+    //     onLoginSuccess();
+    //   } else {
+    //     Alert.alert("Login Failure");
+    //   }
+    // } catch (error) {
+    //   console.error("Error during login:", error);
+    //   Alert.alert("Login Failure", "An error occurred during login.");
+    // }
   };
+
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
-    >
-      <View>
-        <Image
-          style={{ width: 150, height: 150 }}
-          source={require("../assets/logo.png")}
-        />
-      </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center",flex:1,justifyContent:"center"}}>
       <KeyboardAvoidingView>
+        {/* Language Toggle Button */}
+        <View style={{ marginTop: 10 }}>
+          <LanguageToggleButton
+            onPress={handleLanguageToggle}
+            selectedLanguage={selectedLanguage}
+          />
+        </View>
+
         {/* Login to Your Account */}
         <View style={{ alignItems: "center" }}>
           <Text style={{ fontSize: 17, fontWeight: "bold", color: "#007FFF" }}>
-            Login to Your Account
+            {i18n.t("Login")}
           </Text>
         </View>
 
@@ -86,9 +92,9 @@ const LoginScreen = () => {
               marginTop: 30,
             }}
           >
-            <MaterialIcons
+            <AntDesign
               style={{ marginLeft: 10 }}
-              name="username"
+              name="user"
               size={24}
               color="gray"
             />
@@ -101,7 +107,7 @@ const LoginScreen = () => {
                 width: 280,
                 fontSize: 16,
               }}
-              placeholder="Enter your Username"
+              placeholder={i18n.t("Enter Your Username")}
             />
           </View>
         </View>
@@ -135,7 +141,7 @@ const LoginScreen = () => {
                 width: 280,
                 fontSize: 16,
               }}
-              placeholder="Enter your Password"
+              placeholder={i18n.t("Enter Your Password")}
             />
           </View>
         </View>
@@ -149,7 +155,7 @@ const LoginScreen = () => {
           }}
         >
           <Text style={{ color: "#007FFF", fontWeight: "500" }}>
-            Forgot Password?
+            {i18n.t("Forgot Password?")}
           </Text>
         </View>
 
@@ -173,18 +179,10 @@ const LoginScreen = () => {
                 fontWeight: "bold",
               }}
             >
-              Login
+               {i18n.t("Login")}
             </Text>
           </Pressable>
         </View>
-        {/* <Pressable
-          onPress={() => navigation.navigate("Register")}
-          style={{ marginTop: 15 }}
-        >
-          <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-            Don't have an Account? <Text style={{color:"#007FFF",fontWeight:500}}>Sign Up</Text>
-          </Text>
-        </Pressable> */}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

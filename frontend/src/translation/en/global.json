@@ -1,93 +1,99 @@
 {
-    "header":{
-        "message":"Welcome",
-        "Home":"Home",
-        "About":"About Us",
-        "Contact":"Contact Us",
-        "Dashboard":"Dashboard",
-        "Profile":"Profile"
-    },
-    "login":{
-        "LOGIN":"LOGIN",
-        "Logout":"Logout",
-        "username":"username",
-        "Password":"Password",
-        "forgot-password":"Forgot-password",
-        "Click_Here":"Click_Here"
-    },
-    "Select_Language":"Select Language",
-    "Actor":{
-        "Doctor/Supervisor":"Doctor/Supervisor",
-        "Admin Dashboard":"Admin Dashboard",
-        "Add Doctor/Supervisor":"Add Doctor/Supervisor",
-        "Update Doctor/Supervisor":"Update Doctor/Supervisor",
-        "Delete Doctor/Supervisor":"Delete Doctor/Supervisor",
-        "Add HealthWorker":"Add HealthWorker",
-        "Update HealthWorker":"Update HealthWorker",
-        "Delete HealthWorker":"Delete HealthWorker",
-        "Show Activity":"Show Activity",
-        "HealthWorker":"HealthWorker"
-    },
-    "addDoctorSupervisor":{
-        "Doctor":"Doctor",
-        "Supervisor":"Supervisor",
-        "Fill The Doctor Information":"Fill The Doctor Information",
-        "Select Actor to Add":"Select Actor to Add",
-        "Select":"Select",
-        "District":"District",
-        "Subdistrict":"Subdistrict",
-        "First Name":"First Name",
-        "Last Name":"Last Name",
-        "Email":"Email",
-        "ADD":"ADD"
-    },
-    "addHealthWorker":{
-        "Doctor":"Doctor",
-        "Supervisor":"Supervisor",
-        "Fill The HealthWorker Information":"Fill The HealthWorker Information",
-        "Select Actor to Add":"Select Actor to Add",
-        "Select":"Select",
-        "Village":"Village",
-        "Subdistrict":"Subdistrict",
-        "First Name":"First Name",
-        "Last Name":"Last Name",
-        "Email":"Email",
-        "ADD":"ADD",
-        "Gender":"Gender",
-        "Male": "Male",
-        "Female": "Female"
-    },
-    "UpdateDoctorSupervisor":{
-        "District":"District",
-        "Subdistrict":"Subdistrict",
-        "Select":"Select",
-        "Doctor Name":"Doctor Name",
-        "Action":"Action",
-        "Next":"Next",
-        "Previous":"Previous"
-
-    },
-    "UpdateHealthworker":{
-        "Village":"Village",
-        "Select":"Select",
-        "HealthWorker Firstname":"HealthWorker Firstname",
-        "Action":"Action",
-        "Next":"Next",
-        "Previous":"Previous",
-        "Email":"Email",
-        "HealthWorker Lastname":"HealthWorker Lastname"
-    },
-    "Profile":{
-        "Username":"Username",
-        "First Name":"First Name",
-        "Last Name":"Last Name",
-        "Email":"Email",
-        "District":"District",
-        "Subdistrict":"Subdistrict",
-        "Gender":"Gender",
-        "Change Password":"Change Password",
-        "Doctor Profile":"Doctor Profile",
-        "Supervisor Profile":"Supervisor Profile"
-    }
-
+  "header": {
+    "message": "Welcome",
+    "Home": "Home",
+    "About": "About Us",
+    "Contact": "Contact Us",
+    "Dashboard": "Dashboard",
+    "Profile": "Profile"
+  },
+  "login": {
+    "LOGIN": "LOGIN",
+    "Logout": "Logout",
+    "username": "username",
+    "Password": "Password",
+    "forgot-password": "Forgot-password",
+    "Click_Here": "Click_Here"
+  },
+  "Select_Language": "Select Language",
+  "Actor": {
+    "Actions": "Actions",
+    "Admin Dashboard": "Admin Dashboard",
+    "Add": "Add",
+    "Update": "Update",
+    "Delete": "Delete",
+    "Add HealthWorker": "Add HealthWorker",
+    "Update HealthWorker": "Update HealthWorker",
+    "Delete HealthWorker": "Delete HealthWorker",
+    "Show Activity": "Show Activity",
+    "HealthWorker": "HealthWorker"
+  },
+  "addDoctorSupervisor": {
+    "Doctor": "Doctor",
+    "Supervisor": "Supervisor",
+    "Fill The Actor Information": "Fill The Actor Information",
+    "Select Actor to Add": "Select Actor to Add",
+    "Select": "Select",
+    "District": "District",
+    "Subdistrict": "Subdistrict",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "Email": "Email",
+    "ADD": "ADD",
+    "Gender": "Gender",
+    "Male": "Male",
+    "Female": "Female",
+    "Date of Birth": "Date of Birth"
+  },
+  "addHealthWorker": {
+    "Doctor": "Doctor",
+    "Supervisor": "Supervisor",
+    "Fill The HealthWorker Information": "Fill The HealthWorker Information",
+    "Select Actor to Add": "Select Actor to Add",
+    "Select": "Select",
+    "Village": "Village",
+    "Subdistrict": "Subdistrict",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "Email": "Email",
+    "ADD": "ADD",
+    "Gender": "Gender",
+    "Male": "Male",
+    "Female": "Female",
+    "Date of Birth": "Date of Birth"
+  },
+  "UpdateDoctorSupervisor": {
+    "District": "District",
+    "Subdistrict": "Subdistrict",
+    "Select": "Select",
+    "Doctor Name": "Doctor Name",
+    "Action": "Action",
+    "Next": "Next",
+    "Previous": "Previous",
+    "Actor": "Actor",
+    "Reassign": "Reassign",
+    "Supervisor Name": "Supervisor Name"
+  },
+  "UpdateHealthworker": {
+    "Village": "Village",
+    "Select": "Select",
+    "HealthWorker Firstname": "HealthWorker Firstname",
+    "Action": "Action",
+    "Next": "Next",
+    "Previous": "Previous",
+    "Email": "Email",
+    "HealthWorker Lastname": "HealthWorker Lastname"
+  },
+  "Profile": {
+    "Username": "Username",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "Email": "Email",
+    "District": "District",
+    "Subdistrict": "Subdistrict",
+    "Gender": "Gender",
+    "Change Password": "Change Password",
+    "Doctor Profile": "Doctor Profile",
+    "Supervisor Profile": "Supervisor Profile"
+  }
 }
