@@ -16,7 +16,7 @@ const UpdateHealthWorker = () => {
 
   useEffect(() => {
     // Fetch district options
-    SupervisorService.getVillageWithWorker()
+    SupervisorService.getVillageWorker(true)
       .then((response) => {
         setVillageOptions(response.data);
       })

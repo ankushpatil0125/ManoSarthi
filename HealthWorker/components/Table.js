@@ -1,18 +1,21 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { DataTable, Card, Title } from "react-native-paper";
+import { useLanguageContext } from "../Context/LanguageProvider";
+import i18n from "../i18n";
+
 const Table = () => {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.title}>Follow-up Schedule</Title>
+          <Title style={styles.title}>{i18n.t("Follow-up Schedule")}</Title>
 
           <DataTable>
             <DataTable.Header style={styles.head}>
-              <DataTable.Title>Name</DataTable.Title>
-              <DataTable.Title>Adress</DataTable.Title>
-              <DataTable.Title>Status</DataTable.Title>
+              <DataTable.Title>{i18n.t("Name")}</DataTable.Title>
+              <DataTable.Title>{i18n.t("Address")}</DataTable.Title>
+              <DataTable.Title>{i18n.t("Status")}</DataTable.Title>
             </DataTable.Header>
             <DataTable.Row style={styles.row}>
               <DataTable.Cell>Ankush</DataTable.Cell>

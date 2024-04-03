@@ -21,8 +21,8 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Pressable } from 'react-native';
-
+import { Pressable } from "react-native";
+import { LanguageProvider } from "./Context/LanguageProvider";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -58,7 +58,6 @@ const PrescriptionScreen = () => (
 const HomeStack = () => (
   <PatientProvider>
     <Stack.Navigator>
-     
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen
         name="RegisterPatientScreen"
@@ -91,7 +90,6 @@ const MainDrawerNavigator = () => (
     <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
     <Drawer.Screen name="AlertScreen" component={AlertScreen} />
     <Drawer.Screen name="PrescriptionScreen" component={PrescriptionScreen} />
-   
   </Drawer.Navigator>
 );
 export default function App() {
@@ -121,7 +119,6 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
-
   useEffect(() => {
     const initializeDatabase = async () => {
       try {
@@ -147,22 +144,26 @@ export default function App() {
   }, []); // Empty dependency array to ensure this effect runs only once on component mount
 
   return (
+    <LanguageProvider>
     <NavigationContainer>
       {!isLoggedIn ? (
         <Stack.Navigator>
-        {!isLoggedIn ? (
-          <Stack.Screen name="Login" options={{ headerShown: false }}>
-            {(props) => <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />}
-          </Stack.Screen>
-        ) : (
-          <Stack.Screen name="Home" component={HomeScreen} />
-        )}
-      </Stack.Navigator>
+          {!isLoggedIn ? (
+            <Stack.Screen name="Login" options={{ headerShown: false }}>
+              {(props) => (
+                <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />
+              )}
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen name="Home" component={HomeScreen} />
+          )}
+        </Stack.Navigator>
       ) : (
         <MainDrawerNavigator />
       )}
       <ForwardedToast />
     </NavigationContainer>
+  </LanguageProvider>
   );
 }
 

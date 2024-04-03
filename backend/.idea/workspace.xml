@@ -5,22 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/Screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/Screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/Screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/Screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/components/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/components/Table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/utils/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie_ans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie_ans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/QuestionarrieServImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/QuestionarrieServImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/QuestionarrieService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/QuestionarrieService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/VillageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/VillageRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/team9/manosarthi_backend/Config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/AddActorComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/AddActorComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/DoctorHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/DoctorHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/PrivateRoutes/PrivateRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/PrivateRoutes/PrivateRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/css/DoctorHomePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/css/DoctorHomePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,14 +69,17 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Manasi&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;kuldip&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend/src/main/java/com/team9/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
@@ -107,7 +114,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ManosarthiBackendApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <configuration name="ManosarthiBackendApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="manosarthi_backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
@@ -129,6 +136,13 @@
         <item itemvalue="Application.ManosarthiBackendApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-563d888c" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -159,6 +173,8 @@
       <workItem from="1711292970326" duration="866000" />
       <workItem from="1711383128829" duration="12850000" />
       <workItem from="1711431563524" duration="11615000" />
+      <workItem from="1711874169789" duration="594000" />
+      <workItem from="1711874780923" duration="2155000" />
     </task>
     <servers />
   </component>
