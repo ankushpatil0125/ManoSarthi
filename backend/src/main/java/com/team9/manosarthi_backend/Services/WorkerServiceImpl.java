@@ -2,6 +2,7 @@ package com.team9.manosarthi_backend.Services;
 
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class WorkerServiceImpl implements WorkerService{
     private DoctorRepository doctorRepository;
 
     private FollowUpDetailsRepository followUpDetailsRepository;
+
+    private AbhaIdRepository abhaIdRepository;
+
 
     @Override
     public Worker UpdateWorkerProfile(Worker updatedWorker) {
@@ -122,6 +126,24 @@ public class WorkerServiceImpl implements WorkerService{
 //        return patient;
 //    }
 
-
+    @Override
+    public List<String> getAabhaid(Integer workerid)
+    {
+        Optional<Worker> worker=workerRepository.findById(workerid);
+        if(worker.isPresent()) {
+            Worker worker1 = worker.get();
+            Village village = worker1.getVillagecode();
+            if(village==null)
+            {
+                throw new APIRequestException("village of worker not found");
+            }
+            List<String> nonrefabha = abhaIdRepository.findAllByVillage(village.getCode());
+            List<String> refabha = patientRepository.findAllByVillage(village.getCode());
+            List<String> combinedAbha = new ArrayList<>(nonrefabha);
+            combinedAbha.addAll(refabha);
+            return combinedAbha;
+        }
+        throw new APIRequestException("worker with given id not found");
+    }
 
 }

@@ -58,7 +58,12 @@ public class WorkerRestController {
             }
         } catch (Exception ex)
         {
-            throw new APIRequestException("Error while updating worker profile",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while updating worker profile",ex.getMessage());
         }
     }
 
@@ -172,7 +177,12 @@ public class WorkerRestController {
         }
         catch (Exception ex)
         {
-            throw new APIRequestException("Error while registering patient",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while registering patient",ex.getMessage());
         }
 
     }
@@ -210,7 +220,34 @@ public class WorkerRestController {
 
         return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
 
+    }
 
+    @GetMapping("/getAbhaid")
+    public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader)
+    {
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
+                List<String> Abhaid = workerService.getAabhaid(Integer.parseInt(workerId));
+                if (Abhaid.isEmpty())
+                {
+                    throw new APIRequestException("No Aabha Id found");
+                }
+                return Abhaid;
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting registered Aabha Ids",ex.getMessage());
+        }
     }
 }

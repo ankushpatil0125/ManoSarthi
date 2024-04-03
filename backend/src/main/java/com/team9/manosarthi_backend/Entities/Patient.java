@@ -3,6 +3,7 @@ package com.team9.manosarthi_backend.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.team9.manosarthi_backend.Config.AesEncryptor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -24,6 +25,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patient_id;
 
+    @Convert(converter = AesEncryptor.class)
     @Column(name = "aabha_id",unique = true)
     @NotBlank(message = "aabhaId cannot be blank")
     @Pattern(regexp="[0-9]+", message="Only numbers are allowed")
@@ -43,6 +45,7 @@ public class Patient {
     @Column(name = "email")
     private String email;
 
+    @NotBlank(message = "Gender cannot be blank")
     @Column(name = "gender")
     private String gender;
 
