@@ -14,7 +14,7 @@ public class SupervisorFilter<T> {
         this.supervisor = supervisor;
     }
 
-    public MappingJacksonValue getSupervisorrFilter(Set<String> supervisorFilterProperties, Set<String> subDistrictFilterProperties)
+    public MappingJacksonValue getSupervisorFilter(Set<String> supervisorFilterProperties, Set<String> subDistrictFilterProperties)
     {
         SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.filterOutAllExcept(supervisorFilterProperties);
         SimpleBeanPropertyFilter SubDistrictFilter = SimpleBeanPropertyFilter.filterOutAllExcept(subDistrictFilterProperties);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
 import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
@@ -12,6 +13,7 @@ import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -42,65 +44,79 @@ public class WorkerRestController {
 
     @PutMapping("/updateworker")
     public ResponseEntity<MappingJacksonValue> UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
-        ResponseEntity<Worker> responseEntity = workerService.UpdateWorkerProfile(updatedWorker);
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            Worker updatedworker = responseEntity.getBody();
-            SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "villagecode");
-            SimpleBeanPropertyFilter villagefilter = SimpleBeanPropertyFilter.filterOutAllExcept("code", "name", "worker_count");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter", villagefilter);
-            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(updatedworker);
-            mappingJacksonValue.setFilters(filterProvider);
-            return ResponseEntity.ok(mappingJacksonValue);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        try {
+            Worker updatedworker = workerService.UpdateWorkerProfile(updatedWorker);
+            if (updatedworker != null) {
+                SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "villagecode");
+                SimpleBeanPropertyFilter villagefilter = SimpleBeanPropertyFilter.filterOutAllExcept("code", "name", "worker_count");
+                FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter", villagefilter);
+                MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(updatedworker);
+                mappingJacksonValue.setFilters(filterProvider);
+                return ResponseEntity.ok(mappingJacksonValue);
+            } else {
+                throw new APIRequestException("Worker with given ID not found");
+            }
+        } catch (Exception ex)
+        {
+            throw new APIRequestException("Error while updating worker profile",ex.getMessage());
         }
     }
 
     @GetMapping("/getquestionarrie")
     public MappingJacksonValue getquestionarrie() {
-        List<Questionarrie> questions = questionarrieService.getquestions();
-        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionJSONFilter", questionfilter);
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+        try {
+            List<Questionarrie> questions = questionarrieService.getquestions();
+            SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionJSONFilter", questionfilter);
+            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
+            mappingJacksonValue.setFilters(filterProvider);
+            return mappingJacksonValue;
+        }catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting questionarrie",ex.getMessage());
+        }
     }
 
-    @PostMapping("/questionans")
-    public MappingJacksonValue postquestans(@Valid @RequestBody Questionarrie_ans questionarrie_ans)
-    {
-        Questionarrie_ans queans= questionarrieService.postqueans(questionarrie_ans);
-        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id");
-//        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter).addFilter("QuestionJSONFilter",questionfilter);
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
-    }
+//    @PostMapping("/questionans")
+//    public MappingJacksonValue postquestans(@Valid @RequestBody Questionarrie_ans questionarrie_ans)
+//    {
+//        Questionarrie_ans queans= questionarrieService.postqueans(questionarrie_ans);
+//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id");
+////        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
+////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter).addFilter("QuestionJSONFilter",questionfilter);
+//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
+//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
+//        mappingJacksonValue.setFilters(filterProvider);
+//        return mappingJacksonValue;
+//    }
 
     @GetMapping("/get-medical-questionarrie")
     public MappingJacksonValue getmedquestionarrie() {
-        List<MedicalQue> questions = questionarrieService.getmedicalquestions();
-        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueJSONFilter", questionfilter);
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
+        try {
+            List<MedicalQue> questions = questionarrieService.getmedicalquestions();
+            SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
+            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueJSONFilter", questionfilter);
+            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
+            mappingJacksonValue.setFilters(filterProvider);
+            return mappingJacksonValue;
+         }catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting medical questionarrie",ex.getMessage());
+        }
     }
-    @PostMapping("/medical-questionans")
-    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
-    {
-        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
-        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
-        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
-        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-        mappingJacksonValue.setFilters(filterProvider);
-        return mappingJacksonValue;
-    }
+//    @PostMapping("/medical-questionans")
+//    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
+//    {
+//        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
+//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
+//        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
+//        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
+//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
+////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
+//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
+//        mappingJacksonValue.setFilters(filterProvider);
+//        return mappingJacksonValue;
+//    }
 //    @PostMapping("/register-patient")
 //    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
 //        System.out.println("/register-patient");
@@ -116,76 +132,48 @@ public class WorkerRestController {
 //        return patientFilter.getPatientFilter(patientFilterProperties);
 //    }
 
+    @Validated
     @PostMapping("/register-patient")
-    public MappingJacksonValue registerpatient(@RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
-        System.out.println("/register-patient");
-        System.out.println("patient"+registerPatientDTO.toString());
+    public MappingJacksonValue registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+//        System.out.println("patient"+registerPatientDTO.toString());
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
-            String token = authorizationHeader.substring(7);
-            String workerId = helper.getIDFromToken(token);
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
 
-            Patient newPatient = workerService.registerPatient(registerPatientDTO,Integer.parseInt(workerId));
-            Set<String> patientFilterProperties = new HashSet<>();
-            patientFilterProperties.add("aabhaId");
+                Patient newPatient = workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
+                Set<String> patientFilterProperties = new HashSet<>();
+                patientFilterProperties.add("aabhaId");
 
-            PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
+                PatientFilter<Patient> patientFilter = new PatientFilter<>(newPatient);
 
-            return patientFilter.getPatientFilter(patientFilterProperties);
+                return patientFilter.getPatientFilter(patientFilterProperties);
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
         }
+        catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
 
-        return null;
-    }
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
 
-//    @PostMapping("/register-patient")
-//    public MappingJacksonValue registerPatient(@RequestBody Patient patient){
-//        System.out.println("/register-patient");
-//
-//        System.out.println("patient"+patient.toString());
-//
-//        Patient newPatient = workerService.registerPatient(patient);
-//        Set<String> patientFilterProperties = new HashSet<>();
-//        patientFilterProperties.add("aabhaId");
-//
-//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
-//
-//        return patientFilter.getPatientFilter(patientFilterProperties);
-//    }
-
-    @Autowired
-    PatientRepository patientRepository;
-    @GetMapping("/get-patient")
-    public MappingJacksonValue getPatient()
-    {
-
-
-        List<Patient> patientList = patientRepository.findAll();
-
-        Set<String> patientFilterProperties = new HashSet<>();
-        patientFilterProperties.add("aabhaId");
-        patientFilterProperties.add("followUpDetailsList");
-        patientFilterProperties.add("medicalQueAnsList");
-
-        Set<String> followUpFilterProperties = new HashSet<>();
-        followUpFilterProperties.add("followupDate");
-        followUpFilterProperties.add("followUpNo");
-        followUpFilterProperties.add("worker");
-        followUpFilterProperties.add("doctor");
-        followUpFilterProperties.add("questionarrieAnsList");
-
-        Set<String> workerFilterProperties = new HashSet<>();
-        workerFilterProperties.add("firstname");
-
-        Set<String> doctorFilterProperties = new HashSet<>();
-        doctorFilterProperties.add("firstname");
-
-
-        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
-
-        return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
-
-
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while registering patient",ex.getMessage());
+        }
 
     }
 }
