@@ -63,6 +63,7 @@ const PatientDetailsScreen = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
+    
     if (!firstName || !lastName || !email || !gender || !dob || !address) {
       setFormError("Please fill in all fields");
       return;
@@ -71,10 +72,10 @@ const PatientDetailsScreen = ({ navigation }) => {
     if (isConnected) {
       console.log(firstName+" "+lastName+" "+email+" "+dob+" "+address+" "+gender);
       await storeDataLocally();
+
     } else {
       await storeDataLocally();
     }
-
     navigation.navigate("QuestionnaireScreen");
   };
 
