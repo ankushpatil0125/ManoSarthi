@@ -6,17 +6,19 @@ import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent"
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
 import OTPComponent from "./components/Login/OTPComponent";
 import AddActorComponent from "./components/Actors/AddActorComponent";
+import UpdateActor from "./components/Actors/UpdateActor";
 import DoctorHomePage from "./components/HomePage/DoctorHomePage";
 import ProfileComponent from "./components/Actors/ProfileComponent";
 import AdminHomePage from "./components/HomePage/AdminHomePage";
 import SupervisorHomePage from "./components/HomePage/SupervisorHomepage";
 import AdminOperation from "./components/Actors/AdminOperation";
-import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import ErrorPage from "./components/Error/ErrorPage";
-import UpdateDoctor from "./components/Doctor/UpdateDoctor";
-import AddHealthWorker from "./components/Supervisor/AddHealthWorker"
+import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
 import UpdateHealthWorkerpage from "./components/UpdateHealthWorkerpage";
+import PendingPatient from "./components/Doctor/PendingPatient";
+
 const App = () => {
   return (
     <Router>
@@ -31,7 +33,7 @@ const App = () => {
             path="/change-password"
             element={
               // <PrivateRoute type="changepasswordcomponent">
-                <ChangePasswordComponent />
+              <ChangePasswordComponent />
               // </PrivateRoute>
             }
           />
@@ -40,7 +42,7 @@ const App = () => {
             path="/add-doctor-supervisor"
             element={
               // <PrivateRoute type="addactorcomponent">
-                <AddActorComponent />
+              <AddActorComponent />
               // </PrivateRoute>
             }
           />
@@ -48,7 +50,15 @@ const App = () => {
             path="/doctor-home"
             element={
               // <PrivateRoute type="doctorhomepage">
-                <DoctorHomePage />
+              <DoctorHomePage />
+              // </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pendingpatient"
+            element={
+              // <PrivateRoute type="pendingpatient">
+              <PendingPatient />
               // </PrivateRoute>
             }
           />
@@ -56,7 +66,7 @@ const App = () => {
             path="/doctor-dashboard"
             element={
               // <PrivateRoute type="doctor-dashboard">
-                <DoctorHomePage />
+              <DoctorHomePage />
               // </PrivateRoute>
             }
           />
@@ -64,7 +74,7 @@ const App = () => {
             path="/profile"
             element={
               // <PrivateRoute type="profilecomponent">
-                <ProfileComponent />
+              <ProfileComponent />
               // </PrivateRoute>
             }
           />
@@ -72,7 +82,7 @@ const App = () => {
             path="/admin-home"
             element={
               // <PrivateRoute type="adminhomepage">
-                <AdminHomePage />
+              <AdminHomePage />
               // </PrivateRoute>
             }
           />
@@ -80,7 +90,7 @@ const App = () => {
             path="/supervisor-home"
             element={
               // <PrivateRoute type="supervisorhomepage">
-                <SupervisorHomePage />
+              <SupervisorHomePage />
               //  </PrivateRoute>
             }
           />
@@ -88,7 +98,7 @@ const App = () => {
             path="/doctor-supervisor"
             element={
               // <PrivateRoute type="adminoperation">
-                <AdminOperation />
+              <AdminOperation />
               // </PrivateRoute>
             }
           />
@@ -96,7 +106,7 @@ const App = () => {
             path="/update-doctor-supervisor"
             element={
               // <PrivateRoute type="update-doctor-supervisor">
-                <UpdateDoctor />
+              <UpdateActor />
               // </PrivateRoute>
             }
           />
@@ -104,7 +114,7 @@ const App = () => {
             path="/healthworker-home"
             element={
               // <PrivateRoute type="healthworker">
-                <AdminOperation />
+              <AdminOperation />
               // </PrivateRoute>
             }
           />
@@ -112,7 +122,7 @@ const App = () => {
             path="/add-healthworker"
             element={
               // <PrivateRoute type="add-healthworker">
-                <AddHealthWorker />
+              <AddHealthWorker />
               // </PrivateRoute>
             }
           />
@@ -120,7 +130,7 @@ const App = () => {
             path="/update-healthworker"
             element={
               // <PrivateRoute type="update-healthworker">
-                <UpdateHealthWorker />
+              <UpdateHealthWorker />
               // </PrivateRoute>
             }
           />
@@ -128,7 +138,7 @@ const App = () => {
             path="/delete-healthworker"
             element={
               // <PrivateRoute type="delete-healthworker">
-                <AdminOperation />
+              <AdminOperation />
               // </PrivateRoute>
             }
           />
@@ -136,7 +146,7 @@ const App = () => {
             path="/show-activity-healthworker"
             element={
               // <PrivateRoute type="show-activity-healthworker">
-                <AdminOperation />
+              <AdminOperation />
               // </PrivateRoute>
             }
           />
@@ -144,7 +154,7 @@ const App = () => {
             path="/update"
             element={
               // <PrivateRoute type="show-activity-healthworker">
-                <UpdateHealthWorkerpage/>
+              <UpdateHealthWorkerpage />
               // </PrivateRoute>
             }
           />

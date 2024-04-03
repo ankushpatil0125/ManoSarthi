@@ -17,11 +17,11 @@
   },
   "Select_Language": "भाषा चुनें",
   "Actor": {
-    "Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र",
+    "Actions": "कर्तव्य",
     "Admin Dashboard": "एडमिन डैशबोर्ड",
-    "Add Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र जोड़ें",
-    "Update Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र अपडेट करें",
-    "Delete Doctor/Supervisor": "डॉक्टर/सुपरवाइज़र हटाएं",
+    "Add": " जोड़ें",
+    "Update": " अपडेट करें",
+    "Delete": " हटाएं",
     "Add HealthWorker": "स्वास्थ्य कर्मी जोड़ें",
     "Update HealthWorker": "स्वास्थ्य कर्मी अपडेट करें",
     "Delete HealthWorker": "स्वास्थ्य कर्मी हटाएं",
@@ -31,7 +31,7 @@
   "addDoctorSupervisor": {
     "Doctor": "डॉक्टर",
     "Supervisor": "सुपरवाइजर",
-    "Fill The Doctor Information": "जानकारी भरें",
+    "Fill The Actor Information": "जानकारी भरें",
     "Select Actor to Add": "जोड़ने के लिए डॉक्टर या सुपरवाइजर चुनें",
     "Select": "सेलेक्ट करें",
     "District": "जिला",
@@ -39,7 +39,11 @@
     "First Name": "पहला नाम",
     "Last Name": "अंतिम नाम",
     "Email": "ईमेल",
-    "ADD": "जोड़ें"
+    "ADD": "जोड़ें",
+    "Gender": "लिंग",
+    "Male": "पुरुष",
+    "Female": "स्त्री",
+    "Date of Birth": "जन्म तिथि"
   },
   "addHealthWorker": {
     "Doctor": "डॉक्टर",
@@ -55,27 +59,31 @@
     "ADD": "जोड़ें",
     "Gender": "लिंग",
     "Male": "पुरुष",
-    "Female": "स्त्री"
+    "Female": "स्त्री",
+    "Date of Birth": "जन्म तिथि"
   },
-  "UpdateDoctorSupervisor":{
-    "District":"जिला",
-    "Subdistrict":"उपजिला",
-    "Select":"सिलेक्ट",
-    "Doctor Name":"डॉक्टर नाम",
-    "Action":"एक्शन",
-    "Next":"आगे",
-    "Previous":"पीछे"
-},
-  "UpdateHealthworker":{
-    "Village":"गाँव",
-    "Select":"सिलेक्ट",
-    "HealthWorker Firstname":"स्वास्थ्य कर्मी पहला नाम",
-    "Action":"एक्शन",
-    "Next":"आगे",
-    "Previous":"पीछे",
-    "Email":"ईमेल",
-    "HealthWorker Lastname":"स्वास्थ्य कर्मी अंतिम नाम"
-},
+  "UpdateDoctorSupervisor": {
+    "District": "जिला",
+    "Subdistrict": "उपजिला",
+    "Select": "सिलेक्ट",
+    "Doctor Name": "डॉक्टर नाम",
+    "Action": "एक्शन",
+    "Next": "आगे",
+    "Previous": "पीछे",
+    "Actor": "भूमिका",
+    "Reassign": "पुनः नियुक्ति ",
+    "Supervisor Name": "सुपरवाइजर नाम"
+  },
+  "UpdateHealthworker": {
+    "Village": "गाँव",
+    "Select": "सिलेक्ट",
+    "HealthWorker Firstname": "स्वास्थ्य कर्मी पहला नाम",
+    "Action": "एक्शन",
+    "Next": "आगे",
+    "Previous": "पीछे",
+    "Email": "ईमेल",
+    "HealthWorker Lastname": "स्वास्थ्य कर्मी अंतिम नाम"
+  },
   "Profile": {
     "Username": "यूजरनेम",
     "First Name": "पहला नाम",

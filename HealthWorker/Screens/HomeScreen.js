@@ -9,6 +9,9 @@ import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService
 import Table from "../components/Table";
 import { ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguageContext } from "../Context/LanguageProvider";
+import LanguageToggleButton from "../Multilingual/LanguageButton";
+import i18n from "../i18n";
 
 // const [sendPatient, setSendPatient] = useState([]);
 
@@ -56,6 +59,7 @@ function HomeScreen() {
   const [patients, setPatients] = useState([]);
   const [medical_history_ans, setMedical_history_ans] = useState([]);
   const navigation = useNavigation();
+  const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
 
   const fetchPatientDataFromDatabase = async () => {
     try {
@@ -143,19 +147,23 @@ function HomeScreen() {
             style={styles.button}
             onPress={handleRegisterPatient}
           >
-            <Text style={styles.buttonText}>Register Patient</Text>
+            <Text style={styles.buttonText}>{i18n.t("Register Patient")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={handleMissedFollowup}
           >
-            <Text style={styles.buttonText}>Missed Followup</Text>
+            <Text style={styles.buttonText}>{i18n.t("Missed Followup")}</Text>
           </TouchableOpacity>
         </View>
         {/* <View style={styles.topButtonsContainer}>
           <TouchableOpacity style={styles.syncButton} onPress={handleSync}>
-            <Text style={styles.syncButtonText}>Sync Data</Text>
+            <Text style={styles.syncButtonText}>{i18n.t("Sync Data")}</Text>
           </TouchableOpacity>
+          <LanguageToggleButton
+            onPress={handleLanguageToggle}
+            selectedLanguage={selectedLanguage}
+          />
           <TouchableOpacity style={styles.syncButton} onPress={handleFetch}>
             <Text style={styles.syncButtonText}>Fetch Data</Text>
           </TouchableOpacity>

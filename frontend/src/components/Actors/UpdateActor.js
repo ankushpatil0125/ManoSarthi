@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import "../../css/UpdateDoctor.css";
 import AdminService from "../../Services/AdminService";
 import Header from "../Header/Header";
-import ViewDoctors from "./ViewDoctors";
+import ViewDoctors from "../Doctor/ViewDoctors";
 import ViewSupervisor from "../Supervisor/ViewSupervisor";
-const UpdateDoctor = () => {
+
+const UpdateActor = () => {
   const [district, setDistrict] = useState("");
   const [subdistrictcode, setSubDistrictcode] = useState("");
   const [districtOptions, setDistrictOptions] = useState([]);
   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
-  const [allDoctor, setAllDoctor] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [actor, setActor] = useState("");
   const { t } = useTranslation("global");
 
   useEffect(() => {
     // Fetch district options
-    AdminService.getDistrict()
+    console.log("AAACTOR : ", actor)
+    AdminService.getDistrict(actor, true)
       .then((response) => {
+        console.log("jhghidfsifjijgi: ", response);
         setDistrictOptions(response.data);
       })
       .catch((error) => {
         console.error("Error fetching district options:", error);
       });
-  }, []);
+  }, [actor]);
 
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
 
-    AdminService.getSubDistrict(selectedDistrict)
+    AdminService.getSubDistrict(selectedDistrict, actor, true)
       .then((response) => {
         setSubDistrictOptions(response.data);
       })
@@ -44,44 +44,47 @@ const UpdateDoctor = () => {
     setSubDistrictcode(selectedSubDistrict);
   };
 
-  const handleSubmit = async (e) => {
-    // Your form submission logic goes here
-  };
+  // const handleSubmit = async (e) => {
+  //   // Your form submission logic goes here
+  // };
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <Header />
 
-      <div className="udcon">
-        <h4> Choose District and Subdistrict :</h4>
-        <div className="form-container">
-          <div>
-            <label htmlFor="actor">
-              {t("addDoctorSupervisor.Select Actor to Add")}:
+      <div className="flex flex-col items-center justify-center mt-28">
+        <h4 className="mb-4 text-xl font-bold">
+          {t("UpdateDoctorSupervisor.Reassign")}
+        </h4>
+        <div className="max-w-5xl mx-auto flex justify-center items-center mb-4 space-x-4">
+          <div className="w-1/3">
+            <label htmlFor="actor" className="mb-2">
+              {t("UpdateDoctorSupervisor.Actor")}:
             </label>
             <select
               id="actor"
               value={actor}
               onChange={(e) => setActor(e.target.value)}
+              className="border border-gray-400 px-2 py-1 rounded-md w-full"
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
-              <option value="Doctor">{t("addDoctorSupervisor.Doctor")}</option>
-              <option value="Supervisor">
+              <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
+              <option value="SUPERVISOR">
                 {t("addDoctorSupervisor.Supervisor")}
               </option>
             </select>
           </div>
-          <div>
-            <label htmlFor="district">
+          <div className="w-1/3">
+            <label htmlFor="district" className="mb-2">
               {t("UpdateDoctorSupervisor.District")}:
             </label>
             <select
               id="district"
-              UpdateDoctorSupervisor
               value={district}
               onChange={handleDistrictChange}
+              className="border border-gray-400 px-2 py-1 rounded-md w-full"
             >
-              <option value="">Select</option>
+              <option value="">{t("addDoctorSupervisor.Select")}</option>
               {districtOptions.map((district, index) => (
                 <option key={index} value={district.code}>
                   {district.name}
@@ -89,16 +92,17 @@ const UpdateDoctor = () => {
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="subdistrictcode">
+          <div className="w-1/3">
+            <label htmlFor="subdistrictcode" className="mb-2">
               {t("UpdateDoctorSupervisor.Subdistrict")}:
             </label>
             <select
               id="subdistrictcode"
               value={subdistrictcode}
               onChange={handleSubDistrictChange}
+              className="border border-gray-400 px-2 py-1 rounded-md w-full"
             >
-              <option value="">Select</option>
+              <option value="">{t("addDoctorSupervisor.Select")}</option>
               {subDistrictOptions.map((subdistrict, index) => (
                 <option key={index} value={subdistrict.code}>
                   {subdistrict.name}
@@ -109,52 +113,12 @@ const UpdateDoctor = () => {
         </div>
       </div>
       {actor === "Doctor" ? (
-        <ViewDoctors
-          allDoctor={allDoctor}
-          district={district}
-          subdistrictcode={subdistrictcode}
-        />
+        <ViewDoctors district={district} subdistrictcode={subdistrictcode} />
       ) : (
-        <ViewSupervisor
-          allDoctor={allDoctor}
-          district={district}
-          subdistrictcode={subdistrictcode}
-        />
+        <ViewSupervisor district={district} subdistrictcode={subdistrictcode} />
       )}
-      {/* <div className="data">
-        <table className="table-auto border border-collapse border-gray-400">
-          <thead className="bg-gray-200">
-            <tr>
-              <th className="border border-gray-400 px-4 py-2">Doctor Name</th>
-              <th className="border border-gray-400 px-4 py-2">District</th>
-              <th className="border border-gray-400 px-4 py-2">Subdistrict</th>
-              <th className="border border-gray-400 px-4 py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allDoctor.map((doctor) => (
-              <tr key={doctor.id}>
-                <td className="border border-gray-400 px-4 py-2">
-                  {doctor.firstname}
-                </td>
-                <td className="border border-gray-400 px-4 py-2">
-                  {doctor.subdistrictcode.district.name}
-                </td>
-                <td className="border border-gray-400 px-4 py-2">
-                  {doctor.subdistrictcode.name}
-                </td>
-                <td className="border border-gray-400 px-4 py-2">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Update
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
     </div>
   );
 };
 
-export default UpdateDoctor;
+export default UpdateActor;
