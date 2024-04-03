@@ -26,37 +26,29 @@ const LoginScreen = ({ onLoginSuccess }) => {
       password: password,
     };
     console.log(user);
-
-    try {
-      const response = await axios.post(BASE_URL + "auth/login", user 
-      // {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // }
-      );
-      if (response) {
-        console.log(response.data);
-        Alert.alert("Login Successful");
-        onLoginSuccess();
-      } else {
-        Alert.alert("Login Failure");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      Alert.alert("Login Failure", "An error occurred during login.");
-    }
+    onLoginSuccess();
+    // try {
+    //   const response = await axios.post(BASE_URL + "auth/login", user, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
+    //   if (response) {
+    //     console.log(response.data);
+    //     Alert.alert("Login Successful");
+    //     onLoginSuccess();
+    //   } else {
+    //     Alert.alert("Login Failure");
+    //   }
+    // } catch (error) {
+    //   console.error("Error during login:", error);
+    //   Alert.alert("Login Failure", "An error occurred during login.");
+    // }
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}>
-      <View>
-        <Image
-          style={{ width: 150, height: 150, marginTop: "8%" }}
-          source={require("../assets/logo.png")}
-        />
-      </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center",flex:1,justifyContent:"center"}}>
       <KeyboardAvoidingView>
         {/* Login to Your Account */}
         <View style={{ alignItems: "center" }}>

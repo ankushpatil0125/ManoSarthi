@@ -48,7 +48,7 @@ public class Patient {
 
     @NotNull(message = "DOB cannot be null")
     @Column(name = "dob")
-    private Date dob;
+    private int age;
 
     @ManyToOne
     @JoinColumn(name = "doctor")

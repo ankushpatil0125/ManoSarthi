@@ -76,7 +76,12 @@ public class AdminServiceImpl implements AdminService {
 
         User newuser = userRepository.save(user);
 
+        Optional<SubDistrict> subDistrict = subDistrictRepository.findById(supervisor.getSubdistrictcode().getCode());
 
+        subDistrict.ifPresent(temp -> {
+            temp.setSupervisor_count(temp.getSupervisor_count()+1);
+            subDistrictRepository.save(temp);
+        });
         supervisor.setUser(newuser);
 
         return supervisorRepository.save(newSupervisor);
@@ -102,6 +107,47 @@ public class AdminServiceImpl implements AdminService {
         public List<Doctor> viewDoctorBySubDistrict(int subdistrictcode) {
             return doctorRepository.findDoctorBySubDistrict(subdistrictcode);
         }
+
+
+    @Override
+    public List<Supervisor> viewSupervisorByDistrict(int districtcode, int pagenumber, int pagesize) {
+        Pageable p= PageRequest.of(pagenumber,pagesize);
+        Page <Supervisor> pageSupervisor=supervisorRepository.findSupervisorByDistrict(districtcode,p);
+        List<Supervisor> allSupervisor=pageSupervisor.getContent();
+        return allSupervisor;
+    }
+
+    @Override
+    public List<Supervisor> viewSupervisorBySubDistrict(int subdistrictcode) {
+        List<Supervisor> allSupervisor = supervisorRepository.findSupervisorBySubDistrict(subdistrictcode);
+
+        return allSupervisor;
+    }
+
+    @Override
+    public List<Supervisor> viewAllSupervisor(int pagenumber, int pagesize) {
+        Pageable p= PageRequest.of(pagenumber,pagesize);
+        Page <Supervisor> pageSupervisor=supervisorRepository.findAll(p);
+        List<Supervisor> allSupervisor=pageSupervisor.getContent();
+        return allSupervisor;
+    }
+
+    @Override
+    public Supervisor deleteSupervisor(Supervisor supervisor) {
+        Optional<Supervisor> newSupervisor= supervisorRepository.findById(supervisor.getId());
+
+        if(newSupervisor.isPresent())
+        {
+            newSupervisor.get().setActive(false);
+            Optional<SubDistrict> subDistrict = subDistrictRepository.findById(newSupervisor.get().getSubdistrictcode().getCode());
+            subDistrict.ifPresent(temp ->{
+                temp.setSupervisor_count(temp.getSupervisor_count()-1);
+                subDistrictRepository.save(temp);
+            });
+            return supervisorRepository.save(newSupervisor.get());
+        }
+        return null;
+    }
 
     @Override
     public Supervisor ReassignSupervisor(Supervisor updatedSupervisor) {
@@ -149,5 +195,8 @@ public class AdminServiceImpl implements AdminService {
         {
             return medicalQueRepo.save(medicalque);
         }
+
+
+
 
 }

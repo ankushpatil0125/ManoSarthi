@@ -37,4 +37,19 @@ public class DoctorServiceImpl implements DoctorService{
 
 
     }
+
+    @Override
+    public Patient getPatient(int doctorId,int patientId) {
+       Optional<Patient> patient= patientRepository.findById(patientId);
+       Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+        if(patient.isPresent() && doctor.isPresent())
+        {
+            if( doctor.get().getSubdistrictcode().getCode() != patient.get().getVillage().getSubDistrict().getCode() )
+                return null;
+            return patient.get();
+        }
+
+
+       return null;
+    }
 }

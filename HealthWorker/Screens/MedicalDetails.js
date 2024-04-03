@@ -136,14 +136,8 @@ const MedicalDetails = () => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View style={{ alignItems: 'center', paddingTop: 15 }}>
-        <Image
-          source={require('../assets/saarthi.png')}
-          style={{ borderRadius: 8, width: 85, height: 85, borderColor: 'black', borderWidth: 0.8 }}
-        />
-      </View>
-      <View style={{ marginTop: 30, paddingLeft: 10 }}>
-        {medicalQuestions.map((question, index) => (
+      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,alignItems:'center',justifyContent:'center' }}>
+        {medicalQuestions.slice(0, -1).map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}:</Text>
             <View style={{ paddingTop: 5, flexDirection: 'row' }}>
@@ -182,7 +176,7 @@ const MedicalDetails = () => {
         />
         <View style={{width:200, marginBottom:20}}>
           <TouchableOpacity
-            style={{ backgroundColor: 'lightblue', padding: 10, borderRadius: 5 }}
+            style={{ backgroundColor: 'lightblue', padding: 10, borderRadius: 5,alignItems:'center',justifyContent:'center' }}
             onPress={handleFormSubmit}
           >
             <Text style={{ fontSize: 16 }}>Submit</Text>

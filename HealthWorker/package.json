@@ -16,6 +16,7 @@
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
+    "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.6.8",
     "expo": "~50.0.14",
     "expo-secure-store": "~12.8.1",

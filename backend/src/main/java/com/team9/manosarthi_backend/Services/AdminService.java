@@ -25,6 +25,12 @@ public interface AdminService  {
 
     MedicalQue addMedicalQuestionarrie(MedicalQue medicalques);
 
+    List<Supervisor> viewSupervisorByDistrict(int districtcode, int pagenumber, int pagesize);
+    List<Supervisor> viewSupervisorBySubDistrict(int subdistrictcode);
+
+    List<Supervisor> viewAllSupervisor(int pagenumber,int pagesize);
+
+    Supervisor deleteSupervisor(Supervisor supervisor);
 
 
 }
