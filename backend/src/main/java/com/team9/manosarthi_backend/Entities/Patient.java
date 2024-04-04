@@ -28,7 +28,7 @@ public class Patient {
     @Convert(converter = AesEncryptor.class)
     @Column(name = "aabha_id",unique = true)
     @NotBlank(message = "aabhaId cannot be blank")
-    @Pattern(regexp="[0-9]+", message="Only numbers are allowed")
+//    @Pattern(regexp="[0-9]+", message="Only numbers are allowed")
     private String aabhaId;
 
     @NotBlank(message = "first_name cannot be blank")

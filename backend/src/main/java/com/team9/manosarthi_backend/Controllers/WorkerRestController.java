@@ -234,10 +234,10 @@ public class WorkerRestController {
                 String token = authorizationHeader.substring(7);
                 String workerId = helper.getIDFromToken(token);
                 List<String> Abhaid = workerService.getAabhaid(Integer.parseInt(workerId));
-                if (Abhaid.isEmpty())
-                {
-                    throw new APIRequestException("No Aabha Id found");
-                }
+//                if (Abhaid.isEmpty())
+//                {
+//                    throw new APIRequestException("No Aabha Id found");
+//                }
                 return Abhaid;
             } else {
                 throw new APIRequestException("Error in authorizing");
