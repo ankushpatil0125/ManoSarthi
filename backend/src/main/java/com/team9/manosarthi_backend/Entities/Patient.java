@@ -50,7 +50,7 @@ public class Patient {
     private String gender;
 
     @NotNull(message = "DOB cannot be null")
-    @Column(name = "dob")
+    @Column(name = "age")
     private int age;
 
     @ManyToOne

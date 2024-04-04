@@ -142,6 +142,8 @@ public class WorkerRestController {
     public MappingJacksonValue registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
 
 //        System.out.println("patient"+registerPatientDTO.toString());
+        System.out.println("RegisterPatientDTO sent "+registerPatientDTO);
+        System.out.println("RegisterPatientDTO sent "+registerPatientDTO.toString());
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
@@ -149,6 +151,7 @@ public class WorkerRestController {
                 String workerId = helper.getIDFromToken(token);
 
                 Patient newPatient = workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
+                System.out.println("New register patient  "+newPatient.toString());
                 Set<String> patientFilterProperties = new HashSet<>();
                 patientFilterProperties.add("aabhaId");
 
