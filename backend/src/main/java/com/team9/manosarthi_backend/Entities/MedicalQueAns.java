@@ -26,7 +26,7 @@ public class MedicalQueAns {
     private MedicalQue medicalquest;
 
     @NotBlank(message = "ans cannot be blank")
-    @Pattern(regexp="[a-zA-Z0-9]+", message="Only characters are allowed")
+    @Pattern(regexp="[a-zA-Z0-9\\s]+", message="Only characters are allowed")
     private String question_ans;
 
     @ManyToOne

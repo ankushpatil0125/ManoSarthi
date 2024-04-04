@@ -58,7 +58,12 @@ public class WorkerRestController {
             }
         } catch (Exception ex)
         {
-            throw new APIRequestException("Error while updating worker profile",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while updating worker profile",ex.getMessage());
         }
     }
 
@@ -137,6 +142,8 @@ public class WorkerRestController {
     public MappingJacksonValue registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
 
 //        System.out.println("patient"+registerPatientDTO.toString());
+        System.out.println("RegisterPatientDTO sent "+registerPatientDTO);
+        System.out.println("RegisterPatientDTO sent "+registerPatientDTO.toString());
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
@@ -144,6 +151,7 @@ public class WorkerRestController {
                 String workerId = helper.getIDFromToken(token);
 
                 Patient newPatient = workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
+                System.out.println("New register patient  "+newPatient.toString());
                 Set<String> patientFilterProperties = new HashSet<>();
                 patientFilterProperties.add("aabhaId");
 
@@ -172,8 +180,77 @@ public class WorkerRestController {
         }
         catch (Exception ex)
         {
-            throw new APIRequestException("Error while registering patient",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while registering patient",ex.getMessage());
         }
 
+    }
+
+
+
+    @Autowired
+    PatientRepository patientRepository;
+    @GetMapping("/get-patient")
+    public MappingJacksonValue getPatient()
+    {
+
+        List<Patient> patientList = patientRepository.findAll();
+
+        Set<String> patientFilterProperties = new HashSet<>();
+        patientFilterProperties.add("aabhaId");
+        patientFilterProperties.add("followUpDetailsList");
+        patientFilterProperties.add("medicalQueAnsList");
+
+        Set<String> followUpFilterProperties = new HashSet<>();
+        followUpFilterProperties.add("followupDate");
+        followUpFilterProperties.add("followUpNo");
+        followUpFilterProperties.add("worker");
+        followUpFilterProperties.add("doctor");
+        followUpFilterProperties.add("questionarrieAnsList");
+
+        Set<String> workerFilterProperties = new HashSet<>();
+        workerFilterProperties.add("firstname");
+
+        Set<String> doctorFilterProperties = new HashSet<>();
+        doctorFilterProperties.add("firstname");
+
+
+        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
+
+        return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
+
+    }
+
+    @GetMapping("/getAbhaid")
+    public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader)
+    {
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
+                List<String> Abhaid = workerService.getAabhaid(Integer.parseInt(workerId));
+                if (Abhaid.isEmpty())
+                {
+                    throw new APIRequestException("No Aabha Id found");
+                }
+                return Abhaid;
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting registered Aabha Ids",ex.getMessage());
+        }
     }
 }

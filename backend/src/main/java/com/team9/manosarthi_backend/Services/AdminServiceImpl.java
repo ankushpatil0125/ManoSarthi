@@ -54,11 +54,16 @@ public class AdminServiceImpl implements AdminService {
         subDistrict.ifPresent( subDistricttemp ->{
             subDistricttemp.setDoctor_count(subDistricttemp.getDoctor_count()+1);
             subDistrictRepository.save(subDistricttemp);
+            newDoctor.setSubdistrictcode(subDistricttemp);
         } );
 
         newDoctor.setUser(newuser);
-        System.out.println(newDoctor.getSubdistrictcode().getDistrict());
-        return doctorRepository.save(newDoctor);
+//        System.out.println(newDoctor.getSubdistrictcode().getDistrict());
+        doctorRepository.save(newDoctor);
+        //to get password in decoded form
+        newuser.setPassword(password);
+        newDoctor.setUser(newuser);
+        return newDoctor;
     }
 
     @Override
@@ -76,16 +81,23 @@ public class AdminServiceImpl implements AdminService {
 
         User newuser = userRepository.save(user);
 
-        Optional<SubDistrict> subDistrict = subDistrictRepository.findById(supervisor.getSubdistrictcode().getCode());
+        //Increase count of supervisor in subdistrict
+        Optional<SubDistrict> subDistrict = subDistrictRepository.findById(newSupervisor.getSubdistrictcode().getCode());
 
-        subDistrict.ifPresent(temp -> {
-            temp.setSupervisor_count(temp.getSupervisor_count()+1);
-            subDistrictRepository.save(temp);
-        });
-        supervisor.setUser(newuser);
+        subDistrict.ifPresent( subDistricttemp ->{
+            subDistricttemp.setSupervisor_count(subDistricttemp.getSupervisor_count()+1);
+            subDistrictRepository.save(subDistricttemp);
+            newSupervisor.setSubdistrictcode(subDistricttemp);
+        } );
 
-        return supervisorRepository.save(newSupervisor);
+        newSupervisor.setUser(newuser);
 
+        supervisorRepository.save(newSupervisor);
+
+        //to get password in decoded form
+        newuser.setPassword(password);
+        newSupervisor.setUser(newuser);
+        return newSupervisor;
     }
 
         public List<Doctor> viewAllDoctor(int pagenumber,int pagesize) {

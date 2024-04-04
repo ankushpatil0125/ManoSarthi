@@ -12,4 +12,5 @@ public interface WorkerService {
 
     Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId);
 //    Patient registerPatient(Patient patient);
+    List<String> getAabhaid(Integer villagecode);
 }

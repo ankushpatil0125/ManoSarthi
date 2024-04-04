@@ -119,7 +119,12 @@ public class AdminController {
                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
            }
        } catch (Exception ex) {
-           throw new APIRequestException("Error while adding the doctor.", ex.getMessage());
+           if(ex instanceof APIRequestException)
+           {
+               throw new APIRequestException(ex.getMessage());
+           }
+           else
+                throw new APIRequestException("Error while adding the doctor.", ex.getMessage());
        }
     }
 
@@ -149,7 +154,12 @@ public class AdminController {
         }
 
         catch (RuntimeException ex){
-            throw new APIRequestException("Error while getting doctors",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting doctors",ex.getMessage());
         }
     }
 
@@ -179,7 +189,12 @@ public class AdminController {
         }
         catch (Exception ex)
         {
-            throw new APIRequestException("Error while getting doctors of district",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting doctors of district",ex.getMessage());
         }
     }
 
@@ -206,7 +221,12 @@ public class AdminController {
         }
         catch (Exception ex)
         {
-            throw new APIRequestException("Error while getting doctors of subdistrict",ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting doctors of subdistrict",ex.getMessage());
         }
         }
 
@@ -260,7 +280,12 @@ public class AdminController {
                 throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
             }
         } catch (Exception ex) {
-            throw new APIRequestException("Error while adding the Supervisor.", ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while adding the Supervisor.", ex.getMessage());
         }
 
     }
@@ -286,6 +311,7 @@ public class AdminController {
                     System.out.println("mail success");
                 } else {
                     System.out.println("mail failed");
+                    throw new APIRequestException("Sending mail failed");
                 }
 
                 return ResponseEntity.ok(mappingJacksonValue);
