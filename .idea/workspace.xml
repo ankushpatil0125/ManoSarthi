@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="" />
+    <list default="true" id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +61,13 @@
   }
 }</component>
   <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication">
+    <configuration name="Mano" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Manosarthi" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -66,7 +78,7 @@
       </method>
     </configuration>
     <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <module name="manosarthi_backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
@@ -85,6 +97,7 @@
     </configuration>
     <list>
       <item itemvalue="Spring Boot.ManosarthiBackendApplication" />
+      <item itemvalue="Spring Boot.Mano" />
       <item itemvalue="Spring Boot.Manosarthi" />
     </list>
   </component>
@@ -121,7 +134,8 @@
       <workItem from="1712076724987" duration="3274000" />
       <workItem from="1712080073047" duration="2174000" />
       <workItem from="1712149010303" duration="2860000" />
-      <workItem from="1712209881988" duration="2222000" />
+      <workItem from="1712209881988" duration="3243000" />
+      <workItem from="1712214137655" duration="51000" />
     </task>
     <servers />
   </component>
