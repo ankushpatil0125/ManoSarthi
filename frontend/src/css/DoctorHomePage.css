@@ -1,10 +1,3 @@
-.container {
-  margin-top: 150px; /* Adjust according to your Navbar height */
-  display: flex;
-  justify-content: center;
-  height: 700px;
-}
-
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -29,4 +22,3 @@
   height: 100px; /* Adjust the height as needed */
   text-align: center;
 }
-

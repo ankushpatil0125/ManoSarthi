@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import RegisterPatientService from "../Services/RegisterPatientService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
@@ -9,98 +9,12 @@ import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService
 import Table from "../components/Table";
 import { ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguageContext } from "../Context/LanguageProvider";
+import LanguageToggleButton from "../Multilingual/LanguageButton";
+import i18n from "../i18n";
 
 // const [sendPatient, setSendPatient] = useState([]);
-const syncData = async () => {
-  // try {
-  const patients = await SelectService.getAllPatients();
 
-  for (const patient of patients) {
-    const SurveyQuestionAnswerData =
-      await SelectService.getAllSurveyQuestionAnswersByAabhaId(patient.aabhaId);
-    const MedicalHistoryAnswersData =
-      await SelectService.getAllMedicalQuestionAnswersByAabhaId(
-        patient.aabhaId
-      );
-    const sendSurvevyQuestion = [];
-
-    for (const temp of SurveyQuestionAnswerData) {
-      const ques = {
-        question_ans: temp.answer,
-        questionarrie: {
-          question_id: temp.question_id,
-        },
-      };
-      sendSurvevyQuestion.push(ques);
-    }
-
-    const sendMedicalHistoryAnswers = [];
-
-    for (const temp of MedicalHistoryAnswersData) {
-      const ques = {
-        question_ans: temp.question_ans,
-        medicalquest: {
-          question_id: temp.question_id,
-        },
-      };
-      console.log("ques", ques);
-      sendMedicalHistoryAnswers.push(ques);
-    }
-    console.log("sendMedicalHistoryAnswers", sendMedicalHistoryAnswers);
-    // console.log("SurveyQuestionAnswerData: ", SurveyQuestionAnswerData);
-    // console.log("MedicalHistoryAnswersData: ", MedicalHistoryAnswersData);
-
-    const patientData = {
-      patient: {
-        aabhaId: patient.aabhaId,
-        firstname: patient.firstName,
-        lastname: patient.lastName,
-        email: patient.email,
-        gender: patient.gender,
-        dob: patient.dob,
-        address: patient.address,
-      },
-      questionarrieAnsList: sendSurvevyQuestion,
-      medicalQueAnsList: sendMedicalHistoryAnswers,
-    };
-    console.log("patient data", patientData);
-    try {
-      const response = await RegisterPatientService.addPatient(patientData);
-      console.log("Response : ", response.data);
-      if (response) {
-        console.log(
-          `Patient with name ${patientData.patient.firstname} added successfully`
-        );
-
-        const status1 = await DeleteService.deletePatientByAabhaId(
-          response.data.aabhaId
-        );
-        console.log("deletePatientByAabhaId Status ", status1);
-
-        const status2 =
-          await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
-            response.data.aabhaId
-          );
-        console.log("deleteSurveyQuestionAnswersByAabhaId Status ", status2);
-
-        const status3 =
-          await DeleteService.deleteMedicalHistoryAnswersByAabhaId(
-            response.data.aabhaId
-          );
-        console.log("deleteMedicalHistoryAnswersByAabhaId Status ", status3);
-      }
-      // const status = await DeleteService.deletePatientByAabhaId(
-      //   response.data.aabhaId
-      // );
-      // console.log("status ", status);
-      else {
-        console.error("Failed to add patient");
-      }
-    } catch (error) {
-      console.error("Error during adding patient:", error);
-    }
-  }
-};
 
 const fetchData = async () => {
   try {
@@ -145,6 +59,7 @@ function HomeScreen() {
   const [patients, setPatients] = useState([]);
   const [medical_history_ans, setMedical_history_ans] = useState([]);
   const navigation = useNavigation();
+  const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
 
   const fetchPatientDataFromDatabase = async () => {
     try {
@@ -204,7 +119,6 @@ function HomeScreen() {
     fetchPatientDataFromDatabase();
     // fetchSurveyQuestionAnswerFromDatabase();
     // deleteAllMedicalHistoryAnswers();
-   
   }, []);
 
   const handleRegisterPatient = () => {
@@ -217,9 +131,9 @@ function HomeScreen() {
     navigation.navigate("MissedFollowupScreen");
   };
 
-  const handleSync = () => {
-    syncData();
-  };
+  // const handleSync = () => {
+  //   syncData();
+  // };
 
   const handleFetch = () => {
     fetchData();
@@ -233,23 +147,27 @@ function HomeScreen() {
             style={styles.button}
             onPress={handleRegisterPatient}
           >
-            <Text style={styles.buttonText}>Register Patient</Text>
+            <Text style={styles.buttonText}>{i18n.t("Register Patient")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={handleMissedFollowup}
           >
-            <Text style={styles.buttonText}>Missed Followup</Text>
+            <Text style={styles.buttonText}>{i18n.t("Missed Followup")}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.topButtonsContainer}>
+        {/* <View style={styles.topButtonsContainer}>
           <TouchableOpacity style={styles.syncButton} onPress={handleSync}>
-            <Text style={styles.syncButtonText}>Sync Data</Text>
+            <Text style={styles.syncButtonText}>{i18n.t("Sync Data")}</Text>
           </TouchableOpacity>
+          <LanguageToggleButton
+            onPress={handleLanguageToggle}
+            selectedLanguage={selectedLanguage}
+          />
           <TouchableOpacity style={styles.syncButton} onPress={handleFetch}>
             <Text style={styles.syncButtonText}>Fetch Data</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       <View style={{ marginTop: 50 }}>
         <Table />
@@ -264,18 +182,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topButtonsContainer: {
-    width: "70%",
+    width: "100%",
     justifyContent: "space-between",
-
+    display:"flex",
     marginTop: "5%",
     flexDirection: "row",
-
+    gap:5,
     // borderWidth: 1, // Add border to visualize container size
   },
   button: {
     backgroundColor: "#3498db",
+    alignItems:"center",
     padding: 10,
     borderRadius: 5,
+    flex:1,
+    margin:20,
+    paddingVertical:20
   },
   buttonText: {
     color: "#fff",

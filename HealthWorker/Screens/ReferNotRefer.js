@@ -1,47 +1,95 @@
-import React from 'react';
-import { Button, Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import tw from 'twrnc'
+import React from "react";
+import {
+  Button,
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+import { Card } from "react-native-paper";
 
 const ReferNotRefer = () => {
   const navigation = useNavigation();
 
   const handleReferPress = () => {
-    navigation.navigate('MedicalDetails');
+    navigation.navigate("MedicalDetails");
   };
+
   const handleNotReferPress = () => {
-    navigation.navigate('Preview');
+    navigation.navigate("Preview");
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, alignItems: 'center', paddingTop: 20 }}>
-        <Image
-          source={require('../assets/saarthi.png')}
-          style={{ borderRadius: 8, width: 120, height: 120, borderColor: 'black', borderWidth: 1 }}
-        />
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Text style={{ fontSize: 20 }}>Yes/No Count : </Text>
       </View>
-      <View style={tw`items-center mb-8`}>
-         <Text style={tw`text-2xl`}>Yes/No Count: </Text>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          marginTop:50
+        }}
+      >
+        <Text style={{fontSize:20}}>Yes : 8</Text>
       </View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%', maxWidth: 600 }}>
-          <TouchableOpacity
-            onPress={handleReferPress}
-            style={{ backgroundColor: 'lightblue', paddingVertical: 15, paddingHorizontal: 30, borderRadius: 10 }}
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Text style={{fontSize:20}}>No : 2</Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <TouchableOpacity onPress={handleReferPress}>
+          <Card
+            style={{
+              margin: 50,
+              width: 150,
+              height: 150,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <Text style={{ fontSize: 24 }}>Refer</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleNotReferPress}
-            style={{ backgroundColor: 'lightblue', paddingVertical: 15, paddingHorizontal: 30, borderRadius: 10 }}
+            <Card.Content>
+              <Text style={{ fontSize: 25 }}>Refer</Text>
+            </Card.Content>
+          </Card>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNotReferPress}>
+          <Card
+            style={{
+              margin: 50,
+              width: 150,
+              height: 150,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <Text style={{ fontSize: 24 }}>Not Refer</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{ paddingBottom: 20, paddingHorizontal: 20, width: '100%', maxWidth: 600, alignSelf: 'center' }}>
-        <Button title="Back" onPress={() => console.log('Button 2 pressed')} />
+            <Card.Content>
+              <Text style={{ fontSize: 25 }}>Not Refer</Text>
+            </Card.Content>
+          </Card>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
