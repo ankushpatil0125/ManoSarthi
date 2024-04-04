@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Config/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/DistrictRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/DistrictRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Manasi" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2dopRLq3kutptm8bZdtHv7XW5gG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Nikhil&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication">
+    <configuration name="Manosarthi" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ManosarthiBackendApplication" />
+      <item itemvalue="Spring Boot.Manosarthi" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="" />
+      <created>1710684292812</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710684292812</updated>
+      <workItem from="1710684313027" duration="4610000" />
+      <workItem from="1710694979164" duration="6840000" />
+      <workItem from="1710857484914" duration="5417000" />
+      <workItem from="1711259839350" duration="1442000" />
+      <workItem from="1711262145244" duration="1819000" />
+      <workItem from="1711271389183" duration="7118000" />
+      <workItem from="1711286172307" duration="7264000" />
+      <workItem from="1711303040751" duration="2732000" />
+      <workItem from="1711307572023" duration="5828000" />
+      <workItem from="1711316070316" duration="3463000" />
+      <workItem from="1711358578296" duration="133000" />
+      <workItem from="1711366382747" duration="9749000" />
+      <workItem from="1711431534610" duration="7448000" />
+      <workItem from="1711464801962" duration="1831000" />
+      <workItem from="1711520687450" duration="3113000" />
+      <workItem from="1711532388888" duration="18561000" />
+      <workItem from="1711606810141" duration="21033000" />
+      <workItem from="1711652846606" duration="898000" />
+      <workItem from="1711696307021" duration="3257000" />
+      <workItem from="1711705801453" duration="14190000" />
+      <workItem from="1711888880481" duration="4353000" />
+      <workItem from="1711964249690" duration="17747000" />
+      <workItem from="1712076724987" duration="3274000" />
+      <workItem from="1712080073047" duration="2174000" />
+      <workItem from="1712149010303" duration="2860000" />
+      <workItem from="1712209881988" duration="1136000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
