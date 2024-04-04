@@ -377,7 +377,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/supervisor")
-    public MappingJacksonValue deleteSupervisor(@RequestParam Supervisor supervisor)
+    public MappingJacksonValue deleteSupervisor(@RequestBody Supervisor supervisor)
     {
         Supervisor deletedSupervisor = adminService.deleteSupervisor(supervisor);
 

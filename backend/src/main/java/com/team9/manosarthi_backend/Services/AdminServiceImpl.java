@@ -134,17 +134,20 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Supervisor deleteSupervisor(Supervisor supervisor) {
-        Optional<Supervisor> newSupervisor= supervisorRepository.findById(supervisor.getId());
+        Optional<Supervisor> deleteSupervisor= supervisorRepository.findById(supervisor.getId());
 
-        if(newSupervisor.isPresent())
+        if(deleteSupervisor.isPresent())
         {
-            newSupervisor.get().setActive(false);
-            Optional<SubDistrict> subDistrict = subDistrictRepository.findById(newSupervisor.get().getSubdistrictcode().getCode());
+            deleteSupervisor.get().setActive(false);
+            Optional<SubDistrict> subDistrict = subDistrictRepository.findById(deleteSupervisor.get().getSubdistrictcode().getCode());
             subDistrict.ifPresent(temp ->{
                 temp.setSupervisor_count(temp.getSupervisor_count()-1);
                 subDistrictRepository.save(temp);
             });
-            return supervisorRepository.save(newSupervisor.get());
+            String userName = deleteSupervisor.get().getUser().getUsername();
+            deleteSupervisor.get().setUser(null);
+            userRepository.deleteById(userName);
+            return supervisorRepository.save(deleteSupervisor.get());
         }
         return null;
     }
