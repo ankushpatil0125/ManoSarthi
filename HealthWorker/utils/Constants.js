@@ -1,3 +1,15 @@
-export const BASE_URL = "http://192.168.0.118:9090/";
-export const token =
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXT1JLRVIxIiwiaWF0IjoxNzExOTY1MjUzLCJleHAiOjE3MTE5OTYxOTksImp0aSI6IjEifQ.vzGEYWzrDu2qskG0By6mtS0YvbBMyCtOHoIgEREzK4E";
+// Constants.js
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const BASE_URL = "http://192.168.73.199:9090/";
+
+export const getToken = async () => {
+  try {
+    const value = await AsyncStorage.getItem("JWT");
+    return value;
+  } catch (error) {
+    console.error("Error getting token from AsyncStorage:", error);
+    return null;
+  }
+};

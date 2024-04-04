@@ -21,7 +21,7 @@ const CreateService = {
             lastName TEXT,
             email TEXT,
             gender TEXT,
-            dob TEXT,
+            age INTEGER,
             address TEXT
           );`,
           [],

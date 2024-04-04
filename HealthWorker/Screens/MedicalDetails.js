@@ -1,24 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Image, ScrollView, Text, TextInput, View, Alert, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import NetInfo from '@react-native-community/netinfo';
-import SelectService from '../Services/DatabaseServices/SelectService';
-import MedicalQuestionarrieService from '../Services/MedicalQuestionarrieService';
-import InsertService from '../Services/DatabaseServices/InsertService';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import NetInfo from "@react-native-community/netinfo";
+import SelectService from "../Services/DatabaseServices/SelectService";
+import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService";
+import InsertService from "../Services/DatabaseServices/InsertService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
-
 
 const MedicalDetails = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
-  const [comment, setComment] = useState('');
-  const [clickedButtons, setClickedButtons] = useState(Array(questions.length).fill(false));
+  const [comment, setComment] = useState("");
+  const [clickedButtons, setClickedButtons] = useState(
+    Array(questions.length).fill(false)
+  );
   const navigation = useNavigation();
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
-  var commentID;
-
+  const [commentID, setCommentID] = useState("");
 
   useEffect(() => {
     fetchQuestionsFromDatabase();
@@ -37,25 +45,36 @@ const MedicalDetails = () => {
     try {
       const data = await SelectService.getAllMedicalQuestions();
       // setMedicalQuestions(data);
-      console.log("Medical Questions res data (IN MedicalDetails Screen): ", data);
-      
+      console.log(
+        "Medical Questions res data (IN MedicalDetails Screen): ",
+        data
+      );
+
       // Find the index of the question with the "comment" value
-      const commentIndex = data.findIndex(question => question.question === "comment");
-      
+      const commentIndex = data.findIndex(
+        (question) => question.question === "comment"
+      );
+
       // If the "comment" question exists, remove it from the medicalQuestions array
       if (commentIndex !== -1) {
-        commentID = data[commentIndex].question_id;
+        // commentID = data[commentIndex].question_id;
+        setCommentID(data[commentIndex].question_id);
         console.log("CommentID:", commentID);
-        const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
+        const updatedMedicalQuestions = [
+          ...data.slice(0, commentIndex),
+          ...data.slice(commentIndex + 1),
+        ];
         setMedicalQuestions(updatedMedicalQuestions);
       }
-  
-      console.log("Medical Questions after removing comment: ", medicalQuestions);
+
+      console.log(
+        "Medical Questions after removing comment: ",
+        medicalQuestions
+      );
     } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
   };
-  
 
   const handleAnswerChange = (index, answer) => {
     const newAnswers = [...answers];
@@ -78,88 +97,104 @@ const MedicalDetails = () => {
   // };
 
   const handleFormSubmit = async () => {
-    const allQuestionsAnswered = answers.every(answer => answer !== null);
-    const commentNotEmpty = comment.trim() !== '';
+    const allQuestionsAnswered = answers.every((answer) => answer !== null);
+    const commentNotEmpty = comment.trim() !== "";
 
     if (allQuestionsAnswered && commentNotEmpty) {
       if (isConnected) {
         try {
           await saveDataToDatabase(answers, comment);
           // await sendDataToServer(answers, comment);
-          console.log('Data submitted to local DB successfully');
+          console.log("Data submitted to local DB successfully");
         } catch (error) {
-          console.error('Error submitting data to server:', error);
+          console.error("Error submitting data to server:", error);
         }
       } else {
-          await saveDataToDatabase(answers, comment);
+        await saveDataToDatabase(answers, comment);
       }
-      navigation.navigate('Preview');
-
+      navigation.navigate("Preview");
     } else {
       Alert.alert(
-        'Missing Information',
-        'Please answer all questions and provide comments before submitting.',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+        "Missing Information",
+        "Please answer all questions and provide comments before submitting.",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
       );
     }
   };
 
   const sendDataToServer = async (answers, comment) => {
     // const data = [];
-    try{
-      console.log("Data to be send: ",data);
+    try {
+      console.log("Data to be send: ", data);
       // Need to define sendMedicalQuestionarrieAnswers in MedicalQuestionarrieService
-      const response = await MedicalQuestionarrieService.sendMedicalQuestionarrieAnswers();
-      if(response){
-        alert(
-          `Medical que, ans sent successfully`
-        );
-      }else{
+      const response =
+        await MedicalQuestionarrieService.sendMedicalQuestionarrieAnswers();
+      if (response) {
+        alert(`Medical que, ans sent successfully`);
+      } else {
         alert(`Failed to send medical que, ans data`);
       }
-    }
-    catch(error){
+    } catch (error) {
       console.error(`Error during sending medical que, ans, ${error}`);
     }
   };
 
   const saveDataToDatabase = async (answers, comment) => {
-   try{
-    console.log("before res: ");
-    const res = await InsertService.insertMedicalHistoryAnswers(medicalQuestions, answers, comment, commentID, aabhaId);
-    console.log("res: ", res);
-   }
-   catch(error){
-    console.error("Error while storing data locally", error);
-   }
+    try {
+      console.log("before res: ");
+      const res = await InsertService.insertMedicalHistoryAnswers(
+        medicalQuestions,
+        answers,
+        comment,
+        commentID,
+        aabhaId
+      );
+      console.log("res: ", res);
+    } catch (error) {
+      console.error("Error while storing data locally", error);
+    }
   };
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,alignItems:'center',justifyContent:'center' }}>
+      <View
+        style={{
+          flex: 1,
+          marginTop: 30,
+          paddingLeft: 10,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {medicalQuestions.slice(0, -1).map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}:</Text>
-            <View style={{ paddingTop: 5, flexDirection: 'row' }}>
+            <View style={{ paddingTop: 5, flexDirection: "row" }}>
               <View style={{ marginRight: 10 }}>
                 <TouchableOpacity
                   style={{
-                    backgroundColor: clickedButtons[index] && answers[index] === 'Yes' ? 'darkblue' : 'lightblue',
+                    backgroundColor:
+                      clickedButtons[index] && answers[index] === "Yes"
+                        ? "darkblue"
+                        : "lightblue",
                     padding: 10,
-                    borderRadius: 5
+                    borderRadius: 5,
                   }}
-                  onPress={() => handleAnswerChange(index, 'Yes')}
+                  onPress={() => handleAnswerChange(index, "Yes")}
                 >
                   <Text style={{ fontSize: 16 }}>Yes</Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
                 style={{
-                  backgroundColor: clickedButtons[index] && answers[index] === 'No' ? 'darkblue' : 'lightblue',
+                  backgroundColor:
+                    clickedButtons[index] && answers[index] === "No"
+                      ? "darkblue"
+                      : "lightblue",
                   padding: 10,
-                  borderRadius: 5
+                  borderRadius: 5,
                 }}
-                onPress={() => handleAnswerChange(index, 'No')}
+                onPress={() => handleAnswerChange(index, "No")}
               >
                 <Text style={{ fontSize: 16 }}>No</Text>
               </TouchableOpacity>
@@ -172,11 +207,24 @@ const MedicalDetails = () => {
           value={comment}
           onChangeText={setComment}
           multiline
-          style={{marginTop:5, marginBottom: 10, borderWidth: 1, padding: 10, height: 100, width: '50%' }}
+          style={{
+            marginTop: 5,
+            marginBottom: 10,
+            borderWidth: 1,
+            padding: 10,
+            height: 100,
+            width: "50%",
+          }}
         />
-        <View style={{width:200, marginBottom:20}}>
+        <View style={{ width: 200, marginBottom: 20 }}>
           <TouchableOpacity
-            style={{ backgroundColor: 'lightblue', padding: 10, borderRadius: 5,alignItems:'center',justifyContent:'center' }}
+            style={{
+              backgroundColor: "lightblue",
+              padding: 10,
+              borderRadius: 5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onPress={handleFormSubmit}
           >
             <Text style={{ fontSize: 16 }}>Submit</Text>

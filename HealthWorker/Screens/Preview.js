@@ -32,7 +32,7 @@ const Preview = () => {
   const showAlert = async () => {
     if (consentChecked) {
       try {
-        const res = await SelectService.getAllQuestions();
+        const res = await SelectService.getAllMedicalQuestionAnswersByAabhaId();
         Alert.alert("Data saved in local DB successfully!", "OK", [
           {
             text: "OK",
@@ -74,7 +74,7 @@ const Preview = () => {
     "lastName": "Last Name",
     "email": "Email",
     "gender": "Gender",
-    "dob": "Date of Birth",
+    "age": "Age",
     "address": "Address"
 };
 

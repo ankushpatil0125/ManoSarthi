@@ -18,6 +18,7 @@ const UpdateHealthWorker = () => {
     // Fetch district options
     SupervisorService.getVillageWorker(true)
       .then((response) => {
+        console.log("Villages: ",response.data);
         setVillageOptions(response.data);
       })
       .catch((error) => {

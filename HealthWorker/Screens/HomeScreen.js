@@ -15,45 +15,44 @@ import i18n from "../i18n";
 
 // const [sendPatient, setSendPatient] = useState([]);
 
+// const fetchData = async () => {
+//   try {
+//     // Fetch questions from the service
+//     const questionsResponse = await SurveyQuestionsService.getQuestions();
+//     const medicalQuestionsResponse =
+//       await MedicalQuestionarrieService.getMedicalQuestionarrie();
 
-const fetchData = async () => {
-  try {
-    // Fetch questions from the service
-    const questionsResponse = await SurveyQuestionsService.getQuestions();
-    const medicalQuestionsResponse =
-      await MedicalQuestionarrieService.getMedicalQuestionarrie();
+//     if (questionsResponse && medicalQuestionsResponse) {
+//       const questions = questionsResponse.data;
+//       const medicalQuestions = medicalQuestionsResponse.data;
 
-    if (questionsResponse && medicalQuestionsResponse) {
-      const questions = questionsResponse.data;
-      const medicalQuestions = medicalQuestionsResponse.data;
+//       console.log("Fetched Questions:", questions);
+//       console.log("Fetched Medical Questions:", medicalQuestions);
 
-      console.log("Fetched Questions:", questions);
-      console.log("Fetched Medical Questions:", medicalQuestions);
+//       // Delete old questions from the SurveyQuestion table
+//       await DeleteService.deleteAllSurveyQuestions();
+//       console.log("SurveyQuestions deleted successfully.");
 
-      // Delete old questions from the SurveyQuestion table
-      await DeleteService.deleteAllSurveyQuestions();
-      console.log("SurveyQuestions deleted successfully.");
+//       // Delete old medical questions from the MedicalQuestions table
+//       await DeleteService.deleteAllMedicalQuestions();
+//       console.log("MedicalQuestions deleted successfully.");
 
-      // Delete old medical questions from the MedicalQuestions table
-      await DeleteService.deleteAllMedicalQuestions();
-      console.log("MedicalQuestions deleted successfully.");
+//       // Insert fetched questions into the database
+//       await InsertService.insertSurveyQuestion(questions);
+//       console.log("SurveyQuestions inserted successfully.");
 
-      // Insert fetched questions into the database
-      await InsertService.insertSurveyQuestion(questions);
-      console.log("SurveyQuestions inserted successfully.");
-
-      // Insert fetched medical questions into the database
-      await InsertService.insertMedicalQuestions(medicalQuestions);
-      console.log("MedicalQuestions inserted successfully.");
-    } else {
-      // Handle failure to fetch questions
-      console.log("Failed to fetch questions");
-    }
-  } catch (error) {
-    console.error("Error during question insertion:", error);
-    // Handle the error here, such as showing a message to the user
-  }
-};
+//       // Insert fetched medical questions into the database
+//       await InsertService.insertMedicalQuestions(medicalQuestions);
+//       console.log("MedicalQuestions inserted successfully.");
+//     } else {
+//       // Handle failure to fetch questions
+//       console.log("Failed to fetch questions");
+//     }
+//   } catch (error) {
+//     console.error("Error during question insertion:", error);
+//     // Handle the error here, such as showing a message to the user
+//   }
+// };
 
 function HomeScreen() {
   const [patients, setPatients] = useState([]);
@@ -135,9 +134,9 @@ function HomeScreen() {
   //   syncData();
   // };
 
-  const handleFetch = () => {
-    fetchData();
-  };
+  // const handleFetch = () => {
+  //   fetchData();
+  // };
 
   return (
     <ScrollView>
@@ -156,18 +155,6 @@ function HomeScreen() {
             <Text style={styles.buttonText}>{i18n.t("Missed Followup")}</Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.topButtonsContainer}>
-          <TouchableOpacity style={styles.syncButton} onPress={handleSync}>
-            <Text style={styles.syncButtonText}>{i18n.t("Sync Data")}</Text>
-          </TouchableOpacity>
-          <LanguageToggleButton
-            onPress={handleLanguageToggle}
-            selectedLanguage={selectedLanguage}
-          />
-          <TouchableOpacity style={styles.syncButton} onPress={handleFetch}>
-            <Text style={styles.syncButtonText}>Fetch Data</Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
       <View style={{ marginTop: 50 }}>
         <Table />
@@ -184,20 +171,20 @@ const styles = StyleSheet.create({
   topButtonsContainer: {
     width: "100%",
     justifyContent: "space-between",
-    display:"flex",
+    display: "flex",
     marginTop: "5%",
     flexDirection: "row",
-    gap:5,
+    gap: 5,
     // borderWidth: 1, // Add border to visualize container size
   },
   button: {
     backgroundColor: "#3498db",
-    alignItems:"center",
+    alignItems: "center",
     padding: 10,
     borderRadius: 5,
-    flex:1,
-    margin:20,
-    paddingVertical:20
+    flex: 1,
+    margin: 20,
+    paddingVertical: 20,
   },
   buttonText: {
     color: "#fff",

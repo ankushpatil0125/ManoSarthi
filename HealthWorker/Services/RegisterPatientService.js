@@ -1,10 +1,10 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/Constants";
 import { getToken } from "../utils/Constants";
-import { token } from "../utils/Constants";
+
 const RegisterPatientService = {
   addPatient: async (patientData) => {
-    // const token = getToken();
+    const token = await getToken(); // Get token asynchronously
 
     try {
       console.log("HIiII", patientData);
@@ -14,7 +14,7 @@ const RegisterPatientService = {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ` + token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
