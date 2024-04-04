@@ -1,4 +1,6 @@
+backend/target/
 backend/target/*
+backend/.idea/
 backend/.idea/*
 backend/applog*
 backend/appLog*
@@ -7,3 +9,4 @@ backend/appLog*
 appLog*
 applog*
 .idea
+.idea/

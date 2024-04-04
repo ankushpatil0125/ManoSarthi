@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Config/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/DistrictRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Controllers/DistrictRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,7 +121,7 @@
       <workItem from="1712076724987" duration="3274000" />
       <workItem from="1712080073047" duration="2174000" />
       <workItem from="1712149010303" duration="2860000" />
-      <workItem from="1712209881988" duration="1136000" />
+      <workItem from="1712209881988" duration="1736000" />
     </task>
     <servers />
   </component>
