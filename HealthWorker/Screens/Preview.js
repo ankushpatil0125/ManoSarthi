@@ -34,16 +34,12 @@ const Preview = ({route}) => {
     if (consentChecked) {
       try {
         const res = await SelectService.getMedicalHistoryAnswers();
-        Alert.alert("Data saved in local DB successfully!", "OK", [
+        Alert.alert("Patient Referred!", "Data saved in local DB successfully", [
           {
-            text: "OK",
-            onPress: () => {
-              console.log("All data entries in table: ", res);
-              navigation.navigate("HomeScreen");
-            },
+            text: "OK"
           },
         ]);
-        console.log("All data entries in table: ", res);
+        console.log("All data entries in MedicalHistoryAnswers: ", res);
         navigation.navigate("HomeScreen");
       } catch (error) {
         Alert.alert("Error!", "Failed to fetch data from local DB.", [
