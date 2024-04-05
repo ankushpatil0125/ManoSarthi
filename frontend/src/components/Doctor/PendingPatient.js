@@ -2,18 +2,23 @@ import "../../css/PendingPatient.css";
 import DoctorService from "../../Services/DoctorService";
 import Header from "../Header/Header";
 import React, { useEffect, useState } from "react";
-
-import { Link } from "react-router-dom";
+// import { useHistory } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import PatientDetails from "../Patient/PatientDetails";
+import LoadingComponent from "../Loading/LoadingComponent";
 
 const PendingPatient = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  // const history = useHistory();
   useEffect(() => {
     fetchData();
   }, [currentPage]);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       console.log("inside fetchdata function");
 
@@ -21,6 +26,7 @@ const PendingPatient = () => {
       DoctorService.getAllPatients(currentPage)
         .then((response) => {
           setData(response.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching patients:", error);
@@ -29,7 +35,12 @@ const PendingPatient = () => {
       console.error("Error fetching patients details:", error.message);
     }
   };
-
+  const handlePatient = (patientId) =>{
+    console.log('patientId', patientId);
+    // history.push('/patient-details', { patientId });
+    // return <PatientDetails/>
+    navigate('/patient-details', {state: {patientId: patientId}});
+  }
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
@@ -37,6 +48,10 @@ const PendingPatient = () => {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
+  if(loading){
+    return <LoadingComponent/>
+  }
+  else {
 
   return (
     <div>
@@ -59,6 +74,7 @@ const PendingPatient = () => {
               <th className="border border-gray-400 px-4 py-2">Gender</th>
 
               <th className="border border-gray-400 px-4 py-2">Village</th>
+              <th className="border border-gray-400 px-4 py-2">View Details</th>
               {/* <th className="border border-gray-400 px-4 py-2">Age</th> */}
             </tr>
           </thead>
@@ -78,9 +94,14 @@ const PendingPatient = () => {
                 <td className="border border-gray-400 px-4 py-2">
                   {patient.gender}
                 </td>
-                {/* <td className="border border-gray-400 px-4 py-2">
-                  {patient.firstname}
-                </td> */}
+                <td className="border border-gray-400 px-4 py-2">
+                  <button
+                    onClick={()=>handlePatient(patient.patient_id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    View Details
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -105,6 +126,7 @@ const PendingPatient = () => {
       </div>
     </div>
   );
+  }
 };
 
 export default PendingPatient;

@@ -26,7 +26,7 @@ const SupervisorService = {
   getVillageWorker: async (assigned) => {
     try {
       const response = await axios.get(
-        BASE_URL + "supervisor/get-subd-village&assigned="+assigned,
+        BASE_URL + "supervisor/get-subd-village?assigned="+assigned,
         {
           headers: {
             "Content-Type": "application/json",
@@ -95,7 +95,7 @@ const SupervisorService = {
     // console.log("data afsd",healthWorkerData)
     try {
       const response = await axios.put(
-        BASE_URL + "supervisor/reassignworker",
+        BASE_URL + "supervisor/reassign-worker",
         reasignHealthWorker,
         {
           headers: {
