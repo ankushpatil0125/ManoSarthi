@@ -4,161 +4,152 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aef2466a-1ab8-480b-98f0-78f064a48b39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/HealthWorker/Screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/Screens/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthWorker/Screens/MedicalDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/Screens/MedicalDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthWorker/Screens/PatientDetailsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/Screens/PatientDetailsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthWorker/Screens/Preview.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/Screens/Preview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthWorker/Screens/QuestionnaireScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/Screens/QuestionnaireScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthWorker/Services/DatabaseServices/InsertService.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/Services/DatabaseServices/InsertService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthWorker/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/HealthWorker/utils/Constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Config/AuthController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Config/CustomUserDetails.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Config/SecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Config/UserDetailsServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/AdminController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/ChangePassController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/DistrictRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/DoctorRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/SubDistrictRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/SupervisorRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/VillageRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Controllers/WorkerRestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/District.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Doctor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/MedicalQue.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Patient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Questionarrie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Questionarrie_ans.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/SubDistrict.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Supervisor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Village.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Entities/Worker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Exceptions/GlobalExceptionhandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Filters/DoctorFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Filters/PatientFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Filters/SupervisorFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Filters/UserFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Filters/WorkerFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/ManosarthiBackendApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/DistrictRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/DoctorRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/PatientRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/QuestionarrieRepo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/Questionarrie_ansRepo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/SubDistrictRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/SupervisorRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/VillageRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Repositories/WorkerRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/AdminService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/AdminServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/EmailService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/EmailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/PasswordGeneratorService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/QuestionarrieServImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/QuestionarrieService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/SupervisorService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/SupervisorServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/WorkerService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/Services/WorkerServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/models/ChangePassword$ChangePasswordBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/models/ChangePassword.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/models/JwtRequest$JwtRequestBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/models/JwtRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/models/JwtResponse$JwtResponseBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/models/JwtResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/security/JwtAuthenticationEntryPoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/security/JwtAuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/security/JwtHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/com/team9/manosarthi_backend/security/TokenGenerationException.class" beforeDir="false" />
+    <list default="true" id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Manasi" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
+  &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="2eTJr7fgZPpqsmpuiyWEKnE5Phs" />
+  <component name="ProjectId" id="2dopRLq3kutptm8bZdtHv7XW5gG" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "sanket",
-    "last_opened_file_path": "C:/Users/Sanket Patil/Documents/IIITB/SEM2/HAD_Project/ManoSarthi/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Nikhil&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+}</component>
+  <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication">
+    <configuration name="Mano" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="manosarthi_backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.team9.manosarthi_backend.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Spring Boot.ManosarthiBackendApplication" />
-      </list>
-    </recent_temporary>
+    <configuration name="Manosarthi" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ManosarthiBackendApplication" />
+      <item itemvalue="Spring Boot.Mano" />
+      <item itemvalue="Spring Boot.Manosarthi" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="aef2466a-1ab8-480b-98f0-78f064a48b39" name="Changes" comment="" />
-      <created>1711922830470</created>
+      <changelist id="46c0672b-2bba-42f1-92d3-2f4951004731" name="Changes" comment="" />
+      <created>1710684292812</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1711922830470</updated>
-      <workItem from="1711922832329" duration="1905000" />
-      <workItem from="1711924788492" duration="20000" />
-      <workItem from="1711924884652" duration="471000" />
-      <workItem from="1711925419253" duration="90000" />
-      <workItem from="1711981084969" duration="46000" />
+      <updated>1710684292812</updated>
+      <workItem from="1710684313027" duration="4610000" />
+      <workItem from="1710694979164" duration="6840000" />
+      <workItem from="1710857484914" duration="5417000" />
+      <workItem from="1711259839350" duration="1442000" />
+      <workItem from="1711262145244" duration="1819000" />
+      <workItem from="1711271389183" duration="7118000" />
+      <workItem from="1711286172307" duration="7264000" />
+      <workItem from="1711303040751" duration="2732000" />
+      <workItem from="1711307572023" duration="5828000" />
+      <workItem from="1711316070316" duration="3463000" />
+      <workItem from="1711358578296" duration="133000" />
+      <workItem from="1711366382747" duration="9749000" />
+      <workItem from="1711431534610" duration="7448000" />
+      <workItem from="1711464801962" duration="1831000" />
+      <workItem from="1711520687450" duration="3113000" />
+      <workItem from="1711532388888" duration="18561000" />
+      <workItem from="1711606810141" duration="21033000" />
+      <workItem from="1711652846606" duration="898000" />
+      <workItem from="1711696307021" duration="3257000" />
+      <workItem from="1711705801453" duration="14190000" />
+      <workItem from="1711888880481" duration="4353000" />
+      <workItem from="1711964249690" duration="17747000" />
+      <workItem from="1712076724987" duration="3274000" />
+      <workItem from="1712080073047" duration="2174000" />
+      <workItem from="1712149010303" duration="2860000" />
+      <workItem from="1712209881988" duration="3243000" />
+      <workItem from="1712214137655" duration="51000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

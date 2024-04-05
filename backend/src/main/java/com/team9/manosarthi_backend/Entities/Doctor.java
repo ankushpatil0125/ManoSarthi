@@ -2,6 +2,7 @@ package com.team9.manosarthi_backend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.team9.manosarthi_backend.Config.AesEncryptor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

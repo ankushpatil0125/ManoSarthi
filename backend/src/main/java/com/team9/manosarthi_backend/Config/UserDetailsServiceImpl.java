@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             System.out.println("hello");
             throw new UsernameNotFoundException("Cannot find user");
         }
-        System.out.println(user.getUsername());
+//        System.out.println(user.getUsername());
         CustomUserDetails customUserDetails=new CustomUserDetails(user);
         System.out.println(customUserDetails.getUsername());
         return customUserDetails;
