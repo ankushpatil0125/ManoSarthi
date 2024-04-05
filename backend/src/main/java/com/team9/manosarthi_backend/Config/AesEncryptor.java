@@ -18,6 +18,7 @@ import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 import java.security.spec.KeySpec;
 
@@ -29,27 +30,27 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
 
     @Value("${aes.encryption.key}")
     private String encryptionKey;
-    private final String encryptionCipher="AES";
+//    private final String encryptionCipher="AES";
 
-    private Key key;
-    private Cipher cipher;
+//    private Key key;
+//    private Cipher cipher;
 
-    private Key getKey()
-    {
-        if(key==null)
-            key=new SecretKeySpec(encryptionKey.getBytes(),encryptionCipher);
-        return key;
-    }
-    private Cipher getCipher() throws GeneralSecurityException {
-        if(cipher==null)
-            cipher=Cipher.getInstance(encryptionCipher);
-        return cipher;
-    }
+//    private Key getKey()
+//    {
+//        if(key==null)
+//            key=new SecretKeySpec(encryptionKey.getBytes(),encryptionCipher);
+//        return key;
+//    }
+//    private Cipher getCipher() throws GeneralSecurityException {
+//        if(cipher==null)
+//            cipher=Cipher.getInstance(encryptionCipher);
+//        return cipher;
+//    }
 
-    private void initCipher(int encryptMode) throws GeneralSecurityException
-    {
-        getCipher().init(encryptMode,getKey());
-    }
+//    private void initCipher(int encryptMode) throws GeneralSecurityException
+//    {
+//        getCipher().init(encryptMode,getKey());
+//    }
 
 
     //to encrypt
@@ -58,40 +59,38 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
     public String convertToDatabaseColumn(Object attribute) {
         if(attribute==null)
             return null;
-        initCipher(Cipher.ENCRYPT_MODE);
-        byte[] bytes= SerializationUtils.serialize(attribute);
 
-//        System.out.println("Bytes"+encodeToString(bytes));
-        return Base64.getEncoder().encodeToString(getCipher().doFinal(bytes));
+        System.out.println(attribute);
+//        byte[] bytes= SerializationUtils.serialize(attribute);
+        return encrypt(String.valueOf(attribute),encryptionKey, "salt");
+//        String toencrypt=new String(bytes);
+//        System.out.println("Bytes"+toencrypt);
+//        initCipher(Cipher.ENCRYPT_MODE);
+//        return Base64.getEncoder().encodeToString(getCipher().doFinal(bytes));
     }
 
-//    public static String encrypt(String data) throws Exception {
-//        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-//        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(SECRET_KEY.getBytes(), "AES"));
-//        byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-//        return Base64.getEncoder().encodeToString(encryptedBytes);
-//    }
-
-//    public static String decrypt(String encryptedData) throws Exception {
-//        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-//        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(SECRET_KEY.getBytes(), "AES"));
-//        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
-//        return new String(decryptedBytes, StandardCharsets.UTF_8);
-//    }
 
     //to decrypt
     @SneakyThrows
     @Override
     public String convertToEntityAttribute(String dbData) {
-        if(dbData==null)
+        if(dbData==null) {
+            System.out.println("hello");
             return null;
-        initCipher(Cipher.DECRYPT_MODE);
-        byte[] bytes=getCipher().doFinal(Base64.getDecoder().decode(dbData));
-//        String decryptedValue = new String(bytes, StandardCharsets.UTF_8);
-        String decryptedValue = new String(bytes,StandardCharsets.ISO_8859_1);
+        }
 
-        return decryptedValue;
-//        Convert.ToBase64String()
+//        initCipher(Cipher.DECRYPT_MODE);
+//        byte[] bytes=getCipher().doFinal(Base64.getDecoder().decode(dbData));
+//
+////        String decryptedValue = new String(bytes, StandardCharsets.UTF_8);
+////        int paddingLength = bytes[bytes.length - 1];
+////        byte[] unpaddedBytes = Arrays.copyOfRange(bytes, 0, bytes.length - paddingLength);
+//
+//
+////        return new String(unpaddedBytes, StandardCharsets.UTF_8);
+//        String decryptedValue = new String(bytes,StandardCharsets.ISO_8859_1);
+//        return decryptedValue;
+        return decrypt(dbData,encryptionKey,"salt");
     }
     private static final int KEY_LENGTH = 256;
     private static final int ITERATION_COUNT = 65536;
@@ -124,7 +123,34 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
             return null;
         }
     }
+    public static String decrypt(String strToDecrypt, String secretKey, String salt) {
 
+        try {
+
+            byte[] encryptedData = Base64.getDecoder().decode(strToDecrypt);
+            byte[] iv = new byte[16];
+            System.arraycopy(encryptedData, 0, iv, 0, iv.length);
+            IvParameterSpec ivspec = new IvParameterSpec(iv);
+
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), ITERATION_COUNT, KEY_LENGTH);
+            SecretKey tmp = factory.generateSecret(spec);
+            SecretKeySpec secretKeySpec = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivspec);
+
+            byte[] cipherText = new byte[encryptedData.length - 16];
+            System.arraycopy(encryptedData, 16, cipherText, 0, cipherText.length);
+
+            byte[] decryptedText = cipher.doFinal(cipherText);
+            return new String(decryptedText, "UTF-8");
+        } catch (Exception e) {
+            // Handle the exception properly
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 

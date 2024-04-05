@@ -170,7 +170,7 @@ public class WorkerServiceImpl implements WorkerService{
 ////            combinedAbha.forEach( (encryptedValue) -> {
 ////                encryptedValue.
 ////            } );
-            return refabha;
+            return combinedAbha;
         }
         else
             throw new APIRequestException("worker with given id not found");
