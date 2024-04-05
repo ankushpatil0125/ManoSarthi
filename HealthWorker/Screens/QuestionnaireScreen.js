@@ -5,14 +5,17 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import "../Services/SurveyQuestionsService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here
 import InsertService from "../Services/DatabaseServices/InsertService";
+import DeleteService from "../Services/DatabaseServices/DeleteService";
 
 const QuestionnaireScreen = ({ navigation }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
+
   // State to hold the answers for each question
   const [answers, setAnswers] = useState(
     Array(surveyquestions.length).fill(null)
@@ -92,8 +95,20 @@ const QuestionnaireScreen = ({ navigation }) => {
       const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
       console.log("Unmatched count:", unmatchedCount);
 
-      // Navigate to the next screen
-      navigation.navigate('ReferNotRefer');
+      // Navigate to the next screen 
+      if(unmatchedCount >= 1){
+        navigation.navigate('MedicalDetails');
+      }
+      else{
+        DeleteService.deleteSurveyQuestionAnswersByAabhaId(aabhaId);
+        DeleteService.deletePatientByAabhaId(aabhaId);
+        const deldata = await SelectService.getAllSurveyQuestionAnswers();
+        console.log("QAdata after deletion from DB: ", deldata);
+        const delpdata = await SelectService.getAllPatients();
+        console.log("Pdata after deletion from DB: ", delpdata);
+        Alert.alert("Not referring to the doctor", "Related data is deleted from DB");
+        navigation.navigate('HomeScreen');
+      }
     } catch (error) {
       console.error("Error inserting survey answers:", error);
     }
@@ -104,7 +119,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     questions.forEach((question, index) => {
       if (answers[index] !== question.default_ans) {
         unmatchedCount++;
-      }
+      } 
     });
     return unmatchedCount;
   };
@@ -119,18 +134,18 @@ const QuestionnaireScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  answers[index] === "Yes" && styles.radioButtonSelected,
+                  answers[index] === "yes" && styles.radioButtonSelected,
                 ]}
-                onPress={() => handleAnswerSelect(index, "Yes")}
+                onPress={() => handleAnswerSelect(index, "yes")}
               >
                 <Text style={styles.radioButtonText}>Yes</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  answers[index] === "No" && styles.radioButtonSelected,
+                  answers[index] === "no" && styles.radioButtonSelected,
                 ]}
-                onPress={() => handleAnswerSelect(index, "No")}
+                onPress={() => handleAnswerSelect(index, "no")}
               >
                 <Text style={styles.radioButtonText}>No</Text>
               </TouchableOpacity>

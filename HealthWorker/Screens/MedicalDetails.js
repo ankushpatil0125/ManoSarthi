@@ -17,7 +17,8 @@ const MedicalDetails = () => {
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
-  var commentID;
+  // var commentID;
+  const [commentID, setCommentID] = useState(0);
 
 
   useEffect(() => {
@@ -38,30 +39,23 @@ const MedicalDetails = () => {
       const data = await SelectService.getAllMedicalQuestions();
       // setMedicalQuestions(data);
       console.log("Medical Questions res data (IN MedicalDetails Screen): ", data);
-      
       // Find the index of the question with the "comment" value
-      const commentIndex = data.findIndex(question => question.question === "comment");
-      
-      // If the "comment" question exists, remove it from the medicalQuestions array
-      if (commentIndex !== -1) {
-        commentID = data[commentIndex].question_id;
-        console.log("CommentID:", commentID);
-        const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
-        setMedicalQuestions(updatedMedicalQuestions);
-      }
-  
-      console.log("Medical Questions after removing comment: ", medicalQuestions);
+      const commentIndex = data.findIndex(medical_question => medical_question.question === "comment");
+      const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
+      // commentID = data[commentIndex].question_id;
+      setCommentID(data[commentIndex].question_id);
+      console.log("CommentID: ", commentID);
+      setMedicalQuestions(updatedMedicalQuestions);
+      console.log("updatedMedicalQuestions: ", medicalQuestions);
     } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
   };
   
-
   const handleAnswerChange = (index, answer) => {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
     setAnswers(newAnswers);
-
     const newClickedButtons = [...clickedButtons];
     newClickedButtons[index] = true;
     setClickedButtons(newClickedButtons);
@@ -93,7 +87,10 @@ const MedicalDetails = () => {
       } else {
           await saveDataToDatabase(answers, comment);
       }
-      navigation.navigate('Preview');
+      navigation.navigate('Preview', {
+        commentID,
+        comment
+      });
 
     } else {
       Alert.alert(
@@ -137,7 +134,7 @@ const MedicalDetails = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex:1,marginTop: 30, paddingLeft: 10,alignItems:'center',justifyContent:'center' }}>
-        {medicalQuestions.slice(0, -1).map((question, index) => (
+        {medicalQuestions.map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}:</Text>
             <View style={{ paddingTop: 5, flexDirection: 'row' }}>
