@@ -34,7 +34,8 @@ const ForgotPasswordComponent = () => {
         alert("Failed");
       }
     } catch (error) {
-      console.error("Error during password change:", error);
+      alert(error.response.data.message);
+        setLoading(false);
     }
   };
   if(loading)return <LoadingComponent/>

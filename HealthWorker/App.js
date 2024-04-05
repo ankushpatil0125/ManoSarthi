@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useState, forwardRef } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -16,22 +15,15 @@ import Preview from "./Screens/Preview";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
 import PatientContext, { PatientProvider } from "./Context/PatientContext";
-import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Pressable } from "react-native";
 import { LanguageProvider } from "./Context/LanguageProvider";
-
-const Drawer = createDrawerNavigator();
-import { AntDesign } from "@expo/vector-icons";
-import CustomDrawer from "./components/CustomDrawer";
-import { Entypo } from "@expo/vector-icons";
 import MainDrawerNavigator from "./navigation/MainDrawerNavigator";
 import FetchDataService from "./Services/FetchDataService";
 import RegisterPatientService from "./Services/RegisterPatientService";
 
 
+// const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const ForwardedToast = React.forwardRef((props, ref) => (
@@ -86,13 +78,11 @@ export const HomeStack = () => (
   </PatientProvider>
 );
 
-// Define the main drawer navigator
-// Define the main drawer navigator
-
 export default function App() {
   const [isConnected, setIsConnected] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [syncButton,setsyncButton] = useState(true);
+  const [syncButton, setsyncButton] = useState(true);
+
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
       const connected = await checkNetworkConnectivity();
@@ -111,103 +101,9 @@ export default function App() {
       }
     });
   }, []);
-  useEffect(()=>{
-    const syncData = async () => {
-      // try {
-        console.log("Hello")
-      const patients = await SelectService.getAllPatients();
-    
-      for (const patient of patients) {
-        const SurveyQuestionAnswerData =
-          await SelectService.getAllSurveyQuestionAnswersByAabhaId(patient.aabhaId);
-        const MedicalHistoryAnswersData =
-          await SelectService.getAllMedicalQuestionAnswersByAabhaId(
-            patient.aabhaId
-          );
-        const sendSurvevyQuestion = [];
-    
-        for (const temp of SurveyQuestionAnswerData) {
-          const ques = {
-            question_ans: temp.answer,
-            questionarrie: {
-              question_id: temp.question_id,
-            },
-          };
-          sendSurvevyQuestion.push(ques);
-        }
-    
-        const sendMedicalHistoryAnswers = [];
-    
-        for (const temp of MedicalHistoryAnswersData) {
-          const ques = {
-            question_ans: temp.question_ans,
-            medicalquest: {
-              question_id: temp.question_id,
-            },
-          };
-          console.log("ques", ques);
-          sendMedicalHistoryAnswers.push(ques);
-        }
-        console.log("sendMedicalHistoryAnswers", sendMedicalHistoryAnswers);
-        // console.log("SurveyQuestionAnswerData: ", SurveyQuestionAnswerData);
-        // console.log("MedicalHistoryAnswersData: ", MedicalHistoryAnswersData);
-    
-        const patientData = {
-          patient: {
-            aabhaId: patient.aabhaId,
-            firstname: patient.firstName,
-            lastname: patient.lastName,
-            email: patient.email,
-            gender: patient.gender,
-            dob: patient.dob,
-            address: patient.address,
-          },
-          questionarrieAnsList: sendSurvevyQuestion,
-          medicalQueAnsList: sendMedicalHistoryAnswers,
-        };
-        console.log("patient data", patientData);
-        try {
-          const response = await RegisterPatientService.addPatient(patientData);
-          console.log("Response : ", response.data);
-          if (response) {
-            console.log(
-              `Patient with name ${patientData.patient.firstname} added successfully`
-            );
-    
-            const status1 = await DeleteService.deletePatientByAabhaId(
-              response.data.aabhaId
-            );
-            console.log("deletePatientByAabhaId Status ", status1);
-    
-            const status2 =
-              await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
-                response.data.aabhaId
-              );
-            console.log("deleteSurveyQuestionAnswersByAabhaId Status ", status2);
-    
-            const status3 =
-              await DeleteService.deleteMedicalHistoryAnswersByAabhaId(
-                response.data.aabhaId
-              );
-            console.log("deleteMedicalHistoryAnswersByAabhaId Status ", status3);
-          }
-          // const status = await DeleteService.deletePatientByAabhaId(
-          //   response.data.aabhaId
-          // );
-          // console.log("status ", status);
-          else {
-            console.error("Failed to add patient");
-          }
-        } catch (error) {
-          console.error("Error during adding patient:", error);
-        }
-      }
-    };
-  }, [syncButton])
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    FetchDataService.fetchQuestions();
-    NavigationContainer.navigate("HomeScreen");
+
+  const handleLoginSuccess = (islogin) => {
+    setIsLoggedIn(islogin);
   };
 
   useEffect(() => {
@@ -234,25 +130,25 @@ export default function App() {
 
   return (
     <LanguageProvider>
-    <NavigationContainer>
-      {!isLoggedIn ? (
-        <Stack.Navigator>
-          {!isLoggedIn ? (
-            <Stack.Screen name="Login" options={{ headerShown: false }}>
-              {(props) => (
-                <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />
-              )}
-            </Stack.Screen>
-          ) : (
-            <Stack.Screen name="Home" component={HomeScreen} />
-          )}
-        </Stack.Navigator>
-      ) : (
-        <MainDrawerNavigator />
-      )}
-      <ForwardedToast />
-    </NavigationContainer>
-  </LanguageProvider>
+      <NavigationContainer>
+        {!isLoggedIn ? (
+          <Stack.Navigator>
+            {!isLoggedIn ? (
+              <Stack.Screen name="Login" options={{ headerShown: false }}>
+                {(props) => (
+                  <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />
+                )}
+              </Stack.Screen>
+            ) : (
+              <Stack.Screen name="Home" component={HomeScreen} />
+            )}
+          </Stack.Navigator>
+        ) : (
+          <MainDrawerNavigator />
+        )}
+        <ForwardedToast />
+      </NavigationContainer>
+    </LanguageProvider>
   );
 }
 

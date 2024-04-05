@@ -26,7 +26,8 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
             setLoading(false);
           })
           .catch((error) => {
-            console.error("Error Fetching Selected District Doctors:", error);
+            alert(error.response.data.message);
+        setLoading(false);
           });
       } else {
         setCurrentPageDoctor(0);
@@ -37,7 +38,8 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
         });
       }
     } catch (error) {
-      console.error("Error Fetching All Doctors in all Districts:", error.message);
+      alert(error.response.data.message);
+        setLoading(false);
     }
   };
   useEffect(() => {
@@ -49,7 +51,8 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error Fetching Selected Subdistrict Doctor:", error);
+          alert(error.response.data.message);
+        setLoading(false);
         });
     }
   }, [subdistrictcode]);

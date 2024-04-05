@@ -2,6 +2,22 @@
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const DeleteService = {
+  deleteAllAabhaIdInfo: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM AabhaIdInfo",
+          [],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " Rows Deleted From AabhaIdTable");
+          },
+          (_, error) => {
+            reject("Error deleting records from AabhaIdInfo table: " + error);
+          }
+        );
+      });
+    });
+  },
   deleteAllPatients: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -37,20 +53,27 @@ const DeleteService = {
   },
   deleteAllSurveyQuestions: () => {
     return new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "DELETE FROM SurveyQuestion",
-          [],
-          (_, { rowsAffected }) => {
-            resolve(rowsAffected + " rows deleted from SurveyQuestion");
-          },
-          (_, error) => {
-            reject("Error deleting SurveyQuestion: " + error);
-          }
-        );
-      });
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            "DELETE FROM SurveyQuestion",
+            [],
+            (_, { rowsAffected }) => {
+              resolve(rowsAffected + " Rows Deleted From SurveyQuestion");
+            },
+            (_, error) => {
+              reject("Error Deleting SurveyQuestion: " + error);
+            }
+          );
+        },
+        () => {
+        },
+        () => {
+        }
+      );
     });
   },
+
   deleteAllSurveyQuestionAnswers: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -61,7 +84,9 @@ const DeleteService = {
             resolve("All entries deleted from SurveyQuestionAnswer table");
           },
           (_, error) => {
-            reject("Error deleting entries from SurveyQuestionAnswer table: " + error);
+            reject(
+              "Error deleting entries from SurveyQuestionAnswer table: " + error
+            );
           }
         );
       });
@@ -92,10 +117,10 @@ const DeleteService = {
           "DELETE FROM medical_questionarrie",
           [],
           (_, { rowsAffected }) => {
-            resolve(rowsAffected + " rows deleted from medical_questionarrie");
+            resolve(rowsAffected + " Rows Deleted From Medical_questionarrie");
           },
           (_, error) => {
-            reject("Error deleting medical_questionarrie: " + error);
+            reject("Error Deleting Medical_questionarrie: " + error);
           }
         );
       });
@@ -128,7 +153,9 @@ const DeleteService = {
           "DELETE FROM medical_history_answers WHERE aabha_id=?",
           [aabhaId],
           (_, { rowsAffected }) => {
-            resolve(rowsAffected + " rows deleted from medical_history_answers");
+            resolve(
+              rowsAffected + " rows deleted from medical_history_answers"
+            );
           },
           (_, error) => {
             reject("Error deleting medical_history_answers: " + error);
