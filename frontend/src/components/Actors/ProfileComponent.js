@@ -32,7 +32,8 @@ const Profile = () => {
         }
         setLoading(false);
       } catch (error) {
-        console.log("Error fetching doctor data:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       }
     };
     
