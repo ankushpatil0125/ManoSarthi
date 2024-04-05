@@ -46,7 +46,7 @@ const MedicalDetails = () => {
       setCommentID(data[commentIndex].question_id);
       console.log("CommentID: ", commentID);
       setMedicalQuestions(updatedMedicalQuestions);
-      console.log("updatedMedicalQuestions: ", updatedMedicalQuestions);
+      console.log("updatedMedicalQuestions: ", medicalQuestions);
     } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
@@ -134,7 +134,7 @@ const MedicalDetails = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex:1,marginTop: 30, paddingLeft: 10,alignItems:'center',justifyContent:'center' }}>
-        {medicalQuestions.slice(0, -1).map((question, index) => (
+        {medicalQuestions.map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}:</Text>
             <View style={{ paddingTop: 5, flexDirection: 'row' }}>

@@ -148,7 +148,7 @@ const Preview = ({route}) => {
             // Find the corresponding detail in medicalDetails based on question_id
             const detail = medicalDetails.find(detail => detail.question_id === question.question_id);
             // If detail exists, display the question and answer
-            if (detail) {
+            if (detail && (question.question_id !== commentID)) {
               return (
                 <Text key={index}>
                   {question.question}: {detail.question_ans}

@@ -96,14 +96,16 @@ const QuestionnaireScreen = ({ navigation }) => {
       console.log("Unmatched count:", unmatchedCount);
 
       // Navigate to the next screen 
-      if(unmatchedCount >= 3){
+      if(unmatchedCount >= 1){
         navigation.navigate('MedicalDetails');
       }
       else{
         DeleteService.deleteSurveyQuestionAnswersByAabhaId(aabhaId);
         DeleteService.deletePatientByAabhaId(aabhaId);
         const deldata = await SelectService.getAllSurveyQuestionAnswers();
-        console.log("data after deletion from DB: ", deldata);
+        console.log("QAdata after deletion from DB: ", deldata);
+        const delpdata = await SelectService.getAllPatients();
+        console.log("Pdata after deletion from DB: ", delpdata);
         Alert.alert("Not referring to the doctor", "Related data is deleted from DB");
         navigation.navigate('HomeScreen');
       }
