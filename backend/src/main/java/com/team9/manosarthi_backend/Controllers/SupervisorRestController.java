@@ -188,7 +188,13 @@ public class SupervisorRestController {
                 throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
             }
         } catch (Exception ex) {
-            throw new APIRequestException("Error while adding the Worker.", ex.getMessage());
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else {
+                throw new APIRequestException("Error while adding the Worker.", ex.getMessage());
+            }
         }
     }
 

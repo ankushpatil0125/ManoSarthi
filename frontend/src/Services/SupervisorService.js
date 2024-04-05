@@ -39,7 +39,7 @@ const SupervisorService = {
 
       return response;
     } catch (error) {
-      console.error("Error fetching district options:", error);
+      console.error("Error fetching Village options:", error);
       throw error;
     }
   },

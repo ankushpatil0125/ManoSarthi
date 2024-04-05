@@ -20,6 +20,7 @@ const UpdateHealthWorker = () => {
     setLoading(true);
     SupervisorService.getVillageWorker(true)
       .then((response) => {
+        console.log("Villages: ",response.data);
         setVillageOptions(response.data);
         setLoading(false);
       })

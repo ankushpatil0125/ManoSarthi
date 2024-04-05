@@ -1,10 +1,28 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/Constants";
 import { getToken } from "../utils/Constants";
-import { token } from "../utils/Constants";
+
 const RegisterPatientService = {
+  getAabhaIdTable: async () => {
+    const token = await getToken(); // Get token asynchronously
+
+    try {
+      const response = await axios.get(BASE_URL + "worker/getAbhaid", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      console.error("Error Fetching AbhaIdTable:", error);
+      throw error;
+    }
+  },
+
   addPatient: async (patientData) => {
-    // const token = getToken();
+    const token = await getToken(); // Get token asynchronously
 
     try {
       console.log("HIiII", patientData);
@@ -14,7 +32,7 @@ const RegisterPatientService = {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ` + token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

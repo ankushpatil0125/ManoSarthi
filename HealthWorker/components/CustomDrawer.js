@@ -8,7 +8,31 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-const CustomDrawer = (props) => {
+import LanguageToggleButton from "../Multilingual/LanguageButton";
+import { useLanguageContext } from "../Context/LanguageProvider";
+import SyncDataService from "../Services/SyncDataService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { useNavigation } from "@react-navigation/native";
+
+// import { useNavigation } from "@react-navigation/native";
+const CustomDrawer = (props, { navigation }) => {
+  const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
+  // const navigation = useNavigation();
+  handleSync = async () => {
+    console.log("Before Syncing :");
+    SyncDataService.registrationData();
+  };
+  const handleLogout = async () => {
+    console.log("logout");
+    // AsyncStorage.removeItem("JWT");
+    // navigation.navigate("Login");
+    try {
+      await AsyncStorage.removeItem("JWT");
+      navigation.navigate("Login");
+    } catch (exception) {
+      console.log("Error with signout :", exception);
+    }
+  };
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -41,7 +65,9 @@ const CustomDrawer = (props) => {
       </DrawerContentScrollView>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
         <Pressable
-          onPress={() => {}}
+          onPress={() => {
+            handleSync();
+          }}
           style={{ paddingVertical: 15, borderColor: "#87CEEB" }}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -51,18 +77,18 @@ const CustomDrawer = (props) => {
         </Pressable>
       </View>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
-        <Pressable
-          onPress={() => {}}
-          style={{ paddingVertical: 15, borderColor: "#87CEEB" }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <FontAwesome name="language" size={24} color="black" />
-            <Text style={{ fontSize: 15, marginLeft: 5 }}>Change Language</Text>
-          </View>
-        </Pressable>
+        <LanguageToggleButton
+          onPress={handleLanguageToggle}
+          selectedLanguage={selectedLanguage}
+        />
       </View>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
+        <TouchableOpacity
+          onPress={() => {
+            handleLogout();
+          }}
+          style={{ paddingVertical: 15 }}
+        >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialIcons name="logout" size={24} color="black" />
             <Text style={{ fontSize: 15, marginLeft: 5 }}>Signout</Text>
