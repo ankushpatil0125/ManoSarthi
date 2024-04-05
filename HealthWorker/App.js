@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -17,19 +16,10 @@ import Preview from "./Screens/Preview";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
 import DropService from "./Services/DatabaseServices/DropService";
 import PatientContext, { PatientProvider } from "./Context/PatientContext";
-import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Pressable } from "react-native";
 import { LanguageProvider } from "./Context/LanguageProvider";
-
-import { AntDesign } from "@expo/vector-icons";
-import CustomDrawer from "./components/CustomDrawer";
-import { Entypo } from "@expo/vector-icons";
 import MainDrawerNavigator from "./navigation/MainDrawerNavigator";
-import FetchDataService from "./Services/FetchDataService";
-import { useNavigation } from "@react-navigation/native";
 
 // const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -91,15 +81,11 @@ export const HomeStack = () => (
   </PatientProvider>
 );
 
-// Define the main drawer navigator
-// Define the main drawer navigator
-
 export default function App() {
   const [isConnected, setIsConnected] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [syncButton, setsyncButton] = useState(true);
-  // const navigation = useNavigation();
-  // const navigation = useNavigation();
+
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
       const connected = await checkNetworkConnectivity();
@@ -119,11 +105,8 @@ export default function App() {
     });
   }, []);
 
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    FetchDataService.fetchQuestions();
-    // NavigationContainer.navigate("HomeScreen");
-    // navigation.navigate("HomeScreen");
+  const handleLoginSuccess = (islogin) => {
+    setIsLoggedIn(islogin);
   };
 
   useEffect(() => {

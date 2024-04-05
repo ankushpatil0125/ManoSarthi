@@ -18,6 +18,7 @@ import i18n from "../i18n";
 import LanguageToggleButton from "../Multilingual/LanguageButton";
 import { useLanguageContext } from "../Context/LanguageProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchData } from "./HomeScreen";
 
 const LoginScreen = ({ navigation, onLoginSuccess }) => {
   const [username, setUserName] = useState("");
@@ -26,47 +27,36 @@ const LoginScreen = ({ navigation, onLoginSuccess }) => {
   // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
 
-  // const navigation = useNavigation();
+  // AsynStorage to store the JWT Token
   const storeData = async (value) => {
     try {
-      console.log("inside stored data");
+      // console.log("inside stored data");
       await AsyncStorage.setItem("JWT", value);
     } catch (e) {
       // saving error
     }
   };
-  const getData = async () => {
-    try {
-      console.log("inside getdata");
-      const value = await AsyncStorage.getItem("JWT");
-      if (value !== null) {
-        // value previously stored
-        return value;
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
+
   const handleLogin = async () => {
     const user = {
       username: username,
       password: password,
     };
-    console.log(user);
+    console.log("Entered Credentials: ", user);
     try {
-      console.log("HIIIII");
       const response = await axios.post(BASE_URL + "auth/login", user);
       if (response) {
-        console.log("Response :", response);
-        console.log("Response data :", response.data);
-        console.log("Response data jwt:", response.data.jwtToken);
-        storeData(response?.data?.jwtToken);
-        // AsyncStorage.setItem("JWT", response.data.jwtToken);
-        const storedToken = await getData();
-        console.log("Stored Token: ", storedToken);
-        Alert.alert("Login Successful");
-        onLoginSuccess();
-        navigation.navigate("HomeScreen");
+        await storeData(response?.data?.jwtToken);
+
+        fetchData()
+          .then((message) => {
+            onLoginSuccess(true);
+            Alert.alert(message);
+          })
+          .catch((message) => {
+            onLoginSuccess(false);
+            Alert.alert(message);
+          });
       } else {
         Alert.alert("Login Failure");
       }

@@ -13,22 +13,24 @@ import { useLanguageContext } from "../Context/LanguageProvider";
 import SyncDataService from "../Services/SyncDataService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useNavigation } from "@react-navigation/native";
-const CustomDrawer = (props) => {
+
+// import { useNavigation } from "@react-navigation/native";
+const CustomDrawer = (props, { navigation }) => {
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
   // const navigation = useNavigation();
   handleSync = async () => {
     console.log("Before Syncing :");
     SyncDataService.registrationData();
   };
-  const handleLogout = async (key) => {
+  const handleLogout = async () => {
     console.log("logout");
     // AsyncStorage.removeItem("JWT");
     // navigation.navigate("Login");
     try {
-      await AsyncStorage.removeItem(key);
-      return true;
+      await AsyncStorage.removeItem("JWT");
+      navigation.navigate("Login");
     } catch (exception) {
-      return false;
+      console.log("Error with signout :", exception);
     }
   };
   return (
@@ -83,7 +85,7 @@ const CustomDrawer = (props) => {
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
         <TouchableOpacity
           onPress={() => {
-            handleLogout()
+            handleLogout();
           }}
           style={{ paddingVertical: 15 }}
         >

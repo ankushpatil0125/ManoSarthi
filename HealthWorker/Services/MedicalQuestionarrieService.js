@@ -6,7 +6,6 @@ const MedicalQuestionarrieService = {
   getMedicalQuestionarrie: async () => {
     try {
       const token = await getToken(); // Get token asynchronously
-      console.log("token", token);
       const response = await axios.get(
         BASE_URL + "worker/get-medical-questionarrie",
         {

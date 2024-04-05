@@ -45,6 +45,8 @@ const PatientDetailsScreen = ({ navigation }) => {
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllPatients();
+      const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
+      console.log("AabhaId Fetched From Data: ", aabhaIdInfoData);
       setPatients(data);
       console.log("Patients Fetched from Database: ", patients);
     } catch (error) {
