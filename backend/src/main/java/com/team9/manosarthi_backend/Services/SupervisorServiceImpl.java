@@ -5,6 +5,7 @@ import com.team9.manosarthi_backend.Entities.Village;
 import com.team9.manosarthi_backend.Entities.Worker;
 
 import com.team9.manosarthi_backend.Entities.User;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import lombok.AllArgsConstructor;
 
@@ -44,7 +45,7 @@ public class SupervisorServiceImpl implements SupervisorService{
 
 
 
-        Village village = villageOptional.orElseThrow(() -> new RuntimeException("Cannot add worker: Village not found."));
+        Village village = villageOptional.orElseThrow(() -> new APIRequestException("Cannot add worker: Village not found."));
 
 
         if (village.getSubDistrict().getDoctor_count() > 0) {
