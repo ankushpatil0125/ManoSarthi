@@ -25,7 +25,8 @@ const AddHealthWorkerComponent = () => {
         setVillage(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching village options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
   }, []);
 
@@ -38,6 +39,7 @@ const AddHealthWorkerComponent = () => {
       firstname: firstname,
       lastname: lastname,
       gender: gender,
+      dob:dob,
       villagecode: {
         code: villagecode,
       },
@@ -45,7 +47,8 @@ const AddHealthWorkerComponent = () => {
     try {
       // console.log("healthWorker data", healthWorkerData);
       setLoading(true);
-      const response = SupervisorService.addHealthWorker(healthWorkerData);
+      const response = await SupervisorService.addHealthWorker(healthWorkerData);
+      console.log("response", response);
       if (response) {
         alert(
           `Health worker with name ${healthWorkerData.firstname} added successfully`
@@ -56,7 +59,8 @@ const AddHealthWorkerComponent = () => {
         alert("Failed to add health worker");
       }
     } catch (error) {
-      console.error(`Error during adding health worker:", ${error}`);
+      alert(error.response.data.details);
+      setLoading(false);
     }
   };
   if(loading) return <LoadingComponent/>

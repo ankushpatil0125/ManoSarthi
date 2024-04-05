@@ -26,7 +26,8 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
             setLoading(false);
           })
           .catch((error) => {
-            console.error("Error Fetching Selected District Supervisors:", error);
+            alert(error.response.data.message);
+        setLoading(false);
           });
       } else {
         setCurrentPageDoctor(0);
@@ -37,7 +38,8 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
         });
       }
     } catch (error) {
-      console.error("Error Fetching All Supervisors In All Districts :", error.message);
+      alert(error.response.data.message);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -49,8 +51,8 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error Fetching Selected Subdistrict Supervisor:", error);
-          alert(error)
+          alert(error.response.data.message);
+        setLoading(false);
         });
     }
   }, [subdistrictcode]);

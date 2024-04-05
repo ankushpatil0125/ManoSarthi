@@ -32,7 +32,8 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching villages options:", error);
+          alert(error.response.data.message);
+        setLoading(false);
         });
     }
   }, [showModal]);
@@ -53,7 +54,8 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
             setLoading(false);
           })
           .catch((error) => {
-            console.error("Error fetching district doctors:", error);
+            alert(error.response.data.message);
+        setLoading(false);
           });
       } else {
         setCurrentPageHealthWorker(0);
@@ -64,7 +66,8 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
         });
       }
     } catch (error) {
-      console.error("Error fetching doctor details:", error.message);
+      alert(error.response.data.message);
+        setLoading(false);
     }
   };
 

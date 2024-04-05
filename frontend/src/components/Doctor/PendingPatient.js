@@ -29,10 +29,12 @@ const PendingPatient = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching patients:", error);
+          alert(error.response.data.message);
+        setLoading(false);
         });
     } catch (error) {
-      console.error("Error fetching patients details:", error.message);
+      alert(error.response.data.message);
+        setLoading(false);
     }
   };
   const handlePatient = (patientId) =>{

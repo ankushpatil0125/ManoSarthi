@@ -19,7 +19,7 @@ const AddDoctorComponent = () => {
   const [actor, setActor] = useState("");
   const { t } = useTranslation("global");
   const navigate = useNavigate();
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   //Fetch district options
@@ -31,7 +31,7 @@ const AddDoctorComponent = () => {
   //       console.error("Error fetching district options:", error);
   //     });
   // }, [actor]);
-  const handleActor = () =>{
+  const handleActor = () => {
     setLoading(true);
     AdminService.getDistrict(actor, false)
       .then((response) => {
@@ -39,9 +39,10 @@ const AddDoctorComponent = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching district options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
-  }
+  };
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
@@ -54,7 +55,8 @@ const AddDoctorComponent = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching subdistrict options:", error);
+        alert(error.response.data.message);        
+        setLoading(false);
       });
   };
 
@@ -76,7 +78,7 @@ const AddDoctorComponent = () => {
       // Using axios for the POST request
       console.log("doctor data", actorData);
       setLoading(true);
-      if (actor === "Doctor") {
+      if (actor === "DOCTOR") {
         const response = await AdminService.addDoctor(actorData);
         console.log("ADD RESP: ", response);
         if (response) {
@@ -104,10 +106,11 @@ const AddDoctorComponent = () => {
       }
     } catch (error) {
       // console.error(`Error during adding Actor:", ${error}`);
-      alert("Error during adding:" + error);
+      alert(error.response.data.message);      
+      setLoading(false);
     }
   };
-  if(loading)return <LoadingComponent/>
+  if (loading) return <LoadingComponent />;
   return (
     <div>
       <Header />

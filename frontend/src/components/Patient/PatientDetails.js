@@ -48,8 +48,8 @@ const PatientDetails = () => {
         setMedicalQuesAns(response?.data?.medicalQueAnsList);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching Dcotor Information:", error);
-        throw error;
+        alert(error.response.data.message);
+        setLoading(false);
       }
     };
     handlePatientDetails();
