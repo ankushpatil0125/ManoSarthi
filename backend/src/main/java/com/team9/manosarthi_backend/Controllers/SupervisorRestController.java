@@ -247,9 +247,11 @@ public class SupervisorRestController {
 
     //For reassigning worker to another village
     @PutMapping("/reassign-worker")
-    public ResponseEntity<MappingJacksonValue> ReassignWorker(@RequestBody Worker updatedWorker) {
+    public ResponseEntity<MappingJacksonValue> ReassignWorker(@RequestBody Worker updateWorker) {
+        System.out.println("updateWorker "+updateWorker);
         try {
-            Worker updatedworker = supervisorService.ReassignWorker(updatedWorker);
+            Worker updatedworker = supervisorService.ReassignWorker(updateWorker);
+            System.out.println("updatedWorker "+updatedworker);
             if (updatedworker != null) {
                 SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "villagecode");
                 SimpleBeanPropertyFilter villagefilter = SimpleBeanPropertyFilter.filterOutAllExcept("code", "name", "worker_count");
