@@ -16,7 +16,9 @@ const UpdateHealthWorkerpage = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching villages options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
+
       });
   }, []);
   const handleSubmit=() => {

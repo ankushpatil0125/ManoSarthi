@@ -26,7 +26,8 @@ const DeleteActor = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching district options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
   }
   const handleDistrictChange = (e) => {
@@ -39,7 +40,8 @@ const DeleteActor = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching subdistrict options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
   };
 

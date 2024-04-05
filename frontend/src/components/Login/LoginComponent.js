@@ -61,7 +61,8 @@ const LoginComponent = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.log("error",error.response);
+      alert(error.response.data.message);
+        setLoading(false);
       if(error.response.data === "CREDENTIALS INVALID ! ")alert("CREDENTIALS INVALID !!! Please Enter valid CREDENTIALS")
       else if (error.response.data)
         alert("Access restricted. Please log in during operating hours");
