@@ -3,11 +3,12 @@ import {  useNavigate } from "react-router-dom";
 import { PASS_URL } from "../../utils/images";
 import "../../css/LoginComponent.css";
 import ChangePasswordService from "../../Services/ChangePasswordService";
+import LoadingComponent from "../Loading/LoadingComponent";
 // const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 
 
 const ChangePasswordComponent = () => {
-
+  
   const [requestData, setRequestData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -15,6 +16,7 @@ const ChangePasswordComponent = () => {
 
   const [isValid,setIsValid] = useState(true);
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
 
 
 
@@ -39,16 +41,17 @@ const ChangePasswordComponent = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(requestData.oldPassword);
-      console.log(requestData.newPassword);
+      // console.log(requestData.oldPassword);
+      // console.log(requestData.newPassword);
+      setLoading (true);
       if(isValid===true){
+      
         const response = await ChangePasswordService.ChangePassword(requestData);
         console.log("response of changePassword",response);
 
         if (response) {
           alert("Password Successfully Changed");
-
-
+          setLoading(false);
           navigate("/");
           
         } else {
@@ -63,11 +66,7 @@ const ChangePasswordComponent = () => {
       console.error(`Error during password change:", ${error}`);
     }
   };
-
-  useEffect(() => {
-
-  }, []);
-
+  if(loading)return <LoadingComponent/>
   return (
     <div className="login-container">
       <div className="header">

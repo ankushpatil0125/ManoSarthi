@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import SupervisorService from "../../Services/SupervisorService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../Loading/LoadingComponent";
 
 const AddHealthWorkerComponent = () => {
   const [village, setVillage] = useState([]);
@@ -15,6 +16,7 @@ const AddHealthWorkerComponent = () => {
   const [villagecode, setVillageCode] = useState("");
   const { t } = useTranslation("global");
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
     // Fetch district options
@@ -41,12 +43,14 @@ const AddHealthWorkerComponent = () => {
       },
     };
     try {
-      console.log("healthWorker data", healthWorkerData);
+      // console.log("healthWorker data", healthWorkerData);
+      setLoading(true);
       const response = SupervisorService.addHealthWorker(healthWorkerData);
       if (response) {
         alert(
           `Health worker with name ${healthWorkerData.firstname} added successfully`
         );
+        setLoading(false);
         navigate("/healthworker-home");
       } else {
         alert("Failed to add health worker");
@@ -55,7 +59,7 @@ const AddHealthWorkerComponent = () => {
       console.error(`Error during adding health worker:", ${error}`);
     }
   };
-
+  if(loading) return <LoadingComponent/>
   return (
     <div>
       <Header />

@@ -95,7 +95,7 @@ const SupervisorService = {
     // console.log("data afsd",healthWorkerData)
     try {
       const response = await axios.put(
-        BASE_URL + "supervisor/reassignworker",
+        BASE_URL + "supervisor/reassign-worker",
         reasignHealthWorker,
         {
           headers: {

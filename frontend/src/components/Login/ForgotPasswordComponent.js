@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PASS_URL } from "../../utils/images";
 import "../../css/LoginComponent.css"
+import LoadingComponent from "../Loading/LoadingComponent";
 const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
 
 const ForgotPasswordComponent = () => {
   const [email, setEmail] = useState("");
+  const [loading,setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -14,6 +16,7 @@ const ForgotPasswordComponent = () => {
   const handleSubmit = async () => {
     try {
       console.log(email);
+      setLoading(true);
       const response = await fetch(CONST_LOGIN_CHECK, {
         method: "POST",
         headers: {
@@ -24,6 +27,7 @@ const ForgotPasswordComponent = () => {
 
       if (response.ok) {
         // Handle successful login, e.g., redirect to another page
+        setLoading(false);
         alert("Password Successfully Changed");
       } else {
         // Handle login failure
@@ -33,7 +37,7 @@ const ForgotPasswordComponent = () => {
       console.error("Error during password change:", error);
     }
   };
-
+  if(loading)return <LoadingComponent/>
   return (
     <div className="login-container">
       <div className="header">

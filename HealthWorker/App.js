@@ -10,7 +10,6 @@ import HomeScreen from "./Screens/HomeScreen";
 import RegisterPatientScreen from "./Screens/RegisterPatientScreen";
 import PatientDetailsScreen from "./Screens/PatientDetailsScreen";
 import QuestionnaireScreen from "./Screens/QuestionnaireScreen";
-import ReferNotRefer from "./Screens/ReferNotRefer";
 import MedicalDetails from "./Screens/MedicalDetails";
 import Preview from "./Screens/Preview";
 import db from "./Services/DatabaseServices/DatabaseServiceInit";
@@ -20,6 +19,9 @@ import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
 import { LanguageProvider } from "./Context/LanguageProvider";
 import MainDrawerNavigator from "./navigation/MainDrawerNavigator";
+import FetchDataService from "./Services/FetchDataService";
+import RegisterPatientService from "./Services/RegisterPatientService";
+
 
 // const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -60,11 +62,6 @@ export const HomeStack = () => (
       <Stack.Screen
         name="QuestionnaireScreen"
         component={QuestionnaireScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ReferNotRefer"
-        component={ReferNotRefer}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -114,7 +111,6 @@ export default function App() {
       try {
         // Drop All Tables
         // await DropService.dropTables();
-
         // Initialize database and create tables
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
@@ -126,7 +122,6 @@ export default function App() {
     };
 
     initializeDatabase();
-
     // Clean up function to close the database connection
     return () => {
       db.closeSync(); // Close the database connection
