@@ -58,7 +58,8 @@ const PatientDetailsScreen = ({ navigation }) => {
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || dob;
-    setShowDatePicker(Platform.OS === "ios");
+    setShowDatePicker(false);
+    
     setDob(currentDate);
   };
 
@@ -158,12 +159,12 @@ const PatientDetailsScreen = ({ navigation }) => {
         </View>
 
         <Text style={styles.label}>Date Of Birth:</Text>
-        <View style={{alignItems:"center",justifyContent:"center"}}>
-          {/* <Button
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <Button
             onPress={() => setShowDatePicker(true)}
             title={dob.toLocaleDateString()}
-          /> */}
-          {true && (
+          />
+          {showDatePicker && (
             <DateTimePicker
               testID="dateTimePicker"
               value={dob}

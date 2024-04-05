@@ -11,7 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Card } from "react-native-paper";
 
-const ReferNotRefer = () => {
+const ReferNotRefer = ({route}) => {
+  const {unmatchedCount} = route.params;
   const navigation = useNavigation();
 
   const handleReferPress = () => {
@@ -24,15 +25,7 @@ const ReferNotRefer = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <Text style={{ fontSize: 20 }}>Yes/No Count : </Text>
-      </View>
+      
       <View
         style={{
           justifyContent: "center",
@@ -41,17 +34,9 @@ const ReferNotRefer = () => {
           marginTop:50
         }}
       >
-        <Text style={{fontSize:20}}>Yes : 8</Text>
+        <Text style={{fontSize:20}}>Unmatched Count : {unmatchedCount}</Text>
       </View>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <Text style={{fontSize:20}}>No : 2</Text>
-      </View>
+      
       <View
         style={{
           flex: 1,

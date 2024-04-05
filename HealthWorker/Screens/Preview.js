@@ -14,7 +14,8 @@ import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../Context/PatientContext"; // Import PatientContext here 
 import { useNavigation } from "@react-navigation/native";
 
-const Preview = () => {
+const Preview = ({route}) => {
+  const { comment, commentID } = route.params // Destructure comment and commentID from route.params
   const [consentChecked, setConsentChecked] = useState(false);
   const [medicalDetails, setMedicalDetails] = useState([]);
   const [medicalQuestions, setMedicalQuestions] = useState([]);
@@ -32,7 +33,7 @@ const Preview = () => {
   const showAlert = async () => {
     if (consentChecked) {
       try {
-        const res = await SelectService.getAllQuestions();
+        const res = await SelectService.getMedicalHistoryAnswers();
         Alert.alert("Data saved in local DB successfully!", "OK", [
           {
             text: "OK",
@@ -157,6 +158,7 @@ const Preview = () => {
               return null; // If detail doesn't exist, return null
             }
           })}
+          <Text>Comment: {comment}</Text>
         </View>
 
         </View>

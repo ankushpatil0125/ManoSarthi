@@ -26,25 +26,26 @@ const LoginScreen = ({ onLoginSuccess }) => {
       password: password,
     };
     console.log(user);
-    onLoginSuccess();
-    // try {
-    //   const response = await axios.post(BASE_URL + "auth/login", user, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    //   if (response) {
-    //     console.log(response.data);
-    //     Alert.alert("Login Successful");
-    //     onLoginSuccess();
-    //   } else {
-    //     Alert.alert("Login Failure");
-    //   }
-    // } catch (error) {
-    //   console.error("Error during login:", error);
-    //   Alert.alert("Login Failure", "An error occurred during login.");
-    // }
+    try {
+      const response = await axios.post(BASE_URL + "auth/login", user, 
+      // {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
+      );
+      if (response) {
+        console.log(response.data);
+        Alert.alert("Login Successful");
+        onLoginSuccess();
+      } else {
+        Alert.alert("Login Failure");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      Alert.alert("Login Failure", "An error occurred during login.");
+    }
   };
 
   return (

@@ -24,6 +24,9 @@ import { AntDesign } from "@expo/vector-icons";
 import CustomDrawer from "./components/CustomDrawer";
 import { Entypo } from "@expo/vector-icons";
 import MainDrawerNavigator from "./navigation/MainDrawerNavigator";
+import FetchDataService from "./Services/FetchDataService";
+import RegisterPatientService from "./Services/RegisterPatientService";
+
 
 const Stack = createStackNavigator();
 
@@ -204,6 +207,7 @@ export default function App() {
   }, [syncButton])
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    FetchDataService.fetchQuestions();
     NavigationContainer.navigate("HomeScreen");
   };
 
@@ -212,7 +216,6 @@ export default function App() {
       try {
         // Drop All Tables
         // await DropService.dropTables();
-
         // Initialize database and create tables
         await CreateService.createTables();
         console.log("Database and tables initialized successfully.");
@@ -224,7 +227,6 @@ export default function App() {
     };
 
     initializeDatabase();
-
     // Clean up function to close the database connection
     return () => {
       db.closeSync(); // Close the database connection
