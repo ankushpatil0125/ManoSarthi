@@ -45,10 +45,11 @@ function RegisterPatientScreen({ navigation }) {
     //  navigation.navigate("PatientDetailsScreen");
 
     //   navigation.navigate("PatientDetailsScreen")
-    let aabhaId_not_in_array = true;
+    if(abhaTable.length > 0){
+      let aabhaId_not_in_array = true;
     console.log("Desired :",abhaId);
     console.log("In Array : ",abhaTable[0].aabhaId);
-    console.log("abhaTable[i]",abhaTable[12]["aabhaId"])
+    // console.log("abhaTable[i]",abhaTable[12]["aabhaId"])
     // Checking if the desired_aabhaId is not present in the array
     for (let i = 0; i < abhaTable.length; i++) {
       if (abhaTable[i]["aabhaId"] === abhaId ) {
@@ -67,6 +68,13 @@ function RegisterPatientScreen({ navigation }) {
       Alert.alert("Aabha Id Already Registered");
 
     }
+    
+  }
+  else{
+    setAabhaId(abhaId);
+    console.log("ABHA ID registered:", abhaId);
+    navigation.navigate("PatientDetailsScreen");
+  }
    
   };
 
@@ -82,8 +90,8 @@ function RegisterPatientScreen({ navigation }) {
           style={styles.input}
           onChangeText={(value) => {
             // Check if the entered value contains only numeric characters
-            if (/^\d+$/.test(value)) {
-              // If it contains only numeric characters, update the state
+            if (/^\d*$/.test(value)) {
+              // If it contains only numeric characters or is empty, update the state
               setAbhaId(value);
             }
           }}

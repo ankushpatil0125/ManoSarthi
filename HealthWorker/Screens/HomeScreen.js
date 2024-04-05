@@ -54,9 +54,16 @@ export const fetchData = () =>
         console.log("Res5- New Medical Questions: ", res5);
 
         // Insert fetched AabhaId Table into the database
-        const res6 = await InsertService.insertAabhaIdInfo(abhaIDTable, "old");
-        console.log("Res6- New AabhaIdInfo: ", res6);
-        resolve("successfully");
+        if(abhaIDTable.length > 0){
+          const res6 = await InsertService.insertAabhaIdInfo(abhaIDTable, "old");
+          console.log("Res6- New AabhaIdInfo: ", res6);
+        }
+        else{
+          console.log("Abha Id table Received from server is Empty");
+        }
+
+        // console.log("Abha Id table", abhaIDTable);
+        resolve("Login Successfully");
       } else {
         // Handle failure to fetch questions
         console.log("Failed to fetch questions");
