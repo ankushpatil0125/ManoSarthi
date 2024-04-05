@@ -20,6 +20,11 @@ import PatientContext, { PatientProvider } from "./Context/PatientContext";
 import ProfileScreen from "./Screens/ProfileScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import MissedFollowUpsScreen from "./Screens/MissedFollowUpsScreen";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
+import { LanguageProvider } from "./Context/LanguageProvider";
+
+const Drawer = createDrawerNavigator();
 import { AntDesign } from "@expo/vector-icons";
 import CustomDrawer from "./components/CustomDrawer";
 import { Entypo } from "@expo/vector-icons";
@@ -234,6 +239,7 @@ export default function App() {
   }, []); // Empty dependency array to ensure this effect runs only once on component mount
 
   return (
+    <LanguageProvider>
     <NavigationContainer>
       {!isLoggedIn ? (
         <Stack.Navigator>
@@ -252,6 +258,7 @@ export default function App() {
       )}
       <ForwardedToast />
     </NavigationContainer>
+  </LanguageProvider>
   );
 }
 

@@ -23,19 +23,17 @@ const SupervisorService = {
       throw error;
     }
   },
-  getVillageWithNoWorker: async () => {
+  getVillageWorker: async (assigned) => {
     try {
       const response = await axios.get(
-        BASE_URL + "supervisor/get-subd-village",
+        BASE_URL + "supervisor/get-subd-village?assigned="+assigned,
         {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
             // withCredentials:false
           },
-          params: {
-            assigned: false,
-          },
+         
         }
       );
 
@@ -45,29 +43,7 @@ const SupervisorService = {
       throw error;
     }
   },
-  getVillageWithWorker: async () => {
-    try {
-      const response = await axios.get(
-        BASE_URL + "supervisor/get-subd-village",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-            // withCredentials:false
-          },
-          params: {
-            assigned: true,
-          },
-        }
-      );
-
-      return response;
-    } catch (error) {
-      console.error("Error fetching district options:", error);
-      throw error;
-    }
-  },
-
+ 
   getAllHealthWorkers: async (pagenumber) => {
     try {
       console.log("before calling getAll");
@@ -119,7 +95,7 @@ const SupervisorService = {
     // console.log("data afsd",healthWorkerData)
     try {
       const response = await axios.put(
-        BASE_URL + "supervisor/reassignworker",
+        BASE_URL + "supervisor/reassign-worker",
         reasignHealthWorker,
         {
           headers: {

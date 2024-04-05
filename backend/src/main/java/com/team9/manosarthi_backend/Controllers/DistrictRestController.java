@@ -32,30 +32,36 @@ public class DistrictRestController {
     @GetMapping("/")
     public Set<District> getDistricts(@RequestParam("role") String role, @RequestParam("assigned") boolean assigned){
 //        return districtRepository.findAll();
-        try {
         Set<District> districts=null;
+        try {
         if(Objects.equals(role, "DOCTOR") && assigned)
-        {
-            districts =  subDistrictRepository.getAssignedDoctorDistinct();
-        }
-        else if ( Objects.equals(role, "DOCTOR") && !assigned )
-        {
-            districts = subDistrictRepository.getNotAssignedDoctorDistinct();
+            {
+                districts =  subDistrictRepository.getAssignedDoctorDistinct();
+            }
+            else if ( Objects.equals(role, "DOCTOR") && !assigned )
+            {
+                districts = subDistrictRepository.getNotAssignedDoctorDistinct();
+            }
+
+            else if(Objects.equals(role, "SUPERVISOR") && assigned)
+            {
+                districts = subDistrictRepository.getAssignedSupervisorDistinct();
+            }
+            else if(Objects.equals(role, "SUPERVISOR") &&  !assigned)
+            {
+                districts = subDistrictRepository.getNotAssignedSupervisorDistinct();
+            }
+            else {
+            throw new APIRequestException("Error while getting districts");
         }
 
-        else if(Objects.equals(role, "SUPERVISOR") && assigned)
-        {
-            districts = subDistrictRepository.getAssignedSupervisorDistinct();
         }
-        else if(Objects.equals(role, "SUPERVISOR") &&  !assigned)
-        {
-            districts = subDistrictRepository.getNotAssignedSupervisorDistinct();
-        }
-            return districts;
-        }catch (Exception ex)
+        catch (Exception ex)
         {
             throw new APIRequestException("Error while getting districts",ex.getMessage());
         }
+
+        return districts;
     }
 
 

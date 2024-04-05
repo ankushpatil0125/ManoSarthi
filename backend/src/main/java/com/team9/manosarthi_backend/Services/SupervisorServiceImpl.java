@@ -146,6 +146,7 @@ public class SupervisorServiceImpl implements SupervisorService{
         //you can update village code only in reassignment
             if(updatedWorker.getVillagecode()!=null && updatedWorker.getVillagecode().getCode() != existingWorker.getVillagecode().getCode())
             {
+
                 int oldvillagecode=existingWorker.getVillagecode().getCode();
                 Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
                 oldvillage.ifPresent( villagetemp ->{
@@ -159,12 +160,12 @@ public class SupervisorServiceImpl implements SupervisorService{
                     villageRepository.save(villagetemp);
                     existingWorker.setVillagecode(villagetemp);
                 } );
-
+                // Save the updated worker to the database
+                return workerRepository.save(existingWorker);
             }
 
-            // Save the updated worker to the database
-            return workerRepository.save(existingWorker);
 
+            return null;
 
         } else {
             System.out.println("Worker not found with ID: " + updatedWorker.getId());

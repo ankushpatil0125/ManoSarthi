@@ -61,7 +61,7 @@ const Header = () => {
           )}
           {role === "[ROLE_ADMIN]" && (
             <Link to="/doctor-supervisor" className="nav-link">
-              {t("Actor.Doctor/Supervisor")}
+              {t("Actor.Actions")}
             </Link>
           )}
           {role === "[ROLE_SUPERVISOR]" && (
@@ -87,3 +87,6 @@ const Header = () => {
 };
 
 export default Header;
+
+
+

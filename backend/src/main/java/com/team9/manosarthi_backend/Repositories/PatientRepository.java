@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("SELECT p from Patient p where p.village.subDistrict.code=:subdistrictcode and p.status='NEW'")
@@ -14,4 +16,7 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("SELECT p from Patient p where p.aabhaId=:aabhaid")
     Patient findByAabha(@Param("aabhaid") String aabhaid);
+
+    @Query("SELECT p.aabhaId from Patient p where p.village.code=:villagecode")
+    List<String> findAllByVillage(@Param("villagecode") Integer villagecode);
 }

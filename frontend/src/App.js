@@ -6,19 +6,26 @@ import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent"
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
 import OTPComponent from "./components/Login/OTPComponent";
 import AddActorComponent from "./components/Actors/AddActorComponent";
+import UpdateActor from "./components/Actors/UpdateActor";
 import DoctorHomePage from "./components/HomePage/DoctorHomePage";
 import ProfileComponent from "./components/Actors/ProfileComponent";
 import AdminHomePage from "./components/HomePage/AdminHomePage";
 import SupervisorHomePage from "./components/HomePage/SupervisorHomepage";
 import AdminOperation from "./components/Actors/AdminOperation";
-import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import ErrorPage from "./components/Error/ErrorPage";
-import UpdateDoctor from "./components/Doctor/UpdateDoctor";
-import AddHealthWorker from "./components/Supervisor/AddHealthWorker"
+import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
 import UpdateHealthWorkerpage from "./components/UpdateHealthWorkerpage";
+import PendingPatient from "./components/Doctor/PendingPatient";
+import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
+import  { AuthProvider } from "./components/Context/AuthContext";
+import PatientDetails from "./components/Patient/PatientDetails";
+
 const App = () => {
+  
   return (
+    <AuthProvider>
     <Router>
       <div className="App">
         <Routes>
@@ -30,128 +37,145 @@ const App = () => {
           <Route
             path="/change-password"
             element={
-              // <PrivateRoute type="changepasswordcomponent">
+              <PrivateRoute type="changepasswordcomponent">
                 <ChangePasswordComponent />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route path="/otp" element={<OTPComponent />} />
           <Route
             path="/add-doctor-supervisor"
             element={
-              // <PrivateRoute type="addactorcomponent">
+              <PrivateRoute type="addactorcomponent">
                 <AddActorComponent />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/doctor-home"
             element={
-              // <PrivateRoute type="doctorhomepage">
+              <PrivateRoute type="doctorhomepage">
                 <DoctorHomePage />
-              // </PrivateRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pendingpatient"
+            element={
+              <PrivateRoute type="pendingpatient">
+                <PendingPatient />
+              </PrivateRoute>
             }
           />
           <Route
             path="/doctor-dashboard"
             element={
-              // <PrivateRoute type="doctor-dashboard">
+              <PrivateRoute type="doctor-dashboard">
                 <DoctorHomePage />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/profile"
             element={
-              // <PrivateRoute type="profilecomponent">
+              <PrivateRoute type="profilecomponent">
                 <ProfileComponent />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/admin-home"
             element={
-              // <PrivateRoute type="adminhomepage">
+              <PrivateRoute type="adminhomepage">
                 <AdminHomePage />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/supervisor-home"
             element={
-              // <PrivateRoute type="supervisorhomepage">
+              <PrivateRoute type="supervisorhomepage">
                 <SupervisorHomePage />
-              //  </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/doctor-supervisor"
             element={
-              // <PrivateRoute type="adminoperation">
+              <PrivateRoute type="adminoperation">
                 <AdminOperation />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/update-doctor-supervisor"
             element={
-              // <PrivateRoute type="update-doctor-supervisor">
-                <UpdateDoctor />
-              // </PrivateRoute>
+              <PrivateRoute type="update-doctor-supervisor">
+                <UpdateActor />
+              </PrivateRoute>
             }
           />
           <Route
             path="/healthworker-home"
             element={
-              // <PrivateRoute type="healthworker">
+              <PrivateRoute type="healthworker">
                 <AdminOperation />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/add-healthworker"
             element={
-              // <PrivateRoute type="add-healthworker">
+              <PrivateRoute type="add-healthworker">
                 <AddHealthWorker />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/update-healthworker"
             element={
-              // <PrivateRoute type="update-healthworker">
+              <PrivateRoute type="update-healthworker">
                 <UpdateHealthWorker />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/delete-healthworker"
             element={
-              // <PrivateRoute type="delete-healthworker">
+              <PrivateRoute type="delete-healthworker">
                 <AdminOperation />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/show-activity-healthworker"
             element={
-              // <PrivateRoute type="show-activity-healthworker">
+              <PrivateRoute type="show-activity-healthworker">
                 <AdminOperation />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/update"
             element={
-              // <PrivateRoute type="show-activity-healthworker">
-                <UpdateHealthWorkerpage/>
-              // </PrivateRoute>
+              <PrivateRoute type="show-activity-healthworker">
+                <UpdateHealthWorkerpage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/patient-details"
+            element={
+              <PrivateRoute type="patient-details">
+                <PatientDetails />
+              </PrivateRoute>
             }
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </Router>
+    </AuthProvider>
   );
 };
 

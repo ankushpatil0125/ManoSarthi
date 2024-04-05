@@ -1,49 +1,56 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BASE_URL, getToken } from "../../utils/Constants";
 import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
+import LoadingComponent from "../Loading/LoadingComponent";
 
-const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
+const ViewSupervisor = ({district,subdistrictcode }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
   const {t} = useTranslation("global");
+  const [loading,setLoading] = useState(false);
   useEffect(() => {
     fetchData();
   }, [currentPage, district]); // Refetch data when currentPage or district changes
 
   const fetchData = async () => {
     try {
-      console.log("inside fetchdata function");
+      // console.log("Inside fetchdata function");
+
+      setLoading(true);
       if (district) {
         // setCurrentPage(0)
         AdminService.getAllDistrictSupervisors(district, currentPageDoctor)
           .then((response) => {
             setData(response.data);
+            setLoading(false);
           })
           .catch((error) => {
-            console.error("Error fetching district doctors:", error);
+            console.error("Error Fetching Selected District Supervisors:", error);
           });
       } else {
         setCurrentPageDoctor(0);
         AdminService.getAllSupervisors(currentPage).then((response) => {
           setData(response.data);
-          console.log("data", response.data);
+          // console.log("data", response.data);
+          setLoading(false);
         });
       }
     } catch (error) {
-      console.error("Error fetching doctor details:", error.message);
+      console.error("Error Fetching All Supervisors In All Districts :", error.message);
     }
   };
   useEffect(() => {
+    setLoading(true);
     if (subdistrictcode) {
       AdminService.getAllSubDistrictSupervisors(subdistrictcode)
         .then((response) => {
           setData(response.data);
+          setLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching subdistrict doctors:", error);
+          console.error("Error Fetching Selected Subdistrict Supervisor:", error);
+          alert(error)
         });
     }
   }, [subdistrictcode]);
@@ -57,14 +64,14 @@ const ViewSupervisor = ({ allDoctor, district,subdistrictcode }) => {
     setCurrentPage((prevPage) => prevPage + 1);
     setCurrentPageDoctor((prevPage) => prevPage + 1);
   };
-
+  if(loading) return <LoadingComponent/>
   return (
     <div>
       <div className="data">
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Doctor Name')}</th>
+              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Supervisor Name')}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.District')}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Subdistrict')}</th>
               <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Action')}</th>
