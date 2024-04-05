@@ -132,7 +132,7 @@ const Preview = ({route}) => {
           <Text style={styles.cardTitle}>Survey Questionnaire:</Text>
           {surveyQuestionsAnswers.map((detail, index) => (
             <Text key={index}>
-              {surveyQuestions[index]?.question}: {detail.answer}
+              {surveyQuestions[index]?.question} - {' '} {detail.answer}
             </Text>
           ))}
         </View>
@@ -147,7 +147,7 @@ const Preview = ({route}) => {
             if (detail && (question.question_id !== commentID)) {
               return (
                 <Text key={index}>
-                  {question.question}: {detail.question_ans}
+                  {question.question}- {' '} {detail.question_ans}
                 </Text>
               );
             } else {

@@ -96,10 +96,12 @@ const QuestionnaireScreen = ({ navigation }) => {
       console.log("Unmatched count:", unmatchedCount);
 
       // Navigate to the next screen 
-      if(unmatchedCount >= 1){
+      if(unmatchedCount >= 3){
+        await InsertService.insertAabhaId(aabhaId,"old");
         navigation.navigate('MedicalDetails');
       }
       else{
+        await InsertService.insertAabhaId(aabhaId,"new");
         DeleteService.deleteSurveyQuestionAnswersByAabhaId(aabhaId);
         DeleteService.deletePatientByAabhaId(aabhaId);
         const deldata = await SelectService.getAllSurveyQuestionAnswers();
