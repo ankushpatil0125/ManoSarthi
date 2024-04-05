@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { EMAIL_URL, PASS_URL } from "../../utils/images";
 import { Link, useNavigate } from "react-router-dom";
 import LoginService from "../../Services/LoginService";
@@ -8,15 +8,17 @@ import LanguageButton from "../Header/LanguageButton";
 import DoctorHomePage from "../HomePage/DoctorHomePage";
 import AdminHomePage from "../HomePage/AdminHomePage";
 import IsPasswordChangeService from "../../Services/IsPasswordChangeService";
-
+import AuthContext from "../Context/AuthContext";
+import LoadingComponent from "../Loading/LoadingComponent"
 const LoginComponent = () => {
   const [t] = useTranslation("global");
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
   const [requestData, setRequestData] = useState({
     username: "",
     password: "",
   });
-
+  const { setJWT } = useContext(AuthContext);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRequestData((prevData) => ({
@@ -29,6 +31,7 @@ const LoginComponent = () => {
     e.preventDefault(); // Prevent default form submission behavior
 
     try {
+      setLoading(true);
       const response = await LoginService.AddUser(requestData);
 
       console.log("response jwt", response);
@@ -36,6 +39,7 @@ const LoginComponent = () => {
         // Handle successful login, e.g., redirect to another page
         alert("Login successful");
         localStorage.setItem("JWT", response.data.jwtToken);
+        setJWT(response.data.jwtToken);
         localStorage.setItem("ROLE", response.data.role);
         localStorage.setItem("User_Id", response.data.user_id);
 
@@ -54,6 +58,7 @@ const LoginComponent = () => {
             navigate("/supervisor-home", { replace: true });
           }
         }
+        setLoading(false);
       }
     } catch (error) {
       console.log("error",error.response);
@@ -69,7 +74,7 @@ const LoginComponent = () => {
     if (localStorage.getItem("JWT") !== null && localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") navigate("/doctor-home", { replace: true });
     if (localStorage.getItem("JWT") !== null && localStorage.getItem("ROLE") === "[ROLE_SUPERVISOR]") navigate("/supervisor-home", { replace: true });
   }, []);
-
+  if(loading)return <LoadingComponent/>
   return (
     <div className="mb-20">
       <form onSubmit={handleSubmit}>

@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
+import LoadingComponent from "../Loading/LoadingComponent";
 
 const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
   const {t} = useTranslation("global");
+  const [loading,setLoading] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, [currentPage, district]); // Refetch data when currentPage or district changes
 
   const fetchData = async () => {
     try {
-      console.log("inside fetchdata function");
+      // console.log("inside fetchdata function");
+      setLoading(true);
       if (district) {
         // setCurrentPage(0)
         AdminService.getAllDistrictDoctors(district, currentPageDoctor)
           .then((response) => {
             setData(response.data);
+            setLoading(false);
           })
           .catch((error) => {
             console.error("Error Fetching Selected District Doctors:", error);
@@ -27,7 +32,8 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
         setCurrentPageDoctor(0);
         AdminService.getAllDoctors(currentPage).then((response) => {
           setData(response.data);
-          console.log("data", response.data);
+          // console.log("data", response.data);
+          setLoading(false);
         });
       }
     } catch (error) {
@@ -35,10 +41,12 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
     }
   };
   useEffect(() => {
+    setLoading (true);
     if (subdistrictcode) {
       AdminService.getAllSubDistrictDoctors(subdistrictcode)
         .then((response) => {
           setData(response.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error Fetching Selected Subdistrict Doctor:", error);
@@ -55,7 +63,7 @@ const ViewDoctors = ({ allDoctor, district,subdistrictcode }) => {
     setCurrentPage((prevPage) => prevPage + 1);
     setCurrentPageDoctor((prevPage) => prevPage + 1);
   };
-
+  if(loading) return <LoadingComponent/>
   return (
     <div>
       <div className="data">
