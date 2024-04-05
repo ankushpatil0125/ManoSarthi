@@ -3,6 +3,7 @@ import db from "../DatabaseServices/DatabaseServiceInit";
 
 const InsertService = {
   insertAabhaIdInfo: (AabhaIdInfo, status) => {
+    // console.log("length",AabhaIdInfo.length);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         AabhaIdInfo.forEach((aabha) => {
@@ -24,7 +25,27 @@ const InsertService = {
       });
     });
   },
-
+  insertAabhaId: (AabhaId, status) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
+          [AabhaId, status],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve("Data inserted into AabhaIdInfo successfully");
+            } else {
+              reject("Failed to insert data into AabhaIdInfo");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting data into AabhaIdInfo: " + error);
+          }
+        );
+      });
+    });
+  },
+  
   insertPatientDetails: (patientDetails) => {
     console.log("before inside insertPatientD");
     return new Promise((resolve, reject) => {

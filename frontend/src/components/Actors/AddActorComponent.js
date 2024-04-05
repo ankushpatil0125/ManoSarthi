@@ -62,7 +62,7 @@ const AddDoctorComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hii");
+    // console.log("hii");
     // Create doctor object
     const actorData = {
       email: email,
@@ -76,11 +76,11 @@ const AddDoctorComponent = () => {
     };
     try {
       // Using axios for the POST request
-      console.log("doctor data", actorData);
+      // console.log("doctor data", actorData);
       setLoading(true);
       if (actor === "DOCTOR") {
         const response = await AdminService.addDoctor(actorData);
-        console.log("ADD RESP: ", response);
+        // console.log("ADD RESP: ", response);
         if (response) {
           // Handle successful password change, e.g., display a success message
           alert(`Doctor with name ${actorData.firstname} Added Successfully`);

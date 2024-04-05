@@ -144,18 +144,19 @@ const MedicalDetails = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,alignItems:'center',justifyContent:'center' }}>
+    <ScrollView style={{ flex: 1}}>
+      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,}}>
         {medicalQuestions.map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
-            <Text>{question.question}:</Text>
-            <View style={{ paddingTop: 5, flexDirection: "row" }}>
+            <Text>{question.question}</Text>
+            <View style={{ paddingTop: 5,flexDirection:'row',}}>
               <View style={{ marginRight: 10 }}>
                 <TouchableOpacity
                   style={{
+                    
                     backgroundColor:
                       clickedButtons[index] && answers[index] === "Yes"
-                        ? "darkblue"
+                        ? "#3498db"
                         : "lightblue",
                     padding: 10,
                     borderRadius: 5,
@@ -169,7 +170,7 @@ const MedicalDetails = () => {
                 style={{
                   backgroundColor:
                     clickedButtons[index] && answers[index] === "No"
-                      ? "darkblue"
+                      ? "#3498db"
                       : "lightblue",
                   padding: 10,
                   borderRadius: 5,
