@@ -4,46 +4,126 @@ import RegisterPatientService from "../Services/RegisterPatientService";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import InsertService from "../Services/DatabaseServices/InsertService";
-import SurveyQuestionsService from "../Services/SurveyQuestionsService";
-import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService";
 import Table from "../components/Table";
 import { ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useLanguageContext } from "../Context/LanguageProvider";
 import LanguageToggleButton from "../Multilingual/LanguageButton";
 import i18n from "../i18n";
+import SurveyQuestionsService from "../Services/SurveyQuestionsService";
+import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService";
 
-// const [sendPatient, setSendPatient] = useState([]);
+export const fetchData = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      // Fetch questions from the service
+      const questionsResponse = await SurveyQuestionsService.getQuestions();
+      const medicalQuestionsResponse =
+        await MedicalQuestionarrieService.getMedicalQuestionarrie();
+      const AabhaResponse = await RegisterPatientService.getAabhaIdTable();
+      // console.log("Abahid Info", aabhaIdInfo);
+
+      if (questionsResponse && medicalQuestionsResponse && AabhaResponse) {
+        const questions = questionsResponse.data;
+        const medicalQuestions = medicalQuestionsResponse.data;
+        const abhaIDTable = AabhaResponse.data;
+        console.log("Fetched Survey Questions:", questions);
+        console.log("Fetched AbhaId table: ", abhaIDTable);
+        console.log("Fetched Medical Questions:", medicalQuestions);
+
+        // Delete old questions from the SurveyQuestion table
+        const res1 = await DeleteService.deleteAllSurveyQuestions();
+        console.log("Res1- Delete Old Survey Questions: ", res1);
+
+        // Delete old medical questions from the MedicalQuestions table
+        const res2 = await DeleteService.deleteAllMedicalQuestions();
+        console.log("Res2- Delete Old Medical Questions: ", res2);
+
+        // Delete old medical questions from the MedicalQuestions table
+        const res3 = await DeleteService.deleteAllAabhaIdInfo();
+        console.log("Res3- Delete Old AabhaId Table: ", res3);
+
+        // Insert fetched questions into the database
+        const res4 = await InsertService.insertSurveyQuestion(questions);
+        console.log("Res4- New Survey Questions: ", res4);
+
+        // Insert fetched medical questions into the database
+        const res5 = await InsertService.insertMedicalQuestions(
+          medicalQuestions
+        );
+        console.log("Res5- New Medical Questions: ", res5);
+
+        // Insert fetched AabhaId Table into the database
+        const res6 = await InsertService.insertAabhaIdInfo(abhaIDTable, "old");
+        console.log("Res6- New AabhaIdInfo: ", res6);
+        resolve("successfully");
+      } else {
+        // Handle failure to fetch questions
+        console.log("Failed to fetch questions");
+        reject("Failed to fetch questions");
+      }
+    } catch (error) {
+      console.error("Error during question insertion:", error);
+      // Handle the error here, such as showing a message to the user
+      reject("Error during question insertion");
+    }
+  });
 
 function HomeScreen() {
   const [patients, setPatients] = useState([]);
-  const [medical_history_ans, setMedical_history_ans] = useState([]);
+  const [medicalQNA, setMedicalQNA] = useState([]);
+  const [surveyQNA, setSurveyQNA] = useState([]);
+  const [aabhaIdInfo, setAabhaIdInfo] = useState([]);
+
   const navigation = useNavigation();
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
 
   const fetchPatientDataFromDatabase = async () => {
+    console.log("Inside fetchPatientDataFromDatabase");
     try {
-      const patient_data = await SelectService.getAllPatients();
-      const medical_history = await SelectService.getMedicalHistoryAnswers();
+      console.log("In");
 
-      setPatients(patient_data);
-      setMedical_history_ans(medical_history);
+      const patient_data = await SelectService.getAllPatients();
+
+      // const survey_que_ans = await SelectService.getAllSurveyQuestionAnswers();
+      // const medical_history = await SelectService.getMedicalHistoryAnswers();
+      // const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
+
+      const survey_qus = await SelectService.getAllQuestions();
+      const medical_ques = await SelectService.getAllMedicalQuestions();
+      // console.log("Inside", aabhaIdInfoData);
+
+      // setPatients(patient_data);
+      // setSurvey_que_ans(survey_que_ans);
+      // setMedical_history_ans(medical_history_ans);
+      // setAabhaIdInfo(aabhaIdInfoData);
 
       console.log("Homescreen Patients: ", patient_data);
-      console.log("Homescreen medical_history_ans: ", medical_history);
+      // console.log("Homescreen survey_que_ans: ",survey_que_ans);
+      // console.log("Homescreen medical_history_ans: ", medical_history);
+      console.log("Homescreen survey_qus: ", survey_qus);
+      console.log("Homescreen medical_ques: ", medical_ques);
+      // console.log("Homescreen AabhaIdInfo: ", aabhaIdInfoData);
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }
   };
 
-  const fetchSurveyQuestionAnswerFromDatabase = async () => {
-    try {
-      const data = await SelectService.getAllSurveyQuestionAnswers();
-      console.log("Homescreen SurveyQuestionAnswers: ", data);
-    } catch (error) {
-      console.error("Error fetching data from database:", error);
-    }
-  };
+  // const insertAabhaInfo = async () => {
+  //   try {
+  //     // Insert fetched questions into the database
+  //     await InsertService.insertAabhaIdInfo("7", "old");
+  //     console.log("AabhaInfo inserted successfully.");
+
+  //     await InsertService.insertAabhaIdInfo("9", "new");
+  //     console.log("AabhaInfo inserted successfully.");
+  //   } catch (error) {
+  //     console.error(
+  //       "Error Inserting AabhaIdInfo in database(HomeScreen):",
+  //       error
+  //     );
+  //   }
+  // };
 
   const deleteDataFromDatabase = async () => {
     try {
@@ -76,7 +156,7 @@ function HomeScreen() {
   // };
 
   useEffect(() => {
-    fetchPatientDataFromDatabase();
+    // fetchPatientDataFromDatabase();
     // fetchSurveyQuestionAnswerFromDatabase();
     // deleteAllMedicalHistoryAnswers();
   }, []);
@@ -91,11 +171,7 @@ function HomeScreen() {
     navigation.navigate("MissedFollowupScreen");
   };
 
-  // const handleSync = () => {
-  //   syncData();
-  // };
-
-
+ 
   return (
     <ScrollView>
       <View style={styles.screen}>
@@ -113,19 +189,8 @@ function HomeScreen() {
             <Text style={styles.buttonText}>{i18n.t("Missed Followup")}</Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.topButtonsContainer}>
-          <TouchableOpacity style={styles.syncButton} onPress={handleSync}>
-            <Text style={styles.syncButtonText}>{i18n.t("Sync Data")}</Text>
-          </TouchableOpacity>
-          <LanguageToggleButton
-            onPress={handleLanguageToggle}
-            selectedLanguage={selectedLanguage}
-          />
-          <TouchableOpacity style={styles.syncButton} onPress={handleFetch}>
-            <Text style={styles.syncButtonText}>Fetch Data</Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
+    
       <View style={{ marginTop: 50 }}>
         <Table />
       </View>
@@ -141,20 +206,20 @@ const styles = StyleSheet.create({
   topButtonsContainer: {
     width: "100%",
     justifyContent: "space-between",
-    display:"flex",
+    display: "flex",
     marginTop: "5%",
     flexDirection: "row",
-    gap:5,
+    gap: 5,
     // borderWidth: 1, // Add border to visualize container size
   },
   button: {
     backgroundColor: "#3498db",
-    alignItems:"center",
+    alignItems: "center",
     padding: 10,
     borderRadius: 5,
-    flex:1,
-    margin:20,
-    paddingVertical:20
+    flex: 1,
+    margin: 20,
+    paddingVertical: 20,
   },
   buttonText: {
     color: "#fff",

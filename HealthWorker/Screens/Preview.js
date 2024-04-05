@@ -75,7 +75,7 @@ const Preview = ({route}) => {
     "lastName": "Last Name",
     "email": "Email",
     "gender": "Gender",
-    "dob": "Date of Birth",
+    "age": "Age",
     "address": "Address"
 };
 

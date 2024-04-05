@@ -8,7 +8,31 @@ const CreateService = {
     await CreateService.createMedicalQuestionTable();
     await CreateService.createMedicalHistoryAnswersTable();
     await CreateService.createSurveyQuestionAnswerTable();
+    await CreateService.createAabhaIdInfoTable();
     // Add more table creation functions here if needed
+  },
+  createAabhaIdInfoTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS AabhaIdInfo (
+            aabhaId TEXT PRIMARY KEY,
+            status TEXT
+          );`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("AabhaIdInfo table created successfully");
+            } else {
+              resolve("AabhaIdInfo table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating AabhaIdInfo table: " + error);
+          }
+        );
+      });
+    });
   },
 
   createPatientDetailsTable: () => {
@@ -21,7 +45,7 @@ const CreateService = {
             lastName TEXT,
             email TEXT,
             gender TEXT,
-            dob TEXT,
+            age INTEGER,
             address TEXT
           );`,
           [],
