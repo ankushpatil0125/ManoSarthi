@@ -24,7 +24,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @EnableWebMvc
 @EnableMethodSecurity
-@EnableWebMvc
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint point;
