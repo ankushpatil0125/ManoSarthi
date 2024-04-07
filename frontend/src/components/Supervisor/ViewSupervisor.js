@@ -3,15 +3,20 @@ import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import LoadingComponent from "../Loading/LoadingComponent";
 
-const ViewSupervisor = ({district,subdistrictcode }) => {
+const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
+  const [subDistrictOptions, setSubDistrictOptions] = useState([]);
+  const [districtOptions, setDistrictOptions] = useState([]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [newDistrict, setNewDistrict] = useState("");
+  const [selectedSubDistrict, setSelectedSubDistrict] = useState("");
+  const [selectedSupervisorId, setSelectedSupervisorId] = useState(null);
+
   const [data, setData] = useState([]);
-  const {t} = useTranslation("global");
-  const [loading,setLoading] = useState(false);
-  useEffect(() => {
-    fetchData();
-  }, [currentPage, district]); // Refetch data when currentPage or district changes
+  const { t } = useTranslation("global");
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -27,7 +32,7 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
           })
           .catch((error) => {
             alert(error.response.data.message);
-        setLoading(false);
+            setLoading(false);
           });
       } else {
         setCurrentPageDoctor(0);
@@ -42,6 +47,7 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     setLoading(true);
     if (subdistrictcode) {
@@ -52,11 +58,84 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
         })
         .catch((error) => {
           alert(error.response.data.message);
-        setLoading(false);
+          setLoading(false);
         });
     }
   }, [subdistrictcode]);
-  
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage, district]); // Refetch data when currentPage or district changes
+
+  const handleDistrictChange = (e) => {
+    const newSelDist = e.target.value;
+    setNewDistrict(newSelDist);
+    setLoading(true);
+    AdminService.getSubDistrict(newSelDist, actor, false)
+      .then((response) => {
+        setSubDistrictOptions(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    if (showModal) {
+      if (actor) {
+        // Check if actor is selected
+        setLoading(true);
+        AdminService.getDistrict(actor, false)
+          .then((response) => {
+            setDistrictOptions(response.data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+            setLoading(false);
+          });
+      }
+    }
+  }, [showModal, actor]);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleUpdate = (supervisorId) => {
+    console.log("supervisorId", supervisorId);
+    setShowModal(true);
+    setSelectedSupervisorId(supervisorId);
+  };
+
+  const handleDelete = (supervisorId) => {
+    console.log("supervisorId", supervisorId);
+
+    setSelectedSupervisorId(supervisorId);
+  };
+
+  const handleUpdateSupervisor = () => {
+    // Call update worker API with selected village code
+    console.log("Selected Subdistrict:", selectedSubDistrict);
+    console.log("Supervisor ID:", selectedSupervisorId);
+
+    const reasignSupervisor = {
+      id: selectedSupervisorId,
+      subdistrict: {
+        code: selectedSubDistrict,
+      },
+    };
+    setLoading(true);
+    AdminService.reassignSupervisor(reasignSupervisor);
+
+    // Your update worker API call here
+    setShowModal(false); // Close modal after updating
+    setLoading(false);
+  };
+
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
     setCurrentPageDoctor((prevPage) => Math.max(prevPage - 1, 0));
@@ -66,34 +145,51 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
     setCurrentPage((prevPage) => prevPage + 1);
     setCurrentPageDoctor((prevPage) => prevPage + 1);
   };
-  if(loading) return <LoadingComponent/>
+  if (loading) return <LoadingComponent />;
   return (
     <div>
       <div className="data">
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Supervisor Name')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.District')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Subdistrict')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Action')}</th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDoctorSupervisor.Supervisor Name")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDoctorSupervisor.District")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDoctorSupervisor.Subdistrict")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDoctorSupervisor.Action")}
+              </th>
             </tr>
           </thead>
           <tbody>
-            {data.map((doctor) => (
-              <tr key={doctor.id}>
+            {data.map((supervisor) => (
+              <tr key={supervisor.id}>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.firstname}
+                  {supervisor.firstname}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.subdistrictcode?.district?.name || "N/A"}
+                  {supervisor.subdistrictcode?.district?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.subdistrictcode?.name || "N/A"}
+                  {supervisor.subdistrictcode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Update
+                  <button
+                    onClick={() => {
+                      if (action === "Reassign") {
+                        handleUpdate(supervisor.id);
+                      } else if (action === "Delete") {
+                        handleDelete(supervisor.id);
+                      }
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    {action}
                   </button>
                 </td>
               </tr>
@@ -107,7 +203,7 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
-          {t('UpdateDoctorSupervisor.Previous')}
+          {t("UpdateDoctorSupervisor.Previous")}
         </button>
 
         <button
@@ -115,9 +211,49 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
-          {t('UpdateDoctorSupervisor.Next')}
+          {t("UpdateDoctorSupervisor.Next")}
         </button>
       </div>
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleCloseModal}>
+              &times;
+            </span>
+            <h2>Select for Reassignment:</h2>
+            <select
+              value={newDistrict}
+              onChange={handleDistrictChange}
+              className="border border-gray-400 px-2 py-1 rounded-md w-full"
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district) => (
+                <option key={district.code} value={district.code}>
+                  {district.name}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedSubDistrict}
+              onChange={(e) => setSelectedSubDistrict(e.target.value)}
+            >
+              <option value="">Select Subdistrict</option>
+              {subDistrictOptions.map((subdistrict) => (
+                <option key={subdistrict.code} value={subdistrict.code}>
+                  {subdistrict.name}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={handleUpdateSupervisor}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

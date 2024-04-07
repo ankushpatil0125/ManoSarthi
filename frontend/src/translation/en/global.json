@@ -62,7 +62,7 @@
     "Female": "Female",
     "Date of Birth": "Date of Birth"
   },
-  "UpdateDoctorSupervisor": {
+  "UpdateDeleteActor": {
     "District": "District",
     "Subdistrict": "Subdistrict",
     "Select": "Select",
@@ -71,7 +71,8 @@
     "Next": "Next",
     "Previous": "Previous",
     "Actor": "Actor",
-    "Reassign": "Reassign",
+    "Reassign": "Reassign Actor",
+    "Delete": "Delete Actor",
     "Supervisor Name": "Supervisor Name"
   },
   "UpdateHealthworker": {

@@ -337,6 +337,7 @@ public class AdminController {
             throw new APIRequestException("No Supervisor found");
         }
         Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("id");
         supervisorFilterProperties.add("firstname");
         supervisorFilterProperties.add("lastname");
         supervisorFilterProperties.add("email");
@@ -364,6 +365,7 @@ public class AdminController {
             throw new APIRequestException("No Supervisor found");
         }
         Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("id");
         supervisorFilterProperties.add("firstname");
         supervisorFilterProperties.add("lastname");
         supervisorFilterProperties.add("email");
@@ -388,6 +390,7 @@ public class AdminController {
             throw new APIRequestException("No Supervisor found");
         }
         Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("id");
         supervisorFilterProperties.add("firstname");
         supervisorFilterProperties.add("lastname");
         supervisorFilterProperties.add("email");
