@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import SupervisorService from '../Services/SupervisorService';
+import LoadingComponent from './Loading/LoadingComponent';
 
 const UpdateHealthWorkerpage = () => {
   const [village,setVillage ] = useState("");
   const [villageOptions,setVillageOptions] = useState([]);
+  const [loading,setLoading] = useState(false);
+
   useEffect(() => {
+    setLoading (true);
     // Fetch district options
     SupervisorService.getVillageWithNoWorker()
       .then((response) => {
         setVillageOptions(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching villages options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
+
       });
   }, []);
   const handleSubmit=() => {
@@ -23,7 +30,7 @@ const UpdateHealthWorkerpage = () => {
     //     console.error("Error fetching villages options:", error);
     //   });
   }
-  
+  if(loading) return <LoadingComponent/>
   return (
     <div>
       <select

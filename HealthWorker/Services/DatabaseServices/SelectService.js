@@ -2,17 +2,41 @@
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const SelectService = {
-  getAllPatients: () => {
+  
+  getAllAabhaIdInfo: async () => {
+    console.log("Inside getAllAabhaIdInfo");
     return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM AabhaIdInfo",
+          [],
+          (_, { rows }) => {
+            const entries = rows._array; // Renamed from patients to entries
+            resolve(entries);
+          },
+          (_, error) => {
+            reject("Error fetching AabhaIdInfo: " + error.message); // Improved error message
+          }
+        );
+      });
+    });
+  },
+
+  getAllPatients: async () => {
+    console.log("Inside GetAllPatient");
+    return new Promise((resolve, reject) => {
+      console.log("before tr");
       db.transaction((tx) => {
         tx.executeSql(
           "SELECT * FROM PatientDetails",
           [],
           (_, { rows }) => {
             const patients = rows._array;
+            console.log("Inside GetAllPatient after insert");
             resolve(patients);
           },
           (_, error) => {
+            console.log("error");
             reject("Error fetching patients: " + error);
           }
         );
@@ -40,7 +64,6 @@ const SelectService = {
       });
     });
   },
-
 
   getAllQuestions: () => {
     return new Promise((resolve, reject) => {

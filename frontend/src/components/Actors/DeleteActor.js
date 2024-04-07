@@ -6,7 +6,7 @@ import ViewDoctors from "../Doctor/ViewDoctors";
 import ViewSupervisor from "../Supervisor/ViewSupervisor";
 import LoadingComponent from "../Loading/LoadingComponent";
 
-const UpdateActor = () => {
+const DeleteActor = () => {
   const [district, setDistrict] = useState("");
   const [subdistrictcode, setSubDistrictcode] = useState("");
   const [districtOptions, setDistrictOptions] = useState([]);
@@ -139,4 +139,4 @@ const UpdateActor = () => {
   );
 };
 
-export default UpdateActor;
+export default DeleteActor;

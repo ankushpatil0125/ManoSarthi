@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import {getToken} from "../../utils/Constants"
 import { useTranslation } from "react-i18next";
 import ProfileService from "../../Services/ProfileService";
+import LoadingComponent from "../Loading/LoadingComponent";
 // import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Profile = () => {
@@ -13,29 +14,33 @@ const Profile = () => {
   // const [isUserUpdated, setisUserUpdated] = useState(false);
   // const {user_id} = useParams();
   const [t] = useTranslation("global");
+  const [loading,setLoading] = useState(false);
+
   useEffect(() => {
     
     const fetchDoctorData = async () => {
       try {
+        setLoading(true);
         if(localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") {
           const data = await ProfileService.getDoctorData();
           setUser(data);
-          console.log(data);
-    
+          
         }
         else{
           const data = await ProfileService.getSupervisorData();
           setUser(data);
         }
+        setLoading(false);
       } catch (error) {
-        console.log("Error fetching doctor data:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       }
     };
     
 
     fetchDoctorData();
   }, []);
-
+  if(loading)return<LoadingComponent/>
   return (
     <div>
       <Header />

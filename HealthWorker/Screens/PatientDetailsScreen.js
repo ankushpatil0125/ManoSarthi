@@ -24,7 +24,7 @@ const PatientDetailsScreen = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const [dob, setDob] = useState(new Date());
+  const [age, setAge] = useState("");
   const [address, setAddress] = useState("");
   const [formError, setFormError] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -45,6 +45,8 @@ const PatientDetailsScreen = ({ navigation }) => {
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllPatients();
+      const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
+      console.log("AabhaId Fetched From Data: ", aabhaIdInfoData);
       setPatients(data);
       console.log("Patients Fetched from Database: ", patients);
     } catch (error) {
@@ -56,21 +58,21 @@ const PatientDetailsScreen = ({ navigation }) => {
     fetchDataFromDatabase();
   }, []);
 
-  const handleDateChange = (event, selectedDate) => {
-    const currentDate = selectedDate || dob;
-    setShowDatePicker(Platform.OS === "ios");
-    setDob(currentDate);
-  };
+  // const handleDateChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate || dob;
+  //   setShowDatePicker(Platform.OS === "ios");
+  //   setDob(currentDate);
+  // };
 
   const handleSubmit = async () => {
     
-    if (!firstName || !lastName || !email || !gender || !dob || !address) {
+    if (!firstName || !lastName || !email || !gender || !age || !address) {
       setFormError("Please fill in all fields");
       return;
     }
 
     if (isConnected) {
-      console.log(firstName+" "+lastName+" "+email+" "+dob+" "+address+" "+gender);
+      console.log(firstName+" "+lastName+" "+email+" "+age+" "+address+" "+gender);
       await storeDataLocally();
 
     } else {
@@ -87,7 +89,7 @@ const PatientDetailsScreen = ({ navigation }) => {
         lastName,
         email,
         gender,
-        dob: dob.toISOString(),
+        age,
         address,
       };
 
@@ -157,12 +159,8 @@ const PatientDetailsScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.label}>Date Of Birth:</Text>
-        <View style={{alignItems:"center",justifyContent:"center"}}>
-          {/* <Button
-            onPress={() => setShowDatePicker(true)}
-            title={dob.toLocaleDateString()}
-          /> */}
+        <Text style={styles.label}>Age</Text>
+        {/* <View style={{alignItems:"center",justifyContent:"center"}}>
           {true && (
             <DateTimePicker
               testID="dateTimePicker"
@@ -173,6 +171,24 @@ const PatientDetailsScreen = ({ navigation }) => {
               onChange={handleDateChange}
             />
           )}
+        </View> */}
+        <View  style={{alignItems:"center",justifyContent:"center"}}>
+        {/* <Text style={styles.label}>Enter AGE:</Text> */}
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => {
+            // Check if the entered value contains only numeric characters
+            if (/^\d+$/.test(value)) {
+              // If it contains only numeric characters, update the state
+              setAge(value);
+            }
+          }}          
+          value={age}
+          placeholder="AGE"
+          placeholderTextColor="#666"
+          autoFocus // Automatically focus on input when the screen mounts
+          keyboardType="numeric"
+        />
         </View>
 
         <Text style={styles.label}>Address:</Text>
@@ -191,7 +207,7 @@ const PatientDetailsScreen = ({ navigation }) => {
           title="Submit"
           onPress={handleSubmit}
           disabled={
-            !firstName || !lastName || !email || !gender || !dob || !address
+            !firstName || !lastName || !email || !gender || !age || !address
           }
         />
       </ScrollView>

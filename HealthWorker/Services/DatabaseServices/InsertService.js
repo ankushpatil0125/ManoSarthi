@@ -2,21 +2,72 @@
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const InsertService = {
-  insertPatientDetails: (patientDetails) => {
+  insertAabhaIdInfo: (AabhaIdInfo, status) => {
+    // console.log("length",AabhaIdInfo.length);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        AabhaIdInfo.forEach((aabha) => {
+          tx.executeSql(
+            "INSERT INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
+            [aabha, status],
+            (_, { rowsAffected }) => {
+              if (rowsAffected > 0) {
+                resolve("Data inserted into AabhaIdInfo successfully");
+              } else {
+                reject("Failed to insert data into AabhaIdInfo");
+              }
+            },
+            (_, error) => {
+              reject("Error inserting data into AabhaIdInfo: " + error);
+            }
+          );
+        });
+      });
+    });
+  },
+  insertAabhaId: (AabhaId, status) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "INSERT INTO PatientDetails (aabhaId, firstName, lastName, email, gender, dob, address) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          "INSERT INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
+          [AabhaId, status],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve("Data inserted into AabhaIdInfo successfully");
+            } else {
+              reject("Failed to insert data into AabhaIdInfo");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting data into AabhaIdInfo: " + error);
+          }
+        );
+      });
+    });
+  },
+  
+  insertPatientDetails: (patientDetails) => {
+    console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        console.log("in trans inside insertPatientD");
+        tx.executeSql(
+          "INSERT INTO PatientDetails (aabhaId, firstName, lastName, email, gender, age, address) VALUES (?, ?, ?, ?, ?, ?, ?)",
           [
             patientDetails.aabhaId,
             patientDetails.firstName,
             patientDetails.lastName,
             patientDetails.email,
             patientDetails.gender,
-            patientDetails.dob,
+            patientDetails.age,
             patientDetails.address,
           ],
           (_, { rowsAffected }) => {
+            console.log("inside insertPatientD");
+            console.log(
+              "inside insertPatientDetails after ",
+              rowsAffected._array
+            );
             if (rowsAffected > 0) {
               resolve("Data inserted into PatientDetails successfully");
             } else {
@@ -47,13 +98,13 @@ const InsertService = {
             ],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data inserted into SurveyQuestion successfully");
+                resolve("Data Inserted Into SurveyQuestion Successfully");
               } else {
-                reject("Failed to insert data into SurveyQuestion");
+                reject("Failed To Insert Data Into SurveyQuestion");
               }
             },
             (_, error) => {
-              reject("Error inserting data into SurveyQuestion: " + error);
+              reject("Error Inserting Data Into SurveyQuestion: " + error);
             }
           );
         });
@@ -70,20 +121,20 @@ const InsertService = {
             [question.question_id, question.question],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data inserted into Medical Questions successfully");
+                resolve("Data Inserted Into Medical Questions Successfully");
               } else {
-                reject("Failed to insert data into Medical Questions");
+                reject("Failed To Insert Data Into Medical Questions");
               }
             },
             (_, error) => {
-              reject("Error inserting data into Medical Questions: " + error);
+              reject("Error Inserting Data Into Medical Questions: " + error);
             }
           );
         });
       });
     });
   },
-  
+
   insertSurveyQuestionAnswer: (aabhaId, questionId, answer) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -92,7 +143,6 @@ const InsertService = {
           [aabhaId, questionId, answer],
           (_, result) => {
             if (result.rowsAffected > 0) {
-              console.log("Survey question answer inserted successfully");
               resolve("Survey question answer inserted successfully");
             } else {
               reject("Failed to insert survey question answer");
@@ -106,7 +156,13 @@ const InsertService = {
     });
   },
 
-  insertMedicalHistoryAnswers: (medicalQuestions, answers, comment, commentID, aabha_id) => {
+  insertMedicalHistoryAnswers: (
+    medicalQuestions,
+    answers,
+    comment,
+    commentID,
+    aabha_id
+  ) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         for (let index = 0; index < answers.length; index++) {
