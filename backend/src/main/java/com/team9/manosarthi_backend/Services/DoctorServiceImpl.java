@@ -32,14 +32,10 @@ public class DoctorServiceImpl implements DoctorService{
             return patientList.getContent();
         }
         else return null;
-
-
-
-
     }
 
     @Override
-    public Patient getPatient(int doctorId,int patientId) {
+    public Patient  getPatient(int doctorId,int patientId) {
        Optional<Patient> patient= patientRepository.findById(patientId);
        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
         if(patient.isPresent() && doctor.isPresent())

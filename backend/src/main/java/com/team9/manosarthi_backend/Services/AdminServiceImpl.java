@@ -150,15 +150,19 @@ public class AdminServiceImpl implements AdminService {
 
         if(deleteSupervisor.isPresent())
         {
-            deleteSupervisor.get().setActive(false);
+
             Optional<SubDistrict> subDistrict = subDistrictRepository.findById(deleteSupervisor.get().getSubdistrictcode().getCode());
             subDistrict.ifPresent(temp ->{
                 temp.setSupervisor_count(temp.getSupervisor_count()-1);
                 subDistrictRepository.save(temp);
             });
             String userName = deleteSupervisor.get().getUser().getUsername();
+
             deleteSupervisor.get().setUser(null);
             userRepository.deleteById(userName);
+
+            deleteSupervisor.get().setActive(false);
+            deleteSupervisor.get().setSubdistrictcode(null);
             return supervisorRepository.save(deleteSupervisor.get());
         }
         return null;
@@ -193,9 +197,10 @@ public class AdminServiceImpl implements AdminService {
                     existingSupervisor.setSubdistrictcode(subdisttemp);
                 });
                 // Save the updated worker to the database
+                System.out.println("existingSupervisor.get() before save"+existingSupervisor);
                 return supervisorRepository.save(existingSupervisor);
             }
-            System.out.println("updated subdirstrict is not correct");
+            System.out.println("supervisor updated subdirstrict is same ");
             return null;
         }
             else {
