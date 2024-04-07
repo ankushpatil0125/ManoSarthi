@@ -4,6 +4,7 @@ import "../../css/UpdateDoctor.css";
 import Header from "../Header/Header";
 import ViewHealthWorker from "./viewHealthWorker";
 import SupervisorService from "../../Services/SupervisorService";
+import LoadingComponent from "../Loading/LoadingComponent";
 
 const UpdateHealthWorker = () => {
   const [village, setVillage] = useState("");
@@ -16,12 +17,16 @@ const UpdateHealthWorker = () => {
 
   useEffect(() => {
     // Fetch district options
+    setLoading(true);
     SupervisorService.getVillageWorker(true)
       .then((response) => {
+        console.log("Villages: ",response.data);
         setVillageOptions(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching villages options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
   }, []);
 
@@ -29,7 +34,7 @@ const UpdateHealthWorker = () => {
     const selectedVillage = e.target.value;
     setVillage(selectedVillage);
   };
-
+  if(loading)return <LoadingComponent/>
   return (
     <div>
       <Header />

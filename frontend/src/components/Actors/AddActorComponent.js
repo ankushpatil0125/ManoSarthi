@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../Loading/LoadingComponent";
 
 const AddDoctorComponent = () => {
   const [district, setDistrict] = useState("");
@@ -18,35 +19,50 @@ const AddDoctorComponent = () => {
   const [actor, setActor] = useState("");
   const { t } = useTranslation("global");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Fetch district options
+  // useEffect(() => {
+  //   //Fetch district options
+  //   AdminService.getDistrict(actor, false)
+  //     .then((response) => {
+  //       setDistrictOptions(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching district options:", error);
+  //     });
+  // }, [actor]);
+  const handleActor = () => {
+    setLoading(true);
     AdminService.getDistrict(actor, false)
       .then((response) => {
         setDistrictOptions(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching district options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
-  }, [actor]);
-
+  };
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
 
     // Fetch subdistrict options based on selected district
+    setLoading(true);
     AdminService.getSubDistrict(selectedDistrict, actor, false)
       .then((response) => {
         setSubDistrictOptions(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching subdistrict options:", error);
+        alert(error.response.data.message);        
+        setLoading(false);
       });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hii");
+    // console.log("hii");
     // Create doctor object
     const actorData = {
       email: email,
@@ -60,14 +76,16 @@ const AddDoctorComponent = () => {
     };
     try {
       // Using axios for the POST request
-      console.log("doctor data", actorData);
-      if (actor === "Doctor") {
+      // console.log("doctor data", actorData);
+      setLoading(true);
+      if (actor === "DOCTOR") {
         const response = await AdminService.addDoctor(actorData);
-        console.log("ADD RESP: ", response);
+        // console.log("ADD RESP: ", response);
         if (response) {
           // Handle successful password change, e.g., display a success message
           alert(`Doctor with name ${actorData.firstname} Added Successfully`);
           navigate("/doctor-supervisor");
+          setLoading(false);
         } else {
           // Handle password change failure
           alert("Failed to Add Doctor");
@@ -79,6 +97,8 @@ const AddDoctorComponent = () => {
           alert(
             `Supervisor with name ${actorData.firstname} Added Successfully`
           );
+          navigate("/doctor-supervisor");
+          setLoading(false);
         } else {
           // Handle password change failure
           alert("Failed to Add Supervisor");
@@ -86,10 +106,11 @@ const AddDoctorComponent = () => {
       }
     } catch (error) {
       // console.error(`Error during adding Actor:", ${error}`);
-      alert("Error during adding:" + error);
+      alert(error.response.data.message);      
+      setLoading(false);
     }
   };
-
+  if (loading) return <LoadingComponent />;
   return (
     <div>
       <Header />
@@ -108,6 +129,7 @@ const AddDoctorComponent = () => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>

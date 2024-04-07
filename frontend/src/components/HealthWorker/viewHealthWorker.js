@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import SupervisorService from "../../Services/SupervisorService";
 import "../../css/modal.css";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../Loading/LoadingComponent";
+// import { useNavigate } from "react-router-dom";
 
 const ViewHealthWorker = ({ allHealWorker, village }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -11,24 +12,28 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedVillage, setSelectedVillage] = useState("");
   const [selectedHealthWorkerId, setSelectedHealthWorkerId] = useState(null);
+  const [loading,setLoading] = useState(false);
 
 
   const [data, setData] = useState([]);
   const { t } = useTranslation("global");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   useEffect(() => {
     fetchData();
   }, [currentPage, village]); // Refetch data when currentPage or district changes
 
   useEffect(() => {
+    setLoading (true);
     if (showModal) {
       // Fetch village options
-      SupervisorService.getVillageWithNoWorker()
+      SupervisorService.getVillageWorker(false)
         .then((response) => {
           setVillageOptions(response.data);
+          setLoading(false);
         })
         .catch((error) => {
-          console.error("Error fetching villages options:", error);
+          alert(error.response.data.message);
+        setLoading(false);
         });
     }
   }, [showModal]);
@@ -36,28 +41,33 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
   const fetchData = async () => {
     try {
       console.log("inside fetchdata function");
+      setLoading(true);
       if (village) {
-        console.log("Village: ", village);
+        // console.log("Village: ", village);
         // setCurrentPage(0)
         SupervisorService.getAllVillageHealthWorker(village)
           .then((response) => {
-            console.log("VillageVVV: ", response.data);
+            // console.log("VillageVVV: ", response.data);
             data.push( response.data)
 
             setData(response.data);
+            setLoading(false);
           })
           .catch((error) => {
-            console.error("Error fetching district doctors:", error);
+            alert(error.response.data.message);
+        setLoading(false);
           });
       } else {
         setCurrentPageHealthWorker(0);
         SupervisorService.getAllHealthWorkers(currentPage).then((response) => {
           setData(response.data);
-          console.log("data", response.data);
+          // console.log("data", response.data);
+          setLoading(false);
         });
       }
     } catch (error) {
-      console.error("Error fetching doctor details:", error.message);
+      alert(error.response.data.message);
+        setLoading(false);
     }
   };
 
@@ -66,6 +76,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
   // }
 
   const handleUpdate = (healthWorkerId) => {
+    console.log("healthWorkerId", healthWorkerId);
     setShowModal(true);
     setSelectedHealthWorkerId(healthWorkerId);
   };
@@ -85,11 +96,12 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
         code: selectedVillage,
       },
     };
-
+    setLoading(true)
     SupervisorService.updateHealthWorker(reasignHealthWorker);
 
     // Your update worker API call here
     setShowModal(false); // Close modal after updating
+    setLoading(false);
   };
 
   const handlePrevPage = () => {
@@ -101,7 +113,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
     setCurrentPage((prevPage) => prevPage + 1);
     setCurrentPageHealthWorker((prevPage) => prevPage + 1);
   };
-
+  if(loading)return <LoadingComponent/>
   return (
     <div>
       <div className="data">
@@ -183,7 +195,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
             >
               <option value="">Select Village</option>
               {villageOptions.map((village) => (
-                <option key={village.id} value={village.code}>
+                <option key={village.code} value={village.code}>
                   {village.name}
                 </option>
               ))}

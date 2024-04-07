@@ -27,7 +27,7 @@ public class Questionarrie {
     private int maxage;
 
     @NotBlank(message = "question cannot be blank")
-    @Pattern(regexp="[a-zA-Z0-9\\s]+", message="Only characters are allowed")
+    @Pattern(regexp="[a-zA-Z0-9,?\\s]+", message="Only characters are allowed")
     private String question;
 
     @NotBlank(message = "default_ans cannot be blank")

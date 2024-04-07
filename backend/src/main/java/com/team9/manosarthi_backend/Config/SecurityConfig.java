@@ -22,6 +22,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableMethodSecurity
 @EnableWebMvc
 public class SecurityConfig {
@@ -67,6 +68,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**"
+                        ,"/v2/api-docs","/swagger-resources/**","/configuration/**","/swagger-ui/**","/webjars/**","/swagger-ui.html").permitAll()
                         .requestMatchers("/passwordstatus/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
@@ -86,7 +92,6 @@ public class SecurityConfig {
 //                        .requestMatchers("/user/**").hasRole("USER")
 
 //                        .requestMatchers("/auth/login").permitAll()
-//
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

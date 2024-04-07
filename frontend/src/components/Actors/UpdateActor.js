@@ -4,6 +4,7 @@ import AdminService from "../../Services/AdminService";
 import Header from "../Header/Header";
 import ViewDoctors from "../Doctor/ViewDoctors";
 import ViewSupervisor from "../Supervisor/ViewSupervisor";
+import LoadingComponent from "../Loading/LoadingComponent";
 
 const UpdateActor = () => {
   const [district, setDistrict] = useState("");
@@ -12,30 +13,35 @@ const UpdateActor = () => {
   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
   const [actor, setActor] = useState("");
   const { t } = useTranslation("global");
+  const [loading,setLoading] = useState(false);
 
-  useEffect(() => {
-    // Fetch district options
-    console.log("AAACTOR : ", actor)
+
+  const handleActor = () =>{
+    console.log("Actor",actor);
+    setLoading(true);
     AdminService.getDistrict(actor, true)
       .then((response) => {
-        console.log("jhghidfsifjijgi: ", response);
+        // console.log("jhghidfsifjijgi: ", response);
         setDistrictOptions(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching district options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
-  }, [actor]);
-
+  }
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
-
+    setLoading(true);
     AdminService.getSubDistrict(selectedDistrict, actor, true)
       .then((response) => {
         setSubDistrictOptions(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching subdistrict options:", error);
+        alert(error.response.data.message);
+        setLoading(false);
       });
   };
 
@@ -47,7 +53,7 @@ const UpdateActor = () => {
   // const handleSubmit = async (e) => {
   //   // Your form submission logic goes here
   // };
-
+  if(loading) return <LoadingComponent/>
   return (
     <div className="flex flex-col h-full">
       <Header />
@@ -66,6 +72,7 @@ const UpdateActor = () => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="border border-gray-400 px-2 py-1 rounded-md w-full"
+              onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
@@ -112,11 +119,22 @@ const UpdateActor = () => {
           </div>
         </div>
       </div>
-      {actor === "Doctor" ? (
+
+      {(() => {
+        console.log('select',actor);
+        if (actor!=='' ) {
+          if(actor ==='DOCTOR')
+            return <ViewDoctors district={district} subdistrictcode={subdistrictcode} />
+            else {
+            return <ViewSupervisor district={district} subdistrictcode={subdistrictcode} />
+          }
+        }
+      })()}
+      {/* {actor === "DOCTOR" && actor!=='Select' ? (
         <ViewDoctors district={district} subdistrictcode={subdistrictcode} />
       ) : (
         <ViewSupervisor district={district} subdistrictcode={subdistrictcode} />
-      )}
+      )} */}
     </div>
   );
 };
