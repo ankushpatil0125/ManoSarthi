@@ -1,6 +1,7 @@
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
+import AddPrescription from "./components/Doctor/AddPrescription"
 import LoginComponent from "./components/Login/LoginComponent";
 import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent";
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
@@ -21,6 +22,7 @@ import PendingPatient from "./components/Doctor/PendingPatient";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import  { AuthProvider } from "./components/Context/AuthContext";
 import PatientDetails from "./components/Patient/PatientDetails";
+import DeleteActor from "./components/Actors/DeleteActor";
 
 const App = () => {
   
@@ -112,6 +114,22 @@ const App = () => {
             element={
               <PrivateRoute type="update-doctor-supervisor">
                 <UpdateActor />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/delete-doctor-supervisor"
+            element={
+              <PrivateRoute type="delete-doctor-supervisor">
+                <DeleteActor />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add-prescription"
+            element={
+              <PrivateRoute type="add-prescription">
+                <AddPrescription />
               </PrivateRoute>
             }
           />

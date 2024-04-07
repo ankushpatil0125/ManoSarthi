@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BASE_URL, getToken } from "../../utils/Constants";
 import LoadingComponent from "../Loading/LoadingComponent";
 import CryptoJS from 'crypto-js'
+import Header from "../Header/Header";
+// import { useNavigation } from "react-router-dom";
+
 
 const PatientDetails = () => {
   const [firstname, setFirstname] = useState("");
@@ -15,8 +18,10 @@ const PatientDetails = () => {
   const location = useLocation();
   const [loading,setLoading] = useState(false);
   const { patientId } = location.state;
+  // const navigation = useNavigation();
   const [encrypt,setEncrypt] = useState('');
   console.log('patient',patientId)
+
   useEffect(() => {
     // const encryptData = (data, key) => {
     //   return CryptoJS.AES.encrypt(data, key).toString();
@@ -59,6 +64,7 @@ const PatientDetails = () => {
   else
   return (
     <div className="flex justify-center items-center">
+      <Header/>
       <section className="text-gray-600 body-font overflow-hidden ">
         <div className="container px-5 py-24 mx-auto">
           <div className="-my-8 divide-y-2 divide-gray-100">
@@ -207,6 +213,13 @@ const PatientDetails = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div class="pb-5 flex justify-center items-center">
+          <Link to="/add-prescription">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Add Priscription
+            </button>
+          </Link>
         </div>
       </section>
     </div>

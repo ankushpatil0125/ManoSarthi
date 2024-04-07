@@ -4,6 +4,7 @@ import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
+import { Axios } from "axios";
 
 const AddDoctorComponent = () => {
   const [district, setDistrict] = useState("");
@@ -21,6 +22,10 @@ const AddDoctorComponent = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if(actor) handleActor();
+  }, [actor]);
+
   // useEffect(() => {
   //   //Fetch district options
   //   AdminService.getDistrict(actor, false)
@@ -31,6 +36,7 @@ const AddDoctorComponent = () => {
   //       console.error("Error fetching district options:", error);
   //     });
   // }, [actor]);
+
   const handleActor = () => {
     setLoading(true);
     AdminService.getDistrict(actor, false)
@@ -129,7 +135,7 @@ const AddDoctorComponent = () => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-              onClick={handleActor}
+              // onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
