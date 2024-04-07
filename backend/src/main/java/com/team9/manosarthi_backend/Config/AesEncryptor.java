@@ -57,12 +57,14 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
     @SneakyThrows
     @Override
     public String convertToDatabaseColumn(Object attribute) {
-        if(attribute==null)
+        if (attribute == null)
             return null;
 
         System.out.println(attribute);
+        return encrypt(String.valueOf(attribute), encryptionKey, "salt");
+
 //        byte[] bytes= SerializationUtils.serialize(attribute);
-        return encrypt(String.valueOf(attribute),encryptionKey, "salt");
+
 //        String toencrypt=new String(bytes);
 //        System.out.println("Bytes"+toencrypt);
 //        initCipher(Cipher.ENCRYPT_MODE);
@@ -124,9 +126,7 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
         }
     }
     public static String decrypt(String strToDecrypt, String secretKey, String salt) {
-
         try {
-
             byte[] encryptedData = Base64.getDecoder().decode(strToDecrypt);
             byte[] iv = new byte[16];
             System.arraycopy(encryptedData, 0, iv, 0, iv.length);
