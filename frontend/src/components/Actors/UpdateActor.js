@@ -15,6 +15,11 @@ const UpdateActor = () => {
   const { t } = useTranslation("global");
   const [loading,setLoading] = useState(false);
 
+  useEffect(() => {
+    if (actor) {
+      handleActor();
+    }
+  }, [actor]);
 
   const handleActor = () =>{
     console.log("Actor",actor);
@@ -72,7 +77,7 @@ const UpdateActor = () => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="border border-gray-400 px-2 py-1 rounded-md w-full"
-              onClick={handleActor}
+              // onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
