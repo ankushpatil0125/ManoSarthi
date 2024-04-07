@@ -104,6 +104,8 @@ const QuestionnaireScreen = ({ navigation,route }) => {
       });
       await Promise.all(promises).then((msg)=>{console.log("msg success",msg)}).catch((err)=>{console.log("err catch",err)});
       
+      // await Promise.all(promises);
+
       // Matching the answers with the default ans
       const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
       console.log("Unmatched count:", unmatchedCount);

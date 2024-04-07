@@ -18,27 +18,18 @@ const UpdateDeleteActor = ({ action }) => {
   // Determine the value based on the action prop
   const valueToPass = action === "Delete" ? "Delete" : "Reassign";
 
- 
-
   useEffect(() => {
-    // Clear district and subdistrictcode immediately when actor is set
-    setDistrict("");
-    setSubDistrictcode("");
-
-    // Fetch district options only when actor is set
-    const fetchDistrictOptions = async () => {
-      try {
-        // Fetch district options
-        const response = await AdminService.getDistrict(actor, true);
-        setDistrictOptions(response.data);
-      } catch (error) {
-        console.error("Error fetching district options:", error);
-      }
-    };
-
-    // Only run the effect if actor has been set
-    if (actor !== "") {
-      fetchDistrictOptions();
+    if (actor) { // Check if actor is selected
+      setLoading(true);
+      AdminService.getDistrict(actor, true)
+        .then((response) => {
+          setDistrictOptions(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+          setLoading(false);
+        });
     }
   }, [actor]);
 
@@ -90,6 +81,7 @@ const UpdateDeleteActor = ({ action }) => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="border border-gray-400 px-2 py-1 rounded-md w-full"
+              // onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
@@ -157,19 +149,11 @@ const UpdateDeleteActor = ({ action }) => {
                 subdistrictcode={subdistrictcode}
                 action={valueToPass}
                 actor="SUPERVISOR"
-               
               />
             );
           }
         }
       })()}
-      <div className="w-full md:w-1/2 flex justify-center items-center">
-          <img
-            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg"
-            alt="Designer Life"
-            className="m-12 xl:m-16 w-full"
-          />
-        </div>
     </div>
   );
 };

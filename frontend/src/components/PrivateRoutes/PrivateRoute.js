@@ -56,7 +56,7 @@ const PrivateRoute = ({ children, type }) => {
   else if (
     JWT &&
     localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
-    type === "doctor-operation"
+    type === "doctor-dashboard"
   )
     return children;
   else if (
@@ -68,12 +68,6 @@ const PrivateRoute = ({ children, type }) => {
   else if (
     JWT &&
     localStorage.getItem("ROLE") === "[ROLE_SUPERVISOR]" &&
-    type === "changepasswordcomponent"
-  )
-    return children;
-  else if (
-    JWT &&
-    localStorage.getItem("ROLE") === "[ROLE_ADMIN]" &&
     type === "changepasswordcomponent"
   )
     return children;
