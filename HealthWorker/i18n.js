@@ -15,7 +15,10 @@ export const translations = {
     "Follow-up Schedule":"Follow-up Schedule",
     "Name":"Name",
     "Address":"Address",
-    "Status":"Status"
+    "Status":"Status",
+    "Change Password":"Change Password",
+    "Enter Your Old Password":"Enter Your Old Password",
+    "Enter Your New Password":"Enter Your New Password"
     // Add more key-value pairs for English here
   },
   hi: {
@@ -31,7 +34,10 @@ export const translations = {
     "Follow-up Schedule":"फॉलो-अप अनुसूची",
     "Name":"नाम",
     "Address":"पता",
-    "Status":"स्थिति"
+    "Status":"स्थिति",
+    "Change Password":"पासवर्ड बदलें",
+    "Enter Your Old Password": "अपना पुराना पासवर्ड दर्ज करें",
+    "Enter Your New Password": "अपना नया पासवर्ड दर्ज करें"
     // Add more key-value pairs for Hindi here
   },
 };

@@ -9,6 +9,7 @@ import QuestionnaireScreen from "../screens/QuestionnaireScreen";
 import MedicalDetails from "../screens/MedicalDetails";
 import Preview from "../screens/Preview";
 import { PatientProvider } from "../context/PatientContext";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {

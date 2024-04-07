@@ -5,12 +5,14 @@ import axios from "axios";
 import { Alert } from "react-native";
 import { createDatabase, fetchData } from "../Services/initService";
 import DropService from "../Services/DatabaseServices/DropService";
-
+import IsPasswordChangeService from "../Services/ChangePasswordService.js/IsPasswordChangeService";
+// import {navigation }
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
+  const [changePassword,setChangePassword] = useState(false);
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem("JWT", value);
@@ -37,12 +39,12 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await axios.post(BASE_URL + "auth/login", user);
-      // console.log("response: ", response);
+      console.log("response: ", response);
       if (response) {
         await storeData(response?.data?.jwtToken);
         const token = await getToken();
         setUserToken(token);
-        // await DropService.dropTables();
+        console.log("1 - token")
         createDatabase().then((message) => {
           console.log(message);
         })
@@ -56,6 +58,15 @@ export const AuthProvider = ({ children }) => {
         .catch((message) => {
           Alert.alert(message);
         });
+
+
+        const changepass_response = await IsPasswordChangeService.isPasswordChanged(response);
+        console.log("ChangePassResponse",changepass_response)
+        setChangePassword(changepass_response);
+        console.log("2 - change password")
+        console.log("after setting change password",changePassword);
+        // await DropService.dropTables();
+        
         setIsLoading(false);
         console.log("Token", getToken());
       } else {
@@ -77,6 +88,9 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       let userToken = await AsyncStorage.getItem("JWT");
       setUserToken(userToken);
+      setChangePassword(changePassword);
+      console.log("In useeffect after setting change password",changePassword);
+
       setIsLoading(false);
     } catch (e) {
       console.log(`isLoggedIn error ${e}`);
@@ -86,7 +100,7 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn();
   }, []);
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
+    <AuthContext.Provider value={{ login, logout, isLoading, userToken,changePassword }}>
       {children}
     </AuthContext.Provider>
   );

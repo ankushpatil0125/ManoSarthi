@@ -13,9 +13,9 @@ import PatientContext from "../context/PatientContext"; // Import PatientContext
 import InsertService from "../Services/DatabaseServices/InsertService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 
-const QuestionnaireScreen = ({ navigation }) => {
+const QuestionnaireScreen = ({ navigation,route }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
-
+  const {age} = route.params;
   // State to hold the answers for each question
   const [answers, setAnswers] = useState(
     Array(surveyquestions.length).fill(null)
@@ -50,7 +50,7 @@ const QuestionnaireScreen = ({ navigation }) => {
 
   const fetchSurveyQuestionsFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllQuestions();
+      const data = await SelectService.getAllQuestions(age,"normal");
       setsurveyquestions(data);
 
       console.log("Survey Questions Need To Render: ", data);

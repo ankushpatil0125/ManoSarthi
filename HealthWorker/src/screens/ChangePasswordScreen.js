@@ -18,16 +18,50 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from "@expo/vector-icons";
 import i18n from "../../i18n";
 import tw from "twrnc";
-const LoginScreen = () => {
-  const { login } = useContext(AuthContext);
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  
+import ChangePasswordService from "../Services/ChangePasswordService.js/ChangePasswordService";
+import { Alert } from "react-native";
+const ChangePasswordScreen = ({navigation}) => {
+  const [passwordOld, setPasswordOld] = useState("");
+  const [passwordNew, setPasswordNew] = useState("");
+  const [requestData,setRequestData]=useState({oldPassword:"",newPassword:""});
+  const {setChangePassword} = useContext(AuthContext);
   // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
-  const handleLogin = () => {
-    // Call the login function from the context
-    login(username, password);
+  const [isValid,setIsValid] = useState(false);
+  const handleLogout = async () => {
+    if (passwordOld.trim() === "" || passwordNew.trim() === "") {
+      Alert.alert("Please enter both old and new passwords");
+      return;
+    }
+    setRequestData({
+      oldPassword: passwordOld,
+      newPassword: passwordNew
+    });
+    console.log('Requeste Data',requestData);          
+    console.log("Old password", requestData.oldPassword, "New password", requestData.newPassword);
+    try {
+      if(!isValid){
+      
+        const response = await ChangePasswordService.ChangePassword(requestData);
+        console.log("response of changePassword",response);
+
+        if (response) {
+          alert("Password Successfully Changed");
+          // setLoading(false);
+          // navigation.navigate("HomeScreen");
+          setChangePassword(true);
+          
+        } else {
+          Alert.alert("Failed");
+        }
+      }
+      else{
+        Alert.alert("Please enter a valid password");
+      }
+    } catch (error) {
+      Alert.alert("Catch Error of Change Password",error.response.data.message);
+        // setLoading(false);
+    }
   };
 
   return (
@@ -50,24 +84,24 @@ const LoginScreen = () => {
         }}
       >
         {/* Language Toggle Button */}
-        <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc",justifyContent: "center",alignItems:'center' }}>
-        <LanguageToggleButton
-          onPress={handleLanguageToggle}
-          selectedLanguage={selectedLanguage}
-        />
+        <View
+          style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc",justifyContent: "center",alignItems:'center' }}
+        >
+          <LanguageToggleButton
+            onPress={handleLanguageToggle}
+            selectedLanguage={selectedLanguage}
+          />
         </View>
 
         {/* Login to Your Account */}
         <View style={{ alignItems: "center" }}>
-          <Text 
-          style={{ fontSize: 17, fontWeight: "bold", color: "#87CEEB" }}
-          >
-            {i18n.t("Login")}
+          <Text style={{ fontSize: 17, fontWeight: "bold", color: "black" }}>
+            {i18n.t("Change Password")}
           </Text>
         </View>
 
         {/* Email */}
-        <View style={{ marginTop: 70 }}>
+        <View style={{ marginTop: 20 }}>
           <View
             style={{
               flexDirection: "row",
@@ -81,20 +115,21 @@ const LoginScreen = () => {
           >
             <AntDesign
               style={{ marginLeft: 10 }}
-              name="user"
+              name="lock"
               size={24}
               color="gray"
             />
             <TextInput
-              value={username}
-              onChangeText={(text) => setUserName(text)}
+              value={passwordOld}
+              onChangeText={(text) => setPasswordOld(text)}
+              secureTextEntry={true}
               style={{
                 color: "gray",
                 marginVertical: 10,
                 width: 280,
                 fontSize: 16,
               }}
-              placeholder={i18n.t("Enter Your Username")}
+              placeholder={i18n.t("Enter Your Old Password")}
             />
           </View>
         </View>
@@ -119,8 +154,8 @@ const LoginScreen = () => {
               color="gray"
             />
             <TextInput
-              value={password}
-              onChangeText={(text) => setPassword(text)}
+              value={passwordNew}
+              onChangeText={(text) => setPasswordNew(text)}
               secureTextEntry={true}
               style={{
                 color: "gray",
@@ -128,27 +163,14 @@ const LoginScreen = () => {
                 width: 280,
                 fontSize: 16,
               }}
-              placeholder={i18n.t("Enter Your Password")}
+              placeholder={i18n.t("Enter Your New Password")}
             />
           </View>
         </View>
 
-        <View
-          style={{
-            marginTop: 12,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ color: "#007FFF", fontWeight: "500" }}>
-            {i18n.t("Forgot Password?")}
-          </Text>
-        </View>
-
         <View style={{ marginTop: 80 }}>
           <Pressable
-            onPress={handleLogin}
+            onPress={handleLogout}
             style={{
               width: 200,
               backgroundColor: "#87CEEB",
@@ -166,7 +188,7 @@ const LoginScreen = () => {
                 fontWeight: "bold",
               }}
             >
-              {i18n.t("Login")}
+              {i18n.t("Change Password")}
             </Text>
           </Pressable>
         </View>
@@ -175,6 +197,6 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default ChangePasswordScreen;
 
 const styles = StyleSheet.create({});
