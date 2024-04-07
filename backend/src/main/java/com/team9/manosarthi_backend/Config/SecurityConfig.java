@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -22,6 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableWebMvc
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint point;
@@ -70,6 +72,7 @@ public class SecurityConfig {
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/v3/api-docs").permitAll()
 //                        .requestMatchers("/admin/add").permitAll()
 //                        .requestMatchers("/doctor/**").permitAll()
 

@@ -112,7 +112,7 @@ public class DoctorRestController {
         }
     }
     @GetMapping("/patient")
-    public MappingJacksonValue getPatient(@RequestBody Patient patientId,@RequestHeader("Authorization") String authorizationHeader)
+    public MappingJacksonValue getPatient(@RequestParam("patientId") int patientId,@RequestHeader("Authorization") String authorizationHeader)
     {
         System.out.println("Patient "+patientId);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
@@ -120,7 +120,7 @@ public class DoctorRestController {
             String token = authorizationHeader.substring(7);
             String doctorId = helper.getIDFromToken(token);
 
-            Patient patient = doctorService.getPatient(Integer.parseInt(doctorId),patientId.getPatient_id());
+            Patient patient = doctorService.getPatient(Integer.parseInt(doctorId),patientId);
 
 
             Set<String> patientFilterProperties = new HashSet<>();
