@@ -46,8 +46,8 @@ public class FollowUpDetails {
     @JsonManagedReference
     private List<Questionarrie_ans> questionarrieAnsList;
 
-    @OneToOne
-    @JoinColumn(name="prescription")
+    @OneToOne(mappedBy = "followUpDetails")
+    @JsonManagedReference
     private Prescription prescription;
 }
 
