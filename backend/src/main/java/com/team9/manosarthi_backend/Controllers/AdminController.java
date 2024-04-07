@@ -295,6 +295,7 @@ public class AdminController {
     @PutMapping("/reassign-supervisor")
     public ResponseEntity<MappingJacksonValue> ReassignSupervisor(@RequestBody Supervisor updatedSupervisor) {
         try {
+            System.out.println("updatedSupervisor    "+updatedSupervisor);
             Supervisor updatedsupervisor = adminService.ReassignSupervisor(updatedSupervisor);
             if (updatedsupervisor != null) {
                 SimpleBeanPropertyFilter supervisorfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "subdistrictcode");
@@ -337,6 +338,7 @@ public class AdminController {
             throw new APIRequestException("No Supervisor found");
         }
         Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("id");
         supervisorFilterProperties.add("firstname");
         supervisorFilterProperties.add("lastname");
         supervisorFilterProperties.add("email");
@@ -364,6 +366,7 @@ public class AdminController {
             throw new APIRequestException("No Supervisor found");
         }
         Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("id");
         supervisorFilterProperties.add("firstname");
         supervisorFilterProperties.add("lastname");
         supervisorFilterProperties.add("email");
@@ -388,6 +391,7 @@ public class AdminController {
             throw new APIRequestException("No Supervisor found");
         }
         Set<String> supervisorFilterProperties = new HashSet<>();
+        supervisorFilterProperties.add("id");
         supervisorFilterProperties.add("firstname");
         supervisorFilterProperties.add("lastname");
         supervisorFilterProperties.add("email");

@@ -21,4 +21,9 @@ public interface WorkerRepository extends JpaRepository<Worker,Integer>{
     @Query("SELECT w from Worker w where w.villagecode.code =:villagecode and w.active=true")
     List<Worker> findWorkerByVillage(@Param("villagecode") int villagecode);
 
+    @Query("SELECT w from Worker w where w.id=:id and w.active=true ")
+    Optional<Worker> findById(@Param("id") int id);
+
+    @Query("SELECT w from Worker w where w.active=true ")
+    Page<Worker> findAll(Pageable p);
 }
