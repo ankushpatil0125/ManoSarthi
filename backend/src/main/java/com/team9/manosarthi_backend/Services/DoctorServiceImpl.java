@@ -1,15 +1,16 @@
 package com.team9.manosarthi_backend.Services;
 
-import com.team9.manosarthi_backend.Entities.Doctor;
-import com.team9.manosarthi_backend.Entities.Patient;
-import com.team9.manosarthi_backend.Repositories.DoctorRepository;
-import com.team9.manosarthi_backend.Repositories.PatientRepository;
+import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
+import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
+import com.team9.manosarthi_backend.Repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class DoctorServiceImpl implements DoctorService{
 
-    PatientRepository patientRepository;
-    DoctorRepository doctorRepository;
+    private PatientRepository patientRepository;
+    private DoctorRepository doctorRepository;
+    private PrescriptionRepository prescriptionRepository;
+    private MedicineRepository medicineRepository;
+    private FollowUpDetailsRepository followUpDetailsRepository;
+
 
     @Override
     public List<Patient> getNewPatientDetails(int doctorId, int pagenumber, int pagesize) {
@@ -47,5 +52,45 @@ public class DoctorServiceImpl implements DoctorService{
 
 
        return null;
+    }
+
+    @Override
+    public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
+
+        patientFollowUpPrescriptionDTO.getPrescription().setDate(Date.valueOf(java.time.LocalDate.now()));
+
+        Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
+
+        if(patient.isPresent())
+        {
+            Optional<FollowUpDetails> followUpDetails = followUpDetailsRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getFollowUpDetails().getId());
+            if( followUpDetails.isPresent())
+            {
+                if(followUpDetails.get().getFollowUpNo()!=0)    //set previous active prescription to false
+                {
+                    Prescription oldActivePrescription = prescriptionRepository.getActivePrescription(patient.get().getPatient_id());
+                    oldActivePrescription.setActive(false);
+                    prescriptionRepository.save(oldActivePrescription);
+                }
+                patientFollowUpPrescriptionDTO.getPrescription().setActive(true);
+            }
+            else
+            {
+                throw new APIRequestException("No followUpDetails with id : "+patientFollowUpPrescriptionDTO.getPrescription().getFollowUpDetails().getId());
+            }
+        }
+        else {
+            throw new APIRequestException("Patient not found with id "+ patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
+        }
+
+        Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
+        for (Medicine medicine : patientFollowUpPrescriptionDTO.getMedicineList())
+        {
+            medicine.setPrescription(newPrescription);
+            medicineRepository.save(medicine);
+        }
+
+
+        return prescriptionRepository.findById(newPrescription.getPrescription_id()).orElse(null) ;
     }
 }

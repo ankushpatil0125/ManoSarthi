@@ -66,7 +66,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                       .requestMatchers("/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
@@ -76,6 +75,9 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
+                        .requestMatchers("/disease/**").permitAll()
+                        .requestMatchers("/disease-category/**").permitAll()
+                        .requestMatchers("/disease-subcategory/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/v3/api-docs").permitAll()
 //                        .requestMatchers("/admin/add").permitAll()
