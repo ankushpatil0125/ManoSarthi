@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "prescription")
@@ -17,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@JsonFilter("PrescriptionDetails")
+@JsonFilter("PrescriptionJSONFilter")
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +29,25 @@ public class Prescription {
     @JsonBackReference
     private Patient patient;
 
-    @OneToMany
-    @JoinColumn(name="disease_code")
-    @JsonManagedReference
-    private List<Disease> disease_code;
+    @OneToOne
+    @JsonBackReference
+    @JoinColumn(name = "follow_up_id")
+    private FollowUpDetails followUpDetails;
+
+//    @OneToMany
+//    @JoinColumn(name="disease_code")
+    @ManyToMany
+    @JoinTable(name = "patient_disease",
+    joinColumns = @JoinColumn(name = "prescription_id"),
+    inverseJoinColumns = @JoinColumn(name = "disease_code")
+    )
+    private Set<Disease> disease_code;
 
     @NotBlank(message = "treatement cannot be blank")
     @Column(name = "treatement")
     private String treatement;
 
-    @OneToMany
-    @JoinColumn(name="medicine")
+    @OneToMany(mappedBy = "prescription")
     @JsonManagedReference
     private List<Medicine> medicine;
 

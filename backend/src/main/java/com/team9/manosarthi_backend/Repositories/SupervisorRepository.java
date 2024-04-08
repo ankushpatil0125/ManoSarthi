@@ -9,12 +9,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SupervisorRepository extends JpaRepository<Supervisor, Integer>{
-        @Query("select s.id from Supervisor s where s.user.username =:username and s.active=true")
-        int findSupervisorByUsername(@Param("username") String username);
+    @Query("select s.id from Supervisor s where s.user.username =:username and s.active=true")
+    int findSupervisorByUsername(@Param("username") String username);
 
+    @Query("SELECT s from Supervisor s where s.active=true")
+    Page<Supervisor> findAll(Pageable p);
 
+    @Query("SELECT s from Supervisor s where s.id=:id and  s.active=true")
+    Optional<Supervisor> findById(int id);
     @Query("SELECT s from Supervisor s where s.subdistrictcode.district.code =:districtcode and s.active=true")
     Page<Supervisor> findSupervisorByDistrict(@Param("districtcode") int districtcode, Pageable pageable);
     @Query("SELECT s from Supervisor s WHERE s.subdistrictcode.code=:subdistrictcode and s.active=true")

@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@JsonFilter("MedicineDetails")
+@JsonFilter("MedicineJSONFilter")
 public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +30,11 @@ public class Medicine {
     @NotBlank(message = "timing cannot be blank")
     @Column(name = "timing")
     private String timing;
+
+    @ManyToOne
+    @JoinColumn(name = "prescription_id")
+    @JsonBackReference
+    private Prescription prescription;
 
 
 }

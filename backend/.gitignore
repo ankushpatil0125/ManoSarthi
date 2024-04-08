@@ -1,4 +1,8 @@
+target
+.idea
 target/
 .idea/
 applog*
 appLog*
+.idea/*
+target/*
