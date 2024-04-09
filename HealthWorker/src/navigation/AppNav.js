@@ -52,11 +52,12 @@ const AppNav =  () => {
   // const token = await getToken();
   // console.log("userToken: ", token);
   console.log("userToken: ", userToken);
-  console.log('changePassword',changePassword)
+  // console.log('changePassword',changePassword)
 
   return (
     <NavigationContainer>
-      {(userToken !== null && changePassword !==false)  ? <AppStack /> : <AuthStack />}
+      {/* && changePassword !==false */}
+      {(userToken !== null )  ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

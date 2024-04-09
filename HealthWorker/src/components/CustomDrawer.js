@@ -12,7 +12,7 @@ import LanguageToggleButton from "../MultiLingual/LanguageButton";
 import { useLanguageContext } from "../context/LanguageProvider";
 import SyncDataService from "../Services/SyncDataService";
 const CustomDrawer = (props) => {
-  const {logout} = useContext(AuthContext);
+  const {logout,userName} = useContext(AuthContext);
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
   handleSync = async () => {
     console.log("Before Syncing :");
@@ -42,7 +42,7 @@ const CustomDrawer = (props) => {
             marginHorizontal: 10,
           }}
         >
-          John Doe
+          {userName}
         </Text>
         <View style={{ flex: 1, backgroundColor: "#fff", paddingTop: 10 }}>
           <DrawerItemList {...props} />

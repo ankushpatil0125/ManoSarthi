@@ -95,8 +95,8 @@ const SelectService = {
         }
         else{
           tx.executeSql(
-            `SELECT * FROM SurveyQuestion where type=? AND minage > ?`,
-            [type, 61],
+            `SELECT * FROM SurveyQuestion where type=? AND minage = ? AND maxage=?`,
+            [type, 61,110],
             (_, { rows }) => {
               const patients = rows._array;
               resolve(patients);
