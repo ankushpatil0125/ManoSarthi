@@ -65,41 +65,41 @@ const ChangePasswordScreen = ({navigation}) => {
     }
   };
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingHorizontal: 30,
-          paddingTop: 20,
-          paddingBottom: 30,
-          justifyContent: "center",
-        }}
-      >
-        {/* Language Toggle Button */}
-        <View
-          style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc",justifyContent: "center",alignItems:'center' }}
-        >
-          <LanguageToggleButton
-            onPress={handleLanguageToggle}
-            selectedLanguage={selectedLanguage}
-          />
-        </View>
+//   return (
+//     <KeyboardAvoidingView
+//       behavior={Platform.OS === "ios" ? "padding" : "height"}
+//       style={{
+//         flex: 1,
+//         backgroundColor: "white",
+//         alignItems: "center",
+//         justifyContent: "center",
+//       }}
+//     >
+//       <ScrollView
+//         contentContainerStyle={{
+//           flexGrow: 1,
+//           paddingHorizontal: 30,
+//           paddingTop: 20,
+//           paddingBottom: 30,
+//           justifyContent: "center",
+//         }}
+//       >
+//         {/* Language Toggle Button */}
+//         <View
+//           style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc",justifyContent: "center",alignItems:'center' }}
+//         >
+//           <LanguageToggleButton
+//             onPress={handleLanguageToggle}
+//             selectedLanguage={selectedLanguage}
+//           />
+//         </View>
 
-        {/* Login to Your Account */}
-        <View style={{ alignItems: "center" }}>
-          <Text style={{ fontSize: 17, fontWeight: "bold", color: "black" }}>
-            {i18n.t("Change Password")}
-          </Text>
-        </View>
+//         {/* Login to Your Account */}
+//         <View style={{ alignItems: "center" }}>
+//           <Text style={{ fontSize: 17, fontWeight: "bold", color: "black" }}>
+//             {i18n.t("Change Password")}
+//           </Text>
+//         </View>
 
         {/* Email */}
         <View style={{ marginTop: 20 }}>
@@ -169,36 +169,36 @@ const ChangePasswordScreen = ({navigation}) => {
           </View>
         </View>
 
-        <View style={{ marginTop: 80 }}>
-          <Pressable
-            onPress={handleLogout}
-            style={{
-              width: 200,
-              backgroundColor: "#87CEEB",
-              borderRadius: 6,
-              marginLeft: "auto",
-              marginRight: "auto",
-              padding: 15,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                color: "black",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-            >
-              {i18n.t("Change Password")}
-            </Text>
-          </Pressable>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
-  );
-};
+//         <View style={{ marginTop: 80 }}>
+//           <Pressable
+//             onPress={handleLogout}
+//             style={{
+//               width: 200,
+//               backgroundColor: "#87CEEB",
+//               borderRadius: 6,
+//               marginLeft: "auto",
+//               marginRight: "auto",
+//               padding: 15,
+//             }}
+//           >
+//             <Text
+//               style={{
+//                 textAlign: "center",
+//                 color: "black",
+//                 fontSize: 16,
+//                 fontWeight: "bold",
+//               }}
+//             >
+//               {i18n.t("Change Password")}
+//             </Text>
+//           </Pressable>
+//         </View>
+//       </ScrollView>
+//     </KeyboardAvoidingView>
+//   );
+// };
 
-export default ChangePasswordScreen;
+// export default ChangePasswordScreen;
 
 const styles = StyleSheet.create({});
 
