@@ -105,17 +105,37 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
     setShowModal(false);
   };
 
-  const handleUpdate = (supervisorId) => {
+  const handleUpdateButton = (supervisorId) => {
     console.log("supervisorId", supervisorId);
     setShowModal(true);
     setSelectedSupervisorId(supervisorId);
   };
 
   const handleDelete = (supervisorId) => {
-    console.log("supervisorId", supervisorId);
+    const confirmation = window.confirm("Are you sure you want to delete the actor?");
+    if (confirmation) {
+        console.log("Delete supervisorId", supervisorId);
+        setSelectedSupervisorId(supervisorId);
+        const Id = {
+            id: supervisorId,
+        };
 
-    setSelectedSupervisorId(supervisorId);
-  };
+        try {
+            setLoading(true);
+            const response = AdminService.deleteSupervisor(Id);
+            if (response) {
+                alert("Supervisor Deleted Successfully");
+                setLoading(false);
+            }
+        } catch (error) {
+            setLoading(false);
+            alert(error.response.data.message);
+        }
+    } else {
+        // Do nothing or provide feedback to the user.
+        console.log("Deletion canceled");
+    }
+};
 
   const handleUpdateSupervisor = () => {
     // Call update worker API with selected village code
@@ -124,16 +144,24 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
 
     const reasignSupervisor = {
       id: selectedSupervisorId,
-      subdistrict: {
+      subdistrictcode: {
         code: selectedSubDistrict,
       },
     };
-    setLoading(true);
-    AdminService.reassignSupervisor(reasignSupervisor);
+    try {
+      setLoading(true);   
+      const response = AdminService.reassignSupervisor(reasignSupervisor);
+      if (response) {
+        alert("Supervidor Reassigned Successfully");
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      alert(error.response.data.message);
+    }
 
     // Your update worker API call here
     setShowModal(false); // Close modal after updating
-    setLoading(false);
   };
 
   const handlePrevPage = () => {
@@ -153,16 +181,16 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
           <thead className="bg-gray-200">
             <tr>
               <th className="border border-gray-400 px-4 py-2">
-                {t("UpdateDoctorSupervisor.Supervisor Name")}
+                {t("UpdateDeleteActor.Supervisor Name")}
               </th>
               <th className="border border-gray-400 px-4 py-2">
-                {t("UpdateDoctorSupervisor.District")}
+                {t("UpdateDeleteActor.District")}
               </th>
               <th className="border border-gray-400 px-4 py-2">
-                {t("UpdateDoctorSupervisor.Subdistrict")}
+                {t("UpdateDeleteActor.Subdistrict")}
               </th>
               <th className="border border-gray-400 px-4 py-2">
-                {t("UpdateDoctorSupervisor.Action")}
+                {t("UpdateDeleteActor.Action")}
               </th>
             </tr>
           </thead>
@@ -182,7 +210,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
                   <button
                     onClick={() => {
                       if (action === "Reassign") {
-                        handleUpdate(supervisor.id);
+                        handleUpdateButton(supervisor.id);
                       } else if (action === "Delete") {
                         handleDelete(supervisor.id);
                       }
@@ -203,7 +231,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
-          {t("UpdateDoctorSupervisor.Previous")}
+          {t("UpdateDeleteActor.Previous")}
         </button>
 
         <button
@@ -211,7 +239,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
-          {t("UpdateDoctorSupervisor.Next")}
+          {t("UpdateDeleteActor.Next")}
         </button>
       </div>
 

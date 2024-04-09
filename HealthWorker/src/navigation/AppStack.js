@@ -8,14 +8,15 @@ import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 // import TabNavigation from "./TabNavigation";
 import StackNavigator from "./StackNavigator";
+import PrescriptionScreen from "../screens/PrescriptionScreen";
 const Drawer = createDrawerNavigator();
 const AppStack = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
-        drawerActiveBackgroundColor:'#87CEEB',
-        drawerActiveTintColor:'#fff',
+        drawerActiveBackgroundColor: "#87CEEB",
+        drawerActiveTintColor: "#fff",
         drawerLabelStyle: { marginLeft: -25 },
         // headerStyle:{backgroundColor:'#87CEEB'},
       }}
@@ -27,12 +28,27 @@ const AppStack = () => {
           drawerIcon: () => <Entypo name="home" size={20} color="black" />,
         }}
       />
-      <Drawer.Screen name="Profile" component={ProfileScreen} options={{
-          drawerIcon: () => <AntDesign name="user" size={24} color="black" />,
-        }}/>
-      <Drawer.Screen name="Message" component={MessageScreen} options={{
+      <Drawer.Screen
+        name="Prescription"
+        component={PrescriptionScreen}
+        options={{
           drawerIcon: () => <Entypo name="message" size={24} color="black" />,
-        }}/>
+        }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          drawerIcon: () => <AntDesign name="user" size={24} color="black" />,
+        }}
+      />
+      <Drawer.Screen
+        name="Message"
+        component={MessageScreen}
+        options={{
+          drawerIcon: () => <Entypo name="message" size={24} color="black" />,
+        }}
+      />
     </Drawer.Navigator>
   );
 };

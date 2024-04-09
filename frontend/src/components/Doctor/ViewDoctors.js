@@ -3,12 +3,12 @@ import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import LoadingComponent from "../Loading/LoadingComponent";
 
-const ViewDoctors = ({  district,subdistrictcode ,action}) => {
+const ViewDoctors = ({ district, subdistrictcode, action }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageDoctor, setCurrentPageDoctor] = useState(0);
   const [data, setData] = useState([]);
-  const {t} = useTranslation("global");
-  const [loading,setLoading] = useState(false);
+  const { t } = useTranslation("global");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -27,7 +27,7 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
           })
           .catch((error) => {
             alert(error.response.data.message);
-        setLoading(false);
+            setLoading(false);
           });
       } else {
         setCurrentPageDoctor(0);
@@ -39,11 +39,11 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
       }
     } catch (error) {
       alert(error.response.data.message);
-        setLoading(false);
+      setLoading(false);
     }
   };
   useEffect(() => {
-    setLoading (true);
+    setLoading(true);
     if (subdistrictcode) {
       AdminService.getAllSubDistrictDoctors(subdistrictcode)
         .then((response) => {
@@ -52,11 +52,11 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
         })
         .catch((error) => {
           alert(error.response.data.message);
-        setLoading(false);
+          setLoading(false);
         });
     }
   }, [subdistrictcode]);
-  
+
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
     setCurrentPageDoctor((prevPage) => Math.max(prevPage - 1, 0));
@@ -66,17 +66,25 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
     setCurrentPage((prevPage) => prevPage + 1);
     setCurrentPageDoctor((prevPage) => prevPage + 1);
   };
-  if(loading) return <LoadingComponent/>
+  if (loading) return <LoadingComponent />;
   return (
     <div>
       <div className="data">
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Doctor Name')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.District')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Subdistrict')}</th>
-              <th className="border border-gray-400 px-4 py-2">{t('UpdateDoctorSupervisor.Action')}</th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDeleteActor.Doctor Name")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDeleteActor.District")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDeleteActor.Subdistrict")}
+              </th>
+              <th className="border border-gray-400 px-4 py-2">
+                {t("UpdateDeleteActor.Action")}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -93,7 +101,7 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  {action}
+                    {action}
                   </button>
                 </td>
               </tr>
@@ -107,7 +115,7 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
-          {t('UpdateDoctorSupervisor.Previous')}
+          {t("UpdateDeleteActor.Previous")}
         </button>
 
         <button
@@ -115,7 +123,7 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
-          {t('UpdateDoctorSupervisor.Next')}
+          {t("UpdateDeleteActor.Next")}
         </button>
       </div>
     </div>

@@ -21,28 +21,28 @@ const AddDoctorComponent = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   //Fetch district options
-  //   AdminService.getDistrict(actor, false)
-  //     .then((response) => {
-  //       setDistrictOptions(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching district options:", error);
-  //     });
-  // }, [actor]);
-  const handleActor = () => {
-    setLoading(true);
+  useEffect(() => {
+    //Fetch district options
     AdminService.getDistrict(actor, false)
       .then((response) => {
         setDistrictOptions(response.data);
-        setLoading(false);
       })
       .catch((error) => {
-        alert(error.response.data.message);
-        setLoading(false);
+        console.error("Error fetching district options:", error);
       });
-  };
+  }, [actor]);
+  // const handleActor = () => {
+  //   setLoading(true);
+  //   AdminService.getDistrict(actor, false)
+  //     .then((response) => {
+  //       setDistrictOptions(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       alert(error.response.data.message);
+  //       setLoading(false);
+  //     });
+  // };
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
@@ -55,7 +55,7 @@ const AddDoctorComponent = () => {
         setLoading(false);
       })
       .catch((error) => {
-        alert(error.response.data.message);        
+        alert(error.response.data.message);
         setLoading(false);
       });
   };
@@ -106,7 +106,7 @@ const AddDoctorComponent = () => {
       }
     } catch (error) {
       // console.error(`Error during adding Actor:", ${error}`);
-      alert(error.response.data.message);      
+      alert(error.response.data.message);
       setLoading(false);
     }
   };
@@ -129,7 +129,7 @@ const AddDoctorComponent = () => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-              onClick={handleActor}
+              // onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>

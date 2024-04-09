@@ -100,8 +100,8 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
     SupervisorService.updateHealthWorker(reasignHealthWorker);
 
     // Your update worker API call here
-    setShowModal(false); // Close modal after updating
     setLoading(false);
+    setShowModal(false); // Close modal after updating
   };
 
   const handlePrevPage = () => {
