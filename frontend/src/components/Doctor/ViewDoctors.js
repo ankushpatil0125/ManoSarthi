@@ -122,7 +122,7 @@ import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import LoadingComponent from "../Loading/LoadingComponent";
 
-const ViewDoctors = ({  district,subdistrictcode ,action}) => {
+const ViewDoctors = ({ district, subdistrictcode, action }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const { t } = useTranslation("global");
@@ -211,7 +211,7 @@ const ViewDoctors = ({  district,subdistrictcode ,action}) => {
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  {action}
+                    {action}
                   </button>
                 </td>
               </tr>

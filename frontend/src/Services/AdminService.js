@@ -78,7 +78,7 @@ const AdminService = {
     }
   },
 
-  reassignSupervisor: async(reasignSupervisor) =>{
+  reassignSupervisor: async (reasignSupervisor) => {
     try {
       const response = await axios.put(
         BASE_URL + "admin/reassign-supervisor",
@@ -97,7 +97,25 @@ const AdminService = {
       // throw error;
       throw error.response.data.message;
     }
-
+  },
+  deleteSupervisor: async (Id) => {
+    try {
+      const response = await axios.delete(
+        BASE_URL + "admin/supervisor",
+        {
+            data: Id,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getToken()}`,
+            },
+        }
+    );
+      return response;
+    } catch (error) {
+      console.error("Service: Error Reassigning Supervisor: ", error);
+      // throw error;
+      throw error;
+    }
   },
   getDistrict: async (role, assigned) => {
     try {

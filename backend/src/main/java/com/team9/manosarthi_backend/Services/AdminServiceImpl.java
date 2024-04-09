@@ -171,12 +171,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Supervisor ReassignSupervisor(Supervisor updatedSupervisor) {
         // Retrieve the existing worker from the database
-        System.out.println("updated details"+updatedSupervisor.getId());
-        System.out.println("exst sup"+supervisorRepository.findById(updatedSupervisor.getId()));
+        System.out.println("updatedSupervisor.getId() "+updatedSupervisor.getId());
         Supervisor existingSupervisor = supervisorRepository.findById(updatedSupervisor.getId()).orElse(null);
-
-        System.out.println(existingSupervisor);
-
+        System.out.println("existingSupervisor"+existingSupervisor);
+        System.out.println("updated details"+updatedSupervisor.getFirstname());
         if(existingSupervisor!=null) {
             //you can update subdistrict code only in reassignment
             System.out.println("updatedSupervisor.getSubdistrictcode() "+updatedSupervisor.getSubdistrictcode());
