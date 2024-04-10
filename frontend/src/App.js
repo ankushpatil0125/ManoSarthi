@@ -126,7 +126,7 @@ const App = () => {
             }
           />
           <Route
-            path="/add-prescription"
+            path="/add-prescription/:patient_id"
             element={
               <PrivateRoute type="add-prescription">
                 <AddPrescription />

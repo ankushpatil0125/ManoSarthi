@@ -157,14 +157,14 @@ const PatientDetails = () => {
                       (question, index) => (
                         <div className="flex-wrap" key={index}>
                           <p className="leading-relaxed font-bold">
-                            Questionaire Question {index} :
+                             Question {index+1} :
                             {question?.questionarrie?.question}
                           </p>
                           <p className="leading-relaxed font-bold">
-                            Questionaire Answer {index}: {question?.question_ans}
+                             Answer: {question?.question_ans}
                           </p>
                           <p className="leading-relaxed font-bold">
-                            Questionaire Default Answer {index++} :
+                             Default Answer:
                             {question?.questionarrie?.default_ans}
                           </p>
                         </div>
@@ -203,11 +203,11 @@ const PatientDetails = () => {
               <div key={index} className="py-8 flex flex-wrap md:flex-nowrap border-4 border-black-200" >
                 <div className="md:flex-grow">
                   <p className="leading-relaxed">
-                    Medical Questionaire Question :
+                    Question {index+1}:
                     {medical?.medicalquest?.question}
                   </p>
                   <p className="leading-relaxed">
-                    Medical Questionaire Answer: {medical?.question_ans}
+                    Answer: {medical?.question_ans}
                   </p>
                 </div>
               </div>
@@ -215,9 +215,9 @@ const PatientDetails = () => {
           </div>
         </div>
         <div class="pb-5 flex justify-center items-center">
-          <Link to="/add-prescription">
+          <Link to={`/add-prescription/${patientId}`}>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Add Priscription
+              Add Prescription
             </button>
           </Link>
         </div>

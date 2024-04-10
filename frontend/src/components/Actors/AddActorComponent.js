@@ -22,33 +22,33 @@ const AddDoctorComponent = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if(actor) handleActor();
-  }, [actor]);
-
   // useEffect(() => {
-  //   //Fetch district options
-  //   AdminService.getDistrict(actor, false)
-  //     .then((response) => {
-  //       setDistrictOptions(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching district options:", error);
-  //     });
+  //   if(actor) handleActor();
   // }, [actor]);
 
-  const handleActor = () => {
-    setLoading(true);
+  useEffect(() => {
+    //Fetch district options
     AdminService.getDistrict(actor, false)
       .then((response) => {
         setDistrictOptions(response.data);
-        setLoading(false);
       })
       .catch((error) => {
-        alert(error.response.data.message);
-        setLoading(false);
+        console.error("Error fetching district options:", error);
       });
-  };
+  }, [actor]);
+
+  // const handleActor = () => {
+  //   setLoading(true);
+  //   AdminService.getDistrict(actor, false)
+  //     .then((response) => {
+  //       setDistrictOptions(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       alert(error.response.data.message);
+  //       setLoading(false);
+  //     });
+  // };
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
