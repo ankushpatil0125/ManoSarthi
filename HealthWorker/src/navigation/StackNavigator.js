@@ -16,14 +16,14 @@ const StackNavigator = () => {
   return (
     <PatientProvider>
       <Stack.Navigator
-        screenOptions={{ title: "",
-        // headerStyle: {
-        //   backgroundColor:"#87CEEB"
-        // },
-        headerTintColor: '#87CEEB',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        }, }}
+        screenOptions={{
+          title: "",
+          headerStyle:{
+            backgroundColor:'#fff',
+            shadowColor:'#fff',
+            elevation:0, 
+          }
+        }}
       >
         {/* <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}
         <Stack.Screen name="HomeScreen" component={HomeScreen} />

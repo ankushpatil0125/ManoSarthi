@@ -14,6 +14,7 @@ import SyncDataService from "../Services/SyncDataService";
 const CustomDrawer = (props) => {
   const {logout,userName} = useContext(AuthContext);
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
+  // console.log("USername: " , userName)
   handleSync = async () => {
     console.log("Before Syncing :");
     SyncDataService.registrationData();

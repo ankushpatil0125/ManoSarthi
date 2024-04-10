@@ -64,7 +64,7 @@ const SelectService = {
     });
   },
 
-  getAllQuestions: (age,type) => {
+  getAllQuestions: (age, type) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         if (age >= 20 && age <= 40) {
@@ -79,8 +79,7 @@ const SelectService = {
               reject("Error fetching Questions: " + error);
             }
           );
-        }
-        else if(age >=41 && age <= 60){
+        } else if (age >= 41 && age <= 60) {
           tx.executeSql(
             `SELECT * FROM SurveyQuestion where type=? AND minage=? AND maxage=?`,
             [type, 41, 60],
@@ -92,11 +91,10 @@ const SelectService = {
               reject("Error fetching Questions: " + error);
             }
           );
-        }
-        else{
+        } else {
           tx.executeSql(
             `SELECT * FROM SurveyQuestion where type=? AND minage = ? AND maxage=?`,
-            [type, 61,110],
+            [type, 61, 110],
             (_, { rows }) => {
               const patients = rows._array;
               resolve(patients);
@@ -214,6 +212,24 @@ const SelectService = {
           },
           (_, error) => {
             reject("Error fetching medical_history_answers: " + error);
+          }
+        );
+      });
+    });
+  },
+  getWorkerDetail: async () => {
+    // console.log("Inside getAllAabhaIdInfo");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM profile_details_table",
+          [],
+          (_, { rows }) => {
+            const entries = rows._array; // Renamed from patients to entries
+            resolve(entries);
+          },
+          (_, error) => {
+            reject("Error fetching profile_details_table: " + error.message); // Improved error message
           }
         );
       });
