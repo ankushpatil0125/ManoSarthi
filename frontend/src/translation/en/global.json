@@ -95,5 +95,8 @@
     "Change Password": "Change Password",
     "Doctor Profile": "Doctor Profile",
     "Supervisor Profile": "Supervisor Profile"
+  },
+  "ViewPatientDetails" : {
+    "Patient Details": "Patient Details"
   }
 }

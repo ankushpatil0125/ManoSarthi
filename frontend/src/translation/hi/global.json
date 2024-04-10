@@ -95,5 +95,9 @@
     "Change Password": "पासवर्ड बदलें",
     "Doctor Profile": "डॉक्टर प्रोफ़ाइल",
     "Supervisor Profile": "सुपरवाइजर प्रोफ़ाइल"
+  },
+
+  "ViewPatientDetails" : {
+    "Patient Details": "रोगी विवरण"
   }
 }

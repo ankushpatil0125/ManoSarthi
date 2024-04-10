@@ -19,6 +19,7 @@ const AddPrescription = () => {
   const [loading, setLoading] = useState(false);
   const [selectedValues, setSelectedValues] = useState([]);
   let { patient_id } = useParams();
+  
 
   useEffect(() => {
     //Fetch district options
@@ -146,7 +147,7 @@ const AddPrescription = () => {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <div className='flex justify-between'>
               <h1 className="text-2xl font-bold mb-3">Prescription Form</h1>
-              <h1 className="text-2xl font-semibold mb-3">Patient ID: {patient_id}</h1>
+              <h1 className="text-lg font-semibold mb-3">Patient ID: {patient_id}</h1>
               </div>
               <div className="max-h-96 overflow-y-auto">
                 <label htmlFor="category" className="block font-semibold">
