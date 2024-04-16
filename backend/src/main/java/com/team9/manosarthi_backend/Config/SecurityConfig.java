@@ -15,12 +15,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
@@ -64,12 +66,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-//                       .requestMatchers("/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**"
+                        ,"/v2/api-docs","/swagger-resources/**","/configuration/**","/swagger-ui/**","/webjars/**","/swagger-ui.html").permitAll()
                         .requestMatchers("/passwordstatus/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
+                        .requestMatchers("/disease/**").permitAll()
+                        .requestMatchers("/disease-category/**").permitAll()
+                        .requestMatchers("/disease-subcategory/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/v3/api-docs").permitAll()
 //                        .requestMatchers("/admin/add").permitAll()
 //                        .requestMatchers("/doctor/**").permitAll()
 
@@ -83,7 +93,6 @@ public class SecurityConfig {
 //                        .requestMatchers("/user/**").hasRole("USER")
 
 //                        .requestMatchers("/auth/login").permitAll()
-//
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

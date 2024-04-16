@@ -22,7 +22,7 @@ const Preview = ({navigation,route}) => {
   const [surveyQuestions, setSurveyQuestions] = useState([]);
   const [surveyQuestionsAnswers, setSurveyQuestionsAnswers] = useState([]);
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
-  
+  const {age} = route.params;
 
   // const navigation = useNavigation();
 
@@ -92,9 +92,10 @@ const Preview = ({navigation,route}) => {
         setMedicalQuestions(medicalQuestionsRes);
 
         const surveyQuestionsRes =
-          await SelectService.getAllQuestions();
+          await SelectService.getAllQuestions(age,"normal");
+          console.log("quesiton surveyQuestionsRes",surveyQuestionsRes);
         setSurveyQuestions(surveyQuestionsRes);
-
+          console.log("quesiton surveyQuestions",surveyQuestions);
         const surveyQuestionsAnswers =
           await SelectService.getAllSurveyQuestionAnswersByAabhaId(aabhaId);
         setSurveyQuestionsAnswers(surveyQuestionsAnswers);

@@ -4,6 +4,7 @@ import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
+import { Image } from "react-bootstrap";
 
 const AddDoctorComponent = () => {
   const [district, setDistrict] = useState("");
@@ -145,10 +146,11 @@ const AddDoctorComponent = () => {
 
   if (loading) return <LoadingComponent />;
   return (
-    <div>
+    <div className="flex ">
       <Header />
 
-      <div className="container mx-auto px-4 mt-28 ">
+      <div className="container mx-auto px-4 flex gap-5">
+        <div className="w-full md:w-1/2">
         <h4 className="text-lg font-semibold mb-4">
           {t("addDoctorSupervisor.Fill The Actor Information")} :
         </h4>
@@ -324,7 +326,17 @@ const AddDoctorComponent = () => {
             {t("addDoctorSupervisor.ADD")}
           </button>
         </form>
+        </div>
+        <div className="w-full md:w-1/2 flex justify-center items-center">
+          <img
+            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg"
+            alt="Designer Life"
+            className="m-12 xl:m-16 w-full"
+          />
+        </div>
       </div>
+      
+      
     </div>
   );
 };

@@ -69,11 +69,6 @@ const Header = () => {
               {t("header.Patient")}
             </Link>
           )}
-          {role === "[ROLE_ADMIN]" && (
-            <Link to="/doctor-supervisor" className="nav-link">
-              {t("Actor.Actions")}
-            </Link>
-          )}
           {role === "[ROLE_SUPERVISOR]" && (
             <Link to="/healthworker-home" className="nav-link">
               {t("Actor.HealthWorker")}

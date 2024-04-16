@@ -50,11 +50,11 @@ const LoginScreen = () => {
         }}
       >
         {/* Language Toggle Button */}
-        <View style={{ marginTop: 10 }}>
-          <LanguageToggleButton
-            onPress={handleLanguageToggle}
-            selectedLanguage={selectedLanguage}
-          />
+        <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc",justifyContent: "center",alignItems:'center' }}>
+        <LanguageToggleButton
+          onPress={handleLanguageToggle}
+          selectedLanguage={selectedLanguage}
+        />
         </View>
 
         {/* Login to Your Account */}

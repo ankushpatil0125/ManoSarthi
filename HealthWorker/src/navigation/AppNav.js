@@ -18,11 +18,11 @@ const checkNetworkConnectivity = async () => {
 };
 
 const AppNav =  () => {
-  const { isLoading, userToken } = useContext(AuthContext);
+  const { isLoading, userToken, changePassword} = useContext(AuthContext);
   const [isConnected, setIsConnected] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [syncButton, setsyncButton] = useState(true);
-
+  
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
@@ -51,9 +51,13 @@ const AppNav =  () => {
   }
   // const token = await getToken();
   // console.log("userToken: ", token);
+  console.log("userToken: ", userToken);
+  // console.log('changePassword',changePassword)
+
   return (
     <NavigationContainer>
-      {userToken !== null ? <AppStack /> : <AuthStack />}
+      {/* && changePassword !==false */}
+      {(userToken !== null )  ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

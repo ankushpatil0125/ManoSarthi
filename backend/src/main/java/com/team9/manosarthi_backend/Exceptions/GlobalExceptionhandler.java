@@ -33,14 +33,6 @@ public class GlobalExceptionhandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
-//        Map<String, String> resp = new HashMap<>();
-//        ex.getConstraintViolations().forEach(violation -> {
-//            String fieldName = violation.getPropertyPath().toString();
-//            String message = violation.getMessage();
-//            resp.put(fieldName, message);
-//        });
-//        return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
-        //        return new ResponseEntity<Map<String,String>>(resp, HttpStatus.BAD_REQUEST);
 
         StringBuilder errorMessageBuilder = new StringBuilder();
         ex.getConstraintViolations().forEach(violation->{

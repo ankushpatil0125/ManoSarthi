@@ -7,31 +7,8 @@
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appLog.log.2024-04-01.0.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/appLog.log.2024-04-03.0.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/AdminService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/AdminService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/ChangePasswordService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/ChangePasswordService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/LoginService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/LoginService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/AddActorComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/AddActorComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/AdminOperation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/AdminOperation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/UpdateDeleteActor.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/UpdateDeleteActor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Doctor/PendingPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Doctor/PendingPatient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Doctor/ViewDoctors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Doctor/ViewDoctors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Header/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/DoctorHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/DoctorHomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login/ChangePasswordComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Login/ChangePasswordComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login/LoginComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Login/LoginComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Patient/PatientDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Patient/PatientDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/PrivateRoutes/PrivateRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/PrivateRoutes/PrivateRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Supervisor/AddHealthWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Supervisor/AddHealthWorker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Supervisor/ViewSupervisor.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Supervisor/ViewSupervisor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/i18n.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/translation/en/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/translation/en/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/translation/hi/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/translation/hi/global.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Disease.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Disease.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,11 +53,9 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kuldip&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Nikhil&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -144,13 +119,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-563d888c" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -186,18 +154,16 @@
       <workItem from="1711965973781" duration="15068000" />
       <workItem from="1712118950695" duration="3851000" />
       <workItem from="1712135997179" duration="25825000" />
-      <workItem from="1712210561930" duration="19543000" />
-      <workItem from="1712316994127" duration="7981000" />
-      <workItem from="1712334065625" duration="2198000" />
-      <workItem from="1712392156377" duration="393000" />
-      <workItem from="1712392637970" duration="7567000" />
-      <workItem from="1712471303240" duration="668000" />
-      <workItem from="1712477825154" duration="11797000" />
-      <workItem from="1712568555128" duration="6315000" />
-      <workItem from="1712682945214" duration="4577000" />
-      <workItem from="1712728783435" duration="1458000" />
-      <workItem from="1712751854659" duration="3687000" />
-      <workItem from="1712825317625" duration="1735000" />
+      <workItem from="1712210561930" duration="4622000" />
+      <workItem from="1712290404075" duration="174000" />
+      <workItem from="1712290752304" duration="362000" />
+      <workItem from="1712291179777" duration="6634000" />
+      <workItem from="1712312349539" duration="2901000" />
+      <workItem from="1712411464237" duration="5798000" />
+      <workItem from="1712427376328" duration="764000" />
+      <workItem from="1712480913824" duration="8648000" />
+      <workItem from="1712572841435" duration="932000" />
+      <workItem from="1712574647107" duration="2026000" />
     </task>
     <servers />
   </component>
@@ -214,5 +180,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
