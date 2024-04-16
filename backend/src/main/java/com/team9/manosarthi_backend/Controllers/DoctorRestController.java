@@ -1,6 +1,8 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
 import com.team9.manosarthi_backend.Entities.Patient;
+import com.team9.manosarthi_backend.Entities.Prescription;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.DoctorFilter;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
@@ -112,7 +114,7 @@ public class DoctorRestController {
         }
     }
     @GetMapping("/patient")
-    public MappingJacksonValue getPatient(@RequestBody Patient patientId,@RequestHeader("Authorization") String authorizationHeader)
+    public MappingJacksonValue getPatient(@RequestParam("patientId") int patientId,@RequestHeader("Authorization") String authorizationHeader)
     {
         System.out.println("Patient "+patientId);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
@@ -120,7 +122,7 @@ public class DoctorRestController {
             String token = authorizationHeader.substring(7);
             String doctorId = helper.getIDFromToken(token);
 
-            Patient patient = doctorService.getPatient(Integer.parseInt(doctorId),patientId.getPatient_id());
+            Patient patient = doctorService.getPatient(Integer.parseInt(doctorId),patientId);
 
 
             Set<String> patientFilterProperties = new HashSet<>();
@@ -170,6 +172,25 @@ public class DoctorRestController {
 
         }
         return null;
+    }
+
+    @PostMapping("/prescription-followup")
+    public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO){
+        try {
+            Prescription prescription = doctorService.givePrescription(patientFollowUpPrescriptionDTO);
+            if(prescription!=null) return true;
+            else return false;
+        }
+        catch (Exception ex)
+        {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while updating worker profile",ex.getMessage());
+        }
+
     }
 
 }

@@ -150,15 +150,19 @@ public class AdminServiceImpl implements AdminService {
 
         if(deleteSupervisor.isPresent())
         {
-            deleteSupervisor.get().setActive(false);
+
             Optional<SubDistrict> subDistrict = subDistrictRepository.findById(deleteSupervisor.get().getSubdistrictcode().getCode());
             subDistrict.ifPresent(temp ->{
                 temp.setSupervisor_count(temp.getSupervisor_count()-1);
                 subDistrictRepository.save(temp);
             });
             String userName = deleteSupervisor.get().getUser().getUsername();
+
             deleteSupervisor.get().setUser(null);
             userRepository.deleteById(userName);
+
+            deleteSupervisor.get().setActive(false);
+            deleteSupervisor.get().setSubdistrictcode(null);
             return supervisorRepository.save(deleteSupervisor.get());
         }
         return null;
@@ -167,10 +171,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Supervisor ReassignSupervisor(Supervisor updatedSupervisor) {
         // Retrieve the existing worker from the database
+        System.out.println("updated details"+updatedSupervisor.getId());
+        System.out.println("exst sup"+supervisorRepository.findById(updatedSupervisor.getId()));
         Supervisor existingSupervisor = supervisorRepository.findById(updatedSupervisor.getId()).orElse(null);
-        System.out.println("updated details"+updatedSupervisor.getFirstname());
+
+        System.out.println(existingSupervisor);
+
         if(existingSupervisor!=null) {
             //you can update subdistrict code only in reassignment
+            System.out.println("updatedSupervisor.getSubdistrictcode() "+updatedSupervisor.getSubdistrictcode());
+            System.out.println("updatedSupervisor.getSubdistrictcode().getcode "+updatedSupervisor.getSubdistrictcode().getCode());
+            System.out.println(" existingSupervisor.getSubdistrictcode().getCode() "+ existingSupervisor.getSubdistrictcode().getCode());
             if (updatedSupervisor.getSubdistrictcode() != null && updatedSupervisor.getSubdistrictcode().getCode() != existingSupervisor.getSubdistrictcode().getCode()) {
                 int oldsubdistcode = existingSupervisor.getSubdistrictcode().getCode();
                 Optional<SubDistrict> oldsubdist = subDistrictRepository.findById(oldsubdistcode);
@@ -186,9 +197,10 @@ public class AdminServiceImpl implements AdminService {
                     existingSupervisor.setSubdistrictcode(subdisttemp);
                 });
                 // Save the updated worker to the database
+                System.out.println("existingSupervisor.get() before save"+existingSupervisor);
                 return supervisorRepository.save(existingSupervisor);
             }
-            System.out.println("updated subdirstrict is not correct");
+            System.out.println("supervisor updated subdirstrict is same ");
             return null;
         }
             else {

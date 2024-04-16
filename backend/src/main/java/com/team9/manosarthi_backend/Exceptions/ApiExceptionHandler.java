@@ -16,10 +16,6 @@ public class ApiExceptionHandler {
         String customMessage = e.getMessage();
         String originalMessage = e.getDetails();
 
-        // Log or handle the exception as needed
-        // You can also create a custom error response object and return it
-
-        // Check if original message is available
         if (originalMessage != null) {
             ApiException apiException = new ApiException(customMessage, originalMessage,HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
