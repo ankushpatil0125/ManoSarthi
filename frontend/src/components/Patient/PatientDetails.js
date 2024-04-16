@@ -14,7 +14,6 @@ const PatientDetails = () => {
   const [village, setVillage] = useState("");
   const [followUpDetails, setFollowUpDetails] = useState([]);
   const [medicalQuesAns, setMedicalQuesAns] = useState([]);
-  const [questionarrieAns, setQuestionarrieAns] = useState([]);
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const { patientId } = location.state;
@@ -51,7 +50,6 @@ const PatientDetails = () => {
         setVillage(response?.data?.village?.name);
         setFollowUpDetails(response?.data?.followUpDetailsList);
         setMedicalQuesAns(response?.data?.medicalQueAnsList);
-        // setQuestionarrieAns(followUpDetails?.questionarrieAnsList);
         setLoading(false);
       } catch (error) {
         alert(error.response.data.message);

@@ -18,6 +18,9 @@ const AddPrescription = () => {
   const [diseaseOptions, setDiseaseOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedValues, setSelectedValues] = useState([]);
+  const [followUp, setFollowUp] = useState('WEEKLY');
+  const [followUpsCount, setFollowUpsCount] = useState(0);
+
   let { patient_id } = useParams();
   
 
@@ -70,6 +73,11 @@ const AddPrescription = () => {
        });
   }
 
+  const handleFollowupChange = (e) => {
+    const selectedOption = e.target.value;
+    setFollowUp(selectedOption);
+  }
+
   const handleAddMedicineFields = () => {
     if(medicineFields.name !== "" && medicineFields.dosage !== "" && medicineFields.timing !== ""){
       if(diseases.length > 0){
@@ -92,16 +100,6 @@ const AddPrescription = () => {
     }));
   };
 
-  // const handleSeletionChange = (e) => {
-  //   const options = e.target.options;
-  //   const selected = [];
-  //   for (let i = 0; i < options.length; i++) {
-  //     if (options[i].selected) {
-  //       selected.push(options[i].value);
-  //     }
-  //   }
-  //   setSelectedValues(selected);
-  // };
 
   const handleDelete = (index) => {
     const updatedMedicines = [...medicines];
@@ -113,30 +111,33 @@ const AddPrescription = () => {
     // if(medicineFields.name !== "" && medicineFields.dosage !== "" && medicineFields.timing !== ""){
     //   medicines.push(medicineFields);
     // }
-    if(medicines.length){
-      const diseasesCodes = diseases.map(disease => disease.value);
-      console.log('Form Submitted:', {patient_id, medicines, diseasesCodes, diseases});
-
-        const prescription_data = {
-          "patient" : {
-            "patient_id" : patient_id
-          },
-          "followupDetails" : {
-            // "follow_up_id" : follow_up_id
-          },
-          "Disease" : {
-            "disease_code" : diseasesCodes
-          },
-          "Medicines":{
-            "medicines" : medicines
-          }
-        }
-
-     alert("Prescription Submitted Successfully!")
-    }
-    else{
+    if(medicines.length === 0){
       alert("Please Add Medicines!")
     }
+    else if (followUpsCount <= 0){
+      alert("Please Add FollowUp details!")
+    }
+    else{
+        const diseasesCodes = diseases.map(disease => disease.value);
+        console.log('Form Submitted:', {patient_id, medicines, diseasesCodes, diseases, followUp, followUpsCount});
+          const prescription_data = {
+            "patient" : {
+              "patient_id" : patient_id
+            },
+            "followupDetails" : {
+              // "follow_up_id" : follow_up_id,
+              "followup_type" : followUp,
+              "followups_count" : followUpsCount
+            },
+            "Disease" : {
+              "disease_code" : diseasesCodes
+            },
+            "Medicines":{
+              "medicines" : medicines
+            }
+          }
+       alert("Prescription Submitted Successfully!")
+      } 
   };
 
   if(loading) return <LoadingComponent/>
@@ -194,21 +195,6 @@ const AddPrescription = () => {
                   onChange={handleDiseases}
                   options={diseaseOptions.map(option => ({ value: option.code, label: option.longDescription }))}
                 />
-
-                {/* <select onChange={handleSeletionChange} multiple>
-                <option value="">Select</option>
-                  {diseaseOptions.map((disease, index) => (
-                  <option key={index} value={disease.code}>
-                  {disease.longDescription}
-                </option>
-              ))}
-                </select>
-
-                <div>
-                  <h3>Selected Values:</h3>
-                  <div>{selectedValues.join(', ')}</div>
-                </div> */}
-
                 <div className="mt-4 mb-4">
                   <label className="block mb-1 font-semibold">Medicine:</label>
                   <input
@@ -272,7 +258,6 @@ const AddPrescription = () => {
                               {/* Using the trash icon for deletion */}
                               <button onClick={() => handleDelete(index)} className="flex items-center text-red-500">
                                   <FaTimes className="mr-2" /> {/* Using the trash icon */}
-                                  
                               </button>
                           </td>
                         </tr>
@@ -280,7 +265,30 @@ const AddPrescription = () => {
                     </tbody>
                   </table>
                 </div>
-
+                <div>
+                  <label htmlFor="followup" className="block font-semibold">
+                      Follow Ups:
+                  </label>
+                  <div className='flex'>
+                    <select
+                      id="followup"
+                      value={followUp}
+                      onChange={handleFollowupChange}
+                      className="block w-40 mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                    >
+                      <option value="WEEKLY">Weekly</option>
+                      <option value="BI_WEEKLY">Bi-Weekly</option>
+                      <option value="MONTHLY">Monthly</option>
+                    </select>
+                    <input
+                        type="number"
+                        placeholder="Follow Ups Count"
+                        className="border ml-3 mt-1 p-2 rounded-md px-2 py-1 w-22"
+                        value={followUpsCount}
+                        onChange={(e) => setFollowUpsCount(e.target.value)}
+                    />
+                  </div>
+                </div>
                 <div className="flex items-center justify-center mt-4">
                   <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
