@@ -370,6 +370,35 @@ const InsertService = {
       });
     });
   },
+   
+  
+  updateWorkerDetails: (workerDetails) => {
+    console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        console.log("in trans inside insertPatientD");
+        tx.executeSql(
+          "UPDATE profile_details_table SET firstname = ?, lastname=?,gender=? where email = ?",
+          [
+            workerDetails.firstName,
+            workerDetails.lastName,
+            workerDetails.gender,
+            workerDetails.email,
+          ],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve("Data updated into profile_details_table successfully");
+            } else {
+              reject("Failed to update data into profile_details_table");
+            }
+          },
+          (_, error) => {
+            reject("Error updating data into profile_details_table: " + error);
+          }
+        );
+      });
+    });
+  },
 };
 
 export default InsertService;

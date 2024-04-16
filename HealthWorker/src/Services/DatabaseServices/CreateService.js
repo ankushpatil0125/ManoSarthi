@@ -167,6 +167,30 @@ const CreateService = {
       });
     });
   },
+
+  createProfileDetailsTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS profile_details_table (
+            firstname TEXT, lastname TEXT,
+            gender TEXT,
+          )`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("profile_details_table table created successfully");
+            } else {
+              resolve("profile_details_table table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating profile_details_table table: " + error);
+          }
+        );
+      });
+    });
+  },
 };
 
 export default CreateService;

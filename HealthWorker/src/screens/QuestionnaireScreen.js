@@ -13,12 +13,12 @@ import PatientContext from "../context/PatientContext"; // Import PatientContext
 import InsertService from "../Services/DatabaseServices/InsertService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 
-const QuestionnaireScreen = ({ navigation }) => {
+const QuestionnaireScreen = ({ navigation,route }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
-
+  const {age} = route.params;
   // State to hold the answers for each question
   const [answers, setAnswers] = useState(
-    Array(surveyquestions.length).fill(null)
+    []
   );
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
 
@@ -50,9 +50,9 @@ const QuestionnaireScreen = ({ navigation }) => {
 
   const fetchSurveyQuestionsFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllQuestions();
+      const data = await SelectService.getAllQuestions(age,"normal");
       setsurveyquestions(data);
-
+      setAnswers(Array(data.length).fill(null));
       console.log("Survey Questions Need To Render: ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
@@ -88,7 +88,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     // Perform any necessary validation before proceeding
     // For example, you can check if all questions are answered
     if (answers.some((answer) => answer === null)) {
-      console.log("Please answer all questions.");
+      Alert.alert("Please answer all questions.");
       return;
     }
 
@@ -111,7 +111,7 @@ const QuestionnaireScreen = ({ navigation }) => {
       // Navigate to the next screen 
       if(unmatchedCount >= 3){
         await InsertService.insertAabhaId(aabhaId,"old");
-        navigation.navigate('MedicalDetails');
+        navigation.navigate('MedicalDetails',{age});
       }
       else{
         await InsertService.insertAabhaId(aabhaId,"new");
