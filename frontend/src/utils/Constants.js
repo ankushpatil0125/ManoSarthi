@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.120.54:9090/";
+export const BASE_URL = "http://192.168.169.199:9090/";
 export const getToken = () => {
     return localStorage.getItem("JWT");
 }

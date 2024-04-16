@@ -85,7 +85,7 @@ const AddDoctorComponent = () => {
         if (response) {
           // Handle successful password change, e.g., display a success message
           alert(`Doctor with name ${actorData.firstname} Added Successfully`);
-          navigate("/doctor-supervisor");
+          navigate("/admin-home");
           setLoading(false);
         } else {
           // Handle password change failure
@@ -98,7 +98,7 @@ const AddDoctorComponent = () => {
           alert(
             `Supervisor with name ${actorData.firstname} Added Successfully`
           );
-          navigate("/doctor-supervisor");
+          navigate("/admin-home");
           setLoading(false);
         } else {
           // Handle password change failure
@@ -113,10 +113,10 @@ const AddDoctorComponent = () => {
   };
   if (loading) return <LoadingComponent />;
   return (
-    <div className="flex ">
+    <div className="flex flex-col md:flex-row">
       <Header />
 
-      <div className="container mx-auto px-4 flex gap-5">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row gap-5">
         <div className="w-full md:w-1/2">
         <h4 className="text-lg font-semibold mb-4">
           {t("addDoctorSupervisor.Fill The Actor Information")} :

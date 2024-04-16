@@ -11,6 +11,11 @@
     "LOGIN": "लॉगिन",
     "Logout": "लॉगआउट",
     "username": "उपयोगकर्ता नाम",
+    "User name": "उपयोगकर्ता नाम",
+  "Enter user name": "उपयोगकर्ता नाम दर्ज करें",
+  "Enter password": "पासवर्ड दर्ज करें",
+  "Forgot-password": "पासवर्ड भूल गए",
+  "Sign in to your Account":"साइन इन टू योर अकाउंट",
     "Password": "पासवर्ड",
     "forgot-password": "पासवर्ड भूल गए हैं",
     "Click_Here": "यहाँ क्लिक करें"

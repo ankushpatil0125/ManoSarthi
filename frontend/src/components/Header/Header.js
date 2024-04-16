@@ -32,12 +32,12 @@ const Header = () => {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top" >
       <Navbar.Brand as={Link} to="/home" onClick={handleLogoClick}>
         <img className="image" src={LOGO_IMAGE} alt="Logo" />
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
+      <Navbar.Toggle  aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse  id="responsive-navbar-nav">
         <Nav className="ms-auto custom-nav">
           {role === "[ROLE_ADMIN]" && (
             <Link to="/admin-home" className="nav-link">

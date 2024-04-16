@@ -27,7 +27,7 @@ const App = () => {
   return (
     <AuthProvider>
     <Router>
-      <div className="App">
+      <div className="App font-[sans-serif]" >
         <Routes>
           <Route path="/" element={<LoginComponent />} />
           <Route
@@ -99,14 +99,14 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/doctor-supervisor"
             element={
               <PrivateRoute type="adminoperation">
                 <AdminOperation />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/update-doctor-supervisor"
             element={

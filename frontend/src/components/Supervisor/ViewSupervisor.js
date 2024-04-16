@@ -92,7 +92,7 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
                   {doctor.subdistrictcode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  <button className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded">
                     Update
                   </button>
                 </td>
@@ -103,7 +103,7 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
       </div>
       <div className="flex gap-2 justify-center">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
@@ -111,7 +111,7 @@ const ViewSupervisor = ({district,subdistrictcode }) => {
         </button>
 
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >

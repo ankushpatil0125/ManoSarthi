@@ -11,6 +11,11 @@
     "LOGIN": "LOGIN",
     "Logout": "Logout",
     "username": "username",
+    "User name": "User name",
+    "Enter user name":"Enter user name",
+    "Enter password":"Enter password",
+    "Forgot-password": "Forgot-password",
+    "Sign in to your Account":"Sign in to your Account",
     "Password": "Password",
     "forgot-password": "Forgot-password",
     "Click_Here": "Click_Here"
