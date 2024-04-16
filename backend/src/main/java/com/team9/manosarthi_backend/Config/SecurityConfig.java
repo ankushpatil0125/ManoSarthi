@@ -71,16 +71,16 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api/v1/auth/**"
                         ,"/v2/api-docs","/swagger-resources/**","/configuration/**","/swagger-ui/**","/webjars/**","/swagger-ui.html").permitAll()
-                        .requestMatchers("/passwordstatus/**").permitAll()
+                        .requestMatchers("/passwordstatus/**").hasAnyRole("DOCTOR","ADMIN","SUPERVISOR","WORKER")
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/subdistrict/**").permitAll()
                         .requestMatchers("/district/**").permitAll()
                         .requestMatchers("/disease/**").permitAll()
                         .requestMatchers("/disease-category/**").permitAll()
                         .requestMatchers("/disease-subcategory/**").permitAll()
-                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/user/change-password").hasAnyRole("DOCTOR","ADMIN","SUPERVISOR","WORKER")
                         .requestMatchers("/v3/api-docs").permitAll()
-//                        .requestMatchers("/admin/add").permitAll()
+
 //                        .requestMatchers("/doctor/**").permitAll()
 
                         .requestMatchers("/worker/**").hasRole("WORKER")

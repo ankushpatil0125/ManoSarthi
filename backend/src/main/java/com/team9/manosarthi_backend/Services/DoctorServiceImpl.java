@@ -57,18 +57,22 @@ public class DoctorServiceImpl implements DoctorService{
     @Override
     public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 
-        patientFollowUpPrescriptionDTO.getPrescription().setDate(Date.valueOf(java.time.LocalDate.now()));
 
-        Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
+        Optional<Patient> gotpatient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
 
-        if(patient.isPresent())
+        if(gotpatient.isPresent())
         {
-            Optional<FollowUpDetails> followUpDetails = followUpDetailsRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getFollowUpDetails().getId());
+            patientFollowUpPrescriptionDTO.getPrescription().setDate(Date.valueOf(java.time.LocalDate.now()));
+
+            Patient patient=gotpatient.get();
+            int followupno=patient.getFollowUpNumber();
+            Optional<FollowUpDetails> followUpDetails = followUpDetailsRepository.findById(followupno);
             if( followUpDetails.isPresent())
             {
+//                patientFollowUpPrescriptionDTO.setFollowUpDetails(followUpDetails.get());
                 if(followUpDetails.get().getFollowUpNo()!=0)    //set previous active prescription to false
                 {
-                    Prescription oldActivePrescription = prescriptionRepository.getActivePrescription(patient.get().getPatient_id());
+                    Prescription oldActivePrescription = prescriptionRepository.getActivePrescription(patient.getPatient_id());
                     oldActivePrescription.setActive(false);
                     prescriptionRepository.save(oldActivePrescription);
                 }
@@ -78,19 +82,21 @@ public class DoctorServiceImpl implements DoctorService{
             {
                 throw new APIRequestException("No followUpDetails with id : "+patientFollowUpPrescriptionDTO.getPrescription().getFollowUpDetails().getId());
             }
+            Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
+
+            for (Medicine medicine : patientFollowUpPrescriptionDTO.getMedicineList())
+            {
+                medicine.setPrescription(newPrescription);
+                medicineRepository.save(medicine);
+            }
+
+
+            return prescriptionRepository.findById(newPrescription.getPrescription_id()).orElse(null) ;
         }
         else {
             throw new APIRequestException("Patient not found with id "+ patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         }
 
-        Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
-        for (Medicine medicine : patientFollowUpPrescriptionDTO.getMedicineList())
-        {
-            medicine.setPrescription(newPrescription);
-            medicineRepository.save(medicine);
-        }
 
-
-        return prescriptionRepository.findById(newPrescription.getPrescription_id()).orElse(null) ;
     }
 }
