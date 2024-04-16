@@ -4,7 +4,7 @@ import Chart from "chart.js/auto"; // Make sure to import Chart.js before using 
 import { Line, Pie } from "react-chartjs-2";
 // import { useTranslation } from "react-i18next";
 
-const Dashboard = () => {
+const AdminHomePage = () => {
   // Sample data for graphs and charts
   const barChartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -77,4 +77,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminHomePage;

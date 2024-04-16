@@ -16,7 +16,7 @@ const AddHealthWorkerComponent = () => {
   const [villagecode, setVillageCode] = useState("");
   const { t } = useTranslation("global");
   const navigate = useNavigate();
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Fetch district options
@@ -39,7 +39,7 @@ const AddHealthWorkerComponent = () => {
       firstname: firstname,
       lastname: lastname,
       gender: gender,
-      dob:dob,
+      dob: dob,
       villagecode: {
         code: villagecode,
       },
@@ -47,7 +47,9 @@ const AddHealthWorkerComponent = () => {
     try {
       // console.log("healthWorker data", healthWorkerData);
       setLoading(true);
-      const response = await SupervisorService.addHealthWorker(healthWorkerData);
+      const response = await SupervisorService.addHealthWorker(
+        healthWorkerData
+      );
       console.log("response", response);
       if (response) {
         alert(
@@ -59,11 +61,11 @@ const AddHealthWorkerComponent = () => {
         alert("Failed to add health worker");
       }
     } catch (error) {
-      alert(error.response.data.details);
+      alert(error.response.data.messagex);
       setLoading(false);
     }
   };
-  if(loading) return <LoadingComponent/>
+  if (loading) return <LoadingComponent />;
   return (
     <div>
       <Header />

@@ -5,7 +5,8 @@
     "About": "अबाउट",
     "Contact": "कॉन्टैक्ट",
     "Dashboard": "डैशबोर्ड",
-    "Profile": "प्रोफ़ाइल"
+    "Profile": "प्रोफ़ाइल",
+    "Patient": "रोगी"
   },
   "login": {
     "LOGIN": "लॉगिन",
@@ -20,7 +21,7 @@
     "Actions": "कर्तव्य",
     "Admin Dashboard": "एडमिन डैशबोर्ड",
     "Add": " जोड़ें",
-    "Update": " अपडेट करें",
+    "Reassign": "पुनः नियुक्ति",
     "Delete": " हटाएं",
     "Add HealthWorker": "स्वास्थ्य कर्मी जोड़ें",
     "Update HealthWorker": "स्वास्थ्य कर्मी अपडेट करें",
@@ -73,7 +74,8 @@
     "Actor": "भूमिका",
     "Delete": "अ‍ॅ‍क‍्‍ट‍र हटाएं",
     "Reassign": "अ‍ॅ‍क‍्‍ट‍र पुनः नियुक्ति ",
-    "Supervisor Name": "सुपरवाइजर नाम"
+    "Supervisor Name": "सुपरवाइजर नाम",
+    "Email": "ईमेल"
   },
   "UpdateHealthworker": {
     "Village": "गाँव",

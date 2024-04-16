@@ -15,8 +15,8 @@ const AdminService = {
       console.log("Service: Before returning response: ", response);
       return response;
     } catch (error) {
-      console.error("Service: Error Adding Doctor: ", error.response.data);
-      throw error.response.data.message;
+      // console.error("Service: Error Adding Doctor: ", error.response.data);
+      throw error;
     }
   },
   addSupervisor: async (supervisorData) => {
@@ -34,9 +34,9 @@ const AdminService = {
       );
       return response;
     } catch (error) {
-      console.error("Service: Error Adding Supervisor: ", error);
+      // console.error("Service: Error Adding Supervisor: ", error);
       // throw error;
-      throw error.response.data.message;
+      throw error;
     }
   },
 
@@ -55,26 +55,24 @@ const AdminService = {
       );
       return response;
     } catch (error) {
-      console.error("Service: Error Reassigning Supervisor: ", error);
+      // console.error("Service: Error Reassigning Supervisor: ", error);
+      console.log("AEERORRRR: ", error);
       // throw error;
-      throw error.response.data.message;
+      throw error;
     }
   },
   deleteSupervisor: async (Id) => {
     try {
-      const response = await axios.delete(
-        BASE_URL + "admin/supervisor",
-        {
-            data: Id,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${getToken()}`,
-            },
-        }
-    );
+      const response = await axios.delete(BASE_URL + "admin/supervisor", {
+        data: Id,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
       return response;
     } catch (error) {
-      console.error("Service: Error Reassigning Supervisor: ", error);
+      // console.error("Service: Error Reassigning Supervisor: ", error);
       // throw error;
       throw error;
     }
@@ -94,8 +92,8 @@ const AdminService = {
 
       return response;
     } catch (error) {
-      console.error("Service: Error Fetching District Options: ", error);
-      throw error.response.data.message;
+      // console.error("Service: Error Fetching District Options: ", error);
+      throw error;
     }
   },
 
@@ -120,8 +118,8 @@ const AdminService = {
 
       return response;
     } catch (error) {
-      console.error("Service: Error Fetching Subdistrict Options:", error);
-      throw error.response.data.message;
+      // console.error("Service: Error Fetching Subdistrict Options:", error);
+      throw error;
     }
   },
 
@@ -141,11 +139,11 @@ const AdminService = {
       console.log("Service: All Doctors In All Districts", response);
       return response;
     } catch (error) {
-      console.error(
-        "Service: Error Fetching All Doctors In All Districts: ",
-        error
-      );
-      throw error.response.data.message;
+      // console.error(
+      //   "Service: Error Fetching All Doctors In All Districts: ",
+      //   error
+      // );
+      throw error;
     }
   },
   getAllDistrictDoctors: async (code, pagenumber) => {
@@ -167,11 +165,11 @@ const AdminService = {
       console.log("Service: All Doctors In Selected District", response);
       return response;
     } catch (error) {
-      console.error(
-        "Service: Error Fetching All Doctors In Selected District: ",
-        error
-      );
-      throw error.response.data.message;
+      // console.error(
+      //   "Service: Error Fetching All Doctors In Selected District: ",
+      //   error
+      // );
+      throw error;
     }
   },
   getAllSubDistrictDoctors: async (code) => {
@@ -189,11 +187,7 @@ const AdminService = {
       console.log("Service: All Doctors In Selected Subdistricts: ", response);
       return response;
     } catch (error) {
-      console.error(
-        "Service: Error Fetching All Doctors In Selected Subdistricts: ",
-        error
-      );
-      throw error.response.data.message;
+      throw error;
     }
   },
 
@@ -213,11 +207,11 @@ const AdminService = {
       console.log("Service: All Supervisors In All Districts: ", response);
       return response;
     } catch (error) {
-      console.error(
-        "Service: Error Fetching All Supervisors In All Districts: ",
-        error
-      );
-      throw error.response.data.message;
+      // console.error(
+      //   "Service: Error Fetching All Supervisors In All Districts: ",
+      //   error
+      // );
+      throw error;
     }
   },
   getAllDistrictSupervisors: async (code, pagenumber) => {
@@ -239,11 +233,11 @@ const AdminService = {
       console.log("Service: All Supervisors In Selected District", response);
       return response;
     } catch (error) {
-      console.error(
-        "Service: Error Fetching All Supervisors In Selected District: ",
-        error
-      );
-      throw error.response.data.message;
+      // console.error(
+      //   "Service: Error Fetching All Supervisors In Selected District: ",
+      //   error
+      // );
+      throw error;
     }
   },
   getAllSubDistrictSupervisors: async (code) => {
@@ -261,11 +255,11 @@ const AdminService = {
       console.log("Service: All Supervisors In Selected Subdistrict", response);
       return response;
     } catch (error) {
-      console.error(
-        "Service: Error Fetching All Supervisors In Selected Subdistrict: ",
-        error
-      );
-      throw error.response.data.message;
+      // console.error(
+      //   "Service: Error Fetching All Supervisors In Selected Subdistrict: ",
+      //   error
+      // );
+      throw error;
     }
   },
 };

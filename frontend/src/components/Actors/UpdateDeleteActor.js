@@ -18,18 +18,27 @@ const UpdateDeleteActor = ({ action }) => {
   // Determine the value based on the action prop
   const valueToPass = action === "Delete" ? "Delete" : "Reassign";
 
+ 
+
   useEffect(() => {
-    if (actor) { // Check if actor is selected
-      setLoading(true);
-      AdminService.getDistrict(actor, true)
-        .then((response) => {
-          setDistrictOptions(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          alert(error.response.data.message);
-          setLoading(false);
-        });
+    // Clear district and subdistrictcode immediately when actor is set
+    setDistrict("");
+    setSubDistrictcode("");
+
+    // Fetch district options only when actor is set
+    const fetchDistrictOptions = async () => {
+      try {
+        // Fetch district options
+        const response = await AdminService.getDistrict(actor, true);
+        setDistrictOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching district options:", error);
+      }
+    };
+
+    // Only run the effect if actor has been set
+    if (actor !== "") {
+      fetchDistrictOptions();
     }
   }, [actor]);
 
@@ -37,15 +46,22 @@ const UpdateDeleteActor = ({ action }) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
     setLoading(true);
-    AdminService.getSubDistrict(selectedDistrict, actor, true)
-      .then((response) => {
-        setSubDistrictOptions(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-        setLoading(false);
-      });
+
+    // Fetch subdistrict options only if both actor and district are selected
+    if (actor !== "" && selectedDistrict !== "") {
+      AdminService.getSubDistrict(selectedDistrict, actor, true)
+        .then((response) => {
+          setSubDistrictOptions(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+          setLoading(false);
+        });
+    } else {
+      alert("Select Actor and District First");
+      setLoading(false);
+    }
   };
 
   const handleSubDistrictChange = (e) => {
@@ -74,7 +90,6 @@ const UpdateDeleteActor = ({ action }) => {
               value={actor}
               onChange={(e) => setActor(e.target.value)}
               className="border border-gray-400 px-2 py-1 rounded-md w-full"
-              // onClick={handleActor}
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
@@ -91,6 +106,7 @@ const UpdateDeleteActor = ({ action }) => {
               id="district"
               value={district}
               onChange={handleDistrictChange}
+              disabled={!actor} // Disable if actor is not selected
               className="border border-gray-400 px-2 py-1 rounded-md w-full"
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
@@ -109,6 +125,7 @@ const UpdateDeleteActor = ({ action }) => {
               id="subdistrictcode"
               value={subdistrictcode}
               onChange={handleSubDistrictChange}
+              disabled={!actor || !district} // Disable if actor or district is not selected
               className="border border-gray-400 px-2 py-1 rounded-md w-full"
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
@@ -140,6 +157,7 @@ const UpdateDeleteActor = ({ action }) => {
                 subdistrictcode={subdistrictcode}
                 action={valueToPass}
                 actor="SUPERVISOR"
+               
               />
             );
           }

@@ -7,13 +7,30 @@
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appLog.log.2024-04-01.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/appLog.log.2024-04-03.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/Services/AdminService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/AdminService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/ChangePasswordService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/ChangePasswordService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Services/LoginService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Services/LoginService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/AddActorComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/AddActorComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/AdminOperation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/AdminOperation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Actors/UpdateDeleteActor.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Actors/UpdateDeleteActor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Doctor/PendingPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Doctor/PendingPatient.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Doctor/ViewDoctors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Doctor/ViewDoctors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HealthWorker/viewHealthWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HealthWorker/viewHealthWorker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Header/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/DoctorHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/DoctorHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login/ChangePasswordComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Login/ChangePasswordComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login/LoginComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Login/LoginComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Patient/PatientDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Patient/PatientDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/PrivateRoutes/PrivateRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/PrivateRoutes/PrivateRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Supervisor/AddHealthWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Supervisor/AddHealthWorker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Supervisor/ViewSupervisor.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Supervisor/ViewSupervisor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/translation/en/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/translation/en/global.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/translation/hi/global.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/translation/hi/global.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,6 +194,10 @@
       <workItem from="1712471303240" duration="668000" />
       <workItem from="1712477825154" duration="11797000" />
       <workItem from="1712568555128" duration="6315000" />
+      <workItem from="1712682945214" duration="4577000" />
+      <workItem from="1712728783435" duration="1458000" />
+      <workItem from="1712751854659" duration="3687000" />
+      <workItem from="1712825317625" duration="1735000" />
     </task>
     <servers />
   </component>

@@ -8,10 +8,9 @@ import OTPComponent from "./components/Login/OTPComponent";
 import AddActorComponent from "./components/Actors/AddActorComponent";
 import DoctorHomePage from "./components/HomePage/DoctorHomePage";
 import ProfileComponent from "./components/Actors/ProfileComponent";
-import AdminHomePage from "./components/HomePage/AdminHomePage";
+import AdminHomePage from "./components/HomePage/AdminHomePage"
 import SupervisorHomePage from "./components/HomePage/SupervisorHomepage";
 import AdminOperation from "./components/Actors/AdminOperation";
-// import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import ErrorPage from "./components/Error/ErrorPage";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
@@ -21,6 +20,7 @@ import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import { AuthProvider } from "./components/Context/AuthContext";
 import PatientDetails from "./components/Patient/PatientDetails";
 import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
+import DoctorOperation from "./components/Doctor/DoctorOperation";
 
 const App = () => {
   return (
@@ -67,10 +67,10 @@ const App = () => {
               }
             />
             <Route
-              path="/doctor-dashboard"
+              path="/doctor-operation"
               element={
-                <PrivateRoute type="doctor-dashboard">
-                  <DoctorHomePage />
+                <PrivateRoute type="doctor-operation">
+                  <DoctorOperation />
                 </PrivateRoute>
               }
             />

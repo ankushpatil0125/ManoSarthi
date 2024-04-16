@@ -5,7 +5,8 @@
     "About": "About Us",
     "Contact": "Contact Us",
     "Dashboard": "Dashboard",
-    "Profile": "Profile"
+    "Profile": "Profile",
+    "Patient":"Patient"
   },
   "login": {
     "LOGIN": "LOGIN",
@@ -20,7 +21,7 @@
     "Actions": "Actions",
     "Admin Dashboard": "Admin Dashboard",
     "Add": "Add",
-    "Update": "Update",
+    "Reassign": "Reassign",
     "Delete": "Delete",
     "Add HealthWorker": "Add HealthWorker",
     "Update HealthWorker": "Update HealthWorker",
@@ -73,7 +74,8 @@
     "Actor": "Actor",
     "Reassign": "Reassign Actor",
     "Delete": "Delete Actor",
-    "Supervisor Name": "Supervisor Name"
+    "Supervisor Name": "Supervisor Name",
+    "Email": "Email"
   },
   "UpdateHealthworker": {
     "Village": "Village",
