@@ -38,7 +38,7 @@ const AdminOperation = () => {
           >
             <div className="card">
               <div className="card-body">
-                <h4>{t("Actor.Update")}</h4>
+                <h4>{t("Actor.Reassign")}</h4>
               </div>
             </div>
           </Link>

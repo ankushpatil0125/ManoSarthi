@@ -2,6 +2,8 @@ package com.team9.manosarthi_backend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +18,12 @@ import lombok.Setter;
 @JsonFilter("VillageJSONFilter")
 public class Village {
 
+    @NotNull(message = "village code cannot be null")
     @Id
     @Column(name = "villagecode")
     private int code;
 
+    @NotBlank(message = "village name cannot be blank")
     @Column(name = "villagename")
     private String name;
 
