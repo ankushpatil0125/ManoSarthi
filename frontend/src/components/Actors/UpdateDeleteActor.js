@@ -163,6 +163,13 @@ const UpdateDeleteActor = ({ action }) => {
           }
         }
       })()}
+      <div className="w-full md:w-1/2 flex justify-center items-center">
+          <img
+            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg"
+            alt="Designer Life"
+            className="m-12 xl:m-16 w-full"
+          />
+        </div>
     </div>
   );
 };
