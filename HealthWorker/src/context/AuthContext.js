@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         const token = await getToken();
         setUserToken(token);
         setUserName(response?.data?.username);
+        // await DropService.dropTables();
         createDatabase().then((message) => {
           console.log(message);
         })
@@ -65,7 +66,6 @@ export const AuthProvider = ({ children }) => {
         // console.log("ChangePassResponse",changepass_response)
         // setChangePassword(changepass_response);
         // console.log("after setting change password",changePassword);
-        // await DropService.dropTables();
         
         setIsLoading(false);
         console.log("Token", getToken());

@@ -58,7 +58,7 @@ const UpdateActor = () => {
     <div className="flex flex-col h-full">
       <Header />
 
-      <div className="flex flex-col items-center justify-center mt-28">
+      <div className="flex flex-col items-center justify-center">
         <h4 className="mb-4 text-xl font-bold">
           {t("UpdateDoctorSupervisor.Reassign")}
         </h4>
@@ -130,11 +130,13 @@ const UpdateActor = () => {
           }
         }
       })()}
-      {/* {actor === "DOCTOR" && actor!=='Select' ? (
-        <ViewDoctors district={district} subdistrictcode={subdistrictcode} />
-      ) : (
-        <ViewSupervisor district={district} subdistrictcode={subdistrictcode} />
-      )} */}
+      <div className="w-full md:w-1/2 flex justify-center items-center">
+          <img
+            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg"
+            alt="Designer Life"
+            className="m-12 xl:m-16 w-full"
+          />
+        </div>
     </div>
   );
 };
