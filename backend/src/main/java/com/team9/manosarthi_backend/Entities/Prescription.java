@@ -2,6 +2,7 @@ package com.team9.manosarthi_backend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@JsonFilter("PrescriptionJSONFilter")
+//@JsonFilter("PrescriptionJSONFilter")
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,8 @@ public class Prescription {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-//    @JsonBackReference
+//    @JsonIgnore
+    @JsonBackReference(value = "patient_pre")
     private Patient patient;
 
     @OneToOne
@@ -37,6 +39,7 @@ public class Prescription {
 //    @OneToMany
 //    @JoinColumn(name="disease_code")
     @ManyToMany
+//    @JsonIgnore
     @JoinTable(name = "patient_disease",
     joinColumns = @JoinColumn(name = "prescription_id"),
     inverseJoinColumns = @JoinColumn(name = "disease_code")

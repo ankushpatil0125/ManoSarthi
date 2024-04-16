@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +24,7 @@ public class DoctorServiceImpl implements DoctorService{
     private MedicineRepository medicineRepository;
     private FollowUpDetailsRepository followUpDetailsRepository;
     private FollowUpScheduleRepository followUpScheduleRepository;
+    private DiseaseRepository diseaseRepository;
 
 
     @Override
@@ -64,13 +62,14 @@ public class DoctorServiceImpl implements DoctorService{
 
 
         System.out.println("patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id()   "+patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
-//        Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
-        Optional<Patient> patient = patientRepository.findById(17);
+        Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
+//        Optional<Patient> patient = patientRepository.findByAabha("7709");
         System.out.println("hello");
         System.out.println("patient "+patient.isPresent());
-//        System.out.println("patient "+patient.get().getEmail());
+//        System.out.println("patient "+patient);
         if(patient.isPresent())
         {
+            System.out.println("byee");
             Patient newPatient = patient.get();
             System.out.println("newPatient"+newPatient.getPatient_id());
 //            System.out.println("Patient "+patient.get());
@@ -105,24 +104,57 @@ public class DoctorServiceImpl implements DoctorService{
             }
 
 
-            Set<Disease> diseaseSet= new HashSet<>(patientFollowUpPrescriptionDTO.getDiseaseList());
-            patientFollowUpPrescriptionDTO.getPrescription().setDisease_code(diseaseSet);
-
+//            Set<Disease> diseaseSet= new HashSet<>(patientFollowUpPrescriptionDTO.getDiseaseList());
+//            System.out.println("diseaseSet"+diseaseSet);
+            Set<Disease> diseasetostore=new HashSet<>();
+            for (Disease disease : patientFollowUpPrescriptionDTO.getDiseaseList()) {
+                System.out.println("Disease"+disease);
+                Optional<Disease> diseasegot=diseaseRepository.findById(disease.getCode());
+                if(diseasegot.isPresent())
+                {
+                    System.out.println("got d"+diseasegot.get());
+                    diseasetostore.add(diseasegot.get());
+                }
+            }
+            System.out.println("diseasetostore"+diseasetostore);
+//            for(Disease disease:patientFollowUpPrescriptionDTO.getDiseaseList())
+//            {
+//                Optional<Disease> temp = diseaseRepository.findById(disease.getCode());
+//                if(temp.isPresent()) {
+//                    patientFollowUpPrescriptionDTO.getPrescription().getDisease_code().add(temp.get());
+//                }
+//                else {
+//                    System.out.println("Invalid disease");
+//                }
+//            }
+            patientFollowUpPrescriptionDTO.getPrescription().setDisease_code(diseasetostore);
+//            System.out.println("disease"+ diseaseRepository.findById(diseaseSet.get(0)));
+//            System.out.println("prescription"+patientFollowUpPrescriptionDTO.getPrescription());
+            System.out.println("Disease");
+//            System.out.println("PRESCRIPTION"+patientFollowUpPrescriptionDTO.getPrescription().getDisease_code());
             Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
             latestFollowUp.get().setPrescription(newPrescription);
             followUpDetailsRepository.save(latestFollowUp.get());
             System.out.println("newPrescription "+newPrescription.getPrescription_id());
-//            for (Medicine medicine : patientFollowUpPrescriptionDTO.getMedicineList())
-//            {
-//                medicine.setPrescription(newPrescription);
-//                medicineRepository.save(medicine);
-//            }
+            for (Medicine medicine : patientFollowUpPrescriptionDTO.getMedicineList())
+            {
+                medicine.setPrescription(newPrescription);
+                medicineRepository.save(medicine);
+            }
             // add follow up schedule
+            System.out.println("HELLO TYPE");
             Date nextDate=null;
-            if(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="WEEKLY")
+            System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
+            if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {
+                System.out.println("nextDate WEEKLY");
                 nextDate = Date.valueOf(LocalDate.now().plusWeeks(1));
+            }
             else if (patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="MONTHLY")
+            {
+                System.out.println("nextDate MONTHLY");
                 nextDate = Date.valueOf(LocalDate.now().plusMonths(1));
+
+            }
             else throw new APIRequestException("Follow Up Type not specified correctly");
 
             patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
@@ -130,9 +162,9 @@ public class DoctorServiceImpl implements DoctorService{
             System.out.println("followUpSchedule  "+followUpSchedule.getId());
 
 
-
-            return prescriptionRepository.findById(newPrescription.getPrescription_id()).orElseThrow(()->  new APIRequestException("Failed to add Prescription"));
-
+            System.out.println("service completed");
+            Prescription prescr= prescriptionRepository.findById(newPrescription.getPrescription_id()).orElseThrow(()->  new APIRequestException("Failed to add Prescription"));
+            return prescr;
 
         }
         else {

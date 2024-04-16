@@ -14,7 +14,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@JsonFilter("QuestionJSONFilter")
+//@JsonFilter("QuestionJSONFilter")
 public class Questionarrie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
