@@ -132,8 +132,6 @@ import LoginService from "../../Services/LoginService";
 import "../../css/LoginComponent.css";
 import { useTranslation } from "react-i18next";
 import LanguageButton from "../Header/LanguageButton";
-import DoctorHomePage from "../HomePage/DoctorHomePage";
-import AdminHomePage from "../HomePage/AdminHomePage";
 import IsPasswordChangeService from "../../Services/IsPasswordChangeService";
 import AuthContext from "../Context/AuthContext";
 import LoadingComponent from "../Loading/LoadingComponent";
@@ -159,28 +157,34 @@ const LoginComponent = () => {
 
     try {
       setLoading(true);
-      const response = await LoginService.AddUser(requestData);
+      const response = await LoginService.userLogin(requestData);
 
-      console.log("response jwt", response);
+      console.log("Login API Response: ", response);
       if (response) {
         // Handle successful login, e.g., redirect to another page
-        alert("Login successful");
+        alert("Login Successful...");
         localStorage.setItem("JWT", response.data.jwtToken);
         setJWT(response.data.jwtToken);
         localStorage.setItem("ROLE", response.data.role);
-        localStorage.setItem("User_Id", response.data.user_id);
+        // localStorage.setItem("User_Id", response.data.user_id);
 
-        console.log("user response.data ", response.data);
+        // console.log("User Response Data ", response.data);
 
         const changepass_response =
           await IsPasswordChangeService.isPasswordChanged(response);
 
-        console.log("Change pas", changepass_response);
+        console.log(
+          "Is ChangePassword Field API Response: ",
+          changepass_response
+        );
 
-        if (changepass_response === false) navigate("/change-password");
-        else {
+        if (changepass_response === false) {
+          navigate("/change-password");
+        } else {
           if (response.data.role === "[ROLE_ADMIN]") navigate("/admin-home");
           else if (response.data.role === "[ROLE_DOCTOR]") {
+            console.log("role", response.data.role);
+
             navigate("/doctor-home", { replace: true });
           } else {
             navigate("/supervisor-home", { replace: true });

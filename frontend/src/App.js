@@ -6,24 +6,23 @@ import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent"
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
 import OTPComponent from "./components/Login/OTPComponent";
 import AddActorComponent from "./components/Actors/AddActorComponent";
-import UpdateActor from "./components/Actors/UpdateActor";
 import DoctorHomePage from "./components/HomePage/DoctorHomePage";
 import ProfileComponent from "./components/Actors/ProfileComponent";
-import AdminHomePage from "./components/HomePage/AdminHomePage";
+import AdminHomePage from "./components/HomePage/AdminHomePage"
 import SupervisorHomePage from "./components/HomePage/SupervisorHomepage";
 import AdminOperation from "./components/Actors/AdminOperation";
-// import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import ErrorPage from "./components/Error/ErrorPage";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
 import UpdateHealthWorkerpage from "./components/UpdateHealthWorkerpage";
 import PendingPatient from "./components/Doctor/PendingPatient";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
-import  { AuthProvider } from "./components/Context/AuthContext";
+import { AuthProvider } from "./components/Context/AuthContext";
 import PatientDetails from "./components/Patient/PatientDetails";
+import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
+import DoctorOperation from "./components/Doctor/DoctorOperation";
 
 const App = () => {
-  
   return (
     <AuthProvider>
     <Router>
