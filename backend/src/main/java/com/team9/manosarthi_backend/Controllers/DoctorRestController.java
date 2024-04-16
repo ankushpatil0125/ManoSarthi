@@ -176,8 +176,11 @@ public class DoctorRestController {
 
     @PostMapping("/prescription-followup")
     public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO){
+//        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
+        System.out.println("/doctor/prescription-followup");
         try {
             Prescription prescription = doctorService.givePrescription(patientFollowUpPrescriptionDTO);
+            System.out.println("prescription  "+prescription);
             if(prescription!=null) return true;
             else return false;
         }

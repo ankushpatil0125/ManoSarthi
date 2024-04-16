@@ -16,7 +16,8 @@ public class PatientFollowUpPrescriptionDTO {
 //    private Patient patient;
 //    private FollowUpDetails followUpDetails;
     private Prescription prescription;
-    private List<Medicine> medicineList;
+//    private List<Medicine> medicineList;
     private FollowUpSchedule followUpSchedule;
+    private List<Disease> diseaseList;
 
 }

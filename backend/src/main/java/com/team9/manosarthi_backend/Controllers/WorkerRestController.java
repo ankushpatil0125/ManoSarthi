@@ -7,6 +7,8 @@ import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
+import com.team9.manosarthi_backend.Filters.SupervisorFilter;
+import com.team9.manosarthi_backend.Filters.WorkerFilter;
 import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
@@ -22,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import com.team9.manosarthi_backend.security.JwtHelper;
 
@@ -41,6 +44,57 @@ public class WorkerRestController {
         this.questionarrieService = questionarrieService;
         this.helper = helper;
     }
+
+    @GetMapping("/view-profile")
+    public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                // Extract the token part after "Bearer "
+                String token = authorizationHeader.substring(7);
+                String userid = helper.getIDFromToken(token);
+//                Optional<Supervisor> supervisor = supervisorRepository.findById(Integer.parseInt(userid));
+                Worker worker = workerService.viewProfile(Integer.parseInt(userid));
+
+                Set<String> workerFilterProperties = new HashSet<>();
+                workerFilterProperties.add("firstname");
+                workerFilterProperties.add("lastname");
+                workerFilterProperties.add("email");
+                workerFilterProperties.add("villagecode");
+                workerFilterProperties.add("user");
+                workerFilterProperties.add("gender");
+                workerFilterProperties.add("dob");
+
+
+                Set<String> villageFilterProperties = new HashSet<>();
+                villageFilterProperties.add("name");
+                villageFilterProperties.add("subDistrict");
+
+                Set<String> subDistrictFilterProperties = new HashSet<>();
+//                subDistrictFilterProperties.add("code");
+                subDistrictFilterProperties.add("name");
+                subDistrictFilterProperties.add("district");
+
+                Set<String> districtFilterProperties = new HashSet<>();
+                villageFilterProperties.add("name");
+
+                Set<String> userFilterProperties = new HashSet<>();
+                userFilterProperties.add("username");
+
+                WorkerFilter<Worker> workerFilter = new WorkerFilter<>(worker);
+
+                return workerFilter.getWorkerFilter(workerFilterProperties,villageFilterProperties, subDistrictFilterProperties, userFilterProperties);
+
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            if( ex instanceof APIRequestException ) throw new APIRequestException(ex.getMessage());
+            else throw new APIRequestException("Error while getting worker details",ex.getMessage());
+        }
+    }
+
 
     @PutMapping("/updateworker")
     public ResponseEntity<MappingJacksonValue> UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
