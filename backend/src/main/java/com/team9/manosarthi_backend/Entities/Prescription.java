@@ -26,7 +26,7 @@ public class Prescription {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Patient patient;
 
     @OneToOne
