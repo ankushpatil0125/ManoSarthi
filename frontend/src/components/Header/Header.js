@@ -33,9 +33,19 @@ const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
-      <Navbar.Brand as={Link} to="/home" onClick={handleLogoClick}>
-        <img className="image" src={LOGO_IMAGE} alt="Logo" />
-      </Navbar.Brand>
+      {localStorage.getItem("ROLE") === "[ROLE_ADMIN]" ? (
+        <Navbar.Brand as={Link} to="/admin-home" onClick={handleLogoClick}>
+          <img className="image" src={LOGO_IMAGE} alt="Logo" />
+        </Navbar.Brand>
+      ) : localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" ? (
+        <Navbar.Brand as={Link} to="/doctor-home" onClick={handleLogoClick}>
+          <img className="image" src={LOGO_IMAGE} alt="Logo" />
+        </Navbar.Brand>
+      ) : (
+        <Navbar.Brand as={Link} to="/supervisor-home" onClick={handleLogoClick}>
+          <img className="image" src={LOGO_IMAGE} alt="Logo" />
+        </Navbar.Brand>
+      )}
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ms-auto custom-nav">
@@ -55,8 +65,8 @@ const Header = () => {
             </Link>
           )}
           {role === "[ROLE_DOCTOR]" && (
-            <Link to="/doctor-dashboard" className="nav-link">
-              {t("header.Dashboard")}
+            <Link to="/doctor-operation" className="nav-link">
+              {t("header.Patient")}
             </Link>
           )}
           {role === "[ROLE_SUPERVISOR]" && (
@@ -82,6 +92,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-
