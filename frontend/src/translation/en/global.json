@@ -74,7 +74,8 @@
     "Actor": "Actor",
     "Reassign": "Reassign Actor",
     "Delete": "Delete Actor",
-    "Supervisor Name": "Supervisor Name"
+    "Supervisor Name": "Supervisor Name",
+    "Email": "Email"
   },
   "UpdateHealthworker": {
     "Village": "Village",

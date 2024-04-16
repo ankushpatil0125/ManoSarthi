@@ -93,26 +93,24 @@ const AdminService = {
       );
       return response;
     } catch (error) {
-      console.error("Service: Error Reassigning Supervisor: ", error);
+      // console.error("Service: Error Reassigning Supervisor: ", error);
+      console.log("AEERORRRR: ", error);
       // throw error;
-      throw error.response.data.message;
+      throw error;
     }
   },
   deleteSupervisor: async (Id) => {
     try {
-      const response = await axios.delete(
-        BASE_URL + "admin/supervisor",
-        {
-            data: Id,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${getToken()}`,
-            },
-        }
-    );
+      const response = await axios.delete(BASE_URL + "admin/supervisor", {
+        data: Id,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
       return response;
     } catch (error) {
-      console.error("Service: Error Reassigning Supervisor: ", error);
+      // console.error("Service: Error Reassigning Supervisor: ", error);
       // throw error;
       throw error;
     }
