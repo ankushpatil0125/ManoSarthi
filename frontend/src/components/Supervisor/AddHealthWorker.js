@@ -56,12 +56,12 @@ const AddHealthWorkerComponent = () => {
           `Health worker with name ${healthWorkerData.firstname} added successfully`
         );
         setLoading(false);
-        navigate("/healthworker-home");
+        navigate("/supervisor-home");
       } else {
         alert("Failed to add health worker");
       }
     } catch (error) {
-      alert(error.response.data.messagex);
+      alert(error.response.data.message);
       setLoading(false);
     }
   };

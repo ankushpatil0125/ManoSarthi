@@ -1,29 +1,41 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 import { BASE_URL, getToken } from "../../utils/Constants";
 import LoadingComponent from "../Loading/LoadingComponent";
+import Header from "../Header/Header";
+import { useTranslation } from "react-i18next";
+
 
 const PatientDetails = () => {
   const [firstname, setFirstname] = useState("");
   const [gender, setGender] = useState("");
   const [lastname, setLastname] = useState("");
   const [village, setVillage] = useState("");
-  const [followUpDetails, setfollowUpDetails] = useState([]);
+  const [followUpDetails, setFollowUpDetails] = useState([]);
   const [medicalQuesAns, setMedicalQuesAns] = useState([]);
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const { patientId } = location.state;
-  console.log("patient", patientId);
+  const [t] = useTranslation("global");
 
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    console.log("date:", date)
+    const year = date.getFullYear().toString().substr(-2); // Get last two digits of the year
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get month and pad with leading zero if needed
+    const day = date.getDate().toString().padStart(2, '0'); // Get day and pad with leading zero if needed
+    return `${day}/${month}/${year}`;
+  };
+  
 
   useEffect(() => {
     const handlePatientDetails = async () => {
-      console.log("Useeffect handlePatientDetails");
       try {
         setLoading(true);
         const response = await axios.get(
-          BASE_URL + "doctor/patient?patientId=" + patientId,
+          `${BASE_URL}doctor/patient?patientId=${patientId}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -31,11 +43,12 @@ const PatientDetails = () => {
             },
           }
         );
+        console.log("Patient: ", response.data)
         setFirstname(response?.data?.firstname);
         setLastname(response?.data?.lastname);
         setGender(response?.data?.gender);
         setVillage(response?.data?.village?.name);
-        setfollowUpDetails(response?.data?.followUpDetailsList);
+        setFollowUpDetails(response?.data?.followUpDetailsList);
         setMedicalQuesAns(response?.data?.medicalQueAnsList);
         setLoading(false);
       } catch (error) {
@@ -44,159 +57,104 @@ const PatientDetails = () => {
       }
     };
     handlePatientDetails();
-    console.log("Folloe Up details:", followUpDetails);
-  }, []);
-  
+  }, [patientId]);
+
   if (loading) return <LoadingComponent />;
-  else
-    return (
-      <div className="flex justify-center items-center">
-        <section className="text-gray-600 body-font overflow-hidden ">
-          <div className="container px-5 py-24 mx-auto">
-            <div className="-my-8 divide-y-2 divide-gray-100">
-              <div className="py-8 flex flex-wrap md:flex-nowrap border-2 border-black-200 ">
-                <div className="md:flex-grow">
-                  <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
-                    Patient Details
-                  </h2>
-                  <p className="leading-relaxed font-bold">
-                    First Name : {firstname}
-                  </p>
-                  <p className="leading-relaxed font-bold">
-                    Last Name : {lastname}
-                  </p>
-                  <p className="leading-relaxed font-bold">Gender : {gender}</p>
-                  <p className="leading-relaxed font-bold">
-                    Village : {village}
-                  </p>
-                </div>
+
+  return (
+    <div>
+      {console.log("FollowUpDetails: ", followUpDetails)}
+      <Header />
+      <div className="flex flex-col min-h-screen mt-20">
+      <section className="flex-grow py-8 bg-gray-100">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-medium text-gray-900 mb-4">
+                {t("Patient Details")}
+              </h2>
+              <div
+                  className="bg-blue-50 rounded-lg p-4 my-2"
+                >
+              <p className="font-semibold">Name: {firstname}  {lastname}</p>
+              <p className="font-semibold">Gender: {gender}</p>
+              <p className="font-semibold">Village: {village}</p>
               </div>
-              {/* <div className="py-8 flex flex-wrap md:flex-nowrap">
-              <div className="md:flex-grow">
-                <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
-                  Follow Up Details
-                </h2>
+            </div>
 
-                {followUpDetails.map((followUpDetail, index) => (
-                  <div className="flex flex-wrap" key={index}>
-                    <p className="leading-relaxed font-bold">
-                      Follow Up No : {followUpDetail?.followUpNo}
-                    </p>
-                    <p className="leading-relaxed font-bold">
-                      Doctor First Name : {followUpDetail?.doctor?.firstname}
-                    </p>
-                    <p className="leading-relaxed font-bold">
-                      Doctor Last Name : {followUpDetail?.doctor?.lastname}
-                    </p>
-
-                    {followUpDetail?.questionarrieAnsList.map(
-                      (question, index) => (
-                        <div className="flex flex-wrap" key={index}>
-                          <p className="leading-relaxed font-bold">
-                            Questionaire Question :
-                            {question?.questionarrie?.question}
-                          </p>
-                          <p className="leading-relaxed font-bold">
-                            Questionaire Answer :{question?.question_ans}
-                          </p>
-                          <p className="leading-relaxed font-bold">
-                            Questionaire Default Answer :
-                            {question?.questionarrie?.default_ans}
-                          </p>
-                        </div>
-                      )
-                    )}
-
-                    <p className="leading-relaxed font-bold">
-                      followupDate : {followUpDetails[0]?.followupDate}
-                    </p>
-                    <p className="leading-relaxed font-bold">
-                      Worker FirstNamme :{" "}
-                      {followUpDetails[0]?.worker?.firstname}
-                    </p>
-                    <p className="leading-relaxed font-bold">
-                      Worker LastName : {followUpDetails[0]?.worker?.lastname}
-                    </p>
-                  </div>
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-medium text-gray-900 mb-4">
+                Medical History
+              </h2>
+              <div className="bg-blue-50 rounded-lg p-4 my-2">
+                {medicalQuesAns.map((medical, index) => (
+                        <p className="font-semibold"> {index+1}.  {medical?.medicalquest?.question}  -  {medical?.question_ans}</p>                  
                 ))}
               </div>
-            </div> */}
+            </div>
 
-              <h2 className="text-2xl my-15 font-medium text-gray-900 title-font mb-2">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-medium text-gray-900 mb-4">
                 Follow Up Details
               </h2>
-              {followUpDetails.map((followUpDetail, index) => (
-                <div className="py-8 flex flex-wrap md:flex-nowrap border-4 border-black-200">
-                  <div className="md:flex-grow">
-                    <div className="flex-wrap" key={index}>
-                      <p className="leading-relaxed font-bold">
-                        Follow Up No : {followUpDetail?.followUpNo}
-                      </p>
-                      <p className="leading-relaxed font-bold">
-                        Doctor First Name : {followUpDetail?.doctor?.firstname}
-                      </p>
-                      <p className="leading-relaxed font-bold">
-                        Doctor Last Name : {followUpDetail?.doctor?.lastname}
-                      </p>
-
-                      {followUpDetail?.questionarrieAnsList.map(
-                        (question, index) => (
-                          <div className="flex-wrap" key={index}>
-                            <p className="leading-relaxed font-bold">
-                              Questionaire Question {index} :
-                              {question?.questionarrie?.question}
-                            </p>
-                            <p className="leading-relaxed font-bold">
-                              Questionaire Answer {index}:{" "}
-                              {question?.question_ans}
-                            </p>
-                            <p className="leading-relaxed font-bold">
-                              Questionaire Default Answer {index++} :
-                              {question?.questionarrie?.default_ans}
-                            </p>
-                          </div>
-                        )
-                      )}
-
-                      <p className="leading-relaxed font-bold">
-                        followupDate : {followUpDetails[0]?.followupDate}
-                      </p>
-                      <p className="leading-relaxed font-bold">
-                        Worker FirstNamme :{" "}
-                        {followUpDetails[0]?.worker?.firstname}
-                      </p>
-                      <p className="leading-relaxed font-bold">
-                        Worker LastName : {followUpDetails[0]?.worker?.lastname}
-                      </p>
-                    </div>
-                  </div>
+              {followUpDetails.map((followup, follow_index) => (
+                <div
+                  className="bg-blue-50 rounded-lg p-4 my-2"
+                  key={follow_index}
+                >
+                  {follow_index === 0 ? (
+                    <>
+                      <p className="font-semibold">Survey Registration</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-semibold">Follow Up No: {follow_index}</p>
+                     </>
+                  )}
+                  <p className="font-semibold">FollowUp Date: {formatDate(followup.followupDate)}</p>
+                  <p className="font-semibold">Assigned Health Worker: {followup.worker.firstname} {followup.worker.lastname}</p>   
                 </div>
               ))}
+            </div>
 
-              <h2 className="text-2xl my-20 font-medium text-gray-900 title-font mb-2">
-                Medical Questionaire
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-medium text-gray-900 mb-4">
+                Survey Questionnaire Responses
               </h2>
-              {medicalQuesAns.map((medical, index) => (
-                <div
-                  key={index}
-                  className="py-8 flex flex-wrap md:flex-nowrap border-4 border-black-200"
-                >
-                  <div className="md:flex-grow">
-                    <p className="leading-relaxed">
-                      Medical Questionaire Question :
-                      {medical?.medicalquest?.question}
+              {followUpDetails.map((followup, follow_index) => (
+              <div key={follow_index}>
+                {follow_index === 0 ? (
+                  <p className="font-semibold">Survey Details</p>
+                ) : (
+                  <p className="font-semibold">Follow Up: {follow_index}</p>
+                )}
+                {console.log("followup: ", followup)}
+                <div className="bg-blue-50 rounded-lg p-4 my-2">
+                  {followup.questionarrieAnsList.map((quest, quest_index) => (
+                    <p className="font-semibold" key={quest_index}>
+                    {quest_index+1}.  {quest?.questionarrie?.question}? - {quest?.question_ans}
                     </p>
-                    <p className="leading-relaxed">
-                      Medical Questionaire Answer: {medical?.question_ans}
-                    </p>
+                ))}
                   </div>
                 </div>
               ))}
             </div>
+
+            
           </div>
+
+          <div className="flex justify-center mt-3">
+            <Link to={`/add-prescription/${patientId}`}>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Add Prescription
+              </button>
+            </Link>
+          </div>
+        </div>
         </section>
       </div>
-    );
+    </div>
+  );
 };
 
 export default PatientDetails;
