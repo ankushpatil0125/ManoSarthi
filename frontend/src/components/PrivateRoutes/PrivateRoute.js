@@ -124,13 +124,13 @@ const PrivateRoute = ({ children, type }) => {
     localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
     type === "patient-details"
   )
-    return children;
-  else if (
-    JWT && 
-    localStorage.getItem("ROLE") ==="[ROLE_DOCTOR]" && 
-    type==="add-prescription")
-    return children;
-
+  return children;
+  else if(
+    JWT &&
+    localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
+    type === "add-prescription"
+  )
+  return children;
   else return <Navigate to="/" />;
 };
 export default PrivateRoute;

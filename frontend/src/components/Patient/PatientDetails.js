@@ -138,6 +138,8 @@ const PatientDetails = () => {
                 </div>
               ))}
             </div>
+
+            
           </div>
           <div className="flex justify-center mt-3">
             <Link to={`/add-prescription/${patientId}`}>

@@ -176,6 +176,7 @@ public class SupervisorRestController {
             String errorMessage = ex.getCause().getMessage();
             String duplicateEntryMessage = null;
 
+
             if (errorMessage.contains("Duplicate entry")) {
                 // Extract the part of the message that contains the duplicate entry information
                 duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
@@ -187,7 +188,8 @@ public class SupervisorRestController {
                 // If the message doesn't contain the expected format, throw a generic exception
                 throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             if(ex instanceof APIRequestException)
             {
                 throw new APIRequestException(ex.getMessage());

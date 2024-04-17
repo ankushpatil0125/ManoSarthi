@@ -502,7 +502,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
                   {supervisor.email || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button
+                <button
                     onClick={() => {
                       if (action === "Reassign") {
                         handleUpdateButton(supervisor.id);
@@ -522,7 +522,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       </div>
       <div className="flex gap-2 justify-center">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
@@ -530,7 +530,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
         </button>
 
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >

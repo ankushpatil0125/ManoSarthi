@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "disease")
 @NoArgsConstructor
@@ -25,6 +27,9 @@ public class Disease {
     @Column(name = "short_description")
     private String shortDescription;
 
+    @NotBlank(message = "Long description can not be blank")
     @Column(name = "long_description")
     private String longDescription;
+
+
 }

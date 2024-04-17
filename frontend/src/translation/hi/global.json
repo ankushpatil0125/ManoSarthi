@@ -12,6 +12,11 @@
     "LOGIN": "लॉगिन",
     "Logout": "लॉगआउट",
     "username": "उपयोगकर्ता नाम",
+    "User name": "उपयोगकर्ता नाम",
+  "Enter user name": "उपयोगकर्ता नाम दर्ज करें",
+  "Enter password": "पासवर्ड दर्ज करें",
+  "Forgot-password": "पासवर्ड भूल गए",
+  "Sign in to your Account":"साइन इन टू योर अकाउंट",
     "Password": "पासवर्ड",
     "forgot-password": "पासवर्ड भूल गए हैं",
     "Click_Here": "यहाँ क्लिक करें"
@@ -27,7 +32,8 @@
     "Update HealthWorker": "स्वास्थ्य कर्मी अपडेट करें",
     "Delete HealthWorker": "स्वास्थ्य कर्मी हटाएं",
     "Show Activity": "शो एक्टिविटी",
-    "HealthWorker": "स्वास्थ्य कर्मी"
+    "HealthWorker": "स्वास्थ्य कर्मी",
+    "Dashboard":"डैशबोर्ड"
   },
   "addDoctorSupervisor": {
     "Doctor": "डॉक्टर",
@@ -102,5 +108,27 @@
 
   "ViewPatientDetails" : {
     "Patient Details": "रोगी विवरण"
+  },
+  
+  "admin":{
+      "Dashboard": "डैशबोर्ड",
+      "Add": "जोड़ें",
+      "Update": "अपडेट करें",
+      "Delete": "हटाएँ"
+      
+  },
+  "doctor": {
+    "Dashboard": "डैशबोर्ड",
+    "Pending Patient": "अपूर्ण रोगी",
+    "Ongoing Patient": "चल रहे रोगी",
+    "Treated Patient": "इलाज किए गए रोगी",
+    "New Patients": "नए रोगी",
+    "FirstName": "पहला नाम",
+    "LastName": "अंतिम नाम",
+    "Gender": "लिंग",
+    "Village": "गाँव",
+    "View Details": "विवरण देखें",
+    "Previous": "पिछला",
+    "Next": "अगला"
   }
 }

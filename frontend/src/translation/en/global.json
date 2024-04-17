@@ -12,6 +12,11 @@
     "LOGIN": "LOGIN",
     "Logout": "Logout",
     "username": "username",
+    "User name": "User name",
+    "Enter user name":"Enter user name",
+    "Enter password":"Enter password",
+    "Forgot-password": "Forgot-password",
+    "Sign in to your Account":"Sign in to your Account",
     "Password": "Password",
     "forgot-password": "Forgot-password",
     "Click_Here": "Click_Here"
@@ -20,14 +25,14 @@
   "Actor": {
     "Actions": "Actions",
     "Admin Dashboard": "Admin Dashboard",
-    "Add": "Add",
     "Reassign": "Reassign",
     "Delete": "Delete",
     "Add HealthWorker": "Add HealthWorker",
     "Update HealthWorker": "Update HealthWorker",
     "Delete HealthWorker": "Delete HealthWorker",
     "Show Activity": "Show Activity",
-    "HealthWorker": "HealthWorker"
+    "HealthWorker": "HealthWorker",
+    "Dashboard":"Dashboard"
   },
   "addDoctorSupervisor": {
     "Doctor": "Doctor",
@@ -99,7 +104,30 @@
     "Doctor Profile": "Doctor Profile",
     "Supervisor Profile": "Supervisor Profile"
   },
+
   "ViewPatientDetails" : {
     "Patient Details": "Patient Details"
+  },
+
+  "admin":{
+    "Dashboard": "Dashboard",
+    "Add": "Add",
+    "Update": "Update",
+    "Delete": "Delete"
+  },
+  
+  "doctor":{
+    "Dashboard":"Dashboard",
+    "Pending Patient": "Pending Patient",
+    "Ongoing Patient": "Ongoing Patient",
+    "Treated Patient": "Treated Patient",
+    "New Patients" : "New Patients",
+    "FirstName":"First Name",
+    "LastName":"Last Name",
+    "Gender":"Gender",
+    "Village":"Village",
+    "View Details":"View Details",
+    "Previous":"Previous",
+    "Next":"Next"
   }
 }

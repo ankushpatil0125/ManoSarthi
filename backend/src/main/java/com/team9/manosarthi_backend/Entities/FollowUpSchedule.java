@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "follow_up_schedule")
@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@JsonFilter("FollowUpDetailsJSONFilter")
+//@JsonFilter("FollowUpScheduleJSONFilter")
 public class FollowUpSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
