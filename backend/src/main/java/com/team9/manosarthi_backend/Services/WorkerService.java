@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface WorkerService {
+
+    Worker viewProfile(int id);
     Worker UpdateWorkerProfile(Worker updatedWorker);
 
     Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId);

@@ -15,7 +15,7 @@ import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService
 import InsertService from "../Services/DatabaseServices/InsertService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
 
-const MedicalDetails = () => {
+const MedicalDetails = ({route}) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   const [comment, setComment] = useState("");
@@ -28,7 +28,7 @@ const MedicalDetails = () => {
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
   // var commentID;
   const [commentID, setCommentID] = useState(0);
-
+  const {age} = route.params;
 
   useEffect(() => {
     fetchQuestionsFromDatabase();
@@ -100,7 +100,8 @@ const MedicalDetails = () => {
       }
       navigation.navigate('Preview', {
         commentID,
-        comment
+        comment,
+        age
       });
 
     } else {

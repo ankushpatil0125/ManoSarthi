@@ -9,20 +9,21 @@ import QuestionnaireScreen from "../screens/QuestionnaireScreen";
 import MedicalDetails from "../screens/MedicalDetails";
 import Preview from "../screens/Preview";
 import { PatientProvider } from "../context/PatientContext";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
   return (
     <PatientProvider>
       <Stack.Navigator
-        screenOptions={{ title: "",
-        // headerStyle: {
-        //   backgroundColor:"#87CEEB"
-        // },
-        headerTintColor: '#87CEEB',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        }, }}
+        screenOptions={{
+          title: "",
+          headerStyle:{
+            backgroundColor:'#fff',
+            shadowColor:'#fff',
+            elevation:0, 
+          }
+        }}
       >
         {/* <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}
         <Stack.Screen name="HomeScreen" component={HomeScreen} />

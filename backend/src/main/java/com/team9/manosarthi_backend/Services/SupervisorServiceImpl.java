@@ -80,7 +80,7 @@ public class SupervisorServiceImpl implements SupervisorService{
 
         }
         else {
-            throw new RuntimeException("Cannot add worker: Doctor count in the subdistrict is not greater than zero.");
+            throw new APIRequestException("Cannot add worker: Doctor count in the subdistrict is not greater than zero.");
         }
 
 

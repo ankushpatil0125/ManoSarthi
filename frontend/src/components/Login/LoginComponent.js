@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { EMAIL_URL, PASS_URL } from "../../utils/images";
 import { Link, useNavigate } from "react-router-dom";
 import LoginService from "../../Services/LoginService";
 import "../../css/LoginComponent.css";
 import { useTranslation } from "react-i18next";
 import LanguageButton from "../Header/LanguageButton";
-import DoctorHomePage from "../HomePage/DoctorHomePage";
-import AdminHomePage from "../HomePage/AdminHomePage";
 import IsPasswordChangeService from "../../Services/IsPasswordChangeService";
 import AuthContext from "../Context/AuthContext";
-import LoadingComponent from "../Loading/LoadingComponent"
+import LoadingComponent from "../Loading/LoadingComponent";
+
 const LoginComponent = () => {
   const [t] = useTranslation("global");
   const navigate = useNavigate();
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [requestData, setRequestData] = useState({
     username: "",
     password: "",
@@ -32,27 +31,34 @@ const LoginComponent = () => {
 
     try {
       setLoading(true);
-      const response = await LoginService.AddUser(requestData);
+      const response = await LoginService.userLogin(requestData);
 
-      console.log("response jwt", response);
+      console.log("Login API Response: ", response);
       if (response) {
         // Handle successful login, e.g., redirect to another page
-        alert("Login successful");
+        alert("Login Successful...");
         localStorage.setItem("JWT", response.data.jwtToken);
         setJWT(response.data.jwtToken);
         localStorage.setItem("ROLE", response.data.role);
-        localStorage.setItem("User_Id", response.data.user_id);
+        // localStorage.setItem("User_Id", response.data.user_id);
 
-        console.log("user response.data ", response.data);
+        // console.log("User Response Data ", response.data);
 
-        const changepass_response = await IsPasswordChangeService.isPasswordChanged(response);
+        const changepass_response =
+          await IsPasswordChangeService.isPasswordChanged(response);
 
-        console.log("Change pas", changepass_response);
+        console.log(
+          "Is ChangePassword Field API Response: ",
+          changepass_response
+        );
 
-        if (changepass_response === false) navigate("/change-password");
-        else {
+        if (changepass_response === false) {
+          navigate("/change-password");
+        } else {
           if (response.data.role === "[ROLE_ADMIN]") navigate("/admin-home");
           else if (response.data.role === "[ROLE_DOCTOR]") {
+            console.log("role", response.data.role);
+
             navigate("/doctor-home", { replace: true });
           } else {
             navigate("/supervisor-home", { replace: true });
@@ -61,21 +67,31 @@ const LoginComponent = () => {
         setLoading(false);
       }
     } catch (error) {
-      alert(error.response.data.message);
-        setLoading(false);
-      if(error.response.data === "CREDENTIALS INVALID ! ")alert("CREDENTIALS INVALID !!! Please Enter valid CREDENTIALS")
-      else if (error.response.data)
-        alert("Access restricted. Please log in during operating hours");
-      else alert(`Login Failed : ${error.response.data}`);
+      setLoading(false);
+
+      alert(error.response.data);
     }
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("JWT") !== null && localStorage.getItem("ROLE") === "[ROLE_ADMIN]") navigate("/admin-home", { replace: true });
-    if (localStorage.getItem("JWT") !== null && localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") navigate("/doctor-home", { replace: true });
-    if (localStorage.getItem("JWT") !== null && localStorage.getItem("ROLE") === "[ROLE_SUPERVISOR]") navigate("/supervisor-home", { replace: true });
-  }, []);
-  if(loading)return <LoadingComponent/>
+  // useEffect(() => {
+  //   if (
+  //     localStorage.getItem("JWT") !== null &&
+  //     localStorage.getItem("ROLE") === "[ROLE_ADMIN]"
+  //   )
+  //     navigate("/admin-home", { replace: true });
+  //   if (
+  //     localStorage.getItem("JWT") !== null &&
+  //     localStorage.getItem("ROLE") === "[ROLE_DOCTOR]"
+  //   )
+  //     navigate("/doctor-home", { replace: true });
+  //   if (
+  //     localStorage.getItem("JWT") !== null &&
+  //     localStorage.getItem("ROLE") === "[ROLE_SUPERVISOR]"
+  //   )
+  //     navigate("/supervisor-home", { replace: true });
+  // }, []);
+
+  if (loading) return <LoadingComponent />;
   return (
     <div className="mb-20">
       <form onSubmit={handleSubmit}>
@@ -91,7 +107,6 @@ const LoginComponent = () => {
             <div className="input">
               <img className="img" src={EMAIL_URL} alt="" />
               <input
-                
                 placeholder={t("login.username")}
                 name="username"
                 value={requestData.username}
