@@ -60,7 +60,7 @@ public class DoctorServiceImpl implements DoctorService{
     public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 //        System.out.println("patientFollowUpPrescriptionDTO"+patientFollowUpPrescriptionDTO);
 
-
+/*
         System.out.println("patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id()   "+patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
 //        Optional<Patient> patient = patientRepository.findByAabha("7709");
@@ -172,6 +172,7 @@ public class DoctorServiceImpl implements DoctorService{
         }
 
 
-
+*/
+        return null;
     }
 }

@@ -13,7 +13,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("FollowUpScheduleJSONFilter")
+@JsonFilter("FollowUpScheduleJSONFilter")
 public class FollowUpSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

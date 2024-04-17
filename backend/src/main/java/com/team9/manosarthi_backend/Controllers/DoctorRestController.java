@@ -91,7 +91,6 @@ public class DoctorRestController {
                 String token = authorizationHeader.substring(7);
                 String doctorId = helper.getIDFromToken(token);
                 List<Patient> patientList = doctorService.getNewPatientDetails(Integer.parseInt(doctorId), pagenumber, pagesize);
-
                 Set<String> patientFilterProperties = new HashSet<>();
                 patientFilterProperties.add("patient_id");
                 patientFilterProperties.add("firstname");
@@ -125,9 +124,11 @@ public class DoctorRestController {
     @GetMapping("/temp")
     public Prescription temp(@RequestParam("patientId") int patientId,@RequestHeader("Authorization") String authorizationHeader)
     {
-
+    /*
         System.out.println("Patient "+patientId);
         return prescriptionRepository.findById(patientId).get();
+        */
+     return null;
 //        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
 //        {
 //            String token = authorizationHeader.substring(7);
@@ -255,9 +256,10 @@ public class DoctorRestController {
     }
 
     @PostMapping("/prescription-followup")
-    public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO){
+    public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 //        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
         System.out.println("/doctor/prescription-followup");
+        /*
         try {
             System.out.println("GOT TILL THIS");
             Prescription prescription = doctorService.givePrescription(patientFollowUpPrescriptionDTO);
@@ -275,6 +277,10 @@ public class DoctorRestController {
                 throw new APIRequestException("Error while updating worker profile",ex.getMessage());
         }
 
+
+
+         */
+        return false;
     }
 
 }
