@@ -6,7 +6,6 @@ import LoadingComponent from "../Loading/LoadingComponent";
 import Header from "../Header/Header";
 import { useTranslation } from "react-i18next";
 
-
 const PatientDetails = () => {
   const [firstname, setFirstname] = useState("");
   const [gender, setGender] = useState("");
@@ -132,17 +131,14 @@ const PatientDetails = () => {
                 <div className="bg-blue-50 rounded-lg p-4 my-2">
                   {followup.questionarrieAnsList.map((quest, quest_index) => (
                     <p className="font-semibold" key={quest_index}>
-                    {quest_index+1}.  {quest?.questionarrie?.question}? - {quest?.question_ans}
+                    {quest_index+1}.  {quest?.questionarrie?.question} - {quest?.question_ans}
                     </p>
                 ))}
                   </div>
                 </div>
               ))}
             </div>
-
-            
           </div>
-
           <div className="flex justify-center mt-3">
             <Link to={`/add-prescription/${patientId}`}>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
