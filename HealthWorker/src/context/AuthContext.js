@@ -55,9 +55,12 @@ export const AuthProvider = ({ children }) => {
           });
         fetchData()
           .then((message) => {
+            console.log("Before resolve sucess");
             Alert.alert(message);
           })
           .catch((message) => {
+            console.log("Before reject sucess");
+
             Alert.alert(message);
           });
 
@@ -68,13 +71,17 @@ export const AuthProvider = ({ children }) => {
         console.log("after setting change password", changePassword);
 
         setIsLoading(false);
-        console.log("Token", getToken());
+        // console.log("Token", getToken());
       } else {
+        console.log("Before login failure alert");
+
         Alert.alert("Login Failure");
         setIsLoading(false);
       }
     } catch (error) {
       // console.log('error',error)
+      console.log("Before catch failure error");
+
       Alert.alert("Login Failure", error.response);
       setIsLoading(false);
     }

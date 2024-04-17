@@ -12,6 +12,9 @@ import {
 import { CheckBox } from "react-native-elements";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
+import UpdateService from "../Services/DatabaseServices/UpdateService";
+import InsertService from "../Services/DatabaseServices/InsertService";
+
 // import { useNavigation } from "@react-navigation/native";
 
 const Preview = ({ navigation, route }) => {
@@ -23,6 +26,8 @@ const Preview = ({ navigation, route }) => {
   const [surveyQuestionsAnswers, setSurveyQuestionsAnswers] = useState([]);
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { age } = route.params;
+  const { aabhaId } = useContext(PatientContext);
+
 
   // const navigation = useNavigation();
 
@@ -30,15 +35,17 @@ const Preview = ({ navigation, route }) => {
     setConsentChecked(!consentChecked);
   };
 
-  const showAlert = async () => {
+  const handleSubmit = async () => {
     if (consentChecked) {
+      await InsertService.insertAabhaId(aabhaId, "old");
+      const res3 = await UpdateService.updatePatientStatus(aabhaId);
+      console.log(res3);
       try {
         // const res = await SelectService.getMedicalHistoryAnswers();
         Alert.alert("Data saved in local DB successfully!", "OK", [
           {
             text: "OK",
             onPress: () => {
-              console.log("afdsa");
               console.log("Patient data has been successfully saved to the local database");
               navigation.navigate("HomeScreen");
             }
@@ -66,7 +73,7 @@ const Preview = ({ navigation, route }) => {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   };
 
-  const { aabhaId } = useContext(PatientContext);
+  // const { aabhaId } = useContext(PatientContext);
 
   const fieldNames = {
     aabhaId: "Aabha ID",
@@ -76,6 +83,7 @@ const Preview = ({ navigation, route }) => {
     gender: "Gender",
     age: "Age",
     address: "Address",
+    status:"Status"
   };
 
   useEffect(() => {
@@ -181,7 +189,7 @@ const Preview = ({ navigation, route }) => {
           <Text style={styles.consentText}>Consent of patient</Text>
         </View>
 
-        <TouchableOpacity onPress={showAlert} style={styles.button}>
+        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>

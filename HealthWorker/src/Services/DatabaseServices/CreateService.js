@@ -48,7 +48,8 @@ const CreateService = {
             email TEXT,
             gender TEXT,
             age INTEGER,
-            address TEXT
+            address TEXT,
+            status TEXT DEFAULT "0" NOT NULL
           );`,
           [],
           (_, result) => {

@@ -101,7 +101,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       // Navigate to the next screen
       if (unmatchedCount >= 3) {
         
-        await InsertService.insertAabhaId(aabhaId, "old");
+        // await InsertService.insertAabhaId(aabhaId, "old");
         navigation.navigate("MedicalDetails", { age });
 
       } else {
