@@ -84,44 +84,63 @@ const PatientDetails = () => {
 
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                Follow Up Details
+                Medical History
               </h2>
-                <div
-                  className="bg-blue-50 rounded-lg p-4 my-2"
-                >
-                  <p className="font-semibold">Follow Up No:  {followUpDetails[0]?.followUpNo}</p>                  
-                  <p className="font-semibold">FollowUp Date: {formatDate(followUpDetails[0]?.followupDate)}</p>
-                  <p className="font-semibold">Assigned Health Worker:  {followUpDetails[0]?.worker?.firstname}  {followUpDetails[0]?.worker?.lastname}</p>                  
-                </div>
+              <div className="bg-blue-50 rounded-lg p-4 my-2">
+                {medicalQuesAns.map((medical, index) => (
+                        <p className="font-semibold"> {index+1}.  {medical?.medicalquest?.question}  -  {medical?.question_ans}</p>                  
+                ))}
+              </div>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                Survey Questionnaire
+                Follow Up Details
               </h2>
               {followUpDetails.map((followup, follow_index) => (
-                <div key={follow_index}>
-                  <p className="font-semibold">Follow Up: {follow_index+1}</p>
-                  {console.log("followup: ", followup)}
-                  <div className="bg-blue-50 rounded-lg p-4 my-2">
-                    {followup.questionarrieAnsList.map((quest, quest_index) => (
-                        <p className="font-semibold">{quest?.questionarrie?.question}?  -  {quest?.question_ans}</p>                  
-                    ))}
-                  </div>
+                <div
+                  className="bg-blue-50 rounded-lg p-4 my-2"
+                  key={follow_index}
+                >
+                  {follow_index === 0 ? (
+                    <>
+                      <p className="font-semibold">Survey Registration</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-semibold">Follow Up No: {follow_index}</p>
+                     </>
+                  )}
+                  <p className="font-semibold">FollowUp Date: {formatDate(followup.followupDate)}</p>
+                  <p className="font-semibold">Assigned Health Worker: {followup.worker.firstname} {followup.worker.lastname}</p>   
                 </div>
               ))}
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                Medical Questionnaire
+                Survey Questionnaire Responses
               </h2>
-              <div className="bg-blue-50 rounded-lg p-4 my-2">
-                {medicalQuesAns.map((medical, index) => (
-                        <p className="font-semibold">{medical?.medicalquest?.question}  -  {medical?.question_ans}</p>                  
+              {followUpDetails.map((followup, follow_index) => (
+              <div key={follow_index}>
+                {follow_index === 0 ? (
+                  <p className="font-semibold">Survey Details</p>
+                ) : (
+                  <p className="font-semibold">Follow Up: {follow_index}</p>
+                )}
+                {console.log("followup: ", followup)}
+                <div className="bg-blue-50 rounded-lg p-4 my-2">
+                  {followup.questionarrieAnsList.map((quest, quest_index) => (
+                    <p className="font-semibold" key={quest_index}>
+                    {quest_index+1}.  {quest?.questionarrie?.question}? - {quest?.question_ans}
+                    </p>
                 ))}
-              </div>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            
           </div>
 
           <div className="flex justify-center mt-3">
