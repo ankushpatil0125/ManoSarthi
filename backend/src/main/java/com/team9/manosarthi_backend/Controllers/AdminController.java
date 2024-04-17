@@ -130,7 +130,7 @@ public class AdminController {
 
     @GetMapping("/doctor")
     public MappingJacksonValue viewAllDoctors(@RequestParam("pagenumber") int pagenumber){
-        int pagesize = 5;
+        int pagesize = 3;
         try {
             List<Doctor> doctors = adminService.viewAllDoctor(pagenumber, pagesize);
 
@@ -167,7 +167,7 @@ public class AdminController {
 
     @GetMapping("/doctor/district")
     public MappingJacksonValue viewDoctorByDistrict(@RequestParam("districtcode") int districtcode,@RequestParam("pagenumber") int pagenumber){
-        int pagesize=5;
+        int pagesize=3;
         try {
             List<Doctor> doctors = adminService.viewDoctorByDistrict(districtcode, pagenumber, pagesize);
             if (doctors == null) {
@@ -328,7 +328,7 @@ public class AdminController {
 
     @GetMapping("/supervisor")
     public MappingJacksonValue viewAllSupervisor(@RequestParam("pagenumber") int pagenumber){
-        int pagesize = 5;
+        int pagesize = 3;
 
 //        List<Doctor> doctors = adminService.viewAllDoctor(pagenumber,pagesize);
         List<Supervisor> supervisorList=adminService.viewAllSupervisor(pagenumber,pagesize);
@@ -358,7 +358,7 @@ public class AdminController {
 
     @GetMapping("/supervisor/district")
     public MappingJacksonValue viewSupervisorByDistrict(@RequestParam("districtcode") int districtcode,@RequestParam("pagenumber") int pagenumber){
-        int pagesize=5;
+        int pagesize=3;
 //        List<Doctor> doctors= adminService.viewDoctorByDistrict(districtcode, pagenumber, pagesize);
         List<Supervisor> supervisorList=adminService.viewSupervisorByDistrict(districtcode,pagenumber,pagesize);
         if(supervisorList== null)

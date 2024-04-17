@@ -38,6 +38,15 @@ public class WorkerServiceImpl implements WorkerService{
 
 
     @Override
+    public Worker viewProfile(int id) {
+
+        Optional<Worker> worker = workerRepository.findById(id);
+        if(worker.isPresent()) return worker.get();
+        else throw new APIRequestException("Worker not found with id="+id);
+
+    }
+
+    @Override
     public Worker UpdateWorkerProfile(Worker updatedWorker) {
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
