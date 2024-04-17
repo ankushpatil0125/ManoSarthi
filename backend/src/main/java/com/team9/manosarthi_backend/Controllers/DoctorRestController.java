@@ -261,7 +261,7 @@ public class DoctorRestController {
         try {
             System.out.println("GOT TILL THIS");
             Prescription prescription = doctorService.givePrescription(patientFollowUpPrescriptionDTO);
-            
+
             if(prescription!=null) return true;
             else return false;
         }
