@@ -17,7 +17,7 @@
 //       {userToken === null ? (
 //         <Stack.Screen name="Login" component={LoginScreen} />
 //       ) : (
-//         !changePassword ? (
+        //  !changePassword ? (
 //           <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
 //         ) : (
 //           <></>

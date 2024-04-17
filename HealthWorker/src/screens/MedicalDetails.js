@@ -31,7 +31,7 @@ const MedicalDetails = ({route}) => {
   const {age} = route.params;
 
   useEffect(() => {
-    fetchQuestionsFromDatabase();
+    fetchDataFromDatabase();
   }, []);
 
   useEffect(() => {
@@ -43,21 +43,21 @@ const MedicalDetails = ({route}) => {
     };
   }, []);
 
-  const fetchQuestionsFromDatabase = async () => {
+  const fetchDataFromDatabase = async () => {
     try {
       const data2 = await SelectService.getAllSurveyQuestionAnswers();
-      console.log("QUestionaire Answers",data2);
+      console.log("[MedicalDetailsScreen]Suvery QNA Fetched From Database",data2);
       const data = await SelectService.getAllMedicalQuestions();
       // setMedicalQuestions(data);
-      console.log("Medical Questions res data (IN MedicalDetails Screen): ", data);
+      console.log("[MedicalDetailsScreen]Medical Questions Need To Render: ", data);
       // Find the index of the question with the "comment" value
       const commentIndex = data.findIndex(medical_question => medical_question.question === "comment");
       const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
       // commentID = data[commentIndex].question_id;
       setCommentID(data[commentIndex].question_id);
-      console.log("CommentID: ", commentID);
+      // console.log("CommentID: ", commentID);
       setMedicalQuestions(updatedMedicalQuestions);
-      console.log("updatedMedicalQuestions: ", medicalQuestions);
+      console.log("[MedicalDetailsScreen]Updated Medical Questions: ", medicalQuestions);
     } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
@@ -91,7 +91,7 @@ const MedicalDetails = ({route}) => {
         try {
           await saveDataToDatabase(answers, comment);
           // await sendDataToServer(answers, comment);
-          console.log("Data submitted to local DB successfully");
+          console.log("Medical QNA Stored Successfully");
         } catch (error) {
           console.error("Error submitting data to server:", error);
         }
@@ -113,26 +113,9 @@ const MedicalDetails = ({route}) => {
     }
   };
 
-  // const sendDataToServer = async (answers, comment) => {
-  //   // const data = [];
-  //   try {
-  //     console.log("Data to be send: ", data);
-  //     // Need to define sendMedicalQuestionarrieAnswers in MedicalQuestionarrieService
-  //     const response =
-  //       await MedicalQuestionarrieService.sendMedicalQuestionarrieAnswers();
-  //     if (response) {
-  //       alert(`Medical que, ans sent successfully`);
-  //     } else {
-  //       alert(`Failed to send medical que, ans data`);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error during sending medical que, ans, ${error}`);
-  //   }
-  // };
 
   const saveDataToDatabase = async (answers, comment) => {
     try {
-      console.log("before res: ");
       const res = await InsertService.insertMedicalHistoryAnswers(
         medicalQuestions,
         answers,
@@ -140,9 +123,9 @@ const MedicalDetails = ({route}) => {
         commentID,
         aabhaId
       );
-      console.log("res: ", res);
+      // console.log("[MedicalDetailsScreen]",res);
     } catch (error) {
-      console.error("Error while storing data locally", error);
+      console.error("Error While Storing Data Locally", error);
     }
   };
 

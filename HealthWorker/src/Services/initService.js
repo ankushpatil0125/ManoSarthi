@@ -32,9 +32,9 @@ export const fetchData = () =>
         const questions = questionsResponse.data;
         const medicalQuestions = medicalQuestionsResponse.data;
         const abhaIDTable = AabhaResponse.data;
-        console.log("Fetched Survey Questions:", questions);
-        console.log("Fetched AbhaId table: ", abhaIDTable);
-        console.log("Fetched Medical Questions:", medicalQuestions);
+        console.log("Fetched Survey Questions From Server:", questions);
+        console.log("Fetched AbhaId Table From Server: ", abhaIDTable);
+        console.log("Fetched Medical Questions From Server: ", medicalQuestions);
 
         // Delete old questions from the SurveyQuestion table
         const res1 = await DeleteService.deleteAllSurveyQuestions();

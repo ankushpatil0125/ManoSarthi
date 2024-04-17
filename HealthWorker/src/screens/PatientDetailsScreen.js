@@ -44,9 +44,9 @@ const PatientDetailsScreen = ({ navigation }) => {
     try {
       const data = await SelectService.getAllPatients();
       const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
-      console.log("AabhaId Fetched From Data: ", aabhaIdInfoData);
       setPatients(data);
-      console.log("Patients Fetched from Database: ", patients);
+      console.log("[PatientDetailsScreen]AabhaId Fetched From Data: ", aabhaIdInfoData);
+      console.log("[PatientDetailsScreen]Patients Fetched from Database: ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -71,7 +71,7 @@ const PatientDetailsScreen = ({ navigation }) => {
     }
 
     if (isConnected) {
-      console.log(firstName+" "+lastName+" "+email+" "+age+" "+address+" "+gender);
+      console.log("[PatientDetailsScreen]Entered Details: ",firstName+" "+lastName+" "+email+" "+age+" "+address+" "+gender);
       await storeDataLocally();
 
     } else {

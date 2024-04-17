@@ -8,7 +8,7 @@ import {
   ChartBarIcon,
 } from "@heroicons/react/outline";
 import AddActorComponent from "../Actors/AddActorComponent";
-import UpdateActor from "../Actors/UpdateActor";
+import UpdateActor from "../Actors/UpdateDeleteActor";
 const AdminHomePage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

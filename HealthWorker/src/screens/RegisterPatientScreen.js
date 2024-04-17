@@ -12,9 +12,8 @@ const RegisterPatientScreen = ({navigation}) => {
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllAabhaIdInfo();
-      console.log("DATA :",data);
       setAbhaTable(data);
-      console.log("AabhaId Fetched From Data: ", data);
+      console.log("[RegisterPatientScreen]AabhaId Fetched From Database: ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -54,7 +53,7 @@ const RegisterPatientScreen = ({navigation}) => {
   }
   else{
     setAabhaId(abhaId);
-    console.log("ABHA ID registered:", abhaId);
+    console.log("ABHA ID Entered: ", abhaId);
     navigation.navigate("PatientDetailsScreen");
   }
    

@@ -35,7 +35,7 @@ const DeleteService = {
     });
   },
   deletePatientByAabhaId: (aabhaId) => {
-    console.log("delete, id", aabhaId);
+    // console.log("delete, id", aabhaId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
@@ -94,7 +94,7 @@ const DeleteService = {
   },
 
   deleteSurveyQuestionAnswersByAabhaId: (aabhaId) => {
-    console.log("delete, id", aabhaId);
+    // console.log("delete, id", aabhaId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(

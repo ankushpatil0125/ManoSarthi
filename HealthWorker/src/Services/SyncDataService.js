@@ -4,10 +4,11 @@ import InsertService from "../Services/DatabaseServices/InsertService";
 import RegisterPatientService from "./RegisterPatientService";
 import { Alert } from "react-native";
 
+let v = 0;
 const SyncDataService = {
   registrationData: async () => {
     try {
-      console.log("Hello");
+      // console.log("Hello");
       const patients = await SelectService.getAllPatients();
 
       for (const patient of patients) {
@@ -43,7 +44,7 @@ const SyncDataService = {
           console.log("ques", ques);
           sendMedicalHistoryAnswers.push(ques);
         }
-        console.log("sendMedicalHistoryAnswers", sendMedicalHistoryAnswers);
+        // console.log("sendMedicalHistoryAnswers", sendMedicalHistoryAnswers);
         // console.log("SurveyQuestionAnswerData: ", SurveyQuestionAnswerData);
         // console.log("MedicalHistoryAnswersData: ", MedicalHistoryAnswersData);
 
@@ -91,6 +92,7 @@ const SyncDataService = {
               "deleteMedicalHistoryAnswersByAabhaId Status ",
               status3
             );
+            v = 1;
           } else {
             console.error("Failed to add patient");
             Alert.alert("Failed to sync data");
@@ -100,7 +102,7 @@ const SyncDataService = {
           Alert.alert("Failed to sync data");
         }
       }
-      Alert.alert("Syncing Completed");
+      if (v == 1) Alert.alert("Syncing Completed");
     } catch (error) {
       Alert.alert("Failed to sync data");
       console.error("Error Registering Patient:", error);
