@@ -160,7 +160,7 @@ const AddDoctorComponent = () => {
   if (loading) return <LoadingComponent />;
   return (
     <div className="flex flex-col md:flex-row">
-      <Header />
+      {/* <Header /> */}
 
       <div className="container mx-auto px-4 flex flex-col md:flex-row gap-5">
         <div className="w-full md:w-1/2">

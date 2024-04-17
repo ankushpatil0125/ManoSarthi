@@ -25,14 +25,14 @@
   "Actor": {
     "Actions": "Actions",
     "Admin Dashboard": "Admin Dashboard",
-    "Add": "Add",
     "Reassign": "Reassign",
     "Delete": "Delete",
     "Add HealthWorker": "Add HealthWorker",
     "Update HealthWorker": "Update HealthWorker",
     "Delete HealthWorker": "Delete HealthWorker",
     "Show Activity": "Show Activity",
-    "HealthWorker": "HealthWorker"
+    "HealthWorker": "HealthWorker",
+    "Dashboard":"Dashboard"
   },
   "addDoctorSupervisor": {
     "Doctor": "Doctor",
@@ -103,5 +103,25 @@
     "Change Password": "Change Password",
     "Doctor Profile": "Doctor Profile",
     "Supervisor Profile": "Supervisor Profile"
+  },
+  "admin":{
+    "Dashboard": "Dashboard",
+    "Add": "Add",
+    "Update": "Update",
+    "Delete": "Delete"
+  },
+  "doctor":{
+    "Dashboard":"Dashboard",
+    "Pending Patient": "Pending Patient",
+    "Ongoing Patient": "Ongoing Patient",
+    "Treated Patient": "Treated Patient",
+    "New Patients" : "New Patients",
+    "FirstName":"First Name",
+    "LastName":"Last Name",
+    "Gender":"Gender",
+    "Village":"Village",
+    "View Details":"View Details",
+    "Previous":"Previous",
+    "Next":"Next"
   }
 }

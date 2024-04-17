@@ -207,8 +207,11 @@ const ViewDoctors = ({ district, subdistrictcode, action }) => {
                   {doctor.subdistrictcode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
+                  {doctor.email || "N/A"}
+                </td>
+                <td className="border border-gray-400 px-4 py-2">
                   <button className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded">
-                    Update
+                    {action}
                   </button>
                 </td>
               </tr>

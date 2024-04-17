@@ -499,8 +499,20 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
                   {supervisor.subdistrictcode?.name || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded">
-                    Update
+                  {supervisor.email || "N/A"}
+                </td>
+                <td className="border border-gray-400 px-4 py-2">
+                <button
+                    onClick={() => {
+                      if (action === "Reassign") {
+                        handleUpdateButton(supervisor.id);
+                      } else if (action === "Delete") {
+                        handleDelete(supervisor.id);
+                      }
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    {action}
                   </button>
                 </td>
               </tr>
