@@ -73,9 +73,9 @@ const PendingPatient = () => {
             <tr>
               <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t('doctor.FirstName')}</th>
               <th className="border border-gray-400 px-4 py-2 text-[#6467c0] ">{t('doctor.LastName')}</th>
-              <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.Gender")}</th>
 
               <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.Village")}</th>
+              <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.Gender")}</th>
               <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.View Details")}</th>
               {/* <th className="border border-gray-400 px-4 py-2">Age</th> */}
             </tr>
