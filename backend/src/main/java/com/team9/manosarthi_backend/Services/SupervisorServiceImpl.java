@@ -37,6 +37,15 @@ public class SupervisorServiceImpl implements SupervisorService{
     private SupervisorRepository supervisorRepository;
 
     @Override
+    public Supervisor viewProfile(int id) {
+        Optional<Supervisor> supervisor = supervisorRepository.findById(id);
+        if (supervisor.isPresent()) {
+            return supervisor.get();
+        }
+        else throw new APIRequestException("Supervisor not found for id " + id);
+    }
+
+    @Override
     public Worker addworker(Worker worker) {
 
 

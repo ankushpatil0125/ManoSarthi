@@ -3,6 +3,7 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
 import com.team9.manosarthi_backend.Entities.Village;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.SupervisorFilter;
@@ -47,33 +48,17 @@ public class SupervisorRestController {
     private EmailService emailService;
 
     @GetMapping("/viewdetails")
-    public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
+    public SupervisorResponseDTO getDetails(@RequestHeader("Authorization") String authorizationHeader){
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 // Extract the token part after "Bearer "
                 String token = authorizationHeader.substring(7);
                 String userid = helper.getIDFromToken(token);
-                Optional<Supervisor> supervisor = supervisorRepository.findById(Integer.parseInt(userid));
+                Supervisor supervisor = supervisorService.viewProfile(Integer.parseInt(userid));
 
-                Set<String> supervisorFilterProperties = new HashSet<>();
-                supervisorFilterProperties.add("firstname");
-                supervisorFilterProperties.add("lastname");
-                supervisorFilterProperties.add("email");
-                supervisorFilterProperties.add("subdistrictcode");
-                supervisorFilterProperties.add("user");
-                supervisorFilterProperties.add("gender");
-
-                Set<String> subDistrictFilterProperties = new HashSet<>();
-                subDistrictFilterProperties.add("code");
-                subDistrictFilterProperties.add("name");
-                subDistrictFilterProperties.add("district");
-
-                Set<String> userFilterProperties = new HashSet<>();
-                userFilterProperties.add("username");
-
-                SupervisorFilter<Optional<Supervisor>> supervisorFilter = new SupervisorFilter<>(supervisor);
-
-                return supervisorFilter.getSupervisorFilter(supervisorFilterProperties, subDistrictFilterProperties, userFilterProperties);
+                SupervisorResponseDTO supervisorResponseDTO = new SupervisorResponseDTO();
+                supervisorResponseDTO.forSupervisor_SupervisorToSupervisorResponseDTO(supervisor);
+                return supervisorResponseDTO;
 
             } else {
                 throw new APIRequestException("Error in authorizing");

@@ -28,18 +28,40 @@ public class DoctorServiceImpl implements DoctorService{
 
 
     @Override
-    public List<Patient> getNewPatientDetails(int doctorId, int pagenumber, int pagesize) {
+    public Doctor viewProfile(int id) {
+        Optional<Doctor> doctor = doctorRepository.findById(id);
+        if (doctor.isPresent()) {
+            return doctor.get();
+        }
+        else throw new APIRequestException("Doctor not found for id " + id);
+    }
 
+    @Override
+    public List<Patient> getPatientList(String type,int doctorId, int pagenumber, int pagesize) {
         Optional<Doctor> doctor = doctorRepository.findById(doctorId);
         int subDistrictCode;
         if(doctor.isPresent()) {
             subDistrictCode= doctor.get().getSubdistrictcode().getCode();
             Pageable pageable = PageRequest.of(pagenumber,pagesize);
-            Page<Patient> patientList=patientRepository.getNewPatientBySubdistrict(subDistrictCode,pageable);
+            Page<Patient> patientList=patientRepository.getPatientListBySubdistrict(type,subDistrictCode,pageable);
             return patientList.getContent();
         }
         else return null;
     }
+
+//    @Override
+//    public List<Patient> getNewPatientDetails(int doctorId, int pagenumber, int pagesize) {
+//
+//        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+//        int subDistrictCode;
+//        if(doctor.isPresent()) {
+//            subDistrictCode= doctor.get().getSubdistrictcode().getCode();
+//            Pageable pageable = PageRequest.of(pagenumber,pagesize);
+//            Page<Patient> patientList=patientRepository.getNewPatientBySubdistrict(subDistrictCode,pageable);
+//            return patientList.getContent();
+//        }
+//        else return null;
+//    }
 
     @Override
     public Patient  getPatient(int doctorId,int patientId) {
