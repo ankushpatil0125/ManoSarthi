@@ -17,10 +17,10 @@ import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
 import PendingPatient from "./components/Doctor/PendingPatient";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import { AuthProvider } from "./components/Context/AuthContext";
-import PatientDetails from "./components/Patient/PatientDetails";
+import PatientDetails from "./components/Doctor/PatientDetails";
 import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
-import DoctorOperation from "./components/Doctor/DoctorOperation";
-import AddPrescription from "./components/Patient/AddPrescription";
+// import DoctorOperation from "./components/Doctor/DoctorOperation";
+import AddPrescription from "./components/Doctor/AddPrescription";
 
 const App = () => {
   return (
