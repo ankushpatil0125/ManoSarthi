@@ -1,14 +1,12 @@
-package com.team9.manosarthi_backend.Services;
+package com.team9.manosarthi_backend.ServicesImpl;
 import com.team9.manosarthi_backend.Entities.*;
-import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
+import com.team9.manosarthi_backend.Services.AdminService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +40,7 @@ public class AdminServiceImpl implements AdminService {
         user.setUsername("DOC" + newDoctor.getId());
 //        user.setPassword(passwordEncoder.encode("changeme"));
 
-        String password=PasswordGeneratorService.generatePassword();
+        String password= PasswordGeneratorService.generatePassword();
         user.setPassword(passwordEncoder.encode(password));
 
         user.setRole("ROLE_DOCTOR");
