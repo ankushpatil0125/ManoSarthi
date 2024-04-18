@@ -13,12 +13,12 @@ import PatientContext from "../context/PatientContext"; // Import PatientContext
 import InsertService from "../Services/DatabaseServices/InsertService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 
-const QuestionnaireScreen = ({ navigation }) => {
+const QuestionnaireScreen = ({ navigation,route }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
-
+  const {age} = route.params;
   // State to hold the answers for each question
   const [answers, setAnswers] = useState(
-    Array(surveyquestions.length).fill(null)
+    []
   );
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
 
@@ -50,9 +50,9 @@ const QuestionnaireScreen = ({ navigation }) => {
 
   const fetchSurveyQuestionsFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllQuestions();
+      const data = await SelectService.getAllQuestions(age,"normal");
       setsurveyquestions(data);
-
+      setAnswers(Array(data.length).fill(null));
       console.log("Survey Questions Need To Render: ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
@@ -88,7 +88,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     // Perform any necessary validation before proceeding
     // For example, you can check if all questions are answered
     if (answers.some((answer) => answer === null)) {
-      console.log("Please answer all questions.");
+      Alert.alert("Please answer all questions.");
       return;
     }
 
@@ -108,21 +108,30 @@ const QuestionnaireScreen = ({ navigation }) => {
       const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
       console.log("Unmatched count:", unmatchedCount);
 
-      // Navigate to the next screen 
-      if(unmatchedCount >= 3){
-        await InsertService.insertAabhaId(aabhaId,"old");
-        navigation.navigate('MedicalDetails');
-      }
-      else{
-        await InsertService.insertAabhaId(aabhaId,"new");
-        DeleteService.deleteSurveyQuestionAnswersByAabhaId(aabhaId);
-        DeleteService.deletePatientByAabhaId(aabhaId);
-        const deldata = await SelectService.getAllSurveyQuestionAnswers();
-        console.log("QAdata after deletion from DB: ", deldata);
-        const delpdata = await SelectService.getAllPatients();
-        console.log("Pdata after deletion from DB: ", delpdata);
-        Alert.alert("Not referring to the doctor", "Related data is deleted from DB");
-        navigation.navigate('HomeScreen');
+      // Navigate to the next screen
+      if (unmatchedCount >= 3) {
+        await InsertService.insertAabhaId(aabhaId, "old");
+        navigation.navigate("MedicalDetails");
+      } else {
+        const res1 = await InsertService.insertAabhaId(aabhaId, "new");
+        connsole.log("Res1- Not Reffered Patient AabhaId ",res1)
+        const res2 = await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
+          aabhaId
+        );
+        connsole.log("Res2- Not Reffered Patient SurveyQNA ",res2)
+
+        const res3 = await DeleteService.deletePatientByAabhaId(aabhaId);
+        connsole.log("Res3- Not Reffered Patient Details ",res3)
+
+        // const deldata = await SelectService.getAllSurveyQuestionAnswers();
+        // console.log("QAdata after deletion from DB: ", deldata);
+        // const delpdata = await SelectService.getAllPatients();
+        // console.log("Pdata after deletion from DB: ", delpdata);
+        Alert.alert(
+          "Not referring to the doctor",
+          "Related data is deleted from DB"
+        );
+        navigation.navigate("HomeScreen");
       }
     } catch (error) {
       console.error("Error inserting survey answers:", error);
@@ -134,7 +143,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     questions.forEach((question, index) => {
       if (answers[index] !== question.default_ans) {
         unmatchedCount++;
-      } 
+      }
     });
     return unmatchedCount;
   };

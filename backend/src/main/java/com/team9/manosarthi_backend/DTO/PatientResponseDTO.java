@@ -15,12 +15,12 @@ import lombok.ToString;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 public class PatientResponseDTO {
-
     private int patient_id;
 
     private String firstname;
@@ -37,7 +37,7 @@ public class PatientResponseDTO {
 
     private Prescription prescription;
 
-    public void doctor_PatientToPatientResponseDTO(Patient patient)
+    public void doctor_PatientToPatientResponseDTO(Patient patient, String type)
     {
         this.patient_id=patient.getPatient_id();
         this.firstname=patient.getFirstname();
@@ -47,5 +47,11 @@ public class PatientResponseDTO {
         this.villageName=patient.getVillage().getName();
         this.medicalQueAnsList=patient.getMedicalQueAnsList();
         this.prescription=null;
+        if(Objects.equals(type, "ONGOING")){
+            for(Prescription pre: patient.getPrescription()){
+                if(pre.isActive()) prescription=pre;
+                break;
+            }
+        }
     }
 }

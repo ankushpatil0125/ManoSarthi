@@ -2,7 +2,6 @@
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const SelectService = {
-  
   getAllAabhaIdInfo: async () => {
     console.log("Inside getAllAabhaIdInfo");
     return new Promise((resolve, reject) => {
@@ -65,20 +64,46 @@ const SelectService = {
     });
   },
 
-  getAllQuestions: () => {
+  getAllQuestions: (age, type) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
-        tx.executeSql(
-          "SELECT * FROM SurveyQuestion",
-          [],
-          (_, { rows }) => {
-            const patients = rows._array;
-            resolve(patients);
-          },
-          (_, error) => {
-            reject("Error fetching Questions: " + error);
-          }
-        );
+        if (age >= 20 && age <= 40) {
+          tx.executeSql(
+            `SELECT * FROM SurveyQuestion where type=? AND minage=? AND maxage=?`,
+            [type, 20, 40],
+            (_, { rows }) => {
+              const patients = rows._array;
+              resolve(patients);
+            },
+            (_, error) => {
+              reject("Error fetching Questions: " + error);
+            }
+          );
+        } else if (age >= 41 && age <= 60) {
+          tx.executeSql(
+            `SELECT * FROM SurveyQuestion where type=? AND minage=? AND maxage=?`,
+            [type, 41, 60],
+            (_, { rows }) => {
+              const patients = rows._array;
+              resolve(patients);
+            },
+            (_, error) => {
+              reject("Error fetching Questions: " + error);
+            }
+          );
+        } else {
+          tx.executeSql(
+            `SELECT * FROM SurveyQuestion where type=? AND minage = ? AND maxage=?`,
+            [type, 61, 110],
+            (_, { rows }) => {
+              const patients = rows._array;
+              resolve(patients);
+            },
+            (_, error) => {
+              reject("Error fetching Questions: " + error);
+            }
+          );
+        }
       });
     });
   },
@@ -187,6 +212,24 @@ const SelectService = {
           },
           (_, error) => {
             reject("Error fetching medical_history_answers: " + error);
+          }
+        );
+      });
+    });
+  },
+  getWorkerDetail: async () => {
+    // console.log("Inside getAllAabhaIdInfo");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM profile_details_table",
+          [],
+          (_, { rows }) => {
+            const entries = rows._array; // Renamed from patients to entries
+            resolve(entries);
+          },
+          (_, error) => {
+            reject("Error fetching profile_details_table: " + error.message); // Improved error message
           }
         );
       });

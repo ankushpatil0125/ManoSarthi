@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from "react";
-import {  useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PASS_URL } from "../../utils/images";
 import "../../css/LoginComponent.css";
 import ChangePasswordService from "../../Services/ChangePasswordService";
 import LoadingComponent from "../Loading/LoadingComponent";
-// const CONST_LOGIN_CHECK = "http://localhost:9090/auth/login";
-
 
 const ChangePasswordComponent = () => {
-  
   const [requestData, setRequestData] = useState({
     oldPassword: "",
     newPassword: "",
   });
 
-  const [isValid,setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
-  const [loading,setLoading] = useState(false);
-
-
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,48 +21,49 @@ const ChangePasswordComponent = () => {
       ...prevData,
       [name]: value,
     }));
-    if(name === "newPassword"){
-        setIsValid(validatePassword(value))
+    if (name === "newPassword") {
+      setIsValid(validatePassword(value));
     }
   };
 
   //Validate the password
-  const validatePassword =(newPassword) =>{
+  const validatePassword = (newPassword) => {
     // Regular expression to check if the password contains at least one uppercase letter,
     // one lowercase letter, one number, and is at least 8 characters long
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(newPassword); 
-  }
+    return passwordRegex.test(newPassword);
+  };
 
   const handleSubmit = async () => {
     try {
       // console.log(requestData.oldPassword);
       // console.log(requestData.newPassword);
-      setLoading (true);
-      if(isValid===true){
-      
-        const response = await ChangePasswordService.ChangePassword(requestData);
-        console.log("response of changePassword",response);
+      setLoading(true);
+      if (isValid === true) {
+        const response = await ChangePasswordService.ChangePassword(
+          requestData
+        );
+        console.log("Response of ChangePassword API: ", response);
+        console.log("Response Data of ChangePassword API: ", response.data);
 
         if (response) {
-          alert("Password Successfully Changed");
+          alert(response.data);
           setLoading(false);
+          localStorage.removeItem("JWT");
+          localStorage.removeItem("ROLE");
+          localStorage.removeItem("User_Id");
           navigate("/");
-          
-        } else {
-          alert("Failed");
         }
-      }
-      else{
-        alert("Please enter a valid password");
-
+      } else {
+        alert("Enter both the Password");
+        setLoading(false);
       }
     } catch (error) {
-      alert(error.response.data.message);
-        setLoading(false);
+      alert(error.response.data);
+      setLoading(false);
     }
   };
-  if(loading)return <LoadingComponent/>
+  if (loading) return <LoadingComponent />;
   return (
     <div className="login-container">
       <div className="header">
@@ -98,18 +94,20 @@ const ChangePasswordComponent = () => {
         </div>
       </div>
       {!isValid && (
-            <div className="password-validation-msg text-center">
-              <p className="text-red-600 ">
-                Password must contain at least one uppercase letter, one
-                lowercase letter, one number, and be at least 8 characters long.
-              </p>
-            </div>
-          )}
-      <div className="submit-container">
-        <div className="submit" onClick={handleSubmit}>
-          Change Password
+        <div className="password-validation-msg text-center">
+          <p className="text-red-600 ">
+            Password must contain at least one uppercase letter, one lowercase
+            letter, one number, and be at least 8 characters long.
+          </p>
         </div>
-      </div>
+      )}
+      {isValid && (
+        <div className="submit-container">
+          <div className="submit" onClick={handleSubmit}>
+            Change Password
+          </div>
+        </div>
+      )}
     </div>
   );
 };

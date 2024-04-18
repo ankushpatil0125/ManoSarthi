@@ -11,8 +11,9 @@ import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
-    @Query("SELECT p from Patient p where p.village.subDistrict.code=:subdistrictcode and p.status='NEW'")
-    Page<Patient> getNewPatientBySubdistrict(@Param("subdistrictcode") int subdistrictcode, Pageable pageable);
+    @Query("SELECT p from Patient p where p.village.subDistrict.code=:subdistrictcode and p.status=:type")
+    Page<Patient> getPatientListBySubdistrict(@Param("type") String type,@Param("subdistrictcode") int subdistrictcode, Pageable pageable);
+
 
     @Query("SELECT p from Patient p where p.aabhaId=:aabhaid")
     Patient findByAabha(@Param("aabhaid") String aabhaid);

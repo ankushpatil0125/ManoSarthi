@@ -1,80 +1,432 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
-import Chart from "chart.js/auto"; // Make sure to import Chart.js before using react-chartjs-2
-import { Line, Pie } from "react-chartjs-2";
-// import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import {
+  PlusIcon,
+  TrashIcon,
+  PencilIcon,
+  ChartBarIcon,
+} from "@heroicons/react/outline";
+import AddActorComponent from "../Actors/AddActorComponent";
+import UpdateActor from "../Actors/UpdateActor";
+const AdminHomePage = () => {
+  const [currentPage, setCurrentPage] = useState("dashboard");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-const Dashboard = () => {
-  // Sample data for graphs and charts
-  const barChartData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "Patients Screened",
-        backgroundColor: "rgba(75,192,192,1)",
-        borderColor: "rgba(0,0,0,1)",
-        borderWidth: 1,
-        data: [65, 59, 80, 81, 56, 55],
-      },
-    ],
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
-
-  const pieChartData = {
-    labels: ["Mental Health Conditions", "No Mental Health Conditions"],
-    datasets: [
-      {
-        data: [20, 80],
-        backgroundColor: ["#E38627", "#C13C37"],
-      },
-    ],
+  const renderPage = () => {
+    switch (currentPage) {
+      case "dashboard":
+        return (
+          <div className="p-4 bg-blue-100 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+              <p className="text-2xl text-gray-400 dark:text-gray-500">
+                <svg
+                  className="w-3.5 h-3.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 18"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 1v16M1 9h16"
+                  />
+                </svg>
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+              <p className="text-2xl text-gray-400 dark:text-gray-500">
+                <svg
+                  className="w-3.5 h-3.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 18 18"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 1v16M1 9h16"
+                  />
+                </svg>
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                <p className="text-2xl text-gray-400 dark:text-gray-500">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      case "add":
+        return <AddActorComponent />;
+      case "update":
+        return <UpdateActor />;
+      // case "delete":
+      //   return <DeleteActor />;
+      default:
+        return null;
+    }
   };
-
   return (
     <div>
       <Header />
+      <div className="mt-20">
+        {isSidebarOpen ? (
+  <button
+    data-drawer-target="default-sidebar"
+    data-drawer-toggle="default-sidebar"
+    aria-controls="default-sidebar"
+    type="button"
+    onClick={toggleSidebar}
+    className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+  >
+    <span className="sr-only">Open sidebar</span>
+    <svg
+      className="w-6 h-6"
+      aria-hidden="true"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+      ></path>
+    </svg>
+  </button>
+) : (
+  <button
+    data-drawer-target="default-sidebar"
+    data-drawer-toggle="default-sidebar"
+    aria-controls="default-sidebar"
+    type="button"
+    onClick={toggleSidebar}
+    className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+  >
+    <span className="sr-only">Open sidebar</span>
+    <svg
+      className="w-6 h-6"
+      aria-hidden="true"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+      ></path>
+    </svg>
+  </button>
+)}
 
-      <div className="container mx-auto p-4 mt-28">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Card 1 */}
-          <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 overflow-auto hover:scale-105 ">
-            <h2 className="text-xl font-semibold mb-2">
-              Patients Screened (Monthly)
-            </h2>
-            <Line data={barChartData} />
-          </div>
+        {isSidebarOpen && (
+          <aside
+            id="default-sidebar"
+            className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+            aria-label="Sidebar"
+          >
+            <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 mt-20">
+              <ul className="space-y-2 font-medium ">
+                <li>
+                  <Link
+                    onClick={() => setCurrentPage("dashboard")}
+                    to="#"
+                    className={`flex items-center p-2 rounded-lg group no-underline ${
+                      currentPage === "dashboard"
+                        ? "text-white bg-blue-500"
+                        : "text-gray-900 "
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                      <ChartBarIcon />
+                    </span>
+                    <span className="ms-3">Dashboard</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => setCurrentPage("add")}
+                    to="#"
+                    className={`flex items-center p-2 rounded-lg group no-underline ${
+                      currentPage === "add"
+                        ? "text-white bg-blue-500"
+                        : "text-gray-900"
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                      <PlusIcon />
+                    </span>
+                    <span className="flex-1 ms-3 whitespace-nowrap">Add</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => setCurrentPage("update")}
+                    to="#"
+                    className={`flex items-center p-2 rounded-lg group no-underline ${
+                      currentPage === "update"
+                        ? "text-white bg-blue-500"
+                        : "text-gray-900 "
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                      <PencilIcon />
+                    </span>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Update
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => setCurrentPage("delete")}
+                    to="#"
+                    className={`flex items-center p-2 rounded-lg group no-underline ${
+                      currentPage === "delete"
+                        ? "text-white bg-blue-500"
+                        : "text-gray-900"
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                      <TrashIcon />
+                    </span>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      Delete
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        )}
 
-          {/* Card 2 */}
-          <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 overflow-auto hover:scale-105 ">
-            <h2 className="text-xl font-semibold mb-2">
-              Mental Health Conditions Distribution
-            </h2>
-            <Pie data={pieChartData} />
-          </div>
-
-          {/* Card 3 */}
-          <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 overflow-auto hover:scale-105 ">
-            <h2 className="text-xl font-semibold mb-2">
-              Additional Information
-            </h2>
-            <p className="text-gray-700">
-              The "Extending Care to the Home" scheme empowers field health
-              workers to deliver comprehensive healthcare directly to
-              households. Through systematic screenings, individuals with mental
-              health conditions are identified and referred to local doctors for
-              treatment. Doctors evaluate patients, prescribe treatments, and
-              record diagnoses using ICD10 codes. A tablet-based app assists
-              health workers in tracking and completing follow-ups, even
-              offline. Doctors can access patient data and summary information
-              for informed decision-making. The scheme also provides API
-              integration for a state-level dashboard and offers multi-lingual
-              support for inclusivity. Overall, it aims to improve healthcare
-              accessibility and outcomes within communities.
-            </p>
-          </div>
+        <div className={`p-4 ${isSidebarOpen ? "sm:ml-64" : ""}`}>
+          {renderPage()}
         </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default AdminHomePage;

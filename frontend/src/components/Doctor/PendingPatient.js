@@ -2,9 +2,7 @@ import "../../css/PendingPatient.css";
 import DoctorService from "../../Services/DoctorService";
 import Header from "../Header/Header";
 import React, { useEffect, useState } from "react";
-// import { useHistory } from 'react-router-dom';
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import PatientDetails from "../Patient/PatientDetails";
+import {  useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
 
 const PendingPatient = () => {
