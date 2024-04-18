@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
+import com.team9.manosarthi_backend.DTO.WorkerResponseDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
@@ -46,7 +47,7 @@ public class WorkerRestController {
     }
 
     @GetMapping("/view-profile")
-    public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
+    public  WorkerResponseDTO getDetails(@RequestHeader("Authorization") String authorizationHeader){
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 // Extract the token part after "Bearer "
@@ -55,35 +56,9 @@ public class WorkerRestController {
 //                Optional<Supervisor> supervisor = supervisorRepository.findById(Integer.parseInt(userid));
                 Worker worker = workerService.viewProfile(Integer.parseInt(userid));
 
-                Set<String> workerFilterProperties = new HashSet<>();
-                workerFilterProperties.add("firstname");
-                workerFilterProperties.add("lastname");
-                workerFilterProperties.add("email");
-                workerFilterProperties.add("villagecode");
-                workerFilterProperties.add("user");
-                workerFilterProperties.add("gender");
-                workerFilterProperties.add("dob");
-
-
-                Set<String> villageFilterProperties = new HashSet<>();
-                villageFilterProperties.add("name");
-                villageFilterProperties.add("subDistrict");
-
-                Set<String> subDistrictFilterProperties = new HashSet<>();
-//                subDistrictFilterProperties.add("code");
-                subDistrictFilterProperties.add("name");
-                subDistrictFilterProperties.add("district");
-
-                Set<String> districtFilterProperties = new HashSet<>();
-                villageFilterProperties.add("name");
-
-                Set<String> userFilterProperties = new HashSet<>();
-                userFilterProperties.add("username");
-
-                WorkerFilter<Worker> workerFilter = new WorkerFilter<>(worker);
-
-                return workerFilter.getWorkerFilter(workerFilterProperties,villageFilterProperties, subDistrictFilterProperties, userFilterProperties);
-
+                    WorkerResponseDTO workerResponseDTO=new WorkerResponseDTO();
+                    workerResponseDTO.WorkerResponse(worker);
+                    return workerResponseDTO;
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
@@ -97,16 +72,13 @@ public class WorkerRestController {
 
 
     @PutMapping("/updateworker")
-    public ResponseEntity<MappingJacksonValue> UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
+    public WorkerResponseDTO UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
         try {
             Worker updatedworker = workerService.UpdateWorkerProfile(updatedWorker);
             if (updatedworker != null) {
-                SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "villagecode");
-                SimpleBeanPropertyFilter villagefilter = SimpleBeanPropertyFilter.filterOutAllExcept("code", "name", "worker_count");
-                FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter", villagefilter);
-                MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(updatedworker);
-                mappingJacksonValue.setFilters(filterProvider);
-                return ResponseEntity.ok(mappingJacksonValue);
+                WorkerResponseDTO workerResponseDTO=new WorkerResponseDTO();
+                workerResponseDTO.WorkerResponse(updatedworker);
+                return workerResponseDTO;
             } else {
                 throw new APIRequestException("Worker with given ID not found");
             }
@@ -122,78 +94,31 @@ public class WorkerRestController {
     }
 
     @GetMapping("/getquestionarrie")
-    public MappingJacksonValue getquestionarrie() {
+    public List<Questionarrie> getquestionarrie() {
         try {
             List<Questionarrie> questions = questionarrieService.getquestions();
-            SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionJSONFilter", questionfilter);
-            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
-            mappingJacksonValue.setFilters(filterProvider);
-            return mappingJacksonValue;
+            return questions;
         }catch (Exception ex)
         {
             throw new APIRequestException("Error while getting questionarrie",ex.getMessage());
         }
     }
 
-//    @PostMapping("/questionans")
-//    public MappingJacksonValue postquestans(@Valid @RequestBody Questionarrie_ans questionarrie_ans)
-//    {
-//        Questionarrie_ans queans= questionarrieService.postqueans(questionarrie_ans);
-//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id");
-////        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter).addFilter("QuestionJSONFilter",questionfilter);
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-//        mappingJacksonValue.setFilters(filterProvider);
-//        return mappingJacksonValue;
-//    }
-
     @GetMapping("/get-medical-questionarrie")
-    public MappingJacksonValue getmedquestionarrie() {
+    public List<MedicalQue> getmedquestionarrie() {
         try {
             List<MedicalQue> questions = questionarrieService.getmedicalquestions();
-            SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueJSONFilter", questionfilter);
-            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
-            mappingJacksonValue.setFilters(filterProvider);
-            return mappingJacksonValue;
+
+            return questions;
          }catch (Exception ex)
         {
             throw new APIRequestException("Error while getting medical questionarrie",ex.getMessage());
         }
     }
-//    @PostMapping("/medical-questionans")
-//    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
-//    {
-//        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
-//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
-//        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-//        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
-////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-//        mappingJacksonValue.setFilters(filterProvider);
-//        return mappingJacksonValue;
-//    }
-//    @PostMapping("/register-patient")
-//    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
-//        System.out.println("/register-patient");
-//
-//        System.out.println("patient"+patient.toString());
-//
-//        Patient newPatient = workerService.registerPatient(patient);
-//        Set<String> patientFilterProperties = new HashSet<>();
-//        patientFilterProperties.add("aabhaId");
-//
-//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
-//
-//        return patientFilter.getPatientFilter(patientFilterProperties);
-//    }
 
     @Validated
     @PostMapping("/register-patient")
-    public MappingJacksonValue registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
+    public String registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
 
 //        System.out.println("patient"+registerPatientDTO.toString());
         System.out.println("RegisterPatientDTO sent "+registerPatientDTO);
@@ -205,13 +130,7 @@ public class WorkerRestController {
                 String workerId = helper.getIDFromToken(token);
 
                 Patient newPatient = workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
-                System.out.println("New register patient  "+newPatient.toString());
-                Set<String> patientFilterProperties = new HashSet<>();
-                patientFilterProperties.add("aabhaId");
-
-                PatientFilter<Patient> patientFilter = new PatientFilter<>(newPatient);
-
-                return patientFilter.getPatientFilter(patientFilterProperties);
+                return newPatient.getAabhaId();
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
@@ -245,7 +164,7 @@ public class WorkerRestController {
     }
 
 
-
+/*
     @Autowired
     PatientRepository patientRepository;
     @GetMapping("/get-patient")
@@ -278,7 +197,7 @@ public class WorkerRestController {
         return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
 
     }
-
+*/
     @GetMapping("/getAbhaid")
     public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader)
     {

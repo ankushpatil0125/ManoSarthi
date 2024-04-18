@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
+import com.team9.manosarthi_backend.DTO.PatientResponseDTO;
 import com.team9.manosarthi_backend.Entities.Patient;
 import com.team9.manosarthi_backend.Entities.Prescription;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -17,10 +18,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @PreAuthorize("hasRole('DOCTOR')")
@@ -82,7 +80,7 @@ public class DoctorRestController {
         }
     }
     @GetMapping("/new-patient")
-    public MappingJacksonValue getNewPatientDetails(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
+    public List<PatientResponseDTO> getNewPatientDetails(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
 
         int pagesize = 5;
         try {
@@ -92,18 +90,15 @@ public class DoctorRestController {
                 String doctorId = helper.getIDFromToken(token);
                 List<Patient> patientList = doctorService.getNewPatientDetails(Integer.parseInt(doctorId), pagenumber, pagesize);
 
-                Set<String> patientFilterProperties = new HashSet<>();
-                patientFilterProperties.add("patient_id");
-                patientFilterProperties.add("firstname");
-                patientFilterProperties.add("lastname");
-                patientFilterProperties.add("gender");
-                patientFilterProperties.add("village");
+                List<PatientResponseDTO> patientResponseDTOList = new ArrayList<>();
+                for (Patient pat : patientList)
+                {
+                    PatientResponseDTO patientResponseDTO = new PatientResponseDTO();
+                    patientResponseDTO.doctor_PatientToPatientResponseDTO(pat);
+                    patientResponseDTOList.add(patientResponseDTO);
 
-                Set<String> villageFilterProperties = new HashSet<>();
-                villageFilterProperties.add("name");
-
-                PatientFilter<List<Patient>> patientFilter = new PatientFilter<>(patientList);
-                return patientFilter.getPatientFilter(patientFilterProperties, villageFilterProperties);
+                }
+                return patientResponseDTOList;
             }
             else {
                 throw new APIRequestException("Error in authorizing");
