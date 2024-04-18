@@ -107,14 +107,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ManosarthiBackendApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="manosarthi_backend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <option name="SPRING_BOOT_MAIN_CLASS" />
@@ -122,6 +114,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ManosarthiBackendApplication_enc" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="manosarthi_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
+      <option name="VM_PARAMETERS" value="-Djasypt.encryptor.password=javatechie" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ManosarthiBackendApplication" />
+      <item itemvalue="Spring Boot.ManosarthiBackendApplication_enc" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ManosarthiBackendApplication" />
