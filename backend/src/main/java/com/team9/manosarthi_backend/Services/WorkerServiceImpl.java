@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.Services;
 
 import com.team9.manosarthi_backend.Config.AesEncryptor;
+import com.team9.manosarthi_backend.DTO.FollowupScheduleDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -36,6 +37,7 @@ public class WorkerServiceImpl implements WorkerService{
 
     private AesEncryptor aesEncryptor;
 
+    private FollowUpScheduleRepository followUpScheduleRepository;
 
     @Override
     public Worker viewProfile(int id) {
@@ -185,4 +187,18 @@ public class WorkerServiceImpl implements WorkerService{
             throw new APIRequestException("worker with given id not found");
     }
 
+    public List<FollowUpSchedule> get_followup_schedule(Integer workerid)
+    {
+        Optional<Worker> worker=workerRepository.findById(workerid);
+        if(worker.isPresent())
+        {
+            int villagecode=worker.get().getVillagecode().getCode();
+            return followUpScheduleRepository.findbyDateAndVill(Date.valueOf(java.time.LocalDate.now()),villagecode);
+
+        }
+        else {
+            throw new APIRequestException("Worker not found");
+        }
+
+    }
 }

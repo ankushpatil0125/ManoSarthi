@@ -3,6 +3,8 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.team9.manosarthi_backend.DTO.FollowupScheduleDTO;
+import com.team9.manosarthi_backend.DTO.PatientResponseDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.DTO.WorkerResponseDTO;
 import com.team9.manosarthi_backend.Entities.*;
@@ -23,10 +25,9 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
+
 import com.team9.manosarthi_backend.security.JwtHelper;
 
 @RestController
@@ -222,4 +223,27 @@ public class WorkerRestController {
                 throw new APIRequestException("Error while getting registered Aabha Ids",ex.getMessage());
         }
     }
+
+    @GetMapping("/getFollowupSchedule")
+    public List<FollowupScheduleDTO> getFollowupSchedule(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+            List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
+            List<FollowupScheduleDTO> followupScheduleDTOList=new ArrayList<>();
+            for(FollowUpSchedule schedule:schedules)
+            {
+                FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
+                followupScheduleDTO.FollowupScheduleToDTO(schedule);
+                followupScheduleDTOList.add(followupScheduleDTO);
+
+            }
+          return followupScheduleDTOList;
+        }
+        else {
+            throw new APIRequestException("Error in authorizing");
+        }
+    }
+
 }
