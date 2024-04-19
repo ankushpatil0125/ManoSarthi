@@ -13,6 +13,6 @@ public class JwtResponse {
     private String jwtToken;
     private String username;
     private String role;
-    private  int user_id;
-    private boolean changepass;
+//    private  int user_id;
+//    private boolean changepass;
 }
