@@ -50,9 +50,7 @@ const PrescriptionScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textFriends}>
-      Search Prescription
-      </Text>
+      <Text style={styles.textFriends}>Search Prescription</Text>
 
       <View style={styles.searchContainer}>
         <TextInput

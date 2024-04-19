@@ -15,7 +15,7 @@ import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService
 import InsertService from "../Services/DatabaseServices/InsertService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
 
-const MedicalDetails = ({route}) => {
+const MedicalDetails = ({ route }) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   const [comment, setComment] = useState("");
@@ -28,10 +28,10 @@ const MedicalDetails = ({route}) => {
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
   // var commentID;
   const [commentID, setCommentID] = useState(0);
-  const {age} = route.params;
+  const { age } = route.params;
 
   useEffect(() => {
-    fetchQuestionsFromDatabase();
+    fetchDataFromDatabase();
   }, []);
 
   useEffect(() => {
@@ -43,26 +43,40 @@ const MedicalDetails = ({route}) => {
     };
   }, []);
 
-  const fetchQuestionsFromDatabase = async () => {
+  const fetchDataFromDatabase = async () => {
     try {
       const data2 = await SelectService.getAllSurveyQuestionAnswers();
-      console.log("QUestionaire Answers",data2);
+      console.log(
+        "[MedicalDetailsScreen]Suvery QNA Fetched From Database",
+        data2
+      );
       const data = await SelectService.getAllMedicalQuestions();
       // setMedicalQuestions(data);
-      console.log("Medical Questions res data (IN MedicalDetails Screen): ", data);
+      console.log(
+        "[MedicalDetailsScreen]Medical Questions Need To Render: ",
+        data
+      );
       // Find the index of the question with the "comment" value
-      const commentIndex = data.findIndex(medical_question => medical_question.question === "comment");
-      const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
+      const commentIndex = data.findIndex(
+        (medical_question) => medical_question.question === "comment"
+      );
+      const updatedMedicalQuestions = [
+        ...data.slice(0, commentIndex),
+        ...data.slice(commentIndex + 1),
+      ];
       // commentID = data[commentIndex].question_id;
       setCommentID(data[commentIndex].question_id);
-      console.log("CommentID: ", commentID);
+      // console.log("CommentID: ", commentID);
       setMedicalQuestions(updatedMedicalQuestions);
-      console.log("updatedMedicalQuestions: ", medicalQuestions);
+      console.log(
+        "[MedicalDetailsScreen]Updated Medical Questions: ",
+        medicalQuestions
+      );
     } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
   };
-  
+
   const handleAnswerChange = (index, answer) => {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
@@ -91,19 +105,18 @@ const MedicalDetails = ({route}) => {
         try {
           await saveDataToDatabase(answers, comment);
           // await sendDataToServer(answers, comment);
-          console.log("Data submitted to local DB successfully");
+          console.log("Medical QNA Stored Successfully");
         } catch (error) {
           console.error("Error submitting data to server:", error);
         }
       } else {
         await saveDataToDatabase(answers, comment);
       }
-      navigation.navigate('Preview', {
+      navigation.navigate("Preview", {
         commentID,
         comment,
-        age
+        age,
       });
-
     } else {
       Alert.alert(
         "Missing Information",
@@ -113,26 +126,8 @@ const MedicalDetails = ({route}) => {
     }
   };
 
-  // const sendDataToServer = async (answers, comment) => {
-  //   // const data = [];
-  //   try {
-  //     console.log("Data to be send: ", data);
-  //     // Need to define sendMedicalQuestionarrieAnswers in MedicalQuestionarrieService
-  //     const response =
-  //       await MedicalQuestionarrieService.sendMedicalQuestionarrieAnswers();
-  //     if (response) {
-  //       alert(`Medical que, ans sent successfully`);
-  //     } else {
-  //       alert(`Failed to send medical que, ans data`);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error during sending medical que, ans, ${error}`);
-  //   }
-  // };
-
   const saveDataToDatabase = async (answers, comment) => {
     try {
-      console.log("before res: ");
       const res = await InsertService.insertMedicalHistoryAnswers(
         medicalQuestions,
         answers,
@@ -140,23 +135,22 @@ const MedicalDetails = ({route}) => {
         commentID,
         aabhaId
       );
-      console.log("res: ", res);
+      // console.log("[MedicalDetailsScreen]",res);
     } catch (error) {
-      console.error("Error while storing data locally", error);
+      console.error("Error While Storing Data Locally", error);
     }
   };
 
   return (
-    <ScrollView style={{ flex: 1}}>
-      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,}}>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 30, paddingLeft: 10 }}>
         {medicalQuestions.map((question, index) => (
           <View key={index} style={{ marginBottom: 15 }}>
             <Text>{question.question}</Text>
-            <View style={{ paddingTop: 5,flexDirection:'row',}}>
+            <View style={{ paddingTop: 5, flexDirection: "row" }}>
               <View style={{ marginRight: 10 }}>
                 <TouchableOpacity
                   style={{
-                    
                     backgroundColor:
                       clickedButtons[index] && answers[index] === "Yes"
                         ? "#3498db"
