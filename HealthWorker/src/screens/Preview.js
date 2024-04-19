@@ -28,7 +28,6 @@ const Preview = ({ navigation, route }) => {
   const { age } = route.params;
   const { aabhaId } = useContext(PatientContext);
 
-
   // const navigation = useNavigation();
 
   const handleCheckboxChange = () => {
@@ -46,9 +45,11 @@ const Preview = ({ navigation, route }) => {
           {
             text: "OK",
             onPress: () => {
-              console.log("Patient data has been successfully saved to the local database");
+              console.log(
+                "Patient data has been successfully saved to the local database"
+              );
               navigation.navigate("HomeScreen");
-            }
+            },
           },
         ]);
         // console.log("All data entries in table: ", res);
@@ -83,7 +84,7 @@ const Preview = ({ navigation, route }) => {
     gender: "Gender",
     age: "Age",
     address: "Address",
-    status:"Status"
+    status: "Status",
   };
 
   useEffect(() => {

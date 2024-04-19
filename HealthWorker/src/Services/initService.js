@@ -9,10 +9,10 @@ export const createDatabase = () =>
   new Promise(async (resolve, reject) => {
     try {
       await CreateService.createTables();
-    //   console.log("Database and tables initialized successfully.");
+      //   console.log("Database and tables initialized successfully.");
       resolve("All tables created successfully");
     } catch (error) {
-    //   console.error("Error initializing database:", error);
+      //   console.error("Error initializing database:", error);
       // Handle the error here, such as showing a message to the user
       reject("Failed to create database");
     }
@@ -34,7 +34,10 @@ export const fetchData = () =>
         const abhaIDTable = AabhaResponse.data;
         console.log("Fetched Survey Questions From Server:", questions);
         console.log("Fetched AbhaId Table From Server: ", abhaIDTable);
-        console.log("Fetched Medical Questions From Server: ", medicalQuestions);
+        console.log(
+          "Fetched Medical Questions From Server: ",
+          medicalQuestions
+        );
 
         // Delete old questions from the SurveyQuestion table
         const res1 = await DeleteService.deleteAllSurveyQuestions();

@@ -11,7 +11,6 @@ const CreateService = {
     await CreateService.createSurveyQuestionAnswerTable();
     await CreateService.createAabhaIdInfoTable();
     // Add more table creation functions here if needed
-    
   },
   createAabhaIdInfoTable: () => {
     return new Promise((resolve, reject) => {
@@ -66,7 +65,7 @@ const CreateService = {
       });
     });
   },
-  
+
   createSurveyQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -120,7 +119,7 @@ const CreateService = {
       });
     });
   },
-   
+
   createMedicalQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

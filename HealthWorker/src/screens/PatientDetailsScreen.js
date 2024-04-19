@@ -45,8 +45,14 @@ const PatientDetailsScreen = ({ navigation }) => {
       const data = await SelectService.getAllPatients();
       const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
       setPatients(data);
-      console.log("[PatientDetailsScreen]AabhaId Fetched From Data: ", aabhaIdInfoData);
-      console.log("[PatientDetailsScreen]Patients Fetched from Database: ", data);
+      console.log(
+        "[PatientDetailsScreen]AabhaId Fetched From Data: ",
+        aabhaIdInfoData
+      );
+      console.log(
+        "[PatientDetailsScreen]Patients Fetched from Database: ",
+        data
+      );
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -57,7 +63,14 @@ const PatientDetailsScreen = ({ navigation }) => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !gender.trim() || !age.trim() || !address.trim()) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !gender.trim() ||
+      !age.trim() ||
+      !address.trim()
+    ) {
       setFormError("Please fill in all fields");
       return;
     }
@@ -71,13 +84,25 @@ const PatientDetailsScreen = ({ navigation }) => {
     }
 
     if (isConnected) {
-      console.log("[PatientDetailsScreen]Entered Details: ",firstName+" "+lastName+" "+email+" "+age+" "+address+" "+gender);
+      console.log(
+        "[PatientDetailsScreen]Entered Details: ",
+        firstName +
+          " " +
+          lastName +
+          " " +
+          email +
+          " " +
+          age +
+          " " +
+          address +
+          " " +
+          gender
+      );
       await storeDataLocally();
-
     } else {
       await storeDataLocally();
     }
-    navigation.navigate("QuestionnaireScreen",{age});
+    navigation.navigate("QuestionnaireScreen", { age });
   };
 
   const storeDataLocally = async () => {
@@ -101,21 +126,21 @@ const PatientDetailsScreen = ({ navigation }) => {
 
   const handleFirstNameChange = (text) => {
     // Filter out space characters from the input
-    const filteredText = text.replace(/\s/g, '');
+    const filteredText = text.replace(/\s/g, "");
     setFirstName(filteredText);
   };
 
   const handleLastNameChange = (text) => {
     // Filter out space characters from the input
-    const filteredText = text.replace(/\s/g, '');
+    const filteredText = text.replace(/\s/g, "");
     setLastName(filteredText);
   };
 
   // Function to validate email format
   const validateEmail = (email) => {
-    const atIndex = email.indexOf('@');
-    const dotIndex = email.lastIndexOf('.');
-    
+    const atIndex = email.indexOf("@");
+    const dotIndex = email.lastIndexOf(".");
+
     if (atIndex === -1) {
       setEmailError("Email must contain '@'");
       return false;
@@ -135,9 +160,14 @@ const PatientDetailsScreen = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "height" : "position"}
       style={{ flex: 1 }}
     >
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" // Ensure taps outside TextInput dismiss keyboard
-    showsVerticalScrollIndicator={false} >
-        <Text style={styles.label}>First Name:<Text style={{ color: 'red' }}>*</Text></Text>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled" // Ensure taps outside TextInput dismiss keyboard
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.label}>
+          First Name:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           value={firstName}
@@ -145,7 +175,9 @@ const PatientDetailsScreen = ({ navigation }) => {
           placeholder="Enter first name"
         />
 
-        <Text style={styles.label}>Last Name:<Text style={{ color: 'red' }}>*</Text></Text>
+        <Text style={styles.label}>
+          Last Name:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           value={lastName}
@@ -153,7 +185,9 @@ const PatientDetailsScreen = ({ navigation }) => {
           placeholder="Enter last name"
         />
 
-        <Text style={styles.label}>Email:<Text style={{ color: 'red' }}>*</Text></Text>
+        <Text style={styles.label}>
+          Email:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           value={email}
@@ -167,7 +201,9 @@ const PatientDetailsScreen = ({ navigation }) => {
         {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
         {formError ? <Text style={styles.errorText}>{formError}</Text> : null}
 
-        <Text style={styles.label}>Gender:<Text style={{ color: 'red' }}>*</Text></Text>
+        <Text style={styles.label}>
+          Gender:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <View style={styles.genderContainer}>
           <TouchableOpacity
             style={[
@@ -198,17 +234,19 @@ const PatientDetailsScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.label}>Age:<Text style={{ color: 'red' }}>*</Text></Text>
+        <Text style={styles.label}>
+          Age:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           onChangeText={(value) => {
             // Check if the entered value contains only numeric characters
             if (/^\d*$/.test(value)) {
-              if(value === '' || parseInt(value)<=110)
-              // If it contains only numeric characters, update the state
-              setAge(value);
+              if (value === "" || parseInt(value) <= 110)
+                // If it contains only numeric characters, update the state
+                setAge(value);
             }
-          }}          
+          }}
           value={age}
           placeholder="AGE"
           placeholderTextColor="#666"
@@ -216,7 +254,9 @@ const PatientDetailsScreen = ({ navigation }) => {
           keyboardType="numeric"
         />
 
-        <Text style={styles.label}>Address:<Text style={{ color: 'red' }}>*</Text></Text>
+        <Text style={styles.label}>
+          Address:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={[styles.input]}
           value={address}
@@ -226,11 +266,12 @@ const PatientDetailsScreen = ({ navigation }) => {
           placeholder="Enter address"
         />
 
-
         <Button
           title="Submit"
           onPress={handleSubmit}
-          disabled={!firstName || !lastName || !email || !gender || !age || !address}
+          disabled={
+            !firstName || !lastName || !email || !gender || !age || !address
+          }
         />
       </ScrollView>
     </KeyboardAvoidingView>
