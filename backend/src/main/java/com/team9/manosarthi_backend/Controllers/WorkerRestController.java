@@ -263,7 +263,7 @@ public class WorkerRestController {
             for(Prescription prescription:prescriptions)
             {
                 PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
-                prescriptionDTO.PrescriptionToDTO(prescription);
+                prescriptionDTO.prescriptionToDTO(prescription);
                 prescriptionDTOList.add(prescriptionDTO);
 
             }

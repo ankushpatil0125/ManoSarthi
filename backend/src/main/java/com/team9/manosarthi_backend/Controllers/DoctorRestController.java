@@ -19,6 +19,7 @@ import com.team9.manosarthi_backend.security.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -27,6 +28,7 @@ import java.util.*;
 @PreAuthorize("hasRole('DOCTOR')")
 @RequestMapping("/doctor")
 @CrossOrigin(origins = "*")
+@EnableTransactionManagement
 public class DoctorRestController {
     DoctorRepository doctorRepository;
     DoctorService doctorService;
@@ -236,7 +238,9 @@ public class DoctorRestController {
 
     @PostMapping("/prescription-followup")
     public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO){
-//        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
+        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO);
+        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
+
 
         try {
 

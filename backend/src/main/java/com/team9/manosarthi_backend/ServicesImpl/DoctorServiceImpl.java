@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -79,6 +80,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    @Transactional
     public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 //        System.out.println("patientFollowUpPrescriptionDTO"+patientFollowUpPrescriptionDTO);
 
@@ -155,6 +157,7 @@ public class DoctorServiceImpl implements DoctorService {
             System.out.println("Disease");
 //            System.out.println("PRESCRIPTION"+patientFollowUpPrescriptionDTO.getPrescription().getDisease_code());
             Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
+            System.out.println("newPrescription"+newPrescription.getPrescription_id());
             latestFollowUp.get().setPrescription(newPrescription);
             followUpDetailsRepository.save(latestFollowUp.get());
             System.out.println("newPrescription "+newPrescription.getPrescription_id());
@@ -165,7 +168,7 @@ public class DoctorServiceImpl implements DoctorService {
             }
             // add follow up schedule
             System.out.println("HELLO TYPE");
-            Date nextDate=null;
+            Date nextDate;
             System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
             if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {
                 System.out.println("nextDate WEEKLY");
@@ -179,6 +182,8 @@ public class DoctorServiceImpl implements DoctorService {
             }
             else throw new APIRequestException("Follow Up Type not specified correctly");
 
+            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
+            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
             patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
             FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
             System.out.println("followUpSchedule  "+followUpSchedule.getId());

@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team9.manosarthi_backend.Entities.FollowUpDetails;
 import com.team9.manosarthi_backend.Entities.Prescription;
 import com.team9.manosarthi_backend.Entities.Questionarrie_ans;
@@ -15,7 +16,7 @@ import java.util.List;
 @ToString
 public class FollowUpDetailsDTO {
 
-
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date followupDate;
 
     private int followUpNo;
