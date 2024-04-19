@@ -35,7 +35,7 @@ public class PatientResponseDTO {
 
     private List<MedicalQueAns> medicalQueAnsList;
 
-    private Prescription prescription;
+    private PrescriptionDTO prescriptionDTO;
 
     public void doctor_PatientToPatientResponseDTO(Patient patient, String type)
     {
@@ -46,10 +46,10 @@ public class PatientResponseDTO {
         this.age=patient.getAge();
         this.villageName=patient.getVillage().getName();
         this.medicalQueAnsList=patient.getMedicalQueAnsList();
-        this.prescription=null;
+        this.prescriptionDTO=new PrescriptionDTO()  ;
         if(Objects.equals(type, "ONGOING")){
             for(Prescription pre: patient.getPrescription()){
-                if(pre.isActive()) prescription=pre;
+                if(pre.isActive()) prescriptionDTO.prescriptionToDTO(pre);
                 break;
             }
         }

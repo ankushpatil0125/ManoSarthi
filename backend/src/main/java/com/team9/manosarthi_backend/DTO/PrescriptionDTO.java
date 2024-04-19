@@ -38,7 +38,7 @@ public class PrescriptionDTO {
     @JsonFormat(pattern="dd-MMM-yyyy")
     private Date date;
 
-    public void PrescriptionToDTO(Prescription prescription)
+    public void prescriptionToDTO(Prescription prescription)
     {
         this.prescription_id=prescription.getPrescription_id();
         this.patient_fname=prescription.getPatient().getFirstname();
