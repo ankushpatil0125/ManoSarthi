@@ -41,8 +41,7 @@ const Header = () => {
       fixed="top"
     >
       <Navbar.Brand as={Link} to="/home" onClick={handleLogoClick}>
-        {/* <img className="image" src={logo} alt="Logo" />
-         */}
+        
         <Link
           to=""
           className="flex items-center space-x-3 rtl:space-x-reverse no-underline"

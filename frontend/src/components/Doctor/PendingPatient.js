@@ -18,7 +18,7 @@ const PendingPatient = () => {
   }, [currentPage]);
 
   const fetchData = async () => {
-    // setLoading(true);
+    setLoading(true);
     try {
       console.log("inside fetchdata function");
       // setCurrentPage(0)
@@ -115,7 +115,7 @@ const PendingPatient = () => {
         >
           {t("doctor.Previous")}
         </button>
-        <span className="text-gray-700">{currentPage}</span>
+        
         <button
           className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNextPage}

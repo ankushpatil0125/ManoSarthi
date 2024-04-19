@@ -153,6 +153,7 @@ const AddDoctorComponent = () => {
       }
     } catch (error) {
       alert(error.response.data.message || "An error occurred");
+      setLoading(false);
     } finally {
       setLoading(false);
     }
