@@ -5,9 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/DeleteService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/DeleteService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/InsertService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/InsertService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/SelectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/SelectService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/FetchDataService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/SyncDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/SyncDataService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/initService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/initService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/context/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/navigation/AuthStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/navigation/AuthStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/MedicalDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/MedicalDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/PatientDetailsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/PatientDetailsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/Preview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/Preview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/ProfileScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/QuestionnaireScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/QuestionnaireScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/RegisterPatientScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/RegisterPatientScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/utils/Constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/SupervisorHomepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/SupervisorHomepage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +36,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -52,9 +71,11 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Manasi&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;kuldip&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -66,11 +87,6 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
-    ]
   }
 }</component>
   <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication (1)">
@@ -123,6 +139,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-563d888c" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -167,13 +190,12 @@
       <workItem from="1712427376328" duration="764000" />
       <workItem from="1712480913824" duration="8648000" />
       <workItem from="1712572841435" duration="932000" />
-      <workItem from="1712574647107" duration="6054000" />
-      <workItem from="1712682987997" duration="10300000" />
-      <workItem from="1712736336044" duration="23410000" />
-      <workItem from="1712827263907" duration="287000" />
-      <workItem from="1712834883526" duration="828000" />
-      <workItem from="1713330566321" duration="118000" />
-      <workItem from="1713342441433" duration="1133000" />
+      <workItem from="1712574647107" duration="2026000" />
+      <workItem from="1713251541020" duration="4151000" />
+      <workItem from="1713269881289" duration="1691000" />
+      <workItem from="1713273405640" duration="1808000" />
+      <workItem from="1713330694664" duration="2791000" />
+      <workItem from="1713343533510" duration="1280000" />
     </task>
     <servers />
   </component>
@@ -197,10 +219,6 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="1" />
-        </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.StackOverflowError" package="java.lang" />
-          <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
