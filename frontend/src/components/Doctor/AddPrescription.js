@@ -154,7 +154,7 @@ const AddPrescription = () => {
     <div>
       <Header />
       <div className="flex justify-center items-center h-screen">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-100">
+        <div className="bg-[#bfbfdf] rounded-lg shadow-lg p-8 w-full max-w-100">
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mb-3">Prescription Form</h1>
             <h1 className="text-lg font-semibold mb-3">
@@ -169,7 +169,7 @@ const AddPrescription = () => {
               id="category"
               value={category}
               onChange={handleCategoryChange}
-              className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              className="bg-[#bfbfdf] block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
             >
               <option value="">Select</option>
               {categoryOptions.map((category, index) => (
@@ -186,7 +186,7 @@ const AddPrescription = () => {
               id="subcategory"
               value={subCategory}
               onChange={handleSubCategoryChange}
-              className="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              className="bg-[#bfbfdf]  block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
             >
               <option value="">Select</option>
               {subCategoryOptions.map((subcategory, index) => (
@@ -210,6 +210,7 @@ const AddPrescription = () => {
                 value: option.code,
                 label: option.longDescription,
               }))}
+              className="bg-[#bfbfdf] block w-full mt-1 p-2 border rounded-md focus:outline-none focus:border-indigo-500 "
               // styles={{
               //   multiValue: (provided, state) => ({
               //     ...provided,
@@ -223,7 +224,8 @@ const AddPrescription = () => {
               <input
                 type="text"
                 placeholder="Name"
-                className="border rounded px-2 py-1 w-full mb-2"
+            
+                className="bg-[#bfbfdf] border rounded px-2 py-1 w-full mb-2 placeholder-[#646465]"
                 value={medicineFields.name}
                 onChange={(e) => handleMedicineChange("name", e.target.value)}
               />
@@ -231,7 +233,7 @@ const AddPrescription = () => {
                 <input
                   type="text"
                   placeholder="Dosage"
-                  className="border rounded px-2 py-1 w-1/2 mr-2"
+                  className="bg-[#bfbfdf] border rounded px-2 py-1 w-1/2 mr-2 placeholder-[#646465]"
                   value={medicineFields.dosage}
                   onChange={(e) =>
                     handleMedicineChange("dosage", e.target.value)
@@ -240,7 +242,7 @@ const AddPrescription = () => {
                 <input
                   type="text"
                   placeholder="Timing"
-                  className="border rounded px-2 py-1 w-1/2"
+                  className="bg-[#bfbfdf] border rounded px-2 py-1 w-1/2"
                   value={medicineFields.timing}
                   onChange={(e) =>
                     handleMedicineChange("timing", e.target.value)
@@ -248,18 +250,20 @@ const AddPrescription = () => {
                 />
               </div>
             </div>
+            <div className="flex items-center justify-center">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
+              className="bg-[#6467c0] hover:bg-[#bfbfdf] text-white font-bold py-1 px-4 rounded"
               onClick={handleAddMedicineFields}
             >
               Add Medicine
             </button>
+            </div>
 
             <div className="data">
               <table className="table-auto border border-collapse border-gray-400">
-                <thead className="bg-gray-200">
+                <thead className="bg-[#bfbfdf]">
                   <tr>
-                    <th className="border border-gray-400 px-4 py-2">Sr. No</th>
+                    <th className="bg-[#bfbfdf] border border-gray-400 px-4 py-2">Sr. No</th>
                     <th className="border border-gray-400 px-4 py-2">
                       Medicine
                     </th>
@@ -307,7 +311,7 @@ const AddPrescription = () => {
                   id="followup"
                   value={followUp}
                   onChange={handleFollowupChange}
-                  className="block w-40 mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="bg-[#bfbfdf] block w-40 mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 >
                   <option value="WEEKLY">Weekly</option>
                   <option value="BI_WEEKLY">Bi-Weekly</option>
@@ -316,7 +320,7 @@ const AddPrescription = () => {
                 <input
                   type="number"
                   placeholder="Follow Ups Count"
-                  className="border ml-3 mt-1 p-2 rounded-md px-2 py-1 w-22"
+                  className="bg-[#bfbfdf] border ml-3 mt-1 p-2 rounded-md px-2 py-1 w-22"
                   value={followUpsCount}
                   onChange={(e) => setFollowUpsCount(e.target.value)}
                 />
@@ -324,7 +328,7 @@ const AddPrescription = () => {
             </div>
             <div className="flex items-center justify-center mt-4">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
+                className="bg-[#6467c0] hover:bg-[#bfbfdf] text-white font-bold py-2 px-6 rounded"
                 onClick={handleSubmit}
               >
                 Submit

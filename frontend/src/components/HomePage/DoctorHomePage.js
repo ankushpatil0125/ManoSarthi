@@ -292,7 +292,7 @@ import { useTranslation } from "react-i18next";
     return (
       <div className="font-[sans-serif]">
         <Header />
-        <div className="mt-15">
+        <div className="">
           {isSidebarOpen ? (
             <button
               data-drawer-target="default-sidebar"

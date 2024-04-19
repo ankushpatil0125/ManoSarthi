@@ -153,8 +153,7 @@ const UpdateDeleteActor = ({ action }) => {
                 district={district}
                 subdistrictcode={subdistrictcode}
                 action={valueToPass}
-                actor="SUPERVISOR"
-               
+                actor="SUPERVISOR"  
               />
             );
           }
