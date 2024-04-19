@@ -147,7 +147,6 @@ export default Profile;
 //         setLoading(false);
 //       }
 //     };
-    
 
 //     fetchDoctorData();
 //   }, []);

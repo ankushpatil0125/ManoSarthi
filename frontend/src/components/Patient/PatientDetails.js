@@ -17,7 +17,30 @@ const PatientDetails = () => {
   const [loading, setLoading] = useState(false);
   const { patientId } = location.state;
   const [t] = useTranslation("global");
+  const [currentQuestinarriePage, setCurrentQuestionarriePage] = useState(0);
 
+  useEffect(() => {
+    fetchData();
+  }, [currentQuestinarriePage]);
+
+  const fetchData = async () => {
+    // try {
+      console.log("inside fetchdata function");
+      // followUpDetails[0].questionarrieAnsList = []
+      // DoctorService.getAllPatients(currentPage)
+        // .then((response) => {
+        //   setData(response.data);
+        //   setLoading(false);
+        // })
+        // .catch((error) => {
+        //   alert(error.response.data.message);
+        // setLoading(false);
+        // });
+    // } catch (error) {
+    //   alert(error.response.data.message);
+    //     setLoading(false);
+    // }
+  };
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -28,6 +51,13 @@ const PatientDetails = () => {
     return `${day}/${month}/${year}`;
   };
   
+  const handleNextQuestionarrie = () => {
+    setCurrentQuestionarriePage((prevPage) => prevPage + 1);
+  }
+
+  const handlePreviousQuestionarrie = () => {
+    setCurrentQuestionarriePage((prevPage) => Math.max(prevPage - 1, 0));
+  }
 
   useEffect(() => {
     const handlePatientDetails = async () => {
@@ -62,98 +92,91 @@ const PatientDetails = () => {
 
   return (
     <div>
-      {console.log("FollowUpDetails: ", followUpDetails)}
-      <Header />
-      <div className="flex flex-col min-h-screen mt-20">
-      <section className="flex-grow py-8 bg-gray-100">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                {t("ViewPatientDetails.Patient Details")}
-              </h2>
-              <div
-                  className="bg-blue-50 rounded-lg p-4 my-2"
-                >
-              <p className="font-semibold">Name: {firstname}  {lastname}</p>
-              <p className="font-semibold">Gender: {gender}</p>
-              <p className="font-semibold">Village: {village}</p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                Medical History
-              </h2>
-              <div className="bg-blue-50 rounded-lg p-4 my-2">
-                {medicalQuesAns.map((medical, index) => (
-                        <p className="font-semibold"> {index+1}.  {medical?.medicalquest?.question}  -  {medical?.question_ans}</p>                  
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                Follow Up Details
-              </h2>
-              {followUpDetails.map((followup, follow_index) => (
-                <div
-                  className="bg-blue-50 rounded-lg p-4 my-2"
-                  key={follow_index}
-                >
-                  {follow_index === 0 ? (
-                    <>
-                      <p className="font-semibold">Survey Registration</p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="font-semibold">Follow Up No: {follow_index}</p>
-                     </>
-                  )}
-                  <p className="font-semibold">FollowUp Date: {formatDate(followup.followupDate)}</p>
-                  <p className="font-semibold">Assigned Health Worker: {followup.worker.firstname} {followup.worker.lastname}</p>   
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-medium text-gray-900 mb-4">
-                Survey Questionnaire Responses
-              </h2>
-              {followUpDetails.map((followup, follow_index) => (
-              <div key={follow_index}>
-                {follow_index === 0 ? (
-                  <p className="font-semibold">Survey Details</p>
-                ) : (
-                  <p className="font-semibold">Follow Up: {follow_index}</p>
-                )}
-                {console.log("followup: ", followup)}
-                <div className="bg-blue-50 rounded-lg p-4 my-2">
-                  {followup.questionarrieAnsList.map((quest, quest_index) => (
-                    <p className="font-semibold" key={quest_index}>
-                    {quest_index+1}.  {quest?.questionarrie?.question} - {quest?.question_ans}
-                    </p>
-                ))}
+    <Header />
+      <div className="flex flex-col min-h-screen mt-16">
+        <section className="flex-grow py-8 bg-gray-100">
+          <div className="container mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Patient Details and Medical History */}
+              <div className="space-y-8">
+                {/* Patient Details */}
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-2xl font-medium text-gray-900 mb-4">
+                    {t("ViewPatientDetails.Patient Details")}
+                  </h2>
+                  <div className="bg-blue-50 rounded-lg p-4 my-2">
+                    <p className="text-gray-950">Name: {firstname} {lastname}</p>
+                    <p className="text-gray-950">Gender: {gender}</p>
+                    <p className="text-gray-950">Village: {village}</p>
                   </div>
                 </div>
-              ))}
+                {/* Medical History */}
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-2xl font-medium text-gray-900 mb-4">
+                    Medical History
+                  </h2>
+                  <div className="bg-blue-50 rounded-lg p-4 my-2">
+                    {medicalQuesAns.map((medical, index) => (
+                      <p key={index} className="text-gray-950">
+                        {index + 1}. {medical?.medicalquest?.question} - {medical?.question_ans}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+    
+              {/* Survey Questionnaire */}
+              <div className="bg-white rounded-lg shadow-lg p-6 col-span-2 md:col-auto">
+                <h2 className="text-2xl font-medium text-gray-900 mb-4">
+                  Survey Questionnaire Responses
+                </h2>
+                {followUpDetails.map((followup, follow_index) => (
+                  <div key={follow_index}>
+                    {follow_index === 0 ? (
+                      <p className="text-gray-950 font-semibold">Survey Details</p>
+                    ) : (
+                      <p className="text-gray-950 font-semibold">Follow Up: {follow_index}</p>
+                    )}
+                    <p className="text-gray-950">Date: {formatDate(followup.followupDate)}</p>
+                    <p className="text-gray-950">Assigned Health Worker: {followup.worker.firstname} {followup.worker.lastname}</p>
+                    <div className="bg-blue-50 rounded-lg p-4 my-2">
+                      {followup.questionarrieAnsList.map((quest, quest_index) => (
+                        <p key={quest_index} className="text-gray-950">
+                          {quest_index + 1}. {quest?.questionarrie?.question} - {quest?.question_ans}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <div className="flex gap-2 justify-end">
+                  {currentQuestinarriePage !== 0 ? (
+                    <button
+                      className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded"
+                      onClick={handlePreviousQuestionarrie}
+                    >
+                      Previous
+                    </button>
+                  ) : null}
+                  <button
+                    className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded"
+                    onClick={handleNextQuestionarrie}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
             </div>
-
-            
+            <div className="flex justify-center mt-3">
+              <Link to={`/add-prescription/${patientId}`}>
+                <button className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded">
+                  Add Prescription
+                </button>
+              </Link>
+            </div>
           </div>
-          <div className="flex justify-center mt-3">
-            <Link to={`/add-prescription/${patientId}`}>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Add Prescription
-              </button>
-            </Link>
-          </div>
-        </div>
         </section>
       </div>
-    </div>
+    </div>  
   );
 };
-
 export default PatientDetails;
-

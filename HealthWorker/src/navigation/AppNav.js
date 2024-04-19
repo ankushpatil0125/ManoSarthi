@@ -28,7 +28,6 @@ const AppNav =  () => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
       const connected = await checkNetworkConnectivity();
       setIsConnected(connected);
-
       if (connected) {
         Toast.show({
           type: "success",
@@ -53,7 +52,6 @@ const AppNav =  () => {
   // console.log("userToken: ", token);
   console.log("userToken: ", userToken);
   // console.log('changePassword',changePassword)
-
   return (
     <NavigationContainer>
       {/* && changePassword !==false */}

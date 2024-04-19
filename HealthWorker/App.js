@@ -13,8 +13,8 @@ const App =()=>{
   return (
     <AuthProvider>
       <LanguageProvider>
-      <AppNav/>
-    </LanguageProvider>
+        <AppNav/>
+      </LanguageProvider>
     </AuthProvider>
   );
 }
@@ -28,8 +28,8 @@ const App =()=>{
 //     </SafeAreaView>
 //   );
 // }
-const styles = StyleSheet.create({
 
+const styles = StyleSheet.create({
 });
 
 export default App;

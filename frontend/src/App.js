@@ -21,7 +21,6 @@ import { AuthProvider } from "./components/Context/AuthContext";
 import PatientDetails from "./components/Patient/PatientDetails";
 import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
 import DoctorOperation from "./components/Doctor/DoctorOperation";
-import AddPrescription from "./components/Patient/AddPrescription";
 
 const App = () => {
   return (

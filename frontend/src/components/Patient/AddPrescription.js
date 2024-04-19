@@ -189,20 +189,13 @@ const AddPrescription = () => {
                   Disease:
                 </label>
                 <Select
-  isMulti
-  placeholder={"Select"}
-  value={diseases}
-  onChange={handleDiseases}
-  aria-orientation="vertical"
-  options={diseaseOptions.map(option => ({ value: option.code, label: option.longDescription }))}
-  styles={{
-    multiValue: (provided, state) => ({
-      ...provided,
-      display: "block", // Ensures each selected option is displayed in its own block
-      marginBottom: "8px", // Adds some space between each selected option
-    }),
-  }}
-/>
+                    isMulti
+                    placeholder={"Select"}
+                    value={diseases}
+                    onChange={handleDiseases}
+                    options={diseaseOptions.map(option => ({ value: option.code, label: option.longDescription }))}
+                    hideSelectedOptions={true}
+                  />
                 <div className="mt-4 mb-4">
                   <label className="block mb-1 font-semibold">Medicine:</label>
                   <input
