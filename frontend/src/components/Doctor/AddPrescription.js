@@ -112,9 +112,6 @@ const AddPrescription = () => {
   };
 
   const handleSubmit = () => {
-    // if(medicineFields.name !== "" && medicineFields.dosage !== "" && medicineFields.timing !== ""){
-    //   medicines.push(medicineFields);
-    // }
     if (medicines.length === 0) {
       alert("Please Add Medicines!");
     } else if (followUpsCount <= 0) {
@@ -211,13 +208,7 @@ const AddPrescription = () => {
                 label: option.longDescription,
               }))}
               className="bg-[#bfbfdf] block w-full mt-1 p-2 border rounded-md focus:outline-none focus:border-indigo-500 "
-              // styles={{
-              //   multiValue: (provided, state) => ({
-              //     ...provided,
-              //     display: "block", // Ensures each selected option is displayed in its own block
-              //     marginBottom: "8px", // Adds some space between each selected option
-              //   }),
-              // }}
+          
             />
             <div className="mt-4 mb-4">
               <label className="block mb-1 font-semibold">Medicine:</label>

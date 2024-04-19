@@ -1,6 +1,7 @@
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
+import AddPrescription from "./components/Doctor/AddPrescription"
 import LoginComponent from "./components/Login/LoginComponent";
 import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent";
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
@@ -20,7 +21,6 @@ import { AuthProvider } from "./components/Context/AuthContext";
 import PatientDetails from "./components/Doctor/PatientDetails";
 import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
 // import DoctorOperation from "./components/Doctor/DoctorOperation";
-import AddPrescription from "./components/Doctor/AddPrescription";
 
 const App = () => {
   return (

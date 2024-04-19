@@ -81,10 +81,5 @@ const DoctorService = {
       throw error;
     }
   },
- 
-  
-
-
-
 };
 export default DoctorService;

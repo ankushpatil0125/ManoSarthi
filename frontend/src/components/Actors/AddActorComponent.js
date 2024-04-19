@@ -4,6 +4,7 @@ import AdminService from "../../Services/AdminService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
+import { Axios } from "axios";
 import { Image } from "react-bootstrap";
 
 const AddDoctorComponent = () => {

@@ -7,7 +7,6 @@ import {getToken} from "../../utils/Constants"
 import { useTranslation } from "react-i18next";
 import ProfileService from "../../Services/ProfileService";
 import LoadingComponent from "../Loading/LoadingComponent";
-// import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -105,8 +104,6 @@ const Profile = () => {
             <span className="gap"></span>
             <span className="value">KULDIP</span>
           </p> */}
-
-
           <Link to = "/change-password">
             <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded">
               {t("Profile.Change Password")}
@@ -150,7 +147,6 @@ export default Profile;
 //         setLoading(false);
 //       }
 //     };
-    
 
 //     fetchDoctorData();
 //   }, []);
