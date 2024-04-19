@@ -350,7 +350,7 @@ const SupervisorHomepage = () => {
             className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
             aria-label="Sidebar"
           >
-            <div className="h-full px-3 py-4 overflow-y-auto bg-[#a5a7d0] dark:bg-gray-800 mt-[73px]">
+            <div className="h-full px-3 py-4 overflow-y-auto bg-[#e3e3ea] dark:bg-gray-800 mt-[73px]">
               <ul className="space-y-2 font-medium ">
                 <li>
                   <Link
