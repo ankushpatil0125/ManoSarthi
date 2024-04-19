@@ -20,7 +20,7 @@ const Profile = () => {
     
     const fetchDoctorData = async () => {
       try {
-        // setLoading(true);
+        setLoading(true);
         if(localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") {
           const data = await ProfileService.getDoctorData();
           setUser(data);

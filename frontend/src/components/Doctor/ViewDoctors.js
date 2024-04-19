@@ -166,8 +166,9 @@ const ViewDoctors = ({ district, subdistrictcode, action }) => {
   };
 
   const handleNextPage = () => {
+    console.log("currentpage", currentPage)
     setCurrentPage((prevPage) => prevPage + 1);
-  };
+};
 
   if (loading || fetchingData) return <LoadingComponent />; // Show loading indicator while fetching data
 

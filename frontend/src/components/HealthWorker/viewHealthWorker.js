@@ -23,7 +23,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
   }, [currentPage, village]); // Refetch data when currentPage or district changes
 
   useEffect(() => {
-    // setLoading (true);
+    setLoading (true);
     if (showModal) {
       // Fetch village options
       SupervisorService.getVillageWorker(false)
@@ -41,7 +41,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
   const fetchData = async () => {
     try {
       console.log("inside fetchdata function");
-      // setLoading(true);
+      setLoading(true);
       if (village) {
         // console.log("Village: ", village);
         // setCurrentPage(0)
@@ -96,7 +96,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
         code: selectedVillage,
       },
     };
-    // setLoading(true)
+    setLoading(true)
     SupervisorService.updateHealthWorker(reasignHealthWorker);
 
     // Your update worker API call here

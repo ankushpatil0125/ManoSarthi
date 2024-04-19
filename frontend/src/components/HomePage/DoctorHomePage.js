@@ -292,7 +292,7 @@ import { useTranslation } from "react-i18next";
     return (
       <div className="font-[sans-serif]">
         <Header />
-        <div className="mt-15">
+        <div className="">
           {isSidebarOpen ? (
             <button
               data-drawer-target="default-sidebar"
@@ -349,7 +349,7 @@ import { useTranslation } from "react-i18next";
               className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
               aria-label="Sidebar"
             >
-              <div className="h-full px-3 py-4 overflow-y-auto bg-[#a5a7d0] dark:bg-gray-800 mt-[73px]">
+              <div className="h-full px-3 py-4 overflow-y-auto bg-[#f5f5f9] dark:bg-gray-800 mt-[73px]">
                 <ul className="space-y-2 font-medium ">
                   <li>
                     <Link
