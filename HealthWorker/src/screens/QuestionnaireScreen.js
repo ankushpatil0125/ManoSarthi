@@ -21,7 +21,6 @@ const QuestionnaireScreen = ({ navigation, route }) => {
   const [answers, setAnswers] = useState([]);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
 
-
   const fetchPatientDataFromDatabase = async () => {
     try {
 

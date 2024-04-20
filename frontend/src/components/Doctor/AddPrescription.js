@@ -28,7 +28,7 @@ const AddPrescription = () => {
   let { patient_id } = useParams();
 
   useEffect(() => {
-    //Fetch district options
+    //Fetch category options
     DoctorService.getCategories()
       .then((response) => {
         setCategoryOptions(response.data);
@@ -63,7 +63,7 @@ const AddPrescription = () => {
     const selectedSubCategory = e.target.value;
     setSubCategory(selectedSubCategory);
 
-    // Fetch subcategory options based on selected category
+    // Fetch disease options based on selected category
     setLoading(true);
     DoctorService.getDiseases(selectedSubCategory)
       .then((response) => {

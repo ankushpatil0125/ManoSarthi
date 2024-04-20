@@ -23,9 +23,12 @@ const Preview = ({ navigation, route }) => {
   const [medicalDetails, setMedicalDetails] = useState([]);
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [surveyQuestions, setSurveyQuestions] = useState([]);
+  const [followupQuestions, setFollowupQuestions] = useState([]);
   const [surveyQuestionsAnswers, setSurveyQuestionsAnswers] = useState([]);
+  const [followupQuestionsAnswers, setFollowupQuestionsAnswers] = useState([]);
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { age } = route.params;
+  const { type } = route.params;  
   const { aabhaId } = useContext(PatientContext);
 
   // const navigation = useNavigation();
@@ -148,6 +151,7 @@ const Preview = ({ navigation, route }) => {
             ))}
           </View>
 
+          {(type==="survey") ?
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Survey Questionnaire:</Text>
             {surveyQuestionsAnswers.map((detail, index) => (
@@ -156,6 +160,16 @@ const Preview = ({ navigation, route }) => {
               </Text>
             ))}
           </View>
+          :
+          <View style={styles.card}>
+          <Text style={styles.cardTitle}>Followup Questionnaire:</Text>
+          {followupQuestionsAnswers.map((detail, index) => (
+            <Text key={index}>
+              {followupQuestions[index]?.question} - {detail.answer}
+            </Text>
+          ))}
+        </View>
+          }
 
           {/* Medical Details */}
           <View style={styles.card}>

@@ -1,19 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'; // Import Chart.js
-import AdminService from '../../Services/AdminService';
 
-const AdminDashboard = () => {
+const SupervisorDashboard = () => {
   const [chartData, setChartData] = useState(null);
   const [pieChartData, setPieChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
   const chartRef = useRef(null);
   const pieChartRef = useRef(null);
   const barChartRef = useRef(null);
-
-  // const fetchData = () => {
-  //   const response =  AdminService.getSurveyStats()
-  // }
 
   useEffect(() => {
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -61,27 +56,28 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div class="flex gap-2 px-1 py-1 mb-4 h-12">
-        <div class="w-1/2 bg-gray-400 mt-10">
-          <div className="bg-white p-6 shadow-md">
+    <div class="flex mb-4">
+        <div class="w-1/2 bg-gray-400 h-12">
+          <div className="bg-white p-6  shadow-md">
             <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
             {pieChartData && <Pie data={pieChartData} options={{}} ref={pieChartRef} />}
           </div>
         </div>
-        <div class="w-1/2 bg-gray-500">
+        <div class="w-1/2 bg-gray-500 h-12">
           <div className="bg-white p-6 shadow-md">
               <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
               {chartData && (
                   <Line data={chartData} options={{ scales: { x: { type: 'category' } } }} ref={chartRef} />
               )}
-          </div>     
-          <div className="bg-white p-6 shadow-md">
-                <h2 className="text-lg font-semibold mb-4">Bar Chart </h2>
+            </div>
+                
+            <div className="bg-white p-6 shadow-md">
+                <h2 className="text-lg font-semibold mb-4">Bar Chart Title</h2>
                 {barChartData && <Bar data={barChartData} options={{}} ref={barChartRef} />}
-          </div>
+            </div>
         </div>
     </div>
   );
 }
 
-export default AdminDashboard;
+export default SupervisorDashboard;
