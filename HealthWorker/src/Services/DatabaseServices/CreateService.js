@@ -4,12 +4,26 @@ import db from "../DatabaseServices/DatabaseServiceInit";
 
 const CreateService = {
   createTables: async () => {
-    await CreateService.createPatientDetailsTable();
-    await CreateService.createSurveyQuestionTable();
-    await CreateService.createMedicalQuestionTable();
-    await CreateService.createMedicalHistoryAnswersTable();
-    await CreateService.createSurveyQuestionAnswerTable();
-    await CreateService.createAabhaIdInfoTable();
+    const res1 = await CreateService.createPatientDetailsTable();
+    console.log("Create Res1: ", res1);
+    const res2 = await CreateService.createSurveyQuestionTable();
+    console.log("Create Res2: ", res2);
+
+    const res3 = await CreateService.createMedicalQuestionTable();
+    console.log("Create Res3: ", res3);
+
+    const res4 = await CreateService.createMedicalHistoryAnswersTable();
+    console.log("Create Res4: ", res4);
+
+    const res5 = await CreateService.createSurveyQuestionAnswerTable();
+    console.log("Create Res5: ", res5);
+
+    const res6 = await CreateService.createAabhaIdInfoTable();
+    console.log("Create Res6: ", res6);
+
+    const res7 = await CreateService.createFollowUpTable();
+    console.log("Create Res7: ", res7);
+
     // Add more table creation functions here if needed
   },
   createAabhaIdInfoTable: () => {
@@ -30,6 +44,35 @@ const CreateService = {
           },
           (_, error) => {
             reject("Error creating AabhaIdInfo table: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  createFollowUpTable: () => {
+    // console.log("Inside create followup");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS FollowUpSchedule (
+            followup_id INTEGER PRIMARY KEY,
+            patient_fname TEXT,
+            patient_lname TEXT,
+            patient_adress TEXT,
+            followUpDate TEXT,
+            type TEXT
+            );`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("FollowUpSchedule table created successfully");
+            } else {
+              resolve("FollowUpSchedule table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating FollowUpSchedule table: " + error);
           }
         );
       });
@@ -161,6 +204,7 @@ const CreateService = {
             }
           },
           (_, error) => {
+            patient_fname;
             reject("Error creating medical_history_answers table: " + error);
           }
         );

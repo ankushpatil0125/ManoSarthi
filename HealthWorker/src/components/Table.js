@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import { DataTable, Card, Title } from "react-native-paper";
 import { useLanguageContext } from "../context/LanguageProvider";
 import i18n from "../../i18n";
+import SelectService from "../Services/DatabaseServices/SelectService";
 
 const Table = () => {
+  const [folloupSch, setFolloupSch] = useState([]);
+
+  const fetchFollowUpScedule = async () => {
+    try {
+      const data = await SelectService.getFollowUpSchedule();
+      setFolloupSch(data);
+      console.log("[HomeScreen]Follow-Up Schedule Need To Render: ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchDataWithDelay = () => {
+      setTimeout(() => {
+        fetchFollowUpScedule();
+      }, 5000); // 3 seconds delay
+    };
+
+    fetchDataWithDelay();
+    // fetchSurveyQuestionAnswerFromDatabase();
+    // deleteAllMedicalHistoryAnswers();
+  }, []);
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -13,25 +37,23 @@ const Table = () => {
 
           <DataTable>
             <DataTable.Header style={styles.head}>
-              <DataTable.Title>{i18n.t("Name")}</DataTable.Title>
-              <DataTable.Title>{i18n.t("Address")}</DataTable.Title>
-              <DataTable.Title>{i18n.t("Status")}</DataTable.Title>
+              <DataTable.Title>Follow-Up Id</DataTable.Title>
+              <DataTable.Title>First Name</DataTable.Title>
+              <DataTable.Title>Last Name</DataTable.Title>
+              <DataTable.Title>Adress</DataTable.Title>
+              <DataTable.Title>Follow-Up Date</DataTable.Title>
+              <DataTable.Title>Follow-Up Type</DataTable.Title>
             </DataTable.Header>
-            <DataTable.Row style={styles.row}>
-              <DataTable.Cell>Ankush</DataTable.Cell>
-              <DataTable.Cell>Raver</DataTable.Cell>
-              <DataTable.Cell>Pending</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row style={styles.row}>
-              <DataTable.Cell>Nikhil</DataTable.Cell>
-              <DataTable.Cell>UP</DataTable.Cell>
-              <DataTable.Cell>Pending</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row style={styles.row}>
-              <DataTable.Cell>Sanket</DataTable.Cell>
-              <DataTable.Cell>Nashik</DataTable.Cell>
-              <DataTable.Cell>Pending</DataTable.Cell>
-            </DataTable.Row>
+            {folloupSch.map((item, followup_id) => (
+              <DataTable.Row key={followup_id} style={styles.row}>
+                <DataTable.Cell>{item.followup_id}</DataTable.Cell>
+                <DataTable.Cell>{item.patient_fname}</DataTable.Cell>
+                <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
+                <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
+                <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
+                <DataTable.Cell>{item.type}</DataTable.Cell>
+              </DataTable.Row>
+            ))}
           </DataTable>
         </Card.Content>
       </Card>

@@ -19,16 +19,7 @@ export const AuthProvider = ({ children }) => {
       await AsyncStorage.setItem("JWT", value);
     } catch (e) {}
   };
-  // useEffect(()=>{
-  //   const fetchToken = async () => {
-  //     const fetchedToken = await getToken();
-  //     setUserToken(fetchedToken);
-  //     // setInitializing(false);
-  //   };
 
-  //   fetchToken();
-  // },[]);
-  // console.log("after setting change password",changePassword);
   const login = async (username, password) => {
     // console.log("login");
     const user = {
@@ -45,25 +36,22 @@ export const AuthProvider = ({ children }) => {
         const token = await getToken();
         setUserToken(token);
         setUserName(response?.data?.username);
-        //  await DropService.dropTables();
+        // await DropService.dropTables();
+
         createDatabase()
-          .then((message) => {
-            console.log(message);
+          .then((createMessage) => {
+            console.log(createMessage);
+            // Only call fetchData() if createDatabase() is successful
+            return fetchData();
           })
-          .catch((message) => {
-            console.log(message);
-          });
-        fetchData()
-          .then((message) => {
-            console.log("Before resolve sucess");
-            Alert.alert(message);
+          .then((fetchMessage) => {
+            console.log("Data fetched:", fetchMessage);
+            Alert.alert(fetchMessage);
           })
-          .catch((message) => {
-            console.log("Before reject sucess");
-
-            Alert.alert(message);
+          .catch((error) => {
+            console.error("Error:", error);
+            Alert.alert("Error:", error);
           });
-
         const changepass_response =
           await IsPasswordChangeService.isPasswordChanged(response);
         console.log("Change Password Response: ", changepass_response);
@@ -82,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       // console.log('error',error)
       console.log("Before catch failure error");
 
-      Alert.alert("Login Failure", error.response);
+      // Alert.alert("Login Failure", error.response);
       setIsLoading(false);
     }
   };

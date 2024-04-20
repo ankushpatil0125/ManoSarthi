@@ -14,6 +14,8 @@ import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
 import UpdateService from "../Services/DatabaseServices/UpdateService";
 import InsertService from "../Services/DatabaseServices/InsertService";
+import NetInfo from "@react-native-community/netinfo";
+import SyncDataService from "../Services/SyncDataService";
 
 // import { useNavigation } from "@react-navigation/native";
 
@@ -23,12 +25,33 @@ const Preview = ({ navigation, route }) => {
   const [medicalDetails, setMedicalDetails] = useState([]);
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [surveyQuestions, setSurveyQuestions] = useState([]);
+  const [isConnected, setIsConnected] = useState(true);
+
   const [surveyQuestionsAnswers, setSurveyQuestionsAnswers] = useState([]);
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { age } = route.params;
   const { aabhaId } = useContext(PatientContext);
 
-  // const navigation = useNavigation();
+  // const checkNetworkConnectivity = async () => {
+  //   const state = await NetInfo.fetch();
+  //   return state.isConnected;
+  // };
+  const checkNetworkConnectivity = async () => {
+    const state = await NetInfo.fetch();
+    console.log("State Response: ", state);
+    return state.isConnected;
+  };
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(async (state) => {
+      const connected = await checkNetworkConnectivity();
+      setIsConnected(connected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleCheckboxChange = () => {
     setConsentChecked(!consentChecked);
@@ -36,9 +59,14 @@ const Preview = ({ navigation, route }) => {
 
   const handleSubmit = async () => {
     if (consentChecked) {
-      await InsertService.insertAabhaId(aabhaId, "old");
       const res3 = await UpdateService.updatePatientStatus(aabhaId);
       console.log(res3);
+      if (isConnected) {
+        console.log("Inside Isconected");
+
+        await SyncDataService.registrationData();
+      }
+      await InsertService.insertAabhaId(aabhaId, "old");
       try {
         // const res = await SelectService.getMedicalHistoryAnswers();
         Alert.alert("Data saved in local DB successfully!", "OK", [

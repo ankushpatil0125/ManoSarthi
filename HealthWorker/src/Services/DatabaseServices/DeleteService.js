@@ -18,6 +18,24 @@ const DeleteService = {
       });
     });
   },
+  deleteFollowUpTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM FollowUpSchedule",
+          [],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " Rows Deleted From FollowUpSchedule");
+          },
+          (_, error) => {
+            reject(
+              "Error deleting records from FollowUpSchedule table: " + error
+            );
+          }
+        );
+      });
+    });
+  },
   deleteAllPatients: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -35,12 +53,12 @@ const DeleteService = {
     });
   },
   deletePatientByAabhaId: (aabhaId) => {
-    // console.log("delete, id", aabhaId);
+    console.log("delete, id", aabhaId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           "DELETE FROM PatientDetails WHERE aabhaId=?",
-          [aabhaId],
+          [String(aabhaId)],
           (_, { rowsAffected }) => {
             resolve(rowsAffected + " rows deleted from PatientDetails");
           },
@@ -92,12 +110,12 @@ const DeleteService = {
   },
 
   deleteSurveyQuestionAnswersByAabhaId: (aabhaId) => {
-    // console.log("delete, id", aabhaId);
+    console.log("delete, id", aabhaId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           "DELETE FROM SurveyQuestionAnswer WHERE aabhaId=?",
-          [aabhaId],
+          [String(aabhaId)],
           (_, { rowsAffected }) => {
             resolve(rowsAffected + " rows deleted from SurveyQuestionAnswer");
           },

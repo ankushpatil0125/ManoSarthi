@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   Alert,
+  StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -142,39 +143,29 @@ const MedicalDetails = ({ route }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ flex: 1, marginTop: 30, paddingLeft: 10 }}>
-        {medicalQuestions.map((question, index) => (
-          <View key={index} style={{ marginBottom: 15 }}>
-            <Text>{question.question}</Text>
-            <View style={{ paddingTop: 5, flexDirection: "row" }}>
-              <View style={{ marginRight: 10 }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor:
-                      clickedButtons[index] && answers[index] === "Yes"
-                        ? "#3498db"
-                        : "lightblue",
-                    padding: 10,
-                    borderRadius: 5,
-                  }}
-                  onPress={() => handleAnswerChange(index, "Yes")}
-                >
-                  <Text style={{ fontSize: 16 }}>Yes</Text>
-                </TouchableOpacity>
-              </View>
+    <View style={styles.container}>
+      <ScrollView>
+        {medicalQuestions.map((item, index) => (
+          <View key={index} style={styles.questionContainer}>
+            <Text style={styles.questionText}>{item.question}</Text>
+            <View style={styles.radioButtonContainer}>
               <TouchableOpacity
-                style={{
-                  backgroundColor:
-                    clickedButtons[index] && answers[index] === "No"
-                      ? "#3498db"
-                      : "lightblue",
-                  padding: 10,
-                  borderRadius: 5,
-                }}
-                onPress={() => handleAnswerChange(index, "No")}
+                style={[
+                  styles.radioButton,
+                  answers[index] === "yes" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleAnswerChange(index, "yes")}
               >
-                <Text style={{ fontSize: 16 }}>No</Text>
+                <Text style={styles.radioButtonText}>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.radioButton,
+                  answers[index] === "no" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleAnswerChange(index, "no")}
+              >
+                <Text style={styles.radioButtonText}>No</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -194,23 +185,55 @@ const MedicalDetails = ({ route }) => {
             width: "50%",
           }}
         />
-        <View style={{ width: 200, marginBottom: 20 }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: "lightblue",
-              padding: 10,
-              borderRadius: 5,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onPress={handleFormSubmit}
-          >
-            <Text style={{ fontSize: 16 }}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <TouchableOpacity style={styles.nextButton} onPress={handleFormSubmit}>
+        <Text style={styles.nextButtonText}>Next</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "space-between",
+  },
+  questionContainer: {
+    marginBottom: 20,
+  },
+  questionText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  radioButtonContainer: {
+    flexDirection: "row",
+  },
+  radioButton: {
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginRight: 10,
+  },
+  radioButtonSelected: {
+    backgroundColor: "#3498db",
+  },
+  radioButtonText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  nextButton: {
+    backgroundColor: "#3498db",
+    paddingVertical: 15,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+});
 
 export default MedicalDetails;
