@@ -7,7 +7,8 @@ import DoctorService from "../../Services/DoctorService";
 import { FaTimes } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
-const AddPrescription = () => {
+const AddPrescription = ({ patient_id }) => {
+  // console.log(patientId);
   const [medicines, setMedicines] = useState([]);
   const [medicineFields, setMedicineFields] = useState({
     name: "",
@@ -25,8 +26,6 @@ const AddPrescription = () => {
   const [followUp, setFollowUp] = useState("WEEKLY");
   const [followUpsCount, setFollowUpsCount] = useState(0);
 
-  let { patient_id } = useParams();
-
   useEffect(() => {
     //Fetch district options
     DoctorService.getCategories()
@@ -38,6 +37,7 @@ const AddPrescription = () => {
       });
   }, []);
 
+  //get the subcategory based on selected disease category
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     setCategory(selectedCategory);
@@ -59,6 +59,7 @@ const AddPrescription = () => {
     setDiseases(selectedOptions);
   };
 
+  //get the disease based on selected sub category disease
   const handleSubCategoryChange = (e) => {
     const selectedSubCategory = e.target.value;
     setSubCategory(selectedSubCategory);
@@ -111,41 +112,58 @@ const AddPrescription = () => {
     setMedicines(updatedMedicines); // Update the medicines state
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // if(medicineFields.name !== "" && medicineFields.dosage !== "" && medicineFields.timing !== ""){
     //   medicines.push(medicineFields);
     // }
+
     if (medicines.length === 0) {
       alert("Please Add Medicines!");
     } else if (followUpsCount <= 0) {
       alert("Please Add FollowUp details!");
     } else {
-      const diseasesCodes = diseases.map((disease) => disease.value);
-      console.log("Form Submitted:", {
-        patient_id,
-        medicines,
-        diseasesCodes,
-        diseases,
-        followUp,
-        followUpsCount,
-      });
+      // const diseasesCodes = diseases.map((disease) => disease.value);
+      const diseasesCodes = diseases.map((disease) => ({ code: disease.value }));
+
+      
+      // // console.log("Form Submitted:", {
+      //   patient_id,
+      //   medicines,
+      //   diseasesCodes,
+      //   diseases,
+      //   followUp,
+      //   followUpsCount,
+      // });
       const prescription_data = {
-        patient: {
-          patient_id: patient_id,
+        prescription: {
+          patient: {
+            patient_id: patient_id,
+          },
+
+          treatement: "given medicines",
         },
-        followupDetails: {
-          // "follow_up_id" : follow_up_id,
-          followup_type: followUp,
-          followups_count: followUpsCount,
-        },
-        Disease: {
-          disease_code: diseasesCodes,
-        },
-        Medicines: {
-          medicines: medicines,
+        medicineList: medicines,
+        diseaseList: diseasesCodes,
+        followUpSchedule: {
+          followUpRemaining: followUpsCount,
+          type: followUp,
         },
       };
-      alert("Prescription Submitted Successfully!");
+      setLoading(true);
+      console.log("prescription_data",prescription_data)
+      try {
+        const response = await DoctorService.addPrescription(prescription_data);
+        console.log("res",response)
+        if(response){
+          alert("Prescription added successfully");
+          window.location.reload();
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+      // alert("Prescription Submitted Successfully!");
     }
   };
 
@@ -200,7 +218,7 @@ const AddPrescription = () => {
               Disease:
             </label>
             <Select
-              style = {{display:'flex',flexDirection: 'column' }}
+              style={{ display: "flex", flexDirection: "column" }}
               isMulti
               placeholder={"Select"}
               value={diseases}
@@ -224,7 +242,6 @@ const AddPrescription = () => {
               <input
                 type="text"
                 placeholder="Name"
-            
                 className="bg-[#bfbfdf] border rounded px-2 py-1 w-full mb-2 placeholder-[#646465]"
                 value={medicineFields.name}
                 onChange={(e) => handleMedicineChange("name", e.target.value)}
@@ -251,19 +268,21 @@ const AddPrescription = () => {
               </div>
             </div>
             <div className="flex items-center justify-center">
-            <button
-              className="bg-[#6467c0] hover:bg-[#bfbfdf] text-white font-bold py-1 px-4 rounded"
-              onClick={handleAddMedicineFields}
-            >
-              Add Medicine
-            </button>
+              <button
+                className="bg-[#6467c0] hover:bg-[#bfbfdf] text-white font-bold py-1 px-4 rounded"
+                onClick={handleAddMedicineFields}
+              >
+                Add Medicine
+              </button>
             </div>
 
             <div className="data">
               <table className="table-auto border border-collapse border-gray-400">
                 <thead className="bg-[#bfbfdf]">
                   <tr>
-                    <th className="bg-[#bfbfdf] border border-gray-400 px-4 py-2">Sr. No</th>
+                    <th className="bg-[#bfbfdf] border border-gray-400 px-4 py-2">
+                      Sr. No
+                    </th>
                     <th className="border border-gray-400 px-4 py-2">
                       Medicine
                     </th>

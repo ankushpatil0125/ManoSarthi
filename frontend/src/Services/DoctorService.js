@@ -64,10 +64,10 @@ const DoctorService = {
     }
   },
 
-  getAllPatients: async (pagenumber) => {
+  getAllPatients: async (pagenumber,type) => {
     try {
       console.log('before calling getAll')
-      const response = await axios.get(BASE_URL + "doctor/new-patient?pagenumber="+pagenumber, {
+      const response = await axios.get(BASE_URL + "doctor/patient?pagenumber="+pagenumber+"&type="+type, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,
@@ -82,7 +82,24 @@ const DoctorService = {
     }
   },
  
-  
+  addPrescription: async (obj) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "doctor/prescription-followup",
+        obj,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 
 
 

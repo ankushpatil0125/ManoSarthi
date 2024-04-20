@@ -6,7 +6,7 @@ import {  useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
 import { useTranslation } from "react-i18next";
 
-const PendingPatient = () => {
+const NewPatient = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -23,8 +23,9 @@ const PendingPatient = () => {
       console.log("inside fetchdata function");
 
       // setCurrentPage(0)
-      DoctorService.getAllPatients(currentPage)
+      DoctorService.getAllPatients(currentPage,"NEW")
         .then((response) => {
+          console.log("List of patients",response.data)
           setData(response.data);
           setLoading(false);
         })
@@ -37,11 +38,11 @@ const PendingPatient = () => {
         setLoading(false);
     }
   };
-  const handlePatient = (patientId) =>{
-    console.log('patientId', patientId);
+  const handlePatient = (patient) =>{
+    console.log('patientId', patient);
     // history.push('/patient-details', { patientId });
     // return <PatientDetails/>
-    navigate('/patient-details', {state: {patientId: patientId}});
+    navigate('/new-patient-details', {state: {data: patient}});
   }
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -91,14 +92,14 @@ const PendingPatient = () => {
                   {patient.lastname}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {patient.village.name}
+                  {patient.villageName}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   {patient.gender}
                 </td>
                 <td className="border border-gray-400 px-4 py-2 ">
                   <button
-                    onClick={()=>handlePatient(patient.patient_id)}
+                    onClick={()=>handlePatient(patient)}
                     className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded"
                   >
                     {t("doctor.View Details")}
@@ -131,4 +132,4 @@ const PendingPatient = () => {
   }
 };
 
-export default PendingPatient;
+export default NewPatient;

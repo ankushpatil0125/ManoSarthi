@@ -35,10 +35,13 @@ const Preview = ({ navigation, route }) => {
   };
 
   const handleSubmit = async () => {
+    console.log(consentChecked)
+    
     if (consentChecked) {
-      await InsertService.insertAabhaId(aabhaId, "old");
+      const resolve= await InsertService.insertAabhaId(aabhaId, "old");
+      console.log("res1",resolve);
       const res3 = await UpdateService.updatePatientStatus(aabhaId);
-      console.log(res3);
+      console.log("res3",res3);
       try {
         // const res = await SelectService.getMedicalHistoryAnswers();
         Alert.alert("Data saved in local DB successfully!", "OK", [

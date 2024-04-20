@@ -1,4 +1,3 @@
-// UpdateService.js
 import db from "../DatabaseServices/DatabaseServiceInit";
 
 const UpdateService = {
