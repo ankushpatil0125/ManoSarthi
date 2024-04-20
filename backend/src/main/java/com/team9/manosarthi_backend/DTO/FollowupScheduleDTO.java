@@ -15,13 +15,16 @@ import java.sql.Date;
 @Setter
 @ToString
 public class FollowupScheduleDTO {
-    private int followup_id;
+    private int patientID;
+//    private int followup_id;
 
     private String patient_fname;
 
     private String patient_lname;
 
     private String patient_address;
+
+    private int age;
 
     //Date when followup has to take
     @JsonFormat(pattern="dd-MMM-yyyy")
@@ -32,10 +35,12 @@ public class FollowupScheduleDTO {
 
     public void FollowupScheduleToDTO(FollowUpSchedule followUpSchedule,String type)
     {
-        this.followup_id=followUpSchedule.getId();
+        this.patientID=followUpSchedule.getPatient().getPatient_id();
+//        this.followup_id=followUpSchedule.getId();
         this.patient_fname=followUpSchedule.getPatient().getFirstname();
         this.patient_lname=followUpSchedule.getPatient().getLastname();
         this.patient_address=followUpSchedule.getPatient().getAddress();
+        this.age=followUpSchedule.getPatient().getAge();
         this.followUpDate=followUpSchedule.getNextFollowUpDate(); //until followup get complete this date remain the date when it has to taken
         this.type=type;
     }

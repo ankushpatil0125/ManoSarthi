@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ import com.team9.manosarthi_backend.security.JwtHelper;
 //@PreAuthorize("hasRole('WORKER')")
 @RequestMapping("/worker")
 @CrossOrigin(origins = "*")
+@EnableTransactionManagement
 public class WorkerRestController {
     private WorkerService workerService;
     private QuestionarrieService questionarrieService;
@@ -272,6 +274,24 @@ public class WorkerRestController {
         else {
             throw new APIRequestException("Error in authorizing");
         }
+    }
+
+
+    @PostMapping("/register-followup")
+    public int registerFollowUP(@RequestBody RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, @RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+
+            int pattientId = workerService.addFollowUpDetails(registerFollowUpDetailsDTO, Integer.parseInt(workerId));
+            return pattientId;
+
+        }
+        else {
+            throw new APIRequestException("Error in authorizing");
+        }
+
+//        return null;
     }
 
 }
