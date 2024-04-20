@@ -1,9 +1,8 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.Entities.User;
-import com.team9.manosarthi_backend.Services.UserService;
+import com.team9.manosarthi_backend.ServicesImpl.UserService;
 import com.team9.manosarthi_backend.models.ChangePassword;
-import com.team9.manosarthi_backend.models.JwtRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
