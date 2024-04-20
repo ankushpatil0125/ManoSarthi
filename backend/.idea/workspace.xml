@@ -7,12 +7,7 @@
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/FollowupScheduleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/FollowupScheduleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +52,9 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ManosarthiBackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;DTO__Creation&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Manasi&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -81,12 +73,7 @@
     ]
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.team9.manosarthi_backend.ServicesImpl" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication">
+  <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication (1)">
     <configuration name="ManosarthiBackendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
       <module name="backend" />
@@ -113,7 +100,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="ManosarthiBackendApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="manosarthi_backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
@@ -121,19 +108,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ManosarthiBackendApplication_enc" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="ManosarthiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="manosarthi_backend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
-      <option name="VM_PARAMETERS" value="-Djasypt.encryptor.password=javatechie" />
+      <option name="SPRING_BOOT_MAIN_CLASS" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="Application.ManosarthiBackendApplication" />
+      <item itemvalue="Spring Boot.ManosarthiBackendApplication (1)" />
       <item itemvalue="Spring Boot.ManosarthiBackendApplication" />
-      <item itemvalue="Spring Boot.ManosarthiBackendApplication_enc" />
     </list>
     <recent_temporary>
       <list>
@@ -142,14 +127,6 @@
         <item itemvalue="Application.ManosarthiBackendApplication" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -202,10 +179,6 @@
       <workItem from="1712834883526" duration="828000" />
       <workItem from="1713330566321" duration="118000" />
       <workItem from="1713342441433" duration="1133000" />
-      <workItem from="1713344447599" duration="14301000" />
-      <workItem from="1713377743476" duration="881000" />
-      <workItem from="1713418560781" duration="9605000" />
-      <workItem from="1714567945737" duration="9296000" />
     </task>
     <servers />
   </component>
