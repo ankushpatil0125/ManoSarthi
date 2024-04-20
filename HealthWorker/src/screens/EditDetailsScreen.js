@@ -79,7 +79,7 @@
 //       console.log(firstName + " " + lastName + " " + gender);
 //       await sendToServer();
 //       navigation.goback();
-//     } 
+//     }
 //     // else {
 //     //   await storeDataLocally();
 //     // }
@@ -232,7 +232,7 @@
 //               // If it contains only numeric characters, update the state
 //               setAge(value);
 //             }
-//           }}          
+//           }}
 //           value={age}
 //           placeholder="AGE"
 //           placeholderTextColor="#666"
@@ -310,18 +310,17 @@
 
 // export default EditDetailsScreen;
 
-
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 
 const EditDetailsScreen = () => {
   return (
     <View>
       <Text>EditDetailsScreen</Text>
     </View>
-  )
-}
+  );
+};
 
-export default EditDetailsScreen
+export default EditDetailsScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

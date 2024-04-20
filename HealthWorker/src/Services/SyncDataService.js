@@ -75,13 +75,13 @@ const SyncDataService = {
               );
 
               const status1 = await DeleteService.deletePatientByAabhaId(
-                response.data.aabhaId
+                response.data
               );
               console.log("deletePatientByAabhaId Status ", status1);
 
               const status2 =
                 await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
-                  response.data.aabhaId
+                  response.data
                 );
               console.log(
                 "deleteSurveyQuestionAnswersByAabhaId Status ",
@@ -90,7 +90,7 @@ const SyncDataService = {
 
               const status3 =
                 await DeleteService.deleteMedicalHistoryAnswersByAabhaId(
-                  response.data.aabhaId
+                  response.data
                 );
               console.log(
                 "deleteMedicalHistoryAnswersByAabhaId Status ",
