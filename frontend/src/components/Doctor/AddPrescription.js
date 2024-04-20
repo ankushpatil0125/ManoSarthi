@@ -161,6 +161,7 @@ const AddPrescription = ({ patient_id }) => {
         }
       } catch (error) {
         console.log(error);
+        alert(error.response.data.message);
         setLoading(false);
       }
       // alert("Prescription Submitted Successfully!");
@@ -172,7 +173,7 @@ const AddPrescription = ({ patient_id }) => {
     <div>
       <Header />
       <div className="flex justify-center items-center h-screen">
-        <div className="bg-[#bfbfdf] rounded-lg shadow-lg p-8 w-full max-w-100">
+        <div className="bg-[#e0e0eb] rounded-lg shadow-lg p-8 w-full max-w-100">
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mb-3">Prescription Form</h1>
             <h1 className="text-lg font-semibold mb-3">
@@ -187,7 +188,7 @@ const AddPrescription = ({ patient_id }) => {
               id="category"
               value={category}
               onChange={handleCategoryChange}
-              className="bg-[#bfbfdf] block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              className="bg-[#e0e0eb] block w-full mt-1 p-2 border border-black border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
             >
               <option value="">Select</option>
               {categoryOptions.map((category, index) => (
@@ -204,7 +205,7 @@ const AddPrescription = ({ patient_id }) => {
               id="subcategory"
               value={subCategory}
               onChange={handleSubCategoryChange}
-              className="bg-[#bfbfdf]  block w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              className="bg-[#e0e0eb]  block w-full mt-1 p-2 border border-black rounded-md focus:outline-none focus:border-indigo-500"
             >
               <option value="">Select</option>
               {subCategoryOptions.map((subcategory, index) => (
@@ -218,7 +219,7 @@ const AddPrescription = ({ patient_id }) => {
               Disease:
             </label>
             <Select
-              style={{ display: "flex", flexDirection: "column" }}
+              styles={{ display: "flex", flexDirection: "column"}}
               isMulti
               placeholder={"Select"}
               value={diseases}
@@ -228,7 +229,7 @@ const AddPrescription = ({ patient_id }) => {
                 value: option.code,
                 label: option.longDescription,
               }))}
-              className="bg-[#bfbfdf] block w-full mt-1 p-2 border rounded-md focus:outline-none focus:border-indigo-500 "
+              className="block w-full mt-1 p-2 borderrounded-md focus:outline-none focus:border-indigo-500 "
               // styles={{
               //   multiValue: (provided, state) => ({
               //     ...provided,
@@ -242,7 +243,7 @@ const AddPrescription = ({ patient_id }) => {
               <input
                 type="text"
                 placeholder="Name"
-                className="bg-[#bfbfdf] border rounded px-2 py-1 w-full mb-2 placeholder-[#646465]"
+                className="bg-[#e0e0eb] border border-black rounded px-2 py-1 w-full mb-2 placeholder-[#646465]"
                 value={medicineFields.name}
                 onChange={(e) => handleMedicineChange("name", e.target.value)}
               />
@@ -250,7 +251,7 @@ const AddPrescription = ({ patient_id }) => {
                 <input
                   type="text"
                   placeholder="Dosage"
-                  className="bg-[#bfbfdf] border rounded px-2 py-1 w-1/2 mr-2 placeholder-[#646465]"
+                  className="bg-[#e0e0eb] border border-black rounded px-2 py-1 w-1/2 mr-2 placeholder-[#646465]"
                   value={medicineFields.dosage}
                   onChange={(e) =>
                     handleMedicineChange("dosage", e.target.value)
@@ -259,7 +260,7 @@ const AddPrescription = ({ patient_id }) => {
                 <input
                   type="text"
                   placeholder="Timing"
-                  className="bg-[#bfbfdf] border rounded px-2 py-1 w-1/2"
+                  className="bg-[#e0e0eb] border border-black rounded px-2 py-1 w-1/2"
                   value={medicineFields.timing}
                   onChange={(e) =>
                     handleMedicineChange("timing", e.target.value)
@@ -330,7 +331,7 @@ const AddPrescription = ({ patient_id }) => {
                   id="followup"
                   value={followUp}
                   onChange={handleFollowupChange}
-                  className="bg-[#bfbfdf] block w-40 mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="bg-[#e0e0eb] block w-40 mt-1 p-2 border border-black border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                 >
                   <option value="WEEKLY">Weekly</option>
                   <option value="BI_WEEKLY">Bi-Weekly</option>
@@ -339,7 +340,7 @@ const AddPrescription = ({ patient_id }) => {
                 <input
                   type="number"
                   placeholder="Follow Ups Count"
-                  className="bg-[#bfbfdf] border ml-3 mt-1 p-2 rounded-md px-2 py-1 w-22"
+                  className="bg-[#e0e0eb] border border-black ml-3 mt-1 p-2 rounded-md px-2 py-1 w-22"
                   value={followUpsCount}
                   onChange={(e) => setFollowUpsCount(e.target.value)}
                 />

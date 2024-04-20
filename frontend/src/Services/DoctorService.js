@@ -100,7 +100,21 @@ const DoctorService = {
       throw error;
     }
   },
-
+  getNextFollowUp : async (currentPage,patientId) =>{
+    try{
+      const response = await axios.get(BASE_URL + "doctor/getfollowups?pagenumber="+currentPage+"&patientId="+patientId,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      return response;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
 
 
 };

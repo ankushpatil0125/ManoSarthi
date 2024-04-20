@@ -14,7 +14,7 @@ import AdminOperation from "./components/Actors/AdminOperation";
 import ErrorPage from "./components/Error/ErrorPage";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
-import NewPatient from "./components/Doctor/NewPatient";
+import NewPatientList from "./components/Doctor/NewPatientList";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import { AuthProvider } from "./components/Context/AuthContext";
 import NewPatientDetails from "./components/Doctor/NewPatientDetails";
@@ -63,7 +63,7 @@ const App = () => {
             path="/new-patient"
             element={
               <PrivateRoute type="new-patient">
-                <NewPatient />
+                <NewPatientList />
               </PrivateRoute>
             }
           />

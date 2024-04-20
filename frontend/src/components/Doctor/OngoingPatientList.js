@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
 import { useTranslation } from "react-i18next";
 
-const OngoingPatient = () => {
+const OngoingPatientList = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -68,13 +68,13 @@ const OngoingPatient = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 class="w-6 h-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
                 />
               </svg>
@@ -100,9 +100,9 @@ const OngoingPatient = () => {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
             </svg>
@@ -195,4 +195,4 @@ const OngoingPatient = () => {
   }
 };
 
-export default OngoingPatient;
+export default OngoingPatientList;

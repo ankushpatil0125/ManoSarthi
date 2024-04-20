@@ -20,17 +20,17 @@ const PatientDetails = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const { data } = location.state;
-  console.log("data", data);
+  console.log("new patient data", data);
   const [currentPage, setCurrentPage] = useState("Medical-History");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [t] = useTranslation("global");
-  const [firstname, setFirstname] = useState("");
-  const [gender, setGender] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [age, setAge] = useState("");
-  const [village, setVillage] = useState("");
+  // const [firstname, setFirstname] = useState("");
+  // const [gender, setGender] = useState("");
+  // const [lastname, setLastname] = useState("");
+  // const [age, setAge] = useState("");
+  // const [village, setVillage] = useState("");
   const [followUpDetails, setFollowUpDetails] = useState([]);
-  const [medicalQuesAns, setMedicalQuesAns] = useState([]);
+  // const [medicalQuesAns, setMedicalQuesAns] = useState([]);
   // setMedicalQuesAns(data?.medicalQuesAnsList)
   useEffect(() => {
     const handlePatientDetails = async () => {
@@ -83,13 +83,13 @@ const PatientDetails = () => {
             <div className="flex flex-row min-h-screen mt-20">
               <section className="flex-grow ">
                 <div className="mx-auto">
-                  <div className="bg-[#bfbfdf] rounded-lg shadow-lg p-6 ">
+                  <div className="bg-[#e0e0eb] rounded-lg shadow-lg p-6 ">
                     <div className="flex justify-center items-center ">
                       <h2 className="text-gray-900 mb-4 font-semibold text-2xl">
                         Medical History
                       </h2>
                     </div>
-                    <div className="bg-[#bfbfdf] rounded-lg p-4 my-2">
+                    <div className="bg-[#e0e0eb] rounded-lg p-4 my-2">
                       {data?.medicalQueAnsList?.map((medical, index) => (
                         <p key={index} className="">
                           {index + 1}. {medical?.medicalquest?.question} -{" "}
@@ -125,7 +125,7 @@ const PatientDetails = () => {
             <div className="flex flex-row min-h-screen mt-20">
               <section className="flex-grow ">
                 <div className="mx-auto">
-                  <div className="bg-[#bfbfdf] rounded-lg shadow-lg p-6">
+                  <div className="bg-[#e0e0eb] rounded-lg shadow-lg p-6">
                     <div className="items-center justify-center flex ">
                       <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                         Survey Questionnaire Responses
@@ -162,7 +162,7 @@ const PatientDetails = () => {
         );
       case "AddPrescriptions":
         if (loading) return <LoadingComponent />;
-        return <AddPrescription patient_id={data.patient_id}/>;
+        return <AddPrescription patient_id={data.patient_id} />;
       default:
         return null;
     }
@@ -310,9 +310,9 @@ const PatientDetails = () => {
 
 export default PatientDetails;
 
-const Profile = ({ firstname, lastname, village,gender,age }) => {
+const Profile = ({ firstname, lastname, village, gender, age }) => {
   return (
-    <div className=" container mx-2 rounded-lg shadow-lg p-6 flex-1 bg-[#bfbfdf] ">
+    <div className=" container mx-2 rounded-lg shadow-lg p-6 flex-1 bg-[#e0e0eb] ">
       <div className="max-w-md p-8 sm:flex sm:space-x-6 dark:bg-gray-50 dark:text-gray-800">
         <div className="flex-shrink-0 w-full mb-6 h-44 sm:h-32 sm:w-32 sm:mb-0 ">
           <img
@@ -326,7 +326,7 @@ const Profile = ({ firstname, lastname, village,gender,age }) => {
             <h2 className="text-2xl font-semibold">
               {firstname} {lastname}
             </h2>
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -342,19 +342,21 @@ const Profile = ({ firstname, lastname, village,gender,age }) => {
                 />
               </svg>
 
-              <span className="text-sm dark:text-gray-600">Village : {village}</span>
+              <span className="text-sm dark:text-gray-600">
+                Village : {village}
+              </span>
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 class="w-6 h-6"
               >
                 <path
-                  strokeLinecapp="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
                 />
@@ -362,13 +364,25 @@ const Profile = ({ firstname, lastname, village,gender,age }) => {
 
               <span className="text-sm dark:text-gray-600">Age : {age}</span>
             </div>
-            <div className="flex flex-row">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-</svg>
+            <div className="flex flex-row gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                />
+              </svg>
 
-
-              <span className="text-sm dark:text-gray-600">Gender : {gender}</span>
+              <span className="text-sm dark:text-gray-600">
+                Gender : {gender}
+              </span>
             </div>
           </div>
           {/* <div class="space-y-1">
@@ -420,14 +434,14 @@ const FollowUp = ({ followUpDetails }) => {
   //   return `${day}/${month}/${year}`;
   // };
   return (
-    <div className=" container mx-auto rounded-lg shadow-lg p-6 flex-1 bg-[#bfbfdf]">
+    <div className=" container mx-auto rounded-lg shadow-lg p-6 flex-1 bg-[#e0e0eb]">
       <div className="flex flex-col gap-1 items-center justify-center">
         <h4 className="text-2xl font-semibold ">Follow Up Details</h4>
         <h4 className="text-1xl font-semibold">Survey Registration</h4>
       </div>
       {followUpDetails.map((followup, follow_index) => (
         <div
-          className="bg-[#bfbfdf] rounded-lg p-4 my-3 flex flex-col items-center"
+          className="bg-[#d4d4e1] rounded-lg p-4 my-3 flex flex-col items-center"
           key={follow_index}
         >
           {follow_index === 0 ? (

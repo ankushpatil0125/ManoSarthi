@@ -1,4 +1,3 @@
-import "../../css/PendingPatient.css";
 import DoctorService from "../../Services/DoctorService";
 import Header from "../Header/Header";
 import React, { useEffect, useState } from "react";
@@ -6,7 +5,7 @@ import {  useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
 import { useTranslation } from "react-i18next";
 
-const NewPatient = () => {
+const NewPatientList = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -59,7 +58,7 @@ const NewPatient = () => {
   return (
     <div>
       <Header />
-      <div className="pending">
+      <div className="mt-10 p-5">
         <div
           style={{
             padding: 10,
@@ -67,7 +66,7 @@ const NewPatient = () => {
             justifyContent: "center",
           }}
         >
-          <h4 className="flex justify-center items-center text-[#6467c0]">{t('doctor.New Patients')}:</h4>
+          <h4 className="flex justify-center items-center text-[#6467c0]">{t('doctor.New Patients')}</h4>
         </div>
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
@@ -132,4 +131,4 @@ const NewPatient = () => {
   }
 };
 
-export default NewPatient;
+export default NewPatientList;

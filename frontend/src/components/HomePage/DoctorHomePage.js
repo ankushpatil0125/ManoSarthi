@@ -9,10 +9,10 @@
     ChartBarIcon,
     EyeIcon,
   } from "@heroicons/react/outline";
-  import NewPatient from "../Doctor/NewPatient";
+  import NewPatientList from "../Doctor/NewPatientList";
   import UpdateDeleteActor from "../Actors/UpdateDeleteActor";
 import { useTranslation } from "react-i18next";
-import OngoingPatient from "../Doctor/OngoingPatient";
+import OngoingPatientList from "../Doctor/OngoingPatientList";
   const DoctorHomePage = () => {
     const [currentPage, setCurrentPage] = useState("dashboard");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -282,9 +282,9 @@ import OngoingPatient from "../Doctor/OngoingPatient";
             // </div>
           );
         case "new-patient":
-          return <NewPatient/>;
+          return <NewPatientList/>;
           case "ongoing-patient":
-          return <OngoingPatient/>;
+          return <OngoingPatientList/>;
           case "treated-patient":
           return <></>;
         default:
