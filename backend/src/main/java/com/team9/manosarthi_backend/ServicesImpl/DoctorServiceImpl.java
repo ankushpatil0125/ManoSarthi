@@ -1,14 +1,17 @@
-package com.team9.manosarthi_backend.Services;
+package com.team9.manosarthi_backend.ServicesImpl;
 
+import com.team9.manosarthi_backend.DTO.FollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
+import com.team9.manosarthi_backend.Services.DoctorService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -16,7 +19,7 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
-public class DoctorServiceImpl implements DoctorService{
+public class DoctorServiceImpl implements DoctorService {
 
     private PatientRepository patientRepository;
     private DoctorRepository doctorRepository;
@@ -28,18 +31,40 @@ public class DoctorServiceImpl implements DoctorService{
 
 
     @Override
-    public List<Patient> getNewPatientDetails(int doctorId, int pagenumber, int pagesize) {
+    public Doctor viewProfile(int id) {
+        Optional<Doctor> doctor = doctorRepository.findById(id);
+        if (doctor.isPresent()) {
+            return doctor.get();
+        }
+        else throw new APIRequestException("Doctor not found for id " + id);
+    }
 
+    @Override
+    public List<Patient> getPatientList(String type,int doctorId, int pagenumber, int pagesize) {
         Optional<Doctor> doctor = doctorRepository.findById(doctorId);
         int subDistrictCode;
         if(doctor.isPresent()) {
             subDistrictCode= doctor.get().getSubdistrictcode().getCode();
             Pageable pageable = PageRequest.of(pagenumber,pagesize);
-            Page<Patient> patientList=patientRepository.getNewPatientBySubdistrict(subDistrictCode,pageable);
+            Page<Patient> patientList=patientRepository.getPatientListBySubdistrict(type,subDistrictCode,pageable);
             return patientList.getContent();
         }
         else return null;
     }
+
+//    @Override
+//    public List<Patient> getNewPatientDetails(int doctorId, int pagenumber, int pagesize) {
+//
+//        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+//        int subDistrictCode;
+//        if(doctor.isPresent()) {
+//            subDistrictCode= doctor.get().getSubdistrictcode().getCode();
+//            Pageable pageable = PageRequest.of(pagenumber,pagesize);
+//            Page<Patient> patientList=patientRepository.getNewPatientBySubdistrict(subDistrictCode,pageable);
+//            return patientList.getContent();
+//        }
+//        else return null;
+//    }
 
     @Override
     public Patient  getPatient(int doctorId,int patientId) {
@@ -51,12 +76,11 @@ public class DoctorServiceImpl implements DoctorService{
                 return null;
             return patient.get();
         }
-
-
        return null;
     }
 
     @Override
+    @Transactional
     public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 //        System.out.println("patientFollowUpPrescriptionDTO"+patientFollowUpPrescriptionDTO);
 
@@ -133,6 +157,7 @@ public class DoctorServiceImpl implements DoctorService{
             System.out.println("Disease");
 //            System.out.println("PRESCRIPTION"+patientFollowUpPrescriptionDTO.getPrescription().getDisease_code());
             Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
+            System.out.println("newPrescription"+newPrescription.getPrescription_id());
             latestFollowUp.get().setPrescription(newPrescription);
             followUpDetailsRepository.save(latestFollowUp.get());
             System.out.println("newPrescription "+newPrescription.getPrescription_id());
@@ -143,7 +168,7 @@ public class DoctorServiceImpl implements DoctorService{
             }
             // add follow up schedule
             System.out.println("HELLO TYPE");
-            Date nextDate=null;
+            Date nextDate;
             System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
             if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {
                 System.out.println("nextDate WEEKLY");
@@ -157,6 +182,8 @@ public class DoctorServiceImpl implements DoctorService{
             }
             else throw new APIRequestException("Follow Up Type not specified correctly");
 
+            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
+            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
             patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
             FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
             System.out.println("followUpSchedule  "+followUpSchedule.getId());
@@ -171,7 +198,11 @@ public class DoctorServiceImpl implements DoctorService{
             throw new APIRequestException("Patient not found with id "+ patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         }
 
-
-
+    }
+    @Override
+    public List<FollowUpDetails> getFollowups(int pagenumber,int pagesize,int doctorId, int patientId) {
+        Pageable pageable = PageRequest.of(pagenumber,pagesize);
+        Page<FollowUpDetails> followups= followUpDetailsRepository.findFollowUpDetailsByDoctorAndPatient(patientId,doctorId,pageable);
+        return followups.getContent();
     }
 }
