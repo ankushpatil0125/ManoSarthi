@@ -32,5 +32,5 @@ public interface AdminService  {
 
     Supervisor deleteSupervisor(Supervisor supervisor);
 
-
+     List<Object[]> getdistrictstat();
 }

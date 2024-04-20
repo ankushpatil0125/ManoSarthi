@@ -86,6 +86,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
           answer
         );
       });
+
       await Promise.all(promises)
         .then((msg) => {
           console.log("Success Message: ", msg);
@@ -97,6 +98,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       // Matching the answers with the default ans
       const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
       console.log("[QuestionarieScreen]Unmatched count: ", unmatchedCount);
+
 
       // Navigate to the next screen
       if (unmatchedCount >= 3) {
