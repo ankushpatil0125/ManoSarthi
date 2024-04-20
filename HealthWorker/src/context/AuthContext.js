@@ -12,13 +12,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
-  const [userName,setUserName] = useState("");
+  const [userName, setUserName] = useState("");
   // const [changePassword,setChangePassword] = useState(false);
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem("JWT", value);
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   // useEffect(()=>{
   //   const fetchToken = async () => {
@@ -26,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   //     setUserToken(fetchedToken);
   //     // setInitializing(false);
   //   };
-    
+
   //   fetchToken();
   // },[]);
   // console.log("after setting change password",changePassword);
@@ -40,43 +39,52 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await axios.post(BASE_URL + "auth/login", user);
-      console.log("response: ", response);
+      console.log("Login Response Data: ", response.data);
       if (response) {
         await storeData(response?.data?.jwtToken);
         const token = await getToken();
         setUserToken(token);
         setUserName(response?.data?.username);
-        // await DropService.dropTables();
-        createDatabase().then((message) => {
-          console.log(message);
-        })
-        .catch((message) => {
-          console.log(message);
-        });
+        //  await DropService.dropTables();
+        createDatabase()
+          .then((message) => {
+            console.log(message);
+          })
+          .catch((message) => {
+            console.log(message);
+          });
         fetchData()
-        .then((message) => {
-          Alert.alert(message);
-        })
-        .catch((message) => {
-          Alert.alert(message);
-        });
+          .then((message) => {
+            console.log("Before resolve sucess");
+            Alert.alert(message);
+          })
+          .catch((message) => {
+            console.log("Before reject sucess");
 
+            Alert.alert(message);
+          });
 
-        // const changepass_response = await IsPasswordChangeService.isPasswordChanged(response);
-        // console.log("ChangePassResponse",changepass_response)
-        // setChangePassword(changepass_response);
-        // console.log("after setting change password",changePassword);
-        
+        const changepass_response =
+          await IsPasswordChangeService.isPasswordChanged(response);
+        console.log("Change Password Response: ", changepass_response);
+        setChangePassword(changepass_response);
+        console.log("after setting change password", changePassword);
+
         setIsLoading(false);
-        console.log("Token", getToken());
+        // console.log("Token", getToken());
       } else {
+        console.log("Before login failure alert");
+
         Alert.alert("Login Failure");
+        setIsLoading(false);
       }
     } catch (error) {
       // console.log('error',error)
-      Alert.alert("Login Failure", error.response.data);
+      console.log("Before catch failure error");
+
+      Alert.alert("Login Failure", error.response);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
   const logout = () => {
     setIsLoading(true);
@@ -104,7 +112,9 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn();
   }, []);
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, userToken,userName}}>
+    <AuthContext.Provider
+      value={{ login, logout, isLoading, userToken, userName }}
+    >
       {children}
     </AuthContext.Provider>
   );

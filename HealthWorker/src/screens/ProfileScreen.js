@@ -10,7 +10,7 @@ import {
 import ProfileService from "../Services/ProfileService/ProfileService";
 import { Text } from "react-native";
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -41,11 +41,11 @@ const ProfileScreen = ({navigation}) => {
 
   const handleChangeDetails = () => {
     // Handle changing details here
-    navigation.navigate("EditDetailsScreen")
+    navigation.navigate("EditDetailsScreen");
   };
   const handleChangePassword = () => {
-    navigation.navigate("ChangePassword1")
-  }
+    navigation.navigate("ChangePassword1");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,7 +105,7 @@ const ProfileScreen = ({navigation}) => {
                   Village: {village}
                 </Paragraph>
               </View>
-              <View style={{flexDirection:'row',gap:50}}>
+              <View style={{ flexDirection: "row", gap: 50 }}>
                 <Pressable style={styles.button} onPress={handleChangeDetails}>
                   <Text style={styles.buttonText}>Change Details</Text>
                 </Pressable>

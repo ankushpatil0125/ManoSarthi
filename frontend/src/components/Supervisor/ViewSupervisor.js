@@ -313,7 +313,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
   const fetchData = useCallback(async () => {
     try {
       setFetchingData(true);
-      // setLoading(true);
+      setLoading(true);
 
       let response;
       if (!district && !subdistrictcode) {
@@ -334,13 +334,14 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       }
 
       setData(response.data);
-      // setLoading(false);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       alert(error);
-      // setLoading(false);
+      setLoading(false);
     } finally {
       setFetchingData(false);
+      setLoading(false);
     }
   }, [currentPage, district, subdistrictcode]);
 
@@ -351,32 +352,32 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
   const handleDistrictChange = (e) => {
     const newSelDist = e.target.value;
     setNewDistrict(newSelDist);
-    // setLoading(true);
+    setLoading(true);
     AdminService.getSubDistrict(newSelDist, actor, false)
       .then((response) => {
         setSubDistrictOptions(response.data);
-        // setLoading(false);
+        setLoading(false);
       })
       .catch((error) => {
         alert(error.response.data.message);
-        // setLoading(false);
+        setLoading(false);
       });
   };
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     if (showModal) {
       if (actor) {
         // Check if actor is selected
-        // setLoading(true);
+        setLoading(true);
         AdminService.getDistrict(actor, false)
           .then((response) => {
             setDistrictOptions(response.data);
-            // setLoading(false);
+            setLoading(false);
           })
           .catch((error) => {
             alert(error.response.data.message);
-            // setLoading(false);
+            setLoading(false);
           });
       }
     }
@@ -404,20 +405,20 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       };
 
       try {
-        // setLoading(true);
+        setLoading(true);
         const response = AdminService.deleteSupervisor(Id);
         if (response) {
           alert("Supervisor Deleted Successfully");
-          // setLoading(false);
+          setLoading(false);
         }
       } catch (error) {
-        // setLoading(false);
+        setLoading(false);
         alert(error.response.data.message);
       }
     } else {
       // Do nothing or provide feedback to the user.
       console.log("Deletion canceled");
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -433,16 +434,16 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       },
     };
     try {
-      // setLoading(true);
+      setLoading(true);
       const response = AdminService.reassignSupervisor(reasignSupervisor);
       if (response) {
         alert("Supervidor Reassigned Successfully");
         window.location.reload();
         // setActor(actor);
-        // setLoading(false);
+        setLoading(false);
       }
     } catch (error) {
-      // setLoading(false);
+      setLoading(false);
       alert(error.response.data.message);
     }
 
@@ -502,7 +503,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
                   {supervisor.email || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button
+                <button
                     onClick={() => {
                       if (action === "Reassign") {
                         handleUpdateButton(supervisor.id);
@@ -522,7 +523,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       </div>
       <div className="flex gap-2 justify-center">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
@@ -530,7 +531,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
         </button>
 
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >

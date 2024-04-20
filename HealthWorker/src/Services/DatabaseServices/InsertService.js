@@ -45,12 +45,11 @@ const InsertService = {
       });
     });
   },
-  
+
   insertPatientDetails: (patientDetails) => {
-    console.log("before inside insertPatientD");
+    // console.log("before inside insertPatientD");
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
-        console.log("in trans inside insertPatientD");
         tx.executeSql(
           "INSERT OR REPLACE INTO PatientDetails (aabhaId, firstName, lastName, email, gender, age, address) VALUES (?, ?, ?, ?, ?, ?, ?)",
           [
@@ -63,15 +62,10 @@ const InsertService = {
             patientDetails.address,
           ],
           (_, { rowsAffected }) => {
-            console.log("inside insertPatientD");
-            console.log(
-              "inside insertPatientDetails after ",
-              rowsAffected._array
-            );
             if (rowsAffected > 0) {
-              resolve("Data inserted into PatientDetails successfully");
+              resolve("Data Inserted Into PatientDetails Table Successfully");
             } else {
-              reject("Failed to insert data into PatientDetails");
+              reject("Failed To Insert Data Into PatientDetails Table");
             }
           },
           (_, error) => {
@@ -156,29 +150,25 @@ const InsertService = {
   //   });
   // },
 
-  insertSurveyQuestionAnswer : (aabhaId, questionId, answer) => {
+  insertSurveyQuestionAnswer: (aabhaId, questionId, answer) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           `SELECT * FROM SurveyQuestionAnswer WHERE aabhaId = ? AND question_id = ?`,
-          [aabhaId,questionId],
+          [aabhaId, questionId],
           (_, result) => {
             if (result.rows.length > 0) {
-              console.log("Inside condition")
+              // console.log("Inside condition");
               // Record with the same primary key already exists, perform an update
               tx.executeSql(
                 `UPDATE SurveyQuestionAnswer SET answer = ? WHERE aabhaId = ? AND question_id = ?`,
-                [
-                  answer,
-                  aabhaId,
-                  questionId,
-                ],
+                [answer, aabhaId, questionId],
                 (_, { rowsAffected }) => {
                   if (rowsAffected > 0) {
-                    console.log("resolved update query")
+                    // console.log("resolved update query");
                     resolve("SurveyQuestionAnswer updated successfully");
                   } else {
-                    console.log("reject update query")
+                    console.log("reject update query");
                     reject("Failed to update SurveyQuestionAnswer");
                   }
                 },
@@ -190,26 +180,28 @@ const InsertService = {
               // Record does not exist, perform an insert
               tx.executeSql(
                 `INSERT INTO SurveyQuestionAnswer (aabhaId, question_id, answer) VALUES (?, ?, ?)`,
-                [
-                  aabhaId,
-                  questionId,
-                  answer,
-                ],
+                [aabhaId, questionId, answer],
                 (_, { rowsAffected }) => {
                   if (rowsAffected > 0) {
-                    resolve("Data inserted into SurveyQuestionAnswer successfully");
+                    resolve(
+                      "Data inserted into SurveyQuestionAnswer successfully"
+                    );
                   } else {
                     reject("Failed to insert data into SurveyQuestionAnswer");
                   }
                 },
                 (_, error) => {
-                  reject("Error inserting data into SurveyQuestionAnswer: " + error);
+                  reject(
+                    "Error inserting data into SurveyQuestionAnswer: " + error
+                  );
                 }
               );
             }
           },
           (_, error) => {
-            reject("Error checking existing record in SurveyQuestionAnswer: " + error);
+            reject(
+              "Error checking existing record in SurveyQuestionAnswer: " + error
+            );
           }
         );
       });
@@ -261,7 +253,7 @@ const InsertService = {
   //                 );
   //             }
   //           }
-            
+
   //         );
   //       }
   //       tx.executeSql(
@@ -276,11 +268,11 @@ const InsertService = {
   //           reject(error); // Reject the promise if there's an error
   //         }
   //       );
-        
+
   //     });
   //   });
   // },
-  insertMedicalHistoryAnswers : (
+  insertMedicalHistoryAnswers: (
     medicalQuestions,
     answers,
     comment,
@@ -300,24 +292,42 @@ const InsertService = {
                 // Record with the same aabha_id and question_id already exists, perform an update
                 tx.executeSql(
                   `UPDATE medical_history_answers SET question_ans = ? WHERE aabha_id = ? AND question_id = ?`,
-                  [answers[index], aabha_id, medicalQuestions[index].question_id],
+                  [
+                    answers[index],
+                    aabha_id,
+                    medicalQuestions[index].question_id,
+                  ],
                   (_, { rowsAffected }) => {
-                    console.log(`Data for question ${index + 1} updated successfully`);
+                    console.log(
+                      `Data for question ${index + 1} updated successfully`
+                    );
                   },
                   (_, error) => {
-                    console.error(`Error updating data for question ${index + 1}`, error);
+                    console.error(
+                      `Error updating data for question ${index + 1}`,
+                      error
+                    );
                   }
                 );
               } else {
                 // Record does not exist, perform an insert
                 tx.executeSql(
                   `INSERT INTO medical_history_answers (aabha_id, question_id, question_ans) VALUES (?, ?, ?)`,
-                  [aabha_id, medicalQuestions[index].question_id, answers[index]],
+                  [
+                    aabha_id,
+                    medicalQuestions[index].question_id,
+                    answers[index],
+                  ],
                   (_, result) => {
-                    console.log(`Data for question ${index + 1} saved successfully`);
+                    console.log(
+                      `Data for question ${index + 1} saved successfully`
+                    );
                   },
                   (_, error) => {
-                    console.error(`Error saving data for question ${index + 1}`, error);
+                    console.error(
+                      `Error saving data for question ${index + 1}`,
+                      error
+                    );
                   }
                 );
               }
@@ -327,7 +337,7 @@ const InsertService = {
             }
           );
         }
-  
+
         // Insert or update the comment
         tx.executeSql(
           `SELECT * FROM medical_history_answers WHERE aabha_id = ? AND question_id = ?`,
@@ -370,8 +380,7 @@ const InsertService = {
       });
     });
   },
-   
-  
+
   updateWorkerDetails: (workerDetails) => {
     console.log("before inside insertPatientD");
     return new Promise((resolve, reject) => {
