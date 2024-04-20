@@ -32,13 +32,16 @@ const Preview = ({ navigation, route }) => {
   const [followupQuestionsAnswers, setFollowupQuestionsAnswers] = useState([]);
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { age } = route.params;
-  const { type } = route.params;  
+  const { type = 'normal' } = route.params;
   const { aabhaId } = useContext(PatientContext);
+  const { patientId = -1} = route.params;
+
 
   // const checkNetworkConnectivity = async () => {
   //   const state = await NetInfo.fetch();
   //   return state.isConnected;
   // };
+
   const checkNetworkConnectivity = async () => {
     const state = await NetInfo.fetch();
     console.log("State Response: ", state);
@@ -106,7 +109,6 @@ const Preview = ({ navigation, route }) => {
   };
 
   // const { aabhaId } = useContext(PatientContext);
-
   const fieldNames = {
     aabhaId: "Aabha ID",
     firstName: "First Name",
@@ -116,38 +118,66 @@ const Preview = ({ navigation, route }) => {
     age: "Age",
     address: "Address",
     status: "Status",
+    patient_fname : "First Name",
+    patient_lname: "Last Name",
+    patient_adress: "Address",
   };
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const medicalDetailsRes = await SelectService.getMedicalHistoryAnswers(
-          aabhaId
-        );
-        setMedicalDetails(medicalDetailsRes);
+      if (type === "normal"){
+        try {
+          const medicalDetailsRes = await SelectService.getMedicalHistoryAnswers(
+            aabhaId
+          );
+          setMedicalDetails(medicalDetailsRes);
+  
+          const medicalQuestionsRes =
+            await SelectService.getAllMedicalQuestions();
+          setMedicalQuestions(medicalQuestionsRes);
+  
+          const surveyQuestionsRes = await SelectService.getAllQuestions(
+            age,
+            "normal"
+          );
+          // console.log("quesiton surveyQuestionsRes",surveyQuestionsRes);
+          setSurveyQuestions(surveyQuestionsRes);
+          // console.log("quesiton surveyQuestions",surveyQuestions);
+          const surveyQuestionsAnswers =
+            await SelectService.getAllSurveyQuestionAnswersByAabhaId(aabhaId);
+          setSurveyQuestionsAnswers(surveyQuestionsAnswers);
+  
+          const patient_details = await SelectService.getPatientDetailsByID(
+            aabhaId
+          );
+          setPatientPersonalDeatils(patient_details);
+  
+          // const followupQues = await SelectService.get
+          // console.log("Patient details array: ",patientPersonalDetails);
+        } catch (error) {
+          console.error("Error fetching data for preview:", error);
+        }
+      }else{
+        try {
+          if(patientId !== -1){
+            const patient_details = await SelectService.getFollowupDetailsByID(
+              patientId
+            );
+            setPatientPersonalDeatils(patient_details);
+          }
+          else{
+            console.log("Error Receiving patientID for followp details")
+          }
 
-        const medicalQuestionsRes =
-          await SelectService.getAllMedicalQuestions();
-        setMedicalQuestions(medicalQuestionsRes);
+          const followupQuestionsRes = await SelectService.getAllQuestions(
+            age,
+            "followup"
+          );
+          setFollowupQuestions(followupQuestionsRes);
 
-        const surveyQuestionsRes = await SelectService.getAllQuestions(
-          age,
-          "normal"
-        );
-        // console.log("quesiton surveyQuestionsRes",surveyQuestionsRes);
-        setSurveyQuestions(surveyQuestionsRes);
-        // console.log("quesiton surveyQuestions",surveyQuestions);
-        const surveyQuestionsAnswers =
-          await SelectService.getAllSurveyQuestionAnswersByAabhaId(aabhaId);
-        setSurveyQuestionsAnswers(surveyQuestionsAnswers);
-
-        const patient_details = await SelectService.getPatientDetailsByID(
-          aabhaId
-        );
-        setPatientPersonalDeatils(patient_details);
-        // console.log("Patient details array: ",patientPersonalDetails);
-      } catch (error) {
-        console.error("Error fetching data for preview:", error);
+        } catch (error) {
+          console.error("Error fetching followup data for preview:", error);
+        }
       }
     }
     fetchData();
@@ -179,7 +209,7 @@ const Preview = ({ navigation, route }) => {
             ))}
           </View>
 
-          {(type==="survey") ?
+          {(type==="normal") ?
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Survey Questionnaire:</Text>
             {surveyQuestionsAnswers.map((detail, index) => (
@@ -190,17 +220,17 @@ const Preview = ({ navigation, route }) => {
           </View>
           :
           <View style={styles.card}>
-          <Text style={styles.cardTitle}>Followup Questionnaire:</Text>
-          {followupQuestionsAnswers.map((detail, index) => (
-            <Text key={index}>
-              {followupQuestions[index]?.question} - {detail.answer}
-            </Text>
-          ))}
-        </View>
+            <Text style={styles.cardTitle}>Followup Questionnaire:</Text>
+            {followupQuestionsAnswers.map((detail, index) => (
+              <Text key={index}>
+                {followupQuestions[index]?.question} - {detail.answer}
+              </Text>
+            ))}
+          </View>
           }
 
           {/* Medical Details */}
-          <View style={styles.card}>
+          {(type === 'normal')?<View style={styles.card}>
             <Text style={styles.cardTitle}>Medical Details:</Text>
             {medicalQuestions.map((question, index) => {
               // Find the corresponding detail in medicalDetails based on question_id
@@ -219,7 +249,7 @@ const Preview = ({ navigation, route }) => {
               }
             })}
             <Text>Comment: {comment}</Text>
-          </View>
+          </View>:null}
         </View>
 
         <View style={styles.checkboxContainer}>

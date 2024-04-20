@@ -7,21 +7,33 @@ const AdminDashboard = () => {
   const [chartData, setChartData] = useState(null);
   const [pieChartData, setPieChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
+  const [surveyStats, setSurveyStats] = useState([]); // [{dictrict: patientCount}]
   const chartRef = useRef(null);
   const pieChartRef = useRef(null);
   const barChartRef = useRef(null);
 
-  // const fetchData = () => {
-  //   const response =  AdminService.getSurveyStats()
-  // }
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await AdminService.getSurveyStats();
+      setSurveyStats(response.data);    
+    } catch (error) {
+      console.error("Error fetching survey stats: ", error);
+    }
+  }
 
   useEffect(() => {
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    if (surveyStats.length === 0) return; // Don't proceed if surveyStats is empty
+    
+    const labels = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july'];
     const data = {
       labels: labels,
       datasets: [{
         label: 'Survey Dataset',
-        data: [100, 59, 80, 81, 56, 55, 40],
+        data: [23, 6,7, 12, 8, 30, 3],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
@@ -34,7 +46,7 @@ const AdminDashboard = () => {
       labels: pieLabels,
       datasets: [{
         label: 'Pie Dataset',
-        data: [12, 19, 3,],
+        data: [12, 19, 3],
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
@@ -45,41 +57,42 @@ const AdminDashboard = () => {
     };
     setPieChartData(pieData);
 
+
     // Sample data for the bar chart
-    const barLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const barLabels =  surveyStats.map((stat) => stat[0]); //All Districts
     const barData = {
-        labels: barLabels,
-        datasets: [{
+      labels: barLabels,
+      datasets: [{
         label: 'Bar Dataset',
-        data: [12, 19, 3, 5, 2, 3, 9],
+        data: surveyStats.map((stat) => stat[1]), // Patient count in a district
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgb(75, 192, 192)',
         borderWidth: 1
-        }]
+      }]
     };
     setBarChartData(barData);
-  }, []);
+  }, [surveyStats]);
 
   return (
-    <div class="flex gap-2 px-1 py-1 mb-4 h-12">
-        <div class="w-1/2 bg-gray-400 mt-10">
-          <div className="bg-white p-6 shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
-            {pieChartData && <Pie data={pieChartData} options={{}} ref={pieChartRef} />}
-          </div>
+    <div className="flex gap-2 px-1 py-1 mb-4 h-12">
+      <div className="w-1/2 bg-gray-400 mt-10">
+        <div className="bg-white p-6 shadow-md">
+          <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
+          {pieChartData && <Pie data={pieChartData} options={{}} ref={pieChartRef} />}
         </div>
-        <div class="w-1/2 bg-gray-500">
-          <div className="bg-white p-6 shadow-md">
-              <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
-              {chartData && (
-                  <Line data={chartData} options={{ scales: { x: { type: 'category' } } }} ref={chartRef} />
-              )}
-          </div>     
-          <div className="bg-white p-6 shadow-md">
-                <h2 className="text-lg font-semibold mb-4">Bar Chart </h2>
-                {barChartData && <Bar data={barChartData} options={{}} ref={barChartRef} />}
-          </div>
+      </div>
+      <div className="w-1/2 bg-gray-500">
+        <div className="bg-white p-6 shadow-md">
+          <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
+          {chartData && (
+            <Line data={chartData} options={{ scales: { x: { type: 'category' } } }} ref={chartRef} />
+          )}
+        </div>     
+        <div className="bg-white p-6 shadow-md">
+          <h2 className="text-lg font-semibold mb-4">District wise patients stats</h2>
+          {barChartData && <Bar data={barChartData} options={{ scales: { y: { suggestedMin: 1 }}}} ref={barChartRef} />}
         </div>
+      </div>
     </div>
   );
 }

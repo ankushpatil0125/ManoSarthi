@@ -232,9 +232,9 @@ const AdminService = {
 
   getSurveyStats: async() => {
     try{
-      console.log("Calling getSyrveyStats")
+      console.log("Calling getSurveyStats")
       const response = await axios.get(
-        BASE_URL + "api",
+        BASE_URL + "admin/districtstats",
         {
           headers:{
             "Content-Type": "application/json",
@@ -242,7 +242,7 @@ const AdminService = {
           }
         }
       )
-      console.log("SurveyStats: ", response);
+      console.log("SurveyStats: ", response.data);
       return response;
     }
     catch(error){
