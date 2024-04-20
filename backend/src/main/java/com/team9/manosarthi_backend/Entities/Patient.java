@@ -89,4 +89,5 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient_pre")
     private List<Prescription> prescription;
+
 }
