@@ -21,6 +21,25 @@ const SelectService = {
     });
   },
 
+  getFollowUpSchedule: async () => {
+    // console.log("Inside getAllAabhaIdInfo");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM FollowUpSchedule",
+          [],
+          (_, { rows }) => {
+            const entries = rows._array; // Renamed from patients to entries
+            resolve(entries);
+          },
+          (_, error) => {
+            reject("Error fetching FollowUpSchedule: " + error.message); // Improved error message
+          }
+        );
+      });
+    });
+  },
+
   getAllPatients: async () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

@@ -23,9 +23,11 @@ const QuestionnaireScreen = ({ navigation, route }) => {
 
   const fetchPatientDataFromDatabase = async () => {
     try {
-
       const patient_data = await SelectService.getAllPatients();
-      console.log("[QuestionarieScreen]Patients Fetched from Database: ", patient_data);
+      console.log(
+        "[QuestionarieScreen]Patients Fetched from Database: ",
+        patient_data
+      );
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -36,7 +38,10 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       const data = await SelectService.getAllQuestions(age, "normal");
       setsurveyquestions(data);
       setAnswers(Array(data.length).fill(null));
-      console.log("[QuestionarieScreen]Survey Questions Need To Render: ", data);
+      console.log(
+        "[QuestionarieScreen]Survey Questions Need To Render: ",
+        data
+      );
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -85,6 +90,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
           answer
         );
       });
+
       await Promise.all(promises)
         .then((msg) => {
           console.log("Success Message: ", msg);
@@ -97,22 +103,30 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
       console.log("[QuestionarieScreen]Unmatched count: ", unmatchedCount);
 
+
       // Navigate to the next screen
       if (unmatchedCount >= 3) {
-        
         // await InsertService.insertAabhaId(aabhaId, "old");
         navigation.navigate("MedicalDetails", { age });
-
       } else {
         const res1 = await InsertService.insertAabhaId(aabhaId, "new");
-        console.log("[QuestionarieScreen]Res1- Not Reffered Patient AabhaId Noted: ", res1);
+        console.log(
+          "[QuestionarieScreen]Res1- Not Reffered Patient AabhaId Noted: ",
+          res1
+        );
         const res2 = await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
           aabhaId
         );
-        console.log("[QuestionarieScreen]Res2- Not Reffered Patient SurveyQNA: ", res2);
+        console.log(
+          "[QuestionarieScreen]Res2- Not Reffered Patient SurveyQNA: ",
+          res2
+        );
 
         const res3 = await DeleteService.deletePatientByAabhaId(aabhaId);
-        console.log("[QuestionarieScreen]Res3- Not Reffered Patient Details: ", res3);
+        console.log(
+          "[QuestionarieScreen]Res3- Not Reffered Patient Details: ",
+          res3
+        );
         Alert.alert(
           "Not referring to the doctor",
           "Related data is deleted from DB"

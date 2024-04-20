@@ -20,6 +20,9 @@ const DropService = {
     const dr6 = await DropService.dropAabhaIdInfoTable();
     console.log("dr6: ", dr6);
 
+    const dr7 = await DropService.dropFollowUpTable();
+    console.log("dr7: ", dr7);
+
     // Add more table drop functions here if needed
   },
 
@@ -38,6 +41,27 @@ const DropService = {
           },
           (_, error) => {
             reject("Error dropping AabhaIdInfo table: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  dropFollowUpTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS FollowUpSchedule`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("FollowUpSchedule table dropped successfully");
+            } else {
+              resolve("FollowUpSchedule table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping FollowUpSchedule table: " + error);
           }
         );
       });

@@ -24,6 +24,7 @@ const AppNav = () => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
       const connected = await checkNetworkConnectivity();
       setIsConnected(connected);
+
       if (connected) {
         Toast.show({
           type: "success",
@@ -49,10 +50,10 @@ const AppNav = () => {
       </View>
     );
   }
+
   return (
     <>
       <NavigationContainer>
-        {/* <ForwardedToast> */}
         {userToken !== null ? <AppStack /> : <AuthStack />}
       </NavigationContainer>
       <ForwardedToast />

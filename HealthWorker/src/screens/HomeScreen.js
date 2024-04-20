@@ -15,33 +15,12 @@ const HomeScreen = ({ navigation }) => {
       const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
       const survey_ques = await SelectService.getAllSurveyQuestions();
       const medical_ques = await SelectService.getAllMedicalQuestions();
-      setTimeout(function () {
-        console.log(
-          "[Homescreen]Patients Fetched From Database: ",
-          patient_data
-        );
-        console.log(
-          "[Homescreen]Survey QNA Fetched From Database: ",
-          survey_qna
-        );
-        console.log(
-          "[Homescreen]Medical QNA Fetched From Database: ",
-          medical_qna
-        );
-      }, 1000);
-
-      // console.log(
-      //   "[Homescreen]Survey Questions Fetched From Database: ",
-      //   survey_ques
-      // );
-      // console.log(
-      //   "[Homescreen]Medical Questions Fetched From Database: ",
-      //   medical_ques
-      // );
-      // console.log(
-      //   "[Homescreen]AabhaIdInfo Fetched From Database: ",
-      //   aabhaIdInfoData
-      // );
+      console.log("[Homescreen]Patients Fetched From Database: ", patient_data);
+      console.log("[Homescreen]Survey QNA Fetched From Database: ", survey_qna);
+      console.log(
+        "[Homescreen]Medical QNA Fetched From Database: ",
+        medical_qna
+      );
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }
@@ -64,11 +43,19 @@ const HomeScreen = ({ navigation }) => {
       console.error("Error deleting AllMedicalHistoryAnswers:", error);
     }
   };
+
   useEffect(() => {
-    fetchDataFromDatabase();
+    const fetchDataWithDelay = () => {
+      setTimeout(() => {
+        fetchDataFromDatabase();
+      }, 3000); // 3 seconds delay
+    };
+
+    fetchDataWithDelay();
     // fetchSurveyQuestionAnswerFromDatabase();
     // deleteAllMedicalHistoryAnswers();
   }, []);
+
   const handleRegisterPatient = () => {
     // Navigate or perform action for registering patient
     navigation.navigate("RegisterPatientScreen");
@@ -78,6 +65,7 @@ const HomeScreen = ({ navigation }) => {
     // Navigate or perform action for missed followup
     navigation.navigate("MissedFollowupScreen");
   };
+
   return (
     <ScrollView>
       <View style={styles.screen}>

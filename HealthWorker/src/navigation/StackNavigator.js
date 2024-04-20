@@ -18,11 +18,11 @@ const StackNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           title: "",
-          headerStyle:{
-            backgroundColor:'#fff',
-            shadowColor:'#fff',
-            elevation:0, 
-          }
+          headerStyle: {
+            backgroundColor: "#fff",
+            shadowColor: "#fff",
+            elevation: 0,
+          },
         }}
       >
         {/* <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}

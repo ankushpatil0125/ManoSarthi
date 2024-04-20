@@ -12,13 +12,50 @@ const InsertService = {
             [aabha, status],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data inserted into AabhaIdInfo successfully");
+                resolve(
+                  rowsAffected + " Data inserted into AabhaIdInfo successfully"
+                );
               } else {
                 reject("Failed to insert data into AabhaIdInfo");
               }
             },
             (_, error) => {
               reject("Error inserting data into AabhaIdInfo: " + error);
+            }
+          );
+        });
+      });
+    });
+  },
+
+  insertFollowUpTable: (followUpScheduleList) => {
+    // console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        followUpScheduleList.forEach((followUpSchedule) => {
+          tx.executeSql(
+            "INSERT OR REPLACE INTO FollowUpSchedule (followup_id, patient_fname, patient_lname, patient_adress,followUpDate,type) VALUES (?, ?, ?, ?, ?, ?)",
+            [
+              followUpSchedule.followup_id,
+              followUpSchedule.patient_fname,
+              followUpSchedule.patient_lname,
+              followUpSchedule.patient_address,
+              followUpSchedule.followUpDate,
+              followUpSchedule.type,
+            ],
+            (_, { rowsAffected }) => {
+              // console.log("insertFollowUpTable" + rowsAffected);
+              if (rowsAffected > 0) {
+                resolve(
+                  rowsAffected +
+                    " Data Inserted Into FollowUpSchedule Table Successfully"
+                );
+              } else {
+                reject("Failed To Insert Data Into FollowUpSchedule Table");
+              }
+            },
+            (_, error) => {
+              reject("Error inserting data into FollowUpSchedule: " + error);
             }
           );
         });
@@ -92,7 +129,10 @@ const InsertService = {
             ],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data Inserted Into SurveyQuestion Successfully");
+                resolve(
+                  rowsAffected +
+                    " Data Inserted Into SurveyQuestion Successfully"
+                );
               } else {
                 reject("Failed To Insert Data Into SurveyQuestion");
               }
@@ -115,7 +155,10 @@ const InsertService = {
             [question.question_id, question.question],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data Inserted Into Medical Questions Successfully");
+                resolve(
+                  rowsAffected +
+                    " Data Inserted Into Medical Questions Successfully"
+                );
               } else {
                 reject("Failed To Insert Data Into Medical Questions");
               }
