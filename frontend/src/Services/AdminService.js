@@ -42,6 +42,7 @@ const AdminService = {
 
   reassignSupervisor: async (reasignSupervisor) => {
     try {
+      console.log("inside reassignSupervisor")
       const response = await axios.put(
         BASE_URL + "admin/reassign-supervisor",
         reasignSupervisor,

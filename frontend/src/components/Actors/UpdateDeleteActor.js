@@ -71,25 +71,23 @@ const UpdateDeleteActor = ({ action }) => {
 
   if (loading) return <LoadingComponent />;
   return (
-    <div className="flex flex-col h-full">
-      <Header />
+    <div className="flex flex-col">
+      {/* <Header /> */}
 
       <div className="flex flex-col items-center justify-center">
-        <h4 className="mb-4 text-xl font-bold">
-          {valueToPass === "Delete"
-            ? t("UpdateDeleteActor.Delete")
-            : t("UpdateDeleteActor.Reassign")}
+        <h4 className="mb-4 text-xl font-bold text-[#6467c0]">
+          {t("UpdateDeleteActor.Reassign")}
         </h4>
         <div className="max-w-5xl mx-auto flex justify-center items-center mb-4 space-x-4">
-          <div className="w-1/3">
-            <label htmlFor="actor" className="mb-2">
+          <div className="w-full md:w-1/3">
+            <label htmlFor="actor" className="mb-2 text-[#6467c0]">
               {t("UpdateDeleteActor.Actor")}:
             </label>
             <select
               id="actor"
               value={actor}
               onChange={(e) => setActor(e.target.value)}
-              className="border border-gray-400 px-2 py-1 rounded-md w-full"
+              className="border border-gray-400 px-2 py-1 rounded-md w-full "
             >
               <option value="">{t("addDoctorSupervisor.Select")}</option>
               <option value="DOCTOR">{t("addDoctorSupervisor.Doctor")}</option>
@@ -98,8 +96,8 @@ const UpdateDeleteActor = ({ action }) => {
               </option>
             </select>
           </div>
-          <div className="w-1/3">
-            <label htmlFor="district" className="mb-2">
+          <div className="w-full md:w-1/3">
+            <label htmlFor="district" className="mb-2 text-[#6467c0]">
               {t("UpdateDeleteActor.District")}:
             </label>
             <select
@@ -117,8 +115,8 @@ const UpdateDeleteActor = ({ action }) => {
               ))}
             </select>
           </div>
-          <div className="w-1/3">
-            <label htmlFor="subdistrictcode" className="mb-2">
+          <div className="w-full md:w-1/3">
+            <label htmlFor="subdistrictcode" className="mb-2 text-[#6467c0]">
               {t("UpdateDeleteActor.Subdistrict")}:
             </label>
             <select
@@ -137,10 +135,8 @@ const UpdateDeleteActor = ({ action }) => {
             </select>
           </div>
         </div>
-      </div>
-
+          </div>
       {(() => {
-        console.log("select", actor);
         if (actor !== "") {
           if (actor === "DOCTOR")
             return (
@@ -148,6 +144,7 @@ const UpdateDeleteActor = ({ action }) => {
                 district={district}
                 subdistrictcode={subdistrictcode}
                 action={valueToPass}
+                actor="DOCTOR"
               />
             );
           else {
@@ -156,20 +153,13 @@ const UpdateDeleteActor = ({ action }) => {
                 district={district}
                 subdistrictcode={subdistrictcode}
                 action={valueToPass}
-                actor="SUPERVISOR"
-               
+                actor="SUPERVISOR"  
               />
             );
           }
         }
       })()}
-      <div className="w-full md:w-1/2 flex justify-center items-center">
-          <img
-            src="https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg"
-            alt="Designer Life"
-            className="m-12 xl:m-16 w-full"
-          />
-        </div>
+      
     </div>
   );
 };
