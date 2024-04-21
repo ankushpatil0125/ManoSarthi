@@ -5,7 +5,7 @@ import {  useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
 import { useTranslation } from "react-i18next";
 
-const NewPatientList = () => {
+const ReferredDuringFollowUpList = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -22,10 +22,10 @@ const NewPatientList = () => {
       console.log("inside fetchdata function");
 
       // setCurrentPage(0)
-      DoctorService.getAllPatients(currentPage,"NEW")
+      DoctorService.getReferredDuringFollowUpPatientList(currentPage)
         .then((response) => {
-          console.log("List of patients",response.data)
-          setData(response.data);
+          console.log("List of patients",response?.data)
+          setData(response?.data);
           setLoading(false);
         })
         .catch((error) => {
@@ -41,7 +41,7 @@ const NewPatientList = () => {
     console.log('patientId', patient);
     // history.push('/patient-details', { patientId });
     // return <PatientDetails/>
-    navigate('/new-patient-details', {state: {data: patient}});
+    navigate('/referred-during-followup-patient', {state: {data: patient}});
   }
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -66,7 +66,7 @@ const NewPatientList = () => {
             justifyContent: "center",
           }}
         >
-          <h4 className="flex justify-center items-center text-[#6467c0]">{t('doctor.New Patients')}</h4>
+          <h4 className="flex justify-center items-center text-[#6467c0]">{t('doctor.Referred During FollowUp')}</h4>
         </div>
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
@@ -131,4 +131,4 @@ const NewPatientList = () => {
   }
 };
 
-export default NewPatientList;
+export default ReferredDuringFollowUpList;

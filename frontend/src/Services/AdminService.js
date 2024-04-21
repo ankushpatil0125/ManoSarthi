@@ -263,5 +263,43 @@ const AdminService = {
       throw error;
     }
   },
+  getPatientCountAccordingtoDistrict: async() => {
+    try{
+      console.log("Calling getSurveyStats")
+      const response = await axios.get(
+        BASE_URL + "admin/districtstats",
+        {
+          headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      )
+      console.log("SurveyStats: ", response.data);
+      return response;
+    }
+    catch(error){
+      throw error;
+    }
+  },
+  getPatientAccordingtoSubcategory: async() => {
+    try{
+      console.log("Calling getSurveyStats")
+      const response = await axios.get(
+        BASE_URL + "admin/diseasestats",
+        {
+          headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      )
+      console.log("SurveyStats: ", response.data);
+      return response;
+    }
+    catch(error){
+      throw error;
+    }
+  },
 };
 export default AdminService;

@@ -1,11 +1,8 @@
 import React from 'react'
-import AddPrescription from './AddPrescription'
 
-const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
-  
-    console.log("prescriptionDTO",prescriptionDTO)
+const ViewPrescriptionofFollowUps = ({prescriptionPerFollowUp}) => {
+    console.log("viewpresctionoffollowups",prescriptionPerFollowUp)
   return (
-    <div>
     <div className="flex justify-center items-center h-screen">
         <div className="bg-[#e0e0eb] rounded-lg shadow-lg p-8">
           {/* head line */}
@@ -14,15 +11,15 @@ const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
           </div>
           <div className='flex flex-row justify-between'>
           <h1 className="text-lg  mb-3">
-              Patient ID : {patient_id}
+              {/* Patient ID : {patient_id} */}
               {/* {patient_id} */}
             </h1>
             <h1 className="text-lg mb-3">
-              Patient Name : {prescriptionDTO?.patient_fname} {prescriptionDTO?.patient_lname}
+              {/* Patient Name : {prescriptionDTO?.patient_fname} {prescriptionDTO?.patient_lname} */}
               {/* {patient_id} */}
             </h1>
             <h1 className="text-lg mb-3">
-              Date : {prescriptionDTO?.date}
+              Date : {prescriptionPerFollowUp?.date}
               {/* {patient_id} */}
             </h1>
           </div>
@@ -47,7 +44,7 @@ const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {prescriptionDTO?.disease_code?.map((disease, index) => (
+                  {prescriptionPerFollowUp?.disease_code.map((disease, index) => (
                     <tr key={index}>
                       <td className="border border-gray-400 px-4 py-2">
                         {index + 1}
@@ -86,7 +83,7 @@ const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {prescriptionDTO?.medicine?.map((med, index) => (
+                  {prescriptionPerFollowUp?.medicine.map((med, index) => (
                     <tr key={index}>
                       <td className="border border-gray-400 px-4 py-2">
                         {index + 1}
@@ -110,11 +107,8 @@ const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
             
           </div>
         </div>
-
-    </div>
-        {type==="update" && <AddPrescription patient_id={patient_id}/>}
-    </div>
+      </div>
   )
 }
 
-export default ViewPrescription
+export default ViewPrescriptionofFollowUps

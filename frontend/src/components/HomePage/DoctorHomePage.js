@@ -13,6 +13,7 @@
   import UpdateDeleteActor from "../Actors/UpdateDeleteActor";
 import { useTranslation } from "react-i18next";
 import OngoingPatientList from "../Doctor/OngoingPatientList";
+import ReferredDuringFollowUpList from "../Doctor/ReferredDuringFollowUpList";
   const DoctorHomePage = () => {
     const [currentPage, setCurrentPage] = useState("dashboard");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -285,6 +286,8 @@ import OngoingPatientList from "../Doctor/OngoingPatientList";
           return <NewPatientList/>;
           case "ongoing-patient":
           return <OngoingPatientList/>;
+          case "referred-during-followup":
+          return <ReferredDuringFollowUpList/>;
           case "treated-patient":
           return <></>;
         default:
@@ -386,6 +389,7 @@ import OngoingPatientList from "../Doctor/OngoingPatientList";
                       <span className="flex-1 ms-3 whitespace-nowrap">{t('doctor.New Patient')}</span>
                     </Link>
                   </li>
+                  
                   <li>
                     <Link
                       onClick={() => setCurrentPage("ongoing-patient")}
@@ -401,6 +405,23 @@ import OngoingPatientList from "../Doctor/OngoingPatientList";
                         
                       </span>
                       <span className="flex-1 ms-3 whitespace-nowrap">{t('doctor.Ongoing Patient')}</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={() => setCurrentPage("referred-during-followup")}
+                      to="#"
+                      className={`flex items-center p-2 rounded-lg group no-underline ${
+                        currentPage === "referred-during-followup"
+                          ? "text-white bg-[#6467c0]"
+                          : "text-gray-900"
+                      }`}
+                    >
+                      <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                        <EyeIcon className="text-black" />
+                        
+                      </span>
+                      <span className="flex-1 ms-3 whitespace-nowrap">{t('doctor.Referred During FollowUp')}</span>
                     </Link>
                   </li>
                   <li>

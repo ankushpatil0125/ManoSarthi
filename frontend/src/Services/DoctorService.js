@@ -114,7 +114,24 @@ const DoctorService = {
     catch (error) {
       throw error;
     }
-  }
+  },
+  getReferredDuringFollowUpPatientList: async (pagenumber) => {
+    try {
+      console.log('before calling getAll')
+      const response = await axios.get(BASE_URL + "doctor/referred-during-followup?pagenumber="+pagenumber, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+
+        },
+      });
+      console.log("New Patient list :",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
 
 
 };

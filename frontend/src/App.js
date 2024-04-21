@@ -22,6 +22,7 @@ import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
 // import DoctorOperation from "./components/Doctor/DoctorOperation";
 import AddPrescription from "./components/Doctor/AddPrescription";
 import OngoingPatientDetails from "./components/Doctor/OngoingPatientDetails";
+import ReferredDuringFollowUpDetails from "./components/Doctor/ReferredDuringFollowUpDetails";
 
 const App = () => {
   return (
@@ -185,6 +186,15 @@ const App = () => {
               <PrivateRoute type="add-prescription">
                 <AddPrescription />
               </PrivateRoute>
+            }
+          />
+          
+          <Route
+            path="/referred-during-followup-patient"
+            element={
+              <PrivateRoute type="referred-during-followup-patient">
+                <ReferredDuringFollowUpDetails/>
+               </PrivateRoute>
             }
           />
           <Route path="*" element={<ErrorPage />} />

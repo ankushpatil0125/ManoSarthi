@@ -223,22 +223,22 @@ const OngoingPatientDetails = () => {
               {/* Profile */}
 
               <Profile
-                firstname={data.firstname}
-                lastname={data.lastname}
-                village={data.villageName}
-                age={data.age}
-                gender={data.gender}
+                firstname={data?.firstname}
+                lastname={data?.lastname}
+                village={data?.villageName}
+                age={data?.age}
+                gender={data?.gender}
               />
 
               {/* Follow up details  */}
               <FollowUp followUpDetails={followUpDetails} />
             </div>
-            <FollowUpQueResponse followUpDetails={followUpDetails} setFollowUpDetails={setFollowUpDetails} patient_id={ data.patient_id}/>
+            <FollowUpQueResponse followUpDetails={followUpDetails} setFollowUpDetails={setFollowUpDetails} patient_id={data?.patient_id}/>
           </div>
         );
       case "View Prescriptions":
         if (loading) return <LoadingComponent />;
-        return <ViewPrescription prescriptionDTO={data.prescriptionDTO} patient_id={ data.patient_id}/>;
+        return <ViewPrescription prescriptionDTO={data?.prescriptionDTO} patient_id={ data?.patient_id} type={"view"}/>;
       default:
         return null;
     }
@@ -510,7 +510,7 @@ const FollowUp = ({ followUpDetails }) => {
             FollowUp Date: {followup?.followupDate}
           </p>
           <p className="font-semibold">
-            Assigned Health Worker: {followup?.workerFname}{" "}
+            Assigned Health Worker: {followup?.workerFname} {followup?.workerLname}
             {followup?.worker?.lastname}
           </p>
         </div>

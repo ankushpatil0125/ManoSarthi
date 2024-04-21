@@ -5,10 +5,11 @@ import LoadingComponent from "../Loading/LoadingComponent";
 import DoctorService from "../../Services/DoctorService";
 // import { timers } from 'jquery';
 import { FaTimes } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddPrescription = ({ patient_id }) => {
   // console.log(patientId);
+  // console.log("presss")
   const [medicines, setMedicines] = useState([]);
   const [medicineFields, setMedicineFields] = useState({
     name: "",
@@ -25,7 +26,7 @@ const AddPrescription = ({ patient_id }) => {
   // const [selectedValues, setSelectedValues] = useState([]);
   const [followUp, setFollowUp] = useState("WEEKLY");
   const [followUpsCount, setFollowUpsCount] = useState(0);
-
+  const navigate = useNavigate();
   useEffect(() => {
     //Fetch district options
     DoctorService.getCategories()
@@ -156,7 +157,7 @@ const AddPrescription = ({ patient_id }) => {
         console.log("res",response)
         if(response){
           alert("Prescription added successfully");
-          window.location.reload();
+          navigate("/doctor-home")
           setLoading(false);
         }
       } catch (error) {
