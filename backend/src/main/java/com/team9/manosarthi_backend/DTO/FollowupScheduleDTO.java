@@ -15,7 +15,8 @@ import java.sql.Date;
 @Setter
 @ToString
 public class FollowupScheduleDTO {
-    private int followup_id;
+    private int patientID;
+//    private int followup_id;
 
     private String patient_fname;
 
@@ -23,8 +24,11 @@ public class FollowupScheduleDTO {
 
     private String patient_address;
 
+    private int age;
+
     //Date when followup has to take
-    @JsonFormat(pattern="dd-MMM-yyyy")
+//    @JsonFormat(pattern="dd-MMM-yyyy")
+    @JsonFormat(pattern = "dd-MMMM-yyyy", timezone = "Asia/Kolkata")
     private Date followUpDate;
 
     //missed or regular follow up
@@ -32,11 +36,15 @@ public class FollowupScheduleDTO {
 
     public void FollowupScheduleToDTO(FollowUpSchedule followUpSchedule,String type)
     {
-        this.followup_id=followUpSchedule.getId();
+        this.patientID=followUpSchedule.getPatient().getPatient_id();
+//        this.followup_id=followUpSchedule.getId();
         this.patient_fname=followUpSchedule.getPatient().getFirstname();
         this.patient_lname=followUpSchedule.getPatient().getLastname();
         this.patient_address=followUpSchedule.getPatient().getAddress();
+        this.age=followUpSchedule.getPatient().getAge();
+//        System.out.println("followUpSchedule.getNextFollowUpDate()"+followUpSchedule.getNextFollowUpDate());
         this.followUpDate=followUpSchedule.getNextFollowUpDate(); //until followup get complete this date remain the date when it has to taken
+//        System.out.println("this.followUpDate  "+this.followUpDate);
         this.type=type;
     }
 }

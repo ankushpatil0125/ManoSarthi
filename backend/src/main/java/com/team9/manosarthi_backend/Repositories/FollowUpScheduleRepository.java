@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface FollowUpScheduleRepository extends JpaRepository<FollowUpSchedule,Integer> {
 
@@ -16,4 +17,7 @@ public interface FollowUpScheduleRepository extends JpaRepository<FollowUpSchedu
 
 //    @Query("select f from FollowUpSchedule f where  f.village.code=:villagecode")
 //    List<FollowUpSchedule> findbyDateAndVill(@Param("illagecode") int villagecode );
+
+    @Query("SELECT f from FollowUpSchedule f WHERE f.patient.patient_id=:patientID")
+    Optional<FollowUpSchedule> findByPatientID(@Param("patientID") int patientID);
 }
