@@ -19,5 +19,9 @@ public interface DoctorService {
     Patient getPatient(int doctorId,int patientId);
 
     Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO);
+
     List<FollowUpDetails> getFollowups(int pagenumber, int pagesize, int doctorId, int patientId);
+
+    //to get the Referred patient during followup
+    List<Patient> getReferredPatient(int doctorId,int pagenumber, int pagesize);
 }
