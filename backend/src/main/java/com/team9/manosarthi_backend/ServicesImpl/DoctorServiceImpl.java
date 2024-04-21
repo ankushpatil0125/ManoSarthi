@@ -129,11 +129,14 @@ public class DoctorServiceImpl implements DoctorService {
                     }
                     else throw new APIRequestException("Follow Up Type not specified correctly");
 
-                    patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
-                    patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
-                    patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
-                    FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
-                    System.out.println("followUpSchedule  "+followUpSchedule.getId());
+                    if (patientFollowUpPrescriptionDTO.getFollowUpSchedule()==null){
+                        patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
+                        patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
+                        patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
+                        FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
+                        System.out.println("followUpSchedule  "+followUpSchedule.getId());
+                    }
+                    else throw new APIRequestException("Follow Up Schedule not specified correctly");
 
                 }
                     //
