@@ -23,6 +23,9 @@ const DropService = {
     const dr7 = await DropService.dropFollowUpTable();
     console.log("dr7: ", dr7);
 
+    const dr8 = await DropService.dropPrescriptionsTable();
+    console.log("dr8: ", dr8);
+
     // Add more table drop functions here if needed
   },
 
@@ -125,6 +128,26 @@ const DropService = {
           },
           (_, error) => {
             reject("Error dropping medical_questionarrie table: " + error);
+          }
+        );
+      });
+    });
+  },
+  dropPrescriptionsTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS prescriptions`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("prescriptions table dropped successfully");
+            } else {
+              resolve("prescriptions table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping prescriptions table: " + error);
           }
         );
       });

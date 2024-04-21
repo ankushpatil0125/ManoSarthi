@@ -27,6 +27,7 @@ const PrescriptionScreen = () => {
       setData(json.results);
       setFilteredData(json.results);
       console.log(json.results);
+      
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +52,6 @@ const PrescriptionScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.textFriends}>Search Prescription</Text>
-
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}

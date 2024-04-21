@@ -40,7 +40,6 @@ const SelectService = {
     });
   },
   
-
   getAllPatients: async () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -58,6 +57,25 @@ const SelectService = {
       });
     });
   },
+
+  getAllPrescriptions: async () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM prescriptions",
+          [],
+          (_, { rows }) => {
+            const patients = rows._array;
+            resolve(patients);
+          },
+          (_, error) => {
+            reject("Error fetching all prescriptions: " + error);
+          }
+        );
+      });
+    });
+  },
+
   getFollowupDetailsByID: (patientId) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

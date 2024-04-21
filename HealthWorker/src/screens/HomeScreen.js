@@ -61,8 +61,10 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("RegisterPatientScreen");
   };
 
-  const handleMissedFollowup = () => {
+  const handleMissedFollowup = async() => {
     // Navigate or perform action for missed followup
+    const insertedPres = await SelectService.getAllPrescriptions();
+        console.log("Press: ", JSON.parse(insertedPres));
     navigation.navigate("MissedFollowupScreen");
   };
 
