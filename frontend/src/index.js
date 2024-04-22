@@ -12,10 +12,10 @@ import './i18n'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <I18nextProvider i18n={i18next}>
-  <React.StrictMode>
+  {/* <React.StrictMode> */}
     <App />
     {/* <Footer/> */}
-  </React.StrictMode>
+  {/* </React.StrictMode> */}
   </I18nextProvider>
 );
 

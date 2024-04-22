@@ -15,12 +15,15 @@ import AdminOperation from "./components/Actors/AdminOperation";
 import ErrorPage from "./components/Error/ErrorPage";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
-import PendingPatient from "./components/Doctor/PendingPatient";
+import NewPatientList from "./components/Doctor/NewPatientList";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import { AuthProvider } from "./components/Context/AuthContext";
-import PatientDetails from "./components/Doctor/PatientDetails";
+import NewPatientDetails from "./components/Doctor/NewPatientDetails";
 import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
 // import DoctorOperation from "./components/Doctor/DoctorOperation";
+// import AddPrescription from "./components/Doctor/AddPrescription";
+import OngoingPatientDetails from "./components/Doctor/OngoingPatientDetails";
+import ReferredDuringFollowUpDetails from "./components/Doctor/ReferredDuringFollowUpDetails";
 
 const App = () => {
   return (
@@ -36,9 +39,9 @@ const App = () => {
           <Route
             path="/change-password"
             element={
-              <PrivateRoute type="changepasswordcomponent">
+              // <PrivateRoute type="changepasswordcomponent">
                 <ChangePasswordComponent />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
           />
           <Route path="/otp" element={<OTPComponent />} />
@@ -59,10 +62,10 @@ const App = () => {
             }
           />
           <Route
-            path="/pendingpatient"
+            path="/new-patient"
             element={
-              <PrivateRoute type="pendingpatient">
-                <PendingPatient />
+              <PrivateRoute type="new-patient">
+                <NewPatientList />
               </PrivateRoute>
             }
           />
@@ -163,10 +166,18 @@ const App = () => {
             }
           /> */}
           <Route
-            path="/patient-details"
+            path="/new-patient-details"
             element={
-              <PrivateRoute type="patient-details">
-                <PatientDetails />
+              <PrivateRoute type="new-patient-details">
+                <NewPatientDetails />
+               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/ongoing-patient-details"
+            element={
+              <PrivateRoute type="ongoing-patient-details">
+                <OngoingPatientDetails/>
                </PrivateRoute>
             }
           />
@@ -176,6 +187,15 @@ const App = () => {
               <PrivateRoute type="add-prescription">
                 <AddPrescription />
               </PrivateRoute>
+            }
+          />
+          
+          <Route
+            path="/referred-during-followup-patient"
+            element={
+              <PrivateRoute type="referred-during-followup-patient">
+                <ReferredDuringFollowUpDetails/>
+               </PrivateRoute>
             }
           />
           <Route path="*" element={<ErrorPage />} />
