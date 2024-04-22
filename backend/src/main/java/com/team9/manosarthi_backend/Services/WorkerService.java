@@ -1,11 +1,9 @@
 package com.team9.manosarthi_backend.Services;
 
 import com.team9.manosarthi_backend.DTO.PrescriptionDTO;
-import com.team9.manosarthi_backend.Entities.FollowUpSchedule;
+import com.team9.manosarthi_backend.DTO.RegisterFollowUpDetailsDTO;
+import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
-import com.team9.manosarthi_backend.Entities.Patient;
-import com.team9.manosarthi_backend.Entities.Prescription;
-import com.team9.manosarthi_backend.Entities.Worker;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,4 +20,6 @@ public interface WorkerService {
     List<FollowUpSchedule> get_followup_schedule(int workerid);
 
     List<Prescription> getprescriptions(int workerid);
+
+    int addFollowUpDetails(RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, int workerid);
 }

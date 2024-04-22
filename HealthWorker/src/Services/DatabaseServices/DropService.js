@@ -23,8 +23,11 @@ const DropService = {
     const dr7 = await DropService.dropFollowUpTable();
     console.log("dr7: ", dr7);
 
-    const dr8 = await DropService.dropPrescriptionsTable();
+    const dr8 = await DropService.dropFollowupReferNotReferTable();
     console.log("dr8: ", dr8);
+
+    const d9 = await DropService.dropFollowupQuestionAnswerTable();
+    console.log("dr9: ", d9);
 
     // Add more table drop functions here if needed
   },
@@ -65,6 +68,27 @@ const DropService = {
           },
           (_, error) => {
             reject("Error dropping FollowUpSchedule table: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  dropFollowupReferNotReferTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS followupReferNotRefer`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("followupReferNotRefer table dropped successfully");
+            } else {
+              resolve("followupReferNotRefer table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping followupReferNotRefer table: " + error);
           }
         );
       });
@@ -189,6 +213,26 @@ const DropService = {
           },
           (_, error) => {
             reject("Error dropping SurveyQuestionAnswer table: " + error);
+          }
+        );
+      });
+    });
+  },
+  dropFollowupQuestionAnswerTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS FollowUpQuestionAnswer`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("FollowUpQuestionAnswer table dropped successfully");
+            } else {
+              resolve("FollowUpQuestionAnswer table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping FollowUpQuestionAnswer table: " + error);
           }
         );
       });

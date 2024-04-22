@@ -34,13 +34,14 @@ const InsertService = {
       db.transaction((tx) => {
         followUpScheduleList.forEach((followUpSchedule) => {
           tx.executeSql(
-            "INSERT OR REPLACE INTO FollowUpSchedule (followup_id, patient_fname, patient_lname, patient_adress,followUpDate,type) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type) VALUES (?, ?, ?, ?, ?, ?, ?)",
             [
-              followUpSchedule.followup_id,
+              followUpSchedule.patientID,
               followUpSchedule.patient_fname,
               followUpSchedule.patient_lname,
               followUpSchedule.patient_address,
               followUpSchedule.followUpDate,
+              followUpSchedule.age,
               followUpSchedule.type,
             ],
             (_, { rowsAffected }) => {
@@ -150,6 +151,88 @@ const InsertService = {
           }
         );
       });
+    });
+  },
+  insertFollowUpReferNotRefer: (pid, state) => {
+    // console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT OR REPLACE INTO followupReferNotRefer (patientId, status) VALUES (?, ?)",
+          [pid, state],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve(
+                "Data Inserted Into followupReferNotRefer Table Successfully"
+              );
+            } else {
+              reject("Failed To Insert Data Into followupReferNotRefer Table");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting data into followupReferNotRefer: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  insertPrescriptionTable: (prescriptions) => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          prescriptions.forEach((prescription) => {
+            const {
+              aabhaId,
+              prescription_id,
+              patient_fname,
+              patient_lname,
+              patient_age,
+              patient_village_name,
+              disease_code,
+              treatment,
+              medicine,
+              date,
+            } = prescription;
+
+            tx.executeSql(
+              `INSERT INTO prescriptions 
+            (aabhaId, prescription_id, patient_fname, patient_lname, patient_age, patient_village_name, disease_code, treatment, medicine, date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+              [
+                aabhaId,
+                prescription_id,
+                patient_fname,
+                patient_lname,
+                patient_age,
+                patient_village_name,
+                disease_code,
+                treatment,
+                medicine,
+                date,
+              ],
+              (_, result) => {
+                if (result.rowsAffected < 1) {
+                  reject(
+                    "Failed to insert prescription with ID: " + prescription_id
+                  );
+                }
+              },
+              (_, error) => {
+                reject("Error inserting prescription: " + error.message);
+              }
+            );
+          });
+
+          resolve("Prescriptions inserted successfully");
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
     });
   },
 
@@ -284,6 +367,65 @@ const InsertService = {
           (_, error) => {
             reject(
               "Error checking existing record in SurveyQuestionAnswer: " + error
+            );
+          }
+        );
+      });
+    });
+  },
+
+  insertFollowUpQuestionAnswer: (patientId, questionId, answer) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM FollowUpQuestionAnswer WHERE patientId = ? AND question_id = ?`,
+          [patientId, questionId],
+          (_, result) => {
+            if (result.rows.length > 0) {
+              // console.log("Inside condition");
+              // Record with the same primary key already exists, perform an update
+              tx.executeSql(
+                `UPDATE FollowUpQuestionAnswer SET answer = ? WHERE patientId = ? AND question_id = ?`,
+                [answer, patientId, questionId],
+                (_, { rowsAffected }) => {
+                  if (rowsAffected > 0) {
+                    // console.log("resolved update query");
+                    resolve("FollowUpQuestionAnswer updated successfully");
+                  } else {
+                    console.log("reject update query");
+                    reject("Failed to update FollowUpQuestionAnswer");
+                  }
+                },
+                (_, error) => {
+                  reject("Error updating FollowUpQuestionAnswer: " + error);
+                }
+              );
+            } else {
+              // Record does not exist, perform an insert
+              tx.executeSql(
+                `INSERT INTO FollowUpQuestionAnswer (patientId, question_id, answer) VALUES (?, ?, ?)`,
+                [patientId, questionId, answer],
+                (_, { rowsAffected }) => {
+                  if (rowsAffected > 0) {
+                    resolve(
+                      "Data inserted into FollowUpQuestionAnswer successfully"
+                    );
+                  } else {
+                    reject("Failed to insert data into FollowUpQuestionAnswer");
+                  }
+                },
+                (_, error) => {
+                  reject(
+                    "Error inserting data into FollowUpQuestionAnswer: " + error
+                  );
+                }
+              );
+            }
+          },
+          (_, error) => {
+            reject(
+              "Error checking existing record in FollowUpQuestionAnswer: " +
+                error
             );
           }
         );

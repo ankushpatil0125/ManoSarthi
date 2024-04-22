@@ -17,7 +17,7 @@ public class PatientFollowUpPrescriptionDTO {
 //    private FollowUpDetails followUpDetails;
     private Prescription prescription;
     private List<Medicine> medicineList;
-    private FollowUpSchedule followUpSchedule;
+    private FollowUpSchedule followUpSchedule;  //set null if schedule is not to be updated
     private List<Disease> diseaseList;
 
 }

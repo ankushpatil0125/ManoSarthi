@@ -102,7 +102,7 @@ const PatientDetailsScreen = ({ navigation }) => {
     } else {
       await storeDataLocally();
     }
-    navigation.navigate("QuestionnaireScreen", { age });
+    navigation.navigate("QuestionnaireScreen", { type: "normal", age });
   };
 
   const storeDataLocally = async () => {

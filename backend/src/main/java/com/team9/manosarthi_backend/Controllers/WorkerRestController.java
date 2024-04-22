@@ -20,9 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -33,6 +34,7 @@ import com.team9.manosarthi_backend.security.JwtHelper;
 //@PreAuthorize("hasRole('WORKER')")
 @RequestMapping("/worker")
 @CrossOrigin(origins = "*")
+@EnableTransactionManagement
 public class WorkerRestController {
     private WorkerService workerService;
     private QuestionarrieService questionarrieService;
@@ -229,22 +231,39 @@ public class WorkerRestController {
             String token = authorizationHeader.substring(7);
             String workerId = helper.getIDFromToken(token);
             List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
+//            System.out.println("schedules"+schedules.toString());
             List<FollowupScheduleDTO> followupScheduleDTOList=new ArrayList<>();
             for(FollowUpSchedule schedule:schedules)
             {
                 FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
+                Date today = java.sql.Date.valueOf(LocalDate.now());
 
-                Date today = Calendar.getInstance().getTime();
-                Date nextFollowUpDate = schedule.getNextFollowUpDate();
-                if(nextFollowUpDate.compareTo(today) < 0) {
+//                Date today = Calendar.getInstance().getTime();
+//                Date nextFollowUpDate = schedule.getNextFollowUpDate();
+
+
+                if(schedule.getNextFollowUpDate().equals(today) )
+                {
+                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
+                } else if (schedule.getNextFollowUpDate().before(today))
+                {
                     followupScheduleDTO.FollowupScheduleToDTO(schedule,"Missed");
-                }
-                else {
+                } else if (schedule.getNextFollowUpDate().after(today)) {
                     followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
                 }
+
+//                if(nextFollowUpDate.compareTo(today) < 0) {
+//                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Missed");
+//                }
+//                else {
+//                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
+//                }
+                System.out.println("date "+followupScheduleDTO.getFollowUpDate()+"  type  "+followupScheduleDTO.getType());
+
                 followupScheduleDTOList.add(followupScheduleDTO);
 
             }
+            for (FollowupScheduleDTO followupScheduleDTO : followupScheduleDTOList) System.out.println("followupScheduleDTO   "+followupScheduleDTO.getFollowUpDate());
           return followupScheduleDTOList;
         }
         else {
@@ -272,6 +291,24 @@ public class WorkerRestController {
         else {
             throw new APIRequestException("Error in authorizing");
         }
+    }
+
+
+    @PostMapping("/register-followup")
+    public int registerFollowUP(@RequestBody RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, @RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+
+            int pattientId = workerService.addFollowUpDetails(registerFollowUpDetailsDTO, Integer.parseInt(workerId));
+            return pattientId;
+
+        }
+        else {
+            throw new APIRequestException("Error in authorizing");
+        }
+
+//        return null;
     }
 
 }

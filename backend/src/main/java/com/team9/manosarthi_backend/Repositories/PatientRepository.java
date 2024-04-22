@@ -23,4 +23,7 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("SELECT p.village.subDistrict.district.name, COUNT(p) FROM Patient p GROUP BY p.village.subDistrict.district.code")
     List<Object[]> patientCountForDistrict();
+
+    @Query("select p from Patient p where p.doctor.id=:doctorID and p.referred=true")
+    Page<Patient> getReferredPatientsDuringFollowup(@Param("doctorID") int doctorID, Pageable pageable);
 }
