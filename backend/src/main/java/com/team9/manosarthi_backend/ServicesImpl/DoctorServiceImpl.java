@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
@@ -19,6 +22,7 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
+@EnableTransactionManagement
 public class DoctorServiceImpl implements DoctorService {
 
     private PatientRepository patientRepository;
@@ -147,7 +151,21 @@ public class DoctorServiceImpl implements DoctorService {
 
                     //set previous active prescription to false and update follow-up schedule
                     Prescription oldActivePrescription = prescriptionRepository.getActivePrescription(patient.get().getPatient_id());
+                    Set<Disease> olddiseases=oldActivePrescription.getDisease_code();
+                    for(Disease disease:olddiseases)
+                    {
+                        Optional<Disease> diseasegot = diseaseRepository.findById(disease.getCode());
+                        if(diseasegot.isPresent()) {
+                            diseasegot.get().setPatient_count(diseasegot.get().getPatient_count() - 1);
+                            diseaseRepository.save(diseasegot.get());
+                        }
+                        else
+                        {
+                            throw new APIRequestException("no disease found");
+                        }
+                    }
                     oldActivePrescription.setActive(false);
+                    System.out.println("old diseases set");
                     prescriptionRepository.save(oldActivePrescription);
 
                     if(patientFollowUpPrescriptionDTO.getFollowUpSchedule()!=null)
@@ -182,6 +200,21 @@ public class DoctorServiceImpl implements DoctorService {
                         else throw new APIRequestException("Follow Up Schedule not found");
                     }
                 }
+                Set<Disease> newdiseases = new HashSet<>(patientFollowUpPrescriptionDTO.getDiseaseList());
+                System.out.println("new diseases"+newdiseases);
+                for(Disease disease:newdiseases) {
+
+                    Optional<Disease> diseasegot = diseaseRepository.findById(disease.getCode());
+                    if(diseasegot.isPresent()) {
+                        diseasegot.get().setPatient_count(diseasegot.get().getPatient_count() + 1);
+                        diseaseRepository.save(diseasegot.get());
+                    }
+                    else
+                    {
+                        throw new APIRequestException("no disease found");
+                    }
+                }
+                System.out.println("new diseases set");
                 patientFollowUpPrescriptionDTO.getPrescription().setActive(true);
             }
             else
@@ -225,6 +258,7 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
     }
+
     @Override
     public List<FollowUpDetails> getFollowups(int pagenumber,int pagesize,int doctorId, int patientId) {
         Pageable pageable = PageRequest.of(pagenumber,pagesize);
@@ -239,4 +273,6 @@ public class DoctorServiceImpl implements DoctorService {
 
         return patientList.getContent();
     }
+
+
 }

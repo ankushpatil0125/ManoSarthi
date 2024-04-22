@@ -11,6 +11,7 @@ import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Filters.WorkerFilter;
 import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
+import com.team9.manosarthi_backend.Services.PatientService;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
 import jakarta.validation.Valid;
@@ -38,17 +39,20 @@ import com.team9.manosarthi_backend.security.JwtHelper;
 public class WorkerRestController {
     private WorkerService workerService;
     private QuestionarrieService questionarrieService;
+
+    private PatientService patientService;
     private JwtHelper helper;
 
     @Autowired
-    public WorkerRestController(WorkerService workerService, QuestionarrieService questionarrieService, JwtHelper helper) {
+    public WorkerRestController(WorkerService workerService, QuestionarrieService questionarrieService, JwtHelper helper,PatientService patientService) {
         this.workerService = workerService;
         this.questionarrieService = questionarrieService;
         this.helper = helper;
+        this.patientService= patientService;
     }
 
     @GetMapping("/view-profile")
-    public  WorkerResponseDTO getDetails(@RequestHeader("Authorization") String authorizationHeader){
+    public WorkerResponseDTO getDetails(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 // Extract the token part after "Bearer "
@@ -57,17 +61,15 @@ public class WorkerRestController {
 //                Optional<Supervisor> supervisor = supervisorRepository.findById(Integer.parseInt(userid));
                 Worker worker = workerService.viewProfile(Integer.parseInt(userid));
 
-                    WorkerResponseDTO workerResponseDTO=new WorkerResponseDTO();
-                    workerResponseDTO.WorkerResponse(worker);
-                    return workerResponseDTO;
+                WorkerResponseDTO workerResponseDTO = new WorkerResponseDTO();
+                workerResponseDTO.WorkerResponse(worker);
+                return workerResponseDTO;
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
-        }
-        catch (Exception ex)
-        {
-            if( ex instanceof APIRequestException ) throw new APIRequestException(ex.getMessage());
-            else throw new APIRequestException("Error while getting worker details",ex.getMessage());
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) throw new APIRequestException(ex.getMessage());
+            else throw new APIRequestException("Error while getting worker details", ex.getMessage());
         }
     }
 
@@ -77,20 +79,17 @@ public class WorkerRestController {
         try {
             Worker updatedworker = workerService.UpdateWorkerProfile(updatedWorker);
             if (updatedworker != null) {
-                WorkerResponseDTO workerResponseDTO=new WorkerResponseDTO();
+                WorkerResponseDTO workerResponseDTO = new WorkerResponseDTO();
                 workerResponseDTO.WorkerResponse(updatedworker);
                 return workerResponseDTO;
             } else {
                 throw new APIRequestException("Worker with given ID not found");
             }
-        } catch (Exception ex)
-        {
-            if(ex instanceof APIRequestException)
-            {
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
                 throw new APIRequestException(ex.getMessage());
-            }
-            else
-                throw new APIRequestException("Error while updating worker profile",ex.getMessage());
+            } else
+                throw new APIRequestException("Error while updating worker profile", ex.getMessage());
         }
     }
 
@@ -99,9 +98,8 @@ public class WorkerRestController {
         try {
             List<Questionarrie> questions = questionarrieService.getquestions();
             return questions;
-        }catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting questionarrie",ex.getMessage());
+        } catch (Exception ex) {
+            throw new APIRequestException("Error while getting questionarrie", ex.getMessage());
         }
     }
 
@@ -111,19 +109,18 @@ public class WorkerRestController {
             List<MedicalQue> questions = questionarrieService.getmedicalquestions();
 
             return questions;
-         }catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting medical questionarrie",ex.getMessage());
+        } catch (Exception ex) {
+            throw new APIRequestException("Error while getting medical questionarrie", ex.getMessage());
         }
     }
 
     @Validated
     @PostMapping("/register-patient")
-    public String registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
+    public String registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO, @RequestHeader("Authorization") String authorizationHeader) {
 
 //        System.out.println("patient"+registerPatientDTO.toString());
-        System.out.println("RegisterPatientDTO sent "+registerPatientDTO);
-        System.out.println("RegisterPatientDTO sent "+registerPatientDTO.toString());
+        System.out.println("RegisterPatientDTO sent " + registerPatientDTO);
+        System.out.println("RegisterPatientDTO sent " + registerPatientDTO.toString());
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
@@ -135,8 +132,7 @@ public class WorkerRestController {
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
-        }
-        catch (DataIntegrityViolationException ex) {
+        } catch (DataIntegrityViolationException ex) {
             String errorMessage = ex.getCause().getMessage();
             String duplicateEntryMessage = null;
 
@@ -151,57 +147,52 @@ public class WorkerRestController {
                 // If the message doesn't contain the expected format, throw a generic exception
                 throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
             }
-        }
-        catch (Exception ex)
-        {
-            if(ex instanceof APIRequestException)
-            {
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
                 throw new APIRequestException(ex.getMessage());
-            }
-            else
-                throw new APIRequestException("Error while registering patient",ex.getMessage());
+            } else
+                throw new APIRequestException("Error while registering patient", ex.getMessage());
         }
 
     }
 
 
-/*
-    @Autowired
-    PatientRepository patientRepository;
-    @GetMapping("/get-patient")
-    public MappingJacksonValue getPatient()
-    {
+    /*
+        @Autowired
+        PatientRepository patientRepository;
+        @GetMapping("/get-patient")
+        public MappingJacksonValue getPatient()
+        {
 
-        List<Patient> patientList = patientRepository.findAll();
+            List<Patient> patientList = patientRepository.findAll();
 
-        Set<String> patientFilterProperties = new HashSet<>();
-        patientFilterProperties.add("aabhaId");
-        patientFilterProperties.add("followUpDetailsList");
-        patientFilterProperties.add("medicalQueAnsList");
+            Set<String> patientFilterProperties = new HashSet<>();
+            patientFilterProperties.add("aabhaId");
+            patientFilterProperties.add("followUpDetailsList");
+            patientFilterProperties.add("medicalQueAnsList");
 
-        Set<String> followUpFilterProperties = new HashSet<>();
-        followUpFilterProperties.add("followupDate");
-        followUpFilterProperties.add("followUpNo");
-        followUpFilterProperties.add("worker");
-        followUpFilterProperties.add("doctor");
-        followUpFilterProperties.add("questionarrieAnsList");
+            Set<String> followUpFilterProperties = new HashSet<>();
+            followUpFilterProperties.add("followupDate");
+            followUpFilterProperties.add("followUpNo");
+            followUpFilterProperties.add("worker");
+            followUpFilterProperties.add("doctor");
+            followUpFilterProperties.add("questionarrieAnsList");
 
-        Set<String> workerFilterProperties = new HashSet<>();
-        workerFilterProperties.add("firstname");
+            Set<String> workerFilterProperties = new HashSet<>();
+            workerFilterProperties.add("firstname");
 
-        Set<String> doctorFilterProperties = new HashSet<>();
-        doctorFilterProperties.add("firstname");
+            Set<String> doctorFilterProperties = new HashSet<>();
+            doctorFilterProperties.add("firstname");
 
 
-        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
+            PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
 
-        return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
+            return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
 
-    }
-*/
+        }
+    */
     @GetMapping("/getAbhaid")
-    public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader)
-    {
+    public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
@@ -212,15 +203,11 @@ public class WorkerRestController {
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
-        }
-        catch (Exception ex)
-        {
-            if(ex instanceof APIRequestException)
-            {
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
                 throw new APIRequestException(ex.getMessage());
-            }
-            else
-                throw new APIRequestException("Error while getting registered Aabha Ids",ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting registered Aabha Ids", ex.getMessage());
         }
     }
 
@@ -231,10 +218,9 @@ public class WorkerRestController {
             String token = authorizationHeader.substring(7);
             String workerId = helper.getIDFromToken(token);
             List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
-//            System.out.println("schedules"+schedules.toString());
-            List<FollowupScheduleDTO> followupScheduleDTOList=new ArrayList<>();
-            for(FollowUpSchedule schedule:schedules)
-            {
+
+            List<FollowupScheduleDTO> followupScheduleDTOList = new ArrayList<>();
+            for (FollowUpSchedule schedule : schedules) {
                 FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
                 Date today = java.sql.Date.valueOf(LocalDate.now());
 
@@ -278,17 +264,21 @@ public class WorkerRestController {
             String token = authorizationHeader.substring(7);
             String workerId = helper.getIDFromToken(token);
             List<Prescription> prescriptions = workerService.getprescriptions(Integer.parseInt(workerId));
-            List<PrescriptionDTO> prescriptionDTOList=new ArrayList<>();
-            for(Prescription prescription:prescriptions)
-            {
+            List<PrescriptionDTO> prescriptionDTOList = new ArrayList<>();
+            Date sevendaysback=java.sql.Date.valueOf(LocalDate.now().minusDays(7));
+            for (Prescription prescription : prescriptions) {
                 PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
-                prescriptionDTO.prescriptionToDTO(prescription);
+
+                if(prescription.getDate().after(sevendaysback))
+                    prescriptionDTO.PrescriptionToDTO(prescription,true);
+                else
+                    prescriptionDTO.PrescriptionToDTO(prescription,false);
+
                 prescriptionDTOList.add(prescriptionDTO);
 
             }
             return prescriptionDTOList;
-        }
-        else {
+        } else {
             throw new APIRequestException("Error in authorizing");
         }
     }
@@ -310,5 +300,34 @@ public class WorkerRestController {
 
 //        return null;
     }
+
+//    @GetMapping("/getrecentpresc")
+//    public List<PrescriptionDTO> getRecentPresc(@RequestHeader("Authorization") String authorizationHeader) {
+//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+//
+//            String token = authorizationHeader.substring(7);
+//            String workerId = helper.getIDFromToken(token);
+//            List<Prescription> prescriptions = workerService.get_recent_presc(Integer.parseInt(workerId));
+//
+//            List<PrescriptionDTO> prescriptionDTOList = new ArrayList<>();
+//            for (Prescription prescription : prescriptions) {
+//                PrescriptionDTO prescriptionDTO=new PrescriptionDTO();
+//                prescriptionDTO.PrescriptionToDTO(prescription);
+//
+//                prescriptionDTOList.add(prescriptionDTO);
+//
+//            }
+//            return prescriptionDTOList;
+//        } else {
+//            throw new APIRequestException("Error in authorizing");
+//        }
+//    }
+    //trial for decryption
+    @GetMapping("/getpatient")
+    public Patient getPatient(@RequestParam("abhaid") String abhaid) {
+        System.out.println(patientService.findPatientByEncryptedAbhaId(abhaid));
+        return patientService.findPatientByEncryptedAbhaId(abhaid);
+    }
+
 
 }

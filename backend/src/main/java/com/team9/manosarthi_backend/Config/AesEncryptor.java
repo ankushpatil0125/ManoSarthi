@@ -103,6 +103,8 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
             SecureRandom secureRandom = new SecureRandom();
             byte[] iv = new byte[16];
             secureRandom.nextBytes(iv);
+//            for(int i=0;i<16;i++)
+//                System.out.println(iv[i]);
             IvParameterSpec ivspec = new IvParameterSpec(iv);
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -114,10 +116,13 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivspec);
 
             byte[] cipherText = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
+            System.out.println("cipher"+cipherText);
             byte[] encryptedData = new byte[iv.length + cipherText.length];
             System.arraycopy(iv, 0, encryptedData, 0, iv.length);
             System.arraycopy(cipherText, 0, encryptedData, iv.length, cipherText.length);
-
+//            String ivBase64 = Base64.getEncoder().encodeToString(iv); // Convert IV to Base64 string
+            System.out.println("iv l"+iv.length);
+//            System.out.println("iv "+ivBase64);
             return Base64.getEncoder().encodeToString(encryptedData);
         } catch (Exception e) {
             // Handle the exception properly
@@ -141,6 +146,7 @@ public class AesEncryptor implements AttributeConverter<Object,String> {
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivspec);
 
             byte[] cipherText = new byte[encryptedData.length - 16];
+
             System.arraycopy(encryptedData, 16, cipherText, 0, cipherText.length);
 
             byte[] decryptedText = cipher.doFinal(cipherText);
