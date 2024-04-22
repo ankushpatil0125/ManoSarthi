@@ -409,4 +409,15 @@ public class AdminController {
 
         return stats;
     }
+    @GetMapping("/diseasestats")
+    public  List<Object[]> viewDiseaseStats(){
+
+        List<Object[]> stats=adminService.getdiseasecount();
+        if(stats.isEmpty())
+        {
+            throw new APIRequestException("No Stats found");
+        }
+
+        return stats;
+    }
 }

@@ -31,5 +31,7 @@ public class Disease {
     @Column(name = "long_description")
     private String longDescription;
 
+    @Column(name = "patient_count")
+    private int patient_count=0;
 
 }
