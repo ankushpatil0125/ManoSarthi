@@ -6,6 +6,7 @@ import DeleteService from "./DatabaseServices/DeleteService";
 import RegisterPatientService from "./RegisterPatientService";
 import CreateService from "./DatabaseServices/CreateService";
 import FetchFollowUp from "./FetchFollowUp";
+import PrescriptionService from "./PrescriptionService";
 
 export const createDatabase = () =>
   new Promise(async (resolve, reject) => {
@@ -27,17 +28,25 @@ export const fetchData = () =>
         await MedicalQuestionarrieService.getMedicalQuestionarrie();
       const AabhaResponse = await RegisterPatientService.getAabhaIdTable();
       const followUpRes = await FetchFollowUp.getFollowUpSchedule();
-
+      const PrescriptionResponse = await PrescriptionService.getAllPrescriptions();
       if (
         questionsResponse &&
         medicalQuestionsResponse &&
         AabhaResponse &&
-        followUpRes
+        followUpRes&&
+        PrescriptionResponse
       ) {
         const questions = questionsResponse.data;
         const medicalQuestions = medicalQuestionsResponse.data;
         const abhaIDTable = AabhaResponse.data;
         const followupTable = followUpRes.data;
+        const prescriptionTable = PrescriptionResponse.data;
+
+        prescriptionTable.map((pres) => {
+          pres.medicine =  JSON.stringify(pres.medicine)
+          pres.disease_code =  JSON.stringify(pres.disease_code)  
+        })
+
         console.log("Fetched Survey Questions From Server:", questions);
         console.log("Fetched AbhaId Table From Server: ", abhaIDTable);
         console.log(
@@ -45,6 +54,7 @@ export const fetchData = () =>
           medicalQuestions
         );
         console.log("Fetched FollowUp Schedule From Server: ", followupTable);
+        console.log("Fetched Prescriptions From Server: ", prescriptionTable);
 
         // Delete old entries from the tables
         try {
@@ -53,6 +63,7 @@ export const fetchData = () =>
             DeleteService.deleteAllMedicalQuestions(),
             DeleteService.deleteAllAabhaIdInfo(),
             DeleteService.deleteFollowUpTable(),
+            DeleteService.deleteAllPrescriptions(),
           ]);
           deleteResults.forEach((result, index) => {
             console.log(result);
@@ -70,6 +81,7 @@ export const fetchData = () =>
             InsertService.insertMedicalQuestions(medicalQuestions),
             InsertService.insertAabhaIdInfo(abhaIDTable, "old"),
             InsertService.insertFollowUpTable(followupTable),
+            InsertService.insertPrescriptionTable(prescriptionTable),
           ]);
           insertResults.forEach((result, index) => {
             console.log(result);

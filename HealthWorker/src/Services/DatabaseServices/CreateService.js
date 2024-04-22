@@ -30,6 +30,9 @@ const CreateService = {
     const res9 = await CreateService.createFollowUpReferNotReferTable();
     console.log("Create Res9: ", res9);
 
+    const res10 = await CreateService.createPrescriptionTable();
+    console.log("Create Res10: ", res10);
+
     // Add more table creation functions here if needed
   },
   createAabhaIdInfoTable: () => {
@@ -83,6 +86,45 @@ const CreateService = {
           }
         );
       });
+    });
+  },
+  createPrescriptionTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            `CREATE TABLE IF NOT EXISTS prescriptions (
+            aabhaId INTEGER,
+            prescription_id INTEGER PRIMARY KEY,
+            patient_fname TEXT,
+            patient_lname TEXT,
+            patient_age INTEGER,
+            patient_village_name TEXT,
+            disease_code TEXT,
+            treatment TEXT,
+            medicine TEXT,
+            date TEXT
+          )`,
+            [],
+            (_, result) => {
+              if (result.rowsAffected > 0) {
+                resolve("Prescription table created successfully");
+              } else {
+                resolve("Prescription table already exists");
+              }
+            },
+            (_, error) => {
+              reject("Error creating prescription table: " + error.message);
+            }
+          );
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
     });
   },
 

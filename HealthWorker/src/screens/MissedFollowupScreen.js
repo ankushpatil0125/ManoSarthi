@@ -26,7 +26,7 @@ const MissedFollowUpsScreen = ({ route, navigation }) => {
       setTimeout(() => {
         // fetchDataFromDatabase();
         fetchFollowUpScedule();
-      }, 10000); // 3 seconds delay
+      }, 1000); // 3 seconds delay
     };
 
     fetchDataWithDelay();

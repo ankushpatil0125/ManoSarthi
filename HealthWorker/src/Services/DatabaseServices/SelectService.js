@@ -39,6 +39,34 @@ const SelectService = {
       });
     });
   },
+  selectAllPrescriptions: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            `SELECT * FROM prescriptions`,
+            [],
+            (_, result) => {
+              const prescriptions = [];
+              for (let i = 0; i < result.rows.length; i++) {
+                prescriptions.push(result.rows.item(i));
+              }
+              resolve(prescriptions);
+            },
+            (_, error) => {
+              reject("Error selecting prescriptions: " + error.message);
+            }
+          );
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
+    });
+  },
 
   getAllPatients: async () => {
     return new Promise((resolve, reject) => {

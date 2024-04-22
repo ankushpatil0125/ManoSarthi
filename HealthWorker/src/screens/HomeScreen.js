@@ -25,12 +25,15 @@ const HomeScreen = ({ navigation }) => {
       const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
       const survey_ques = await SelectService.getAllSurveyQuestions();
       const medical_ques = await SelectService.getAllMedicalQuestions();
+      const prescRes = await SelectService.selectAllPrescriptions();
       console.log("[Homescreen]Patients Fetched From Database: ", patient_data);
       console.log("[Homescreen]Survey QNA Fetched From Database: ", survey_qna);
       console.log(
         "[Homescreen]Medical QNA Fetched From Database: ",
         medical_qna
       );
+      console.log("[Homescreen]Prescriptions Fetched From Database: ", prescRes);
+
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }

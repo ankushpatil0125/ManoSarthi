@@ -122,7 +122,9 @@ const InsertService = {
           [pid, state],
           (_, { rowsAffected }) => {
             if (rowsAffected > 0) {
-              resolve("Data Inserted Into followupReferNotRefer Table Successfully");
+              resolve(
+                "Data Inserted Into followupReferNotRefer Table Successfully"
+              );
             } else {
               reject("Failed To Insert Data Into followupReferNotRefer Table");
             }
@@ -134,6 +136,66 @@ const InsertService = {
       });
     });
   },
+
+  insertPrescriptionTable: (prescriptions) => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          prescriptions.forEach((prescription) => {
+            const {
+              aabhaId,
+              prescription_id,
+              patient_fname,
+              patient_lname,
+              patient_age,
+              patient_village_name,
+              disease_code,
+              treatment,
+              medicine,
+              date,
+            } = prescription;
+
+            tx.executeSql(
+              `INSERT INTO prescriptions 
+            (aabhaId, prescription_id, patient_fname, patient_lname, patient_age, patient_village_name, disease_code, treatment, medicine, date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+              [
+                aabhaId,
+                prescription_id,
+                patient_fname,
+                patient_lname,
+                patient_age,
+                patient_village_name,
+                disease_code,
+                treatment,
+                medicine,
+                date,
+              ],
+              (_, result) => {
+                if (result.rowsAffected < 1) {
+                  reject(
+                    "Failed to insert prescription with ID: " + prescription_id
+                  );
+                }
+              },
+              (_, error) => {
+                reject("Error inserting prescription: " + error.message);
+              }
+            );
+          });
+
+          resolve("Prescriptions inserted successfully");
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
+    });
+  },
+
   insertSurveyQuestion: (SurveyQuestions) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

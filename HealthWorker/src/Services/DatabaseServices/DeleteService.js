@@ -36,6 +36,31 @@ const DeleteService = {
       });
     });
   },
+  deleteAllPrescriptions: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            `DELETE FROM prescriptions`,
+            [],
+            (_, result) => {
+              resolve("All prescriptions deleted successfully");
+            },
+            (_, error) => {
+              reject("Error deleting prescriptions: " + error.message);
+            }
+          );
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
+    });
+  },
+
   deleteAllPatients: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -145,7 +170,6 @@ const DeleteService = {
       });
     });
   },
-
 
   deleteFolloupQuestionAnswersByPID: (pid) => {
     console.log("delete, id", pid);
