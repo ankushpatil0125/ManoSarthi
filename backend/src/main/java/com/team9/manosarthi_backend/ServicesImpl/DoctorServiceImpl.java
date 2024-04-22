@@ -87,7 +87,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Transactional
     public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 
-
+/*
         System.out.println("patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id()   "+patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         System.out.println("patient "+patient.isPresent());
@@ -221,6 +221,9 @@ public class DoctorServiceImpl implements DoctorService {
             throw new APIRequestException("Patient not found with id "+ patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         }
 
+
+*/
+        return null;
     }
 
     @Override

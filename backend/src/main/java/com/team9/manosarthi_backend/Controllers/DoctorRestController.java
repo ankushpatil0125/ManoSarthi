@@ -108,9 +108,11 @@ public class DoctorRestController {
     @GetMapping("/temp")
     public Prescription temp(@RequestParam("patientId") int patientId,@RequestHeader("Authorization") String authorizationHeader)
     {
-
+    /*
         System.out.println("Patient "+patientId);
         return prescriptionRepository.findById(patientId).get();
+        */
+     return null;
 //        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
 //        {
 //            String token = authorizationHeader.substring(7);
@@ -238,11 +240,10 @@ public class DoctorRestController {
 //    }
 
     @PostMapping("/prescription-followup")
-    public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO){
-        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO);
-        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
-
-
+    public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
+//        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
+        System.out.println("/doctor/prescription-followup");
+        /*
         try {
 
             Prescription prescription = doctorService.givePrescription(patientFollowUpPrescriptionDTO);
@@ -260,6 +261,10 @@ public class DoctorRestController {
                 throw new APIRequestException("Error while giving prescription",ex.getMessage());
         }
 
+
+
+         */
+        return false;
     }
 
     @GetMapping("/getfollowups")
