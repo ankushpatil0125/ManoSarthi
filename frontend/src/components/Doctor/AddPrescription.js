@@ -7,7 +7,7 @@ import DoctorService from "../../Services/DoctorService";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 
-const AddPrescription = ({ patient_id }) => {
+const AddPrescription = ({ patient_id, type }) => {
   // console.log(patientId);
   // console.log("presss")
   const [medicines, setMedicines] = useState([]);
@@ -26,6 +26,13 @@ const AddPrescription = ({ patient_id }) => {
   // const [selectedValues, setSelectedValues] = useState([]);
   const [followUp, setFollowUp] = useState("WEEKLY");
   const [followUpsCount, setFollowUpsCount] = useState(0);
+  const [updateFollowUpSchedule, setUpdateFollowUpSchedule] = useState(true);
+  const [toggleFollowup, setToggleFollowup] = useState(false);
+  const handleToggleFollowup = (e) => {
+    setToggleFollowup(e.target.checked);
+    setUpdateFollowUpSchedule(e.target.checked);
+  };
+  console.log("toggleFollowup", toggleFollowup);
   const navigate = useNavigate();
   useEffect(() => {
     //Fetch district options
@@ -120,13 +127,14 @@ const AddPrescription = ({ patient_id }) => {
 
     if (medicines.length === 0) {
       alert("Please Add Medicines!");
-    } else if (followUpsCount <= 0) {
+    } else if (toggleFollowup && followUpsCount <= 0) {
       alert("Please Add FollowUp details!");
     } else {
       // const diseasesCodes = diseases.map((disease) => disease.value);
-      const diseasesCodes = diseases.map((disease) => ({ code: disease.value }));
+      const diseasesCodes = diseases.map((disease) => ({
+        code: disease.value,
+      }));
 
-      
       // // console.log("Form Submitted:", {
       //   patient_id,
       //   medicines,
@@ -135,6 +143,7 @@ const AddPrescription = ({ patient_id }) => {
       //   followUp,
       //   followUpsCount,
       // });
+      
       const prescription_data = {
         prescription: {
           patient: {
@@ -149,15 +158,16 @@ const AddPrescription = ({ patient_id }) => {
           followUpRemaining: followUpsCount,
           type: followUp,
         },
+        updateFollowUpSchedule,
       };
       setLoading(true);
-      console.log("prescription_data",prescription_data)
+      console.log("prescription_data", prescription_data);
       try {
         const response = await DoctorService.addPrescription(prescription_data);
-        console.log("res",response)
-        if(response){
+        console.log("res", response);
+        if (response) {
           alert("Prescription added successfully");
-          navigate("/doctor-home")
+          navigate("/doctor-home");
           setLoading(false);
         }
       } catch (error) {
@@ -220,7 +230,7 @@ const AddPrescription = ({ patient_id }) => {
               Disease:
             </label>
             <Select
-              styles={{ display: "flex", flexDirection: "column"}}
+              styles={{ display: "flex", flexDirection: "column" }}
               isMulti
               placeholder={"Select"}
               value={diseases}
@@ -323,7 +333,23 @@ const AddPrescription = ({ patient_id }) => {
                 </tbody>
               </table>
             </div>
-            <div>
+            {type === "update" && (
+              <div>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={toggleFollowup}
+                    onChange={handleToggleFollowup}
+                    className="sr-only peer"
+                  />
+                  <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                  <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Want to give new Follow up Schedule
+                  </span>
+                </label>
+              </div>
+            )}
+            {toggleFollowup && <div>
               <label htmlFor="followup" className="block font-semibold">
                 Follow Ups:
               </label>
@@ -346,7 +372,7 @@ const AddPrescription = ({ patient_id }) => {
                   onChange={(e) => setFollowUpsCount(e.target.value)}
                 />
               </div>
-            </div>
+            </div>}
             <div className="flex items-center justify-center mt-4">
               <button
                 className="bg-[#6467c0] hover:bg-[#bfbfdf] text-white font-bold py-2 px-6 rounded"

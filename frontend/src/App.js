@@ -38,9 +38,9 @@ const App = () => {
           <Route
             path="/change-password"
             element={
-              <PrivateRoute type="changepasswordcomponent">
+              // <PrivateRoute type="changepasswordcomponent">
                 <ChangePasswordComponent />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
           />
           <Route path="/otp" element={<OTPComponent />} />

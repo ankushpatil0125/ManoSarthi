@@ -3,7 +3,7 @@ import AddPrescription from './AddPrescription'
 
 const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
   
-    console.log("prescriptionDTO",prescriptionDTO)
+  console.log("prescriptionDTO",prescriptionDTO)
   return (
     <div>
     <div className="flex justify-center items-center h-screen">
@@ -112,7 +112,7 @@ const ViewPrescription = ({prescriptionDTO,patient_id,type}) => {
         </div>
 
     </div>
-        {type==="update" && <AddPrescription patient_id={patient_id}/>}
+        {type==="update" && <AddPrescription patient_id={patient_id} type={"update"}/>}
     </div>
   )
 }
