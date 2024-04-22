@@ -25,7 +25,7 @@ const RegisterPatientService = {
     const token = await getToken(); // Get token asynchronously
 
     try {
-      console.log("HIiII", patientData);
+      // console.log("HIiII", patientData);
       const response = await axios.post(
         BASE_URL + "worker/register-patient",
         patientData,

@@ -28,7 +28,8 @@ import java.util.*;
 @PreAuthorize("hasRole('DOCTOR')")
 @RequestMapping("/doctor")
 @CrossOrigin(origins = "*")
-//@EnableTransactionManagement
+
+@EnableTransactionManagement
 public class DoctorRestController {
     DoctorRepository doctorRepository;
     DoctorService doctorService;
@@ -238,7 +239,9 @@ public class DoctorRestController {
 
     @PostMapping("/prescription-followup")
     public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO){
-//        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
+        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO);
+        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
+
 
         try {
 

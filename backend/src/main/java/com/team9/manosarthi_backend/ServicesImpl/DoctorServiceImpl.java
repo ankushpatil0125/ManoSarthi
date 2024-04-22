@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
@@ -186,7 +188,9 @@ public class DoctorServiceImpl implements DoctorService {
 
             // add follow up schedule
 
+
             //For NEW Patient add new schedule
+
             Date nextDate;
             System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
             if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {

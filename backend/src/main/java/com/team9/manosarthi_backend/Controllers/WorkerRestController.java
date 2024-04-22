@@ -248,10 +248,12 @@ public class WorkerRestController {
             Date sevendaysback=java.sql.Date.valueOf(LocalDate.now().minusDays(7));
             for (Prescription prescription : prescriptions) {
                 PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
+
                 if(prescription.getDate().after(sevendaysback))
                     prescriptionDTO.PrescriptionToDTO(prescription,true);
                 else
                     prescriptionDTO.PrescriptionToDTO(prescription,false);
+
                 prescriptionDTOList.add(prescriptionDTO);
 
             }

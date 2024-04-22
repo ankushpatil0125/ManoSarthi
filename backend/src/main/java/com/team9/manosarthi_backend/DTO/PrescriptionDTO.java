@@ -40,6 +40,7 @@ public class PrescriptionDTO {
     @JsonFormat(pattern="dd-MMMM-yyyy",timezone="Asia/Kolkata")
     private Date date;
 
+
     private Boolean recent;
 
     public void PrescriptionToDTO(Prescription prescription,Boolean recent)
