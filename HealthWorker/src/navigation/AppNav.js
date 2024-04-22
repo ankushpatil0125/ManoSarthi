@@ -1,10 +1,9 @@
-import React, { useContext,useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./AuthStack";
 import AppStack from "./AppStack";
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator, View } from "react-native";
-// import { getToken } from "../src/utils/Constants";
 import NetInfo from "@react-native-community/netinfo";
 import Toast from "react-native-toast-message";
 
@@ -17,18 +16,14 @@ const checkNetworkConnectivity = async () => {
   return state.isConnected;
 };
 
-const AppNav =  () => {
+const AppNav = () => {
   const { isLoading, userToken } = useContext(AuthContext);
   const [isConnected, setIsConnected] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [syncButton, setsyncButton] = useState(true);
-
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {
       const connected = await checkNetworkConnectivity();
       setIsConnected(connected);
-
       if (connected) {
         Toast.show({
           type: "success",
@@ -41,7 +36,12 @@ const AppNav =  () => {
         });
       }
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -49,12 +49,14 @@ const AppNav =  () => {
       </View>
     );
   }
-  // const token = await getToken();
-  // console.log("userToken: ", token);
   return (
-    <NavigationContainer>
-      {userToken !== null ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        {/* <ForwardedToast> */}
+        {userToken !== null ? <AppStack /> : <AuthStack />}
+      </NavigationContainer>
+      <ForwardedToast />
+    </>
   );
 };
 

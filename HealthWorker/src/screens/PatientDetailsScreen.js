@@ -28,6 +28,7 @@ const PatientDetailsScreen = ({ navigation }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [patients, setPatients] = useState([]);
   const { aabhaId } = useContext(PatientContext);
+  const [emailError, setEmailError] = useState("");
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
@@ -43,9 +44,15 @@ const PatientDetailsScreen = ({ navigation }) => {
     try {
       const data = await SelectService.getAllPatients();
       const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
-      console.log("AabhaId Fetched From Data: ", aabhaIdInfoData);
       setPatients(data);
-      console.log("Patients Fetched from Database: ", patients);
+      console.log(
+        "[PatientDetailsScreen]AabhaId Fetched From Data: ",
+        aabhaIdInfoData
+      );
+      console.log(
+        "[PatientDetailsScreen]Patients Fetched from Database: ",
+        data
+      );
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -55,27 +62,47 @@ const PatientDetailsScreen = ({ navigation }) => {
     fetchDataFromDatabase();
   }, []);
 
-  // const handleDateChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate || dob;
-  //   setShowDatePicker(Platform.OS === "ios");
-  //   setDob(currentDate);
-  // };
-
   const handleSubmit = async () => {
-    
-    if (!firstName || !lastName || !email || !gender || !age || !address) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !gender.trim() ||
+      !age.trim() ||
+      !address.trim()
+    ) {
       setFormError("Please fill in all fields");
       return;
     }
 
-    if (isConnected) {
-      console.log(firstName+" "+lastName+" "+email+" "+age+" "+address+" "+gender);
-      await storeDataLocally();
+    // Email validation regular expression
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    if (!emailRegex.test(email)) {
+      setFormError("Please enter a valid email address");
+      return;
+    }
+
+    if (isConnected) {
+      console.log(
+        "[PatientDetailsScreen]Entered Details: ",
+        firstName +
+          " " +
+          lastName +
+          " " +
+          email +
+          " " +
+          age +
+          " " +
+          address +
+          " " +
+          gender
+      );
+      await storeDataLocally();
     } else {
       await storeDataLocally();
     }
-    navigation.navigate("QuestionnaireScreen");
+    navigation.navigate("QuestionnaireScreen", { age });
   };
 
   const storeDataLocally = async () => {
@@ -97,35 +124,86 @@ const PatientDetailsScreen = ({ navigation }) => {
     }
   };
 
+  const handleFirstNameChange = (text) => {
+    // Filter out space characters from the input
+    const filteredText = text.replace(/\s/g, "");
+    setFirstName(filteredText);
+  };
+
+  const handleLastNameChange = (text) => {
+    // Filter out space characters from the input
+    const filteredText = text.replace(/\s/g, "");
+    setLastName(filteredText);
+  };
+
+  // Function to validate email format
+  const validateEmail = (email) => {
+    const atIndex = email.indexOf("@");
+    const dotIndex = email.lastIndexOf(".");
+
+    if (atIndex === -1) {
+      setEmailError("Email must contain '@'");
+      return false;
+    }
+
+    if (dotIndex === -1 || dotIndex < atIndex) {
+      setEmailError("Invalid email format");
+      return false;
+    }
+
+    setEmailError(""); // Clear error if email format is correct
+    return true;
+  };
+
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "height" : "position"}
       style={{ flex: 1 }}
     >
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.label}>First Name:</Text>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled" // Ensure taps outside TextInput dismiss keyboard
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.label}>
+          First Name:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           value={firstName}
-          onChangeText={setFirstName}
+          onChangeText={handleFirstNameChange}
           placeholder="Enter first name"
         />
-        <Text style={styles.label}>Last Name:</Text>
+
+        <Text style={styles.label}>
+          Last Name:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           value={lastName}
-          onChangeText={setLastName}
+          onChangeText={handleLastNameChange}
           placeholder="Enter last name"
         />
-        <Text style={styles.label}>Email:</Text>
+
+        <Text style={styles.label}>
+          Email:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+            validateEmail(text);
+          }}
           placeholder="Enter email"
           keyboardType="email-address"
         />
-        <Text style={styles.label}>Gender:</Text>
+        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+        {formError ? <Text style={styles.errorText}>{formError}</Text> : null}
+
+        <Text style={styles.label}>
+          Gender:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <View style={styles.genderContainer}>
           <TouchableOpacity
             style={[
@@ -156,39 +234,29 @@ const PatientDetailsScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.label}>Age</Text>
-        {/* <View style={{alignItems:"center",justifyContent:"center"}}>
-          {true && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={dob}
-              mode="date"
-              is24Hour={true}
-              display="default"
-              onChange={handleDateChange}
-            />
-          )}
-        </View> */}
-        <View  style={{alignItems:"center",justifyContent:"center"}}>
-        {/* <Text style={styles.label}>Enter AGE:</Text> */}
+        <Text style={styles.label}>
+          Age:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           onChangeText={(value) => {
             // Check if the entered value contains only numeric characters
-            if (/^\d+$/.test(value)) {
-              // If it contains only numeric characters, update the state
-              setAge(value);
+            if (/^\d*$/.test(value)) {
+              if (value === "" || parseInt(value) <= 110)
+                // If it contains only numeric characters, update the state
+                setAge(value);
             }
-          }}          
+          }}
           value={age}
           placeholder="AGE"
           placeholderTextColor="#666"
           autoFocus // Automatically focus on input when the screen mounts
           keyboardType="numeric"
         />
-        </View>
 
-        <Text style={styles.label}>Address:</Text>
+        <Text style={styles.label}>
+          Address:<Text style={{ color: "red" }}>*</Text>
+        </Text>
         <TextInput
           style={[styles.input]}
           value={address}
@@ -197,8 +265,6 @@ const PatientDetailsScreen = ({ navigation }) => {
           numberOfLines={2}
           placeholder="Enter address"
         />
-
-        {formError ? <Text style={styles.errorText}>{formError}</Text> : null}
 
         <Button
           title="Submit"

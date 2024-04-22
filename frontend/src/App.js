@@ -1,33 +1,32 @@
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
+import AddPrescription from "./components/Doctor/AddPrescription"
 import LoginComponent from "./components/Login/LoginComponent";
 import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent";
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
 import OTPComponent from "./components/Login/OTPComponent";
 import AddActorComponent from "./components/Actors/AddActorComponent";
-import UpdateActor from "./components/Actors/UpdateActor";
 import DoctorHomePage from "./components/HomePage/DoctorHomePage";
 import ProfileComponent from "./components/Actors/ProfileComponent";
-import AdminHomePage from "./components/HomePage/AdminHomePage";
+import AdminHomePage from "./components/HomePage/AdminHomePage"
 import SupervisorHomePage from "./components/HomePage/SupervisorHomepage";
 import AdminOperation from "./components/Actors/AdminOperation";
-// import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 import ErrorPage from "./components/Error/ErrorPage";
 import AddHealthWorker from "./components/Supervisor/AddHealthWorker";
 import UpdateHealthWorker from "./components/HealthWorker/UpdateHealthWorker";
-import UpdateHealthWorkerpage from "./components/UpdateHealthWorkerpage";
 import PendingPatient from "./components/Doctor/PendingPatient";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
-import  { AuthProvider } from "./components/Context/AuthContext";
-import PatientDetails from "./components/Patient/PatientDetails";
+import { AuthProvider } from "./components/Context/AuthContext";
+import PatientDetails from "./components/Doctor/PatientDetails";
+import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
+// import DoctorOperation from "./components/Doctor/DoctorOperation";
 
 const App = () => {
-  
   return (
     <AuthProvider>
     <Router>
-      <div className="App">
+      <div className="App font-[sans-serif]" >
         <Routes>
           <Route path="/" element={<LoginComponent />} />
           <Route
@@ -99,30 +98,30 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/doctor-supervisor"
             element={
               <PrivateRoute type="adminoperation">
                 <AdminOperation />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/update-doctor-supervisor"
             element={
               <PrivateRoute type="update-doctor-supervisor">
-                <UpdateActor />
+                <UpdateDeleteActor />
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/healthworker-home"
             element={
-              <PrivateRoute type="healthworker">
+              // <PrivateRoute type="healthworker">
                 <AdminOperation />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/add-healthworker"
             element={
@@ -155,19 +154,27 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/update"
             element={
-              <PrivateRoute type="show-activity-healthworker">
+              // <PrivateRoute type="show-activity-healthworker">
                 <UpdateHealthWorkerpage />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/patient-details"
             element={
               <PrivateRoute type="patient-details">
                 <PatientDetails />
+               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add-prescription/:patient_id"
+            element={
+              <PrivateRoute type="add-prescription">
+                <AddPrescription />
               </PrivateRoute>
             }
           />

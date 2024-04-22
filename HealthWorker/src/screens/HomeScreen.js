@@ -4,43 +4,49 @@ import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import Table from "../components/Table";
 import { ScrollView } from "react-native";
-// import { useNavigation } from "@react-navigation/native";
 import i18n from "../../i18n";
-import tw from "twrnc"
 
-const HomeScreen = ({navigation}) => {
-  const fetchPatientDataFromDatabase = async () => {
-    // const navigation = useNavigation();
-    console.log("Inside fetchPatientDataFromDatabase");
+const HomeScreen = ({ navigation }) => {
+  const fetchDataFromDatabase = async () => {
     try {
-      console.log("In");
-  
       const patient_data = await SelectService.getAllPatients();
-  
-      // const survey_que_ans = await SelectService.getAllSurveyQuestionAnswers();
-      // const medical_history = await SelectService.getMedicalHistoryAnswers();
-      // const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
-  
-      const survey_qus = await SelectService.getAllQuestions();
+      const survey_qna = await SelectService.getAllSurveyQuestionAnswers();
+      const medical_qna = await SelectService.getMedicalHistoryAnswers();
+      const aabhaIdInfoData = await SelectService.getAllAabhaIdInfo();
+      const survey_ques = await SelectService.getAllSurveyQuestions();
       const medical_ques = await SelectService.getAllMedicalQuestions();
-      // console.log("Inside", aabhaIdInfoData);
-  
-      // setPatients(patient_data);
-      // setSurvey_que_ans(survey_que_ans);
-      // setMedical_history_ans(medical_history_ans);
-      // setAabhaIdInfo(aabhaIdInfoData);
-  
-      console.log("Homescreen Patients: ", patient_data);
-      // console.log("Homescreen survey_que_ans: ",survey_que_ans);
-      // console.log("Homescreen medical_history_ans: ", medical_history);
-      console.log("Homescreen survey_qus: ", survey_qus);
-      console.log("Homescreen medical_ques: ", medical_ques);
-      // console.log("Homescreen AabhaIdInfo: ", aabhaIdInfoData);
+      setTimeout(function () {
+        console.log(
+          "[Homescreen]Patients Fetched From Database: ",
+          patient_data
+        );
+        console.log(
+          "[Homescreen]Survey QNA Fetched From Database: ",
+          survey_qna
+        );
+        console.log(
+          "[Homescreen]Medical QNA Fetched From Database: ",
+          medical_qna
+        );
+      }, 1000);
+
+      // console.log(
+      //   "[Homescreen]Survey Questions Fetched From Database: ",
+      //   survey_ques
+      // );
+      // console.log(
+      //   "[Homescreen]Medical Questions Fetched From Database: ",
+      //   medical_ques
+      // );
+      // console.log(
+      //   "[Homescreen]AabhaIdInfo Fetched From Database: ",
+      //   aabhaIdInfoData
+      // );
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }
   };
-  
+
   const deleteDataFromDatabase = async () => {
     try {
       await DeleteService.deleteAllSurveyQuestionAnswers();
@@ -49,7 +55,7 @@ const HomeScreen = ({navigation}) => {
       console.error("Error deleting data from database:", error);
     }
   };
-  
+
   const deleteAllMedicalHistoryAnswers = async () => {
     try {
       await DeleteService.deleteAllMedicalHistoryAnswers();
@@ -59,7 +65,7 @@ const HomeScreen = ({navigation}) => {
     }
   };
   useEffect(() => {
-    // fetchPatientDataFromDatabase();
+    fetchDataFromDatabase();
     // fetchSurveyQuestionAnswerFromDatabase();
     // deleteAllMedicalHistoryAnswers();
   }, []);
@@ -67,7 +73,7 @@ const HomeScreen = ({navigation}) => {
     // Navigate or perform action for registering patient
     navigation.navigate("RegisterPatientScreen");
   };
-  
+
   const handleMissedFollowup = () => {
     // Navigate or perform action for missed followup
     navigation.navigate("MissedFollowupScreen");
@@ -90,15 +96,15 @@ const HomeScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    
+
       <View style={{ marginTop: 50 }}>
         <Table />
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
-export default HomeScreen
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   screen: {

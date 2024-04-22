@@ -22,7 +22,7 @@ const LoginScreen = () => {
   const { login } = useContext(AuthContext);
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  
+
   // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
   const handleLogin = () => {
@@ -50,7 +50,15 @@ const LoginScreen = () => {
         }}
       >
         {/* Language Toggle Button */}
-        <View style={{ marginTop: 10 }}>
+        <View
+          style={{
+            padding: 20,
+            borderTopWidth: 1,
+            borderTopColor: "#ccc",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <LanguageToggleButton
             onPress={handleLanguageToggle}
             selectedLanguage={selectedLanguage}
@@ -59,9 +67,7 @@ const LoginScreen = () => {
 
         {/* Login to Your Account */}
         <View style={{ alignItems: "center" }}>
-          <Text 
-          style={{ fontSize: 17, fontWeight: "bold", color: "#87CEEB" }}
-          >
+          <Text style={{ fontSize: 17, fontWeight: "bold", color: "#87CEEB" }}>
             {i18n.t("Login")}
           </Text>
         </View>

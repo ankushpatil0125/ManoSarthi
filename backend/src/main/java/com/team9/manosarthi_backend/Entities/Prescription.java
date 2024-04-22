@@ -61,5 +61,4 @@ public class Prescription {
     @Column(name="Date")
     private Date date;
 
-
 }

@@ -1,23 +1,25 @@
-package com.team9.manosarthi_backend.Services;
+package com.team9.manosarthi_backend.ServicesImpl;
 
 import com.team9.manosarthi_backend.Config.AesEncryptor;
+import com.team9.manosarthi_backend.DTO.PrescriptionDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
+import com.team9.manosarthi_backend.Services.WorkerService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class WorkerServiceImpl implements WorkerService{
+public class WorkerServiceImpl implements WorkerService {
 
 
     private WorkerRepository workerRepository;
@@ -36,6 +38,9 @@ public class WorkerServiceImpl implements WorkerService{
 
     private AesEncryptor aesEncryptor;
 
+    private FollowUpScheduleRepository followUpScheduleRepository;
+
+    private PrescriptionRepository prescriptionRepository;
 
     @Override
     public Worker viewProfile(int id) {
@@ -145,7 +150,7 @@ public class WorkerServiceImpl implements WorkerService{
 //    }
 
     @Override
-    public List<String> getAabhaid(Integer workerid)
+    public List<String> getAabhaid(int workerid)
     {
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent()) {
@@ -185,4 +190,56 @@ public class WorkerServiceImpl implements WorkerService{
             throw new APIRequestException("worker with given id not found");
     }
 
+    public List<FollowUpSchedule> get_followup_schedule(int workerid)
+    {
+        Optional<Worker> worker=workerRepository.findById(workerid);
+        if(worker.isPresent())
+        {
+            Calendar calendar = Calendar.getInstance();
+            Date startDate = new Date(calendar.getTimeInMillis());
+
+            // Calculate the end date (today + 6 days)
+            calendar.add(Calendar.DAY_OF_MONTH, 6);
+            Date endDate = new Date(calendar.getTimeInMillis());
+            int villagecode=worker.get().getVillagecode().getCode();
+            return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+        }
+        else {
+            throw new APIRequestException("Worker not found");
+        }
+
+    }
+
+    public List<Prescription> getprescriptions(int workerid)
+    {
+        Optional<Worker> worker=workerRepository.findById(workerid);
+        if(worker.isPresent())
+        {
+            int villagecode=worker.get().getVillagecode().getCode();
+            return prescriptionRepository.getActivePrescriptionsOfVillage(villagecode);
+        }
+        else {
+            throw new APIRequestException("Worker not found");
+        }
+
+    }
+
+//    public List<Prescription> get_recent_presc(int workerid)
+//    {
+//        Optional<Worker> worker=workerRepository.findById(workerid);
+//        if(worker.isPresent())
+//        {
+////            Calendar calendar = Calendar.getInstance();
+////            Date startDate = new Date(calendar.getTimeInMillis());
+//            Date startDate = Date.valueOf(LocalDate.now().plusDays(-7));
+//            Date endDate = Date.valueOf(LocalDate.now());
+//
+//            int villagecode=worker.get().getVillagecode().getCode();
+//            return prescriptionRepository.findbyDateAndVill(startDate,endDate,villagecode);
+//        }
+//        else {
+//            throw new APIRequestException("Worker not found");
+//        }
+//
+//    }
 }

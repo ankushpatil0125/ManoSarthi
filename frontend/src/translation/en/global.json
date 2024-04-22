@@ -5,12 +5,18 @@
     "About": "About Us",
     "Contact": "Contact Us",
     "Dashboard": "Dashboard",
-    "Profile": "Profile"
+    "Profile": "Profile",
+    "Patient":"Patient"
   },
   "login": {
     "LOGIN": "LOGIN",
     "Logout": "Logout",
     "username": "username",
+    "User name": "User name",
+    "Enter user name":"Enter user name",
+    "Enter password":"Enter password",
+    "Forgot-password": "Forgot-password",
+    "Sign in to your Account":"Sign in to your Account",
     "Password": "Password",
     "forgot-password": "Forgot-password",
     "Click_Here": "Click_Here"
@@ -19,14 +25,14 @@
   "Actor": {
     "Actions": "Actions",
     "Admin Dashboard": "Admin Dashboard",
-    "Add": "Add",
-    "Update": "Update",
+    "Reassign": "Reassign",
     "Delete": "Delete",
     "Add HealthWorker": "Add HealthWorker",
     "Update HealthWorker": "Update HealthWorker",
     "Delete HealthWorker": "Delete HealthWorker",
     "Show Activity": "Show Activity",
-    "HealthWorker": "HealthWorker"
+    "HealthWorker": "HealthWorker",
+    "Dashboard":"Dashboard"
   },
   "addDoctorSupervisor": {
     "Doctor": "Doctor",
@@ -62,7 +68,7 @@
     "Female": "Female",
     "Date of Birth": "Date of Birth"
   },
-  "UpdateDoctorSupervisor": {
+  "UpdateDeleteActor": {
     "District": "District",
     "Subdistrict": "Subdistrict",
     "Select": "Select",
@@ -71,8 +77,10 @@
     "Next": "Next",
     "Previous": "Previous",
     "Actor": "Actor",
-    "Reassign": "Reassign",
-    "Supervisor Name": "Supervisor Name"
+    "Reassign": "Reassign Actor",
+    "Delete": "Delete Actor",
+    "Supervisor Name": "Supervisor Name",
+    "Email": "Email"
   },
   "UpdateHealthworker": {
     "Village": "Village",
@@ -95,5 +103,31 @@
     "Change Password": "Change Password",
     "Doctor Profile": "Doctor Profile",
     "Supervisor Profile": "Supervisor Profile"
+  },
+
+  "ViewPatientDetails" : {
+    "Patient Details": "Patient Details"
+  },
+
+  "admin":{
+    "Dashboard": "Dashboard",
+    "Add": "Add",
+    "Update": "Update",
+    "Delete": "Delete"
+  },
+  
+  "doctor":{
+    "Dashboard":"Dashboard",
+    "Pending Patient": "Pending Patient",
+    "Ongoing Patient": "Ongoing Patient",
+    "Treated Patient": "Treated Patient",
+    "New Patients" : "New Patients",
+    "FirstName":"First Name",
+    "LastName":"Last Name",
+    "Gender":"Gender",
+    "Village":"Village",
+    "View Details":"View Details",
+    "Previous":"Previous",
+    "Next":"Next"
   }
 }

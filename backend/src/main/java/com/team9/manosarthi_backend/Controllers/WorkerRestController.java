@@ -3,7 +3,7 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
+import com.team9.manosarthi_backend.DTO.*;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
@@ -11,6 +11,7 @@ import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Filters.WorkerFilter;
 import com.team9.manosarthi_backend.Repositories.PatientRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
+import com.team9.manosarthi_backend.Services.PatientService;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
 import jakarta.validation.Valid;
@@ -22,10 +23,10 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
+import java.time.LocalDate;
+import java.util.*;
+
 import com.team9.manosarthi_backend.security.JwtHelper;
 
 @RestController
@@ -36,17 +37,20 @@ import com.team9.manosarthi_backend.security.JwtHelper;
 public class WorkerRestController {
     private WorkerService workerService;
     private QuestionarrieService questionarrieService;
+
+    private PatientService patientService;
     private JwtHelper helper;
 
     @Autowired
-    public WorkerRestController(WorkerService workerService, QuestionarrieService questionarrieService, JwtHelper helper) {
+    public WorkerRestController(WorkerService workerService, QuestionarrieService questionarrieService, JwtHelper helper,PatientService patientService) {
         this.workerService = workerService;
         this.questionarrieService = questionarrieService;
         this.helper = helper;
+        this.patientService= patientService;
     }
 
     @GetMapping("/view-profile")
-    public MappingJacksonValue getDetails(@RequestHeader("Authorization") String authorizationHeader){
+    public WorkerResponseDTO getDetails(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 // Extract the token part after "Bearer "
@@ -55,149 +59,66 @@ public class WorkerRestController {
 //                Optional<Supervisor> supervisor = supervisorRepository.findById(Integer.parseInt(userid));
                 Worker worker = workerService.viewProfile(Integer.parseInt(userid));
 
-                Set<String> workerFilterProperties = new HashSet<>();
-                workerFilterProperties.add("firstname");
-                workerFilterProperties.add("lastname");
-                workerFilterProperties.add("email");
-                workerFilterProperties.add("villagecode");
-                workerFilterProperties.add("user");
-                workerFilterProperties.add("gender");
-                workerFilterProperties.add("dob");
-
-
-                Set<String> villageFilterProperties = new HashSet<>();
-                villageFilterProperties.add("name");
-                villageFilterProperties.add("subDistrict");
-
-                Set<String> subDistrictFilterProperties = new HashSet<>();
-//                subDistrictFilterProperties.add("code");
-                subDistrictFilterProperties.add("name");
-                subDistrictFilterProperties.add("district");
-
-                Set<String> districtFilterProperties = new HashSet<>();
-                villageFilterProperties.add("name");
-
-                Set<String> userFilterProperties = new HashSet<>();
-                userFilterProperties.add("username");
-
-                WorkerFilter<Worker> workerFilter = new WorkerFilter<>(worker);
-
-                return workerFilter.getWorkerFilter(workerFilterProperties,villageFilterProperties, subDistrictFilterProperties, userFilterProperties);
-
+                WorkerResponseDTO workerResponseDTO = new WorkerResponseDTO();
+                workerResponseDTO.WorkerResponse(worker);
+                return workerResponseDTO;
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
-        }
-        catch (Exception ex)
-        {
-            if( ex instanceof APIRequestException ) throw new APIRequestException(ex.getMessage());
-            else throw new APIRequestException("Error while getting worker details",ex.getMessage());
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) throw new APIRequestException(ex.getMessage());
+            else throw new APIRequestException("Error while getting worker details", ex.getMessage());
         }
     }
 
 
     @PutMapping("/updateworker")
-    public ResponseEntity<MappingJacksonValue> UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
+    public WorkerResponseDTO UpdateWorkerProfile(@RequestBody Worker updatedWorker) {
         try {
             Worker updatedworker = workerService.UpdateWorkerProfile(updatedWorker);
             if (updatedworker != null) {
-                SimpleBeanPropertyFilter workerfilter = SimpleBeanPropertyFilter.filterOutAllExcept("firstname", "lastname", "email", "villagecode");
-                SimpleBeanPropertyFilter villagefilter = SimpleBeanPropertyFilter.filterOutAllExcept("code", "name", "worker_count");
-                FilterProvider filterProvider = new SimpleFilterProvider().addFilter("WorkerJSONFilter", workerfilter).addFilter("VillageJSONFilter", villagefilter);
-                MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(updatedworker);
-                mappingJacksonValue.setFilters(filterProvider);
-                return ResponseEntity.ok(mappingJacksonValue);
+                WorkerResponseDTO workerResponseDTO = new WorkerResponseDTO();
+                workerResponseDTO.WorkerResponse(updatedworker);
+                return workerResponseDTO;
             } else {
                 throw new APIRequestException("Worker with given ID not found");
             }
-        } catch (Exception ex)
-        {
-            if(ex instanceof APIRequestException)
-            {
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
                 throw new APIRequestException(ex.getMessage());
-            }
-            else
-                throw new APIRequestException("Error while updating worker profile",ex.getMessage());
+            } else
+                throw new APIRequestException("Error while updating worker profile", ex.getMessage());
         }
     }
 
     @GetMapping("/getquestionarrie")
-    public MappingJacksonValue getquestionarrie() {
+    public List<Questionarrie> getquestionarrie() {
         try {
             List<Questionarrie> questions = questionarrieService.getquestions();
-            SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionJSONFilter", questionfilter);
-            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
-            mappingJacksonValue.setFilters(filterProvider);
-            return mappingJacksonValue;
-        }catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting questionarrie",ex.getMessage());
+            return questions;
+        } catch (Exception ex) {
+            throw new APIRequestException("Error while getting questionarrie", ex.getMessage());
         }
     }
-
-//    @PostMapping("/questionans")
-//    public MappingJacksonValue postquestans(@Valid @RequestBody Questionarrie_ans questionarrie_ans)
-//    {
-//        Questionarrie_ans queans= questionarrieService.postqueans(questionarrie_ans);
-//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id");
-////        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "minage", "maxage", "question", "default_ans", "type");
-////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter).addFilter("QuestionJSONFilter",questionfilter);
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-//        mappingJacksonValue.setFilters(filterProvider);
-//        return mappingJacksonValue;
-//    }
 
     @GetMapping("/get-medical-questionarrie")
-    public MappingJacksonValue getmedquestionarrie() {
+    public List<MedicalQue> getmedquestionarrie() {
         try {
             List<MedicalQue> questions = questionarrieService.getmedicalquestions();
-            SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueJSONFilter", questionfilter);
-            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(questions);
-            mappingJacksonValue.setFilters(filterProvider);
-            return mappingJacksonValue;
-         }catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting medical questionarrie",ex.getMessage());
+
+            return questions;
+        } catch (Exception ex) {
+            throw new APIRequestException("Error while getting medical questionarrie", ex.getMessage());
         }
     }
-//    @PostMapping("/medical-questionans")
-//    public MappingJacksonValue postmedicalquestans(@Valid @RequestBody MedicalQueAns medquestionarrie_ans)
-//    {
-//        MedicalQueAns queans= questionarrieService.postmedicalqueans(medquestionarrie_ans);
-//        SimpleBeanPropertyFilter questionansfilter = SimpleBeanPropertyFilter.filterOutAllExcept("answer_id","medicalquest","question_ans","patient");
-//        SimpleBeanPropertyFilter questionfilter = SimpleBeanPropertyFilter.filterOutAllExcept("question_id", "question");
-//        SimpleBeanPropertyFilter patientfilter = SimpleBeanPropertyFilter.filterOutAllExcept("aabhaId", "firstname", "lastname", "email");
-//        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("MedicalQueAnsJSONFilter", questionansfilter).addFilter("MedicalQueJSONFilter",questionfilter).addFilter("PatientJSONFilter",patientfilter);
-////        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("QuestionAnsJSONFilter", questionansfilter);
-//        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(queans);
-//        mappingJacksonValue.setFilters(filterProvider);
-//        return mappingJacksonValue;
-//    }
-//    @PostMapping("/register-patient")
-//    public MappingJacksonValue registerpatient(@RequestBody Patient patient){
-//        System.out.println("/register-patient");
-//
-//        System.out.println("patient"+patient.toString());
-//
-//        Patient newPatient = workerService.registerPatient(patient);
-//        Set<String> patientFilterProperties = new HashSet<>();
-//        patientFilterProperties.add("aabhaId");
-//
-//        PatientFilter<Patient> patientFilter=new PatientFilter<>(newPatient);
-//
-//        return patientFilter.getPatientFilter(patientFilterProperties);
-//    }
 
     @Validated
     @PostMapping("/register-patient")
-    public MappingJacksonValue registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO,@RequestHeader("Authorization") String authorizationHeader){
+    public String registerpatient(@Valid @RequestBody RegisterPatientDTO registerPatientDTO, @RequestHeader("Authorization") String authorizationHeader) {
 
 //        System.out.println("patient"+registerPatientDTO.toString());
-        System.out.println("RegisterPatientDTO sent "+registerPatientDTO);
-        System.out.println("RegisterPatientDTO sent "+registerPatientDTO.toString());
+        System.out.println("RegisterPatientDTO sent " + registerPatientDTO);
+        System.out.println("RegisterPatientDTO sent " + registerPatientDTO.toString());
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
@@ -205,18 +126,11 @@ public class WorkerRestController {
                 String workerId = helper.getIDFromToken(token);
 
                 Patient newPatient = workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
-                System.out.println("New register patient  "+newPatient.toString());
-                Set<String> patientFilterProperties = new HashSet<>();
-                patientFilterProperties.add("aabhaId");
-
-                PatientFilter<Patient> patientFilter = new PatientFilter<>(newPatient);
-
-                return patientFilter.getPatientFilter(patientFilterProperties);
+                return newPatient.getAabhaId();
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
-        }
-        catch (DataIntegrityViolationException ex) {
+        } catch (DataIntegrityViolationException ex) {
             String errorMessage = ex.getCause().getMessage();
             String duplicateEntryMessage = null;
 
@@ -231,57 +145,52 @@ public class WorkerRestController {
                 // If the message doesn't contain the expected format, throw a generic exception
                 throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
             }
-        }
-        catch (Exception ex)
-        {
-            if(ex instanceof APIRequestException)
-            {
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
                 throw new APIRequestException(ex.getMessage());
-            }
-            else
-                throw new APIRequestException("Error while registering patient",ex.getMessage());
+            } else
+                throw new APIRequestException("Error while registering patient", ex.getMessage());
         }
 
     }
 
 
+    /*
+        @Autowired
+        PatientRepository patientRepository;
+        @GetMapping("/get-patient")
+        public MappingJacksonValue getPatient()
+        {
 
-    @Autowired
-    PatientRepository patientRepository;
-    @GetMapping("/get-patient")
-    public MappingJacksonValue getPatient()
-    {
+            List<Patient> patientList = patientRepository.findAll();
 
-        List<Patient> patientList = patientRepository.findAll();
+            Set<String> patientFilterProperties = new HashSet<>();
+            patientFilterProperties.add("aabhaId");
+            patientFilterProperties.add("followUpDetailsList");
+            patientFilterProperties.add("medicalQueAnsList");
 
-        Set<String> patientFilterProperties = new HashSet<>();
-        patientFilterProperties.add("aabhaId");
-        patientFilterProperties.add("followUpDetailsList");
-        patientFilterProperties.add("medicalQueAnsList");
+            Set<String> followUpFilterProperties = new HashSet<>();
+            followUpFilterProperties.add("followupDate");
+            followUpFilterProperties.add("followUpNo");
+            followUpFilterProperties.add("worker");
+            followUpFilterProperties.add("doctor");
+            followUpFilterProperties.add("questionarrieAnsList");
 
-        Set<String> followUpFilterProperties = new HashSet<>();
-        followUpFilterProperties.add("followupDate");
-        followUpFilterProperties.add("followUpNo");
-        followUpFilterProperties.add("worker");
-        followUpFilterProperties.add("doctor");
-        followUpFilterProperties.add("questionarrieAnsList");
+            Set<String> workerFilterProperties = new HashSet<>();
+            workerFilterProperties.add("firstname");
 
-        Set<String> workerFilterProperties = new HashSet<>();
-        workerFilterProperties.add("firstname");
-
-        Set<String> doctorFilterProperties = new HashSet<>();
-        doctorFilterProperties.add("firstname");
+            Set<String> doctorFilterProperties = new HashSet<>();
+            doctorFilterProperties.add("firstname");
 
 
-        PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
+            PatientFilter<List<Patient>> patientFilter=new PatientFilter<>(patientList);
 
-        return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
+            return patientFilter.getPatientFilter(patientFilterProperties,followUpFilterProperties,workerFilterProperties,doctorFilterProperties);
 
-    }
-
+        }
+    */
     @GetMapping("/getAbhaid")
-    public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader)
-    {
+    public List<String> getAbhaid(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
@@ -292,15 +201,95 @@ public class WorkerRestController {
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
-        }
-        catch (Exception ex)
-        {
-            if(ex instanceof APIRequestException)
-            {
+        } catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
                 throw new APIRequestException(ex.getMessage());
-            }
-            else
-                throw new APIRequestException("Error while getting registered Aabha Ids",ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting registered Aabha Ids", ex.getMessage());
         }
     }
+
+    @GetMapping("/getFollowupSchedule")
+    public List<FollowupScheduleDTO> getFollowupSchedule(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+            List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
+
+            List<FollowupScheduleDTO> followupScheduleDTOList = new ArrayList<>();
+            for (FollowUpSchedule schedule : schedules) {
+                FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
+
+                Date today = Calendar.getInstance().getTime();
+                Date nextFollowUpDate = schedule.getNextFollowUpDate();
+                if (nextFollowUpDate.compareTo(today) < 0) {
+                    followupScheduleDTO.FollowupScheduleToDTO(schedule, "Missed");
+                } else {
+                    followupScheduleDTO.FollowupScheduleToDTO(schedule, "Normal");
+                }
+                followupScheduleDTOList.add(followupScheduleDTO);
+
+            }
+            return followupScheduleDTOList;
+        } else {
+            throw new APIRequestException("Error in authorizing");
+        }
+    }
+
+    @GetMapping("/getprescriptions")
+    public List<PrescriptionDTO> getPrescriptions(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+            List<Prescription> prescriptions = workerService.getprescriptions(Integer.parseInt(workerId));
+            List<PrescriptionDTO> prescriptionDTOList = new ArrayList<>();
+            Date sevendaysback=java.sql.Date.valueOf(LocalDate.now().minusDays(7));
+            for (Prescription prescription : prescriptions) {
+                PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
+
+                if(prescription.getDate().after(sevendaysback))
+                    prescriptionDTO.PrescriptionToDTO(prescription,true);
+                else
+                    prescriptionDTO.PrescriptionToDTO(prescription,false);
+
+                prescriptionDTOList.add(prescriptionDTO);
+
+            }
+            return prescriptionDTOList;
+        } else {
+            throw new APIRequestException("Error in authorizing");
+        }
+    }
+
+//    @GetMapping("/getrecentpresc")
+//    public List<PrescriptionDTO> getRecentPresc(@RequestHeader("Authorization") String authorizationHeader) {
+//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+//
+//            String token = authorizationHeader.substring(7);
+//            String workerId = helper.getIDFromToken(token);
+//            List<Prescription> prescriptions = workerService.get_recent_presc(Integer.parseInt(workerId));
+//
+//            List<PrescriptionDTO> prescriptionDTOList = new ArrayList<>();
+//            for (Prescription prescription : prescriptions) {
+//                PrescriptionDTO prescriptionDTO=new PrescriptionDTO();
+//                prescriptionDTO.PrescriptionToDTO(prescription);
+//
+//                prescriptionDTOList.add(prescriptionDTO);
+//
+//            }
+//            return prescriptionDTOList;
+//        } else {
+//            throw new APIRequestException("Error in authorizing");
+//        }
+//    }
+    //trial for decryption
+    @GetMapping("/getpatient")
+    public Patient getPatient(@RequestParam("abhaid") String abhaid) {
+        System.out.println(patientService.findPatientByEncryptedAbhaId(abhaid));
+        return patientService.findPatientByEncryptedAbhaId(abhaid);
+    }
+
+
 }
