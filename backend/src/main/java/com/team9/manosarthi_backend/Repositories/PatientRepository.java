@@ -26,4 +26,9 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("select p from Patient p where p.doctor.id=:doctorID and p.referred=true")
     Page<Patient> getReferredPatientsDuringFollowup(@Param("doctorID") int doctorID, Pageable pageable);
+    
+    @Query(value = "SELECT * FROM patient WHERE AES_DECRYPT(FROM_BASE64(aabha_id), ?1, ?2) = ?3", nativeQuery = true)
+    Patient findByEncryptedAbhaId(String secretKey, String salt, String encryptedAbhaId);
+//    @Query("SELECT p FROM Patient p WHERE decrypt(p.aabhaId, :secretKey, :salt) = :abhaId")
+//    Patient findByEncryptedAbhaId(@Param("abhaId") String abhaId, @Param("secretKey") String secretKey, @Param("salt") String salt);
 }

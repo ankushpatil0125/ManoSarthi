@@ -21,6 +21,8 @@ public class PrescriptionDTO {
 
     private int prescription_id;
 
+    private String patient_abha; //it will be useful for searching patients prescription using abha in worker in offline mode
+
     private String patient_fname;
 
     private String patient_lname;
@@ -35,12 +37,16 @@ public class PrescriptionDTO {
 
     private List<Medicine> medicine;
 
-    @JsonFormat(pattern="dd-MMM-yyyy")
+    @JsonFormat(pattern="dd-MMMM-yyyy",timezone="Asia/Kolkata")
     private Date date;
 
-    public void prescriptionToDTO(Prescription prescription)
+
+    private Boolean recent;
+
+    public void PrescriptionToDTO(Prescription prescription,Boolean recent)
     {
         this.prescription_id=prescription.getPrescription_id();
+        this.patient_abha=prescription.getPatient().getAabhaId();
         this.patient_fname=prescription.getPatient().getFirstname();
         this.patient_lname=prescription.getPatient().getLastname();
         this.patient_age=prescription.getPatient().getAge();
@@ -49,6 +55,20 @@ public class PrescriptionDTO {
         this.treatement=prescription.getTreatement();
         this.medicine=prescription.getMedicine();
         this.date=prescription.getDate();
+        this.recent=recent;
+    }
 
+    public void doctorPrescriptionDTO(Prescription prescription)
+    {
+        this.prescription_id=prescription.getPrescription_id();
+        this.patient_abha=prescription.getPatient().getAabhaId();
+        this.patient_fname=prescription.getPatient().getFirstname();
+        this.patient_lname=prescription.getPatient().getLastname();
+        this.patient_age=prescription.getPatient().getAge();
+        this.patient_village_name=prescription.getPatient().getVillage().getName();
+        this.disease_code=prescription.getDisease_code();
+        this.treatement=prescription.getTreatement();
+        this.medicine=prescription.getMedicine();
+        this.date=prescription.getDate();
     }
 }

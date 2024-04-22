@@ -49,9 +49,8 @@ public class PatientResponseDTO {
         this.prescriptionDTO=new PrescriptionDTO()  ;
         if(Objects.equals(patient.getStatus(), "ONGOING")){
             for(Prescription pre: patient.getPrescription()){
-                System.out.println("pre id "+pre.getPrescription_id()+" is active "+ pre.isActive());
                 if(pre.isActive()) {
-                    prescriptionDTO.prescriptionToDTO(pre);
+                    prescriptionDTO.doctorPrescriptionDTO(pre);
                     break;
                 }
             }

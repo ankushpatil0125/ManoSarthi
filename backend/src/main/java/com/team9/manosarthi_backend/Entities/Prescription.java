@@ -19,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("PrescriptionJSONFilter")
+@JsonFilter("PrescriptionJSONFilter")
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +60,5 @@ public class Prescription {
 
     @Column(name="Date")
     private Date date;
-
 
 }
