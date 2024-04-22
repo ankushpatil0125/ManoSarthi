@@ -23,7 +23,7 @@ const TabNavigation = () => {
         name="Home2"
         component={HomeScreen}
         options={{
-        //   tabBarStyle:{display: getTabBarVisibility(route)},  
+          //   tabBarStyle:{display: getTabBarVisibility(route)},
           tabBarIcon: () => <Entypo name="home" size={20} color="black" />,
         }}
       />

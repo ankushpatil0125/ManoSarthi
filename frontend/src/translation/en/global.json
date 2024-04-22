@@ -104,12 +104,18 @@
     "Doctor Profile": "Doctor Profile",
     "Supervisor Profile": "Supervisor Profile"
   },
+
+  "ViewPatientDetails" : {
+    "Patient Details": "Patient Details"
+  },
+
   "admin":{
     "Dashboard": "Dashboard",
     "Add": "Add",
     "Update": "Update",
     "Delete": "Delete"
   },
+  
   "doctor":{
     "Dashboard":"Dashboard",
     "New Patient": "New Patient",

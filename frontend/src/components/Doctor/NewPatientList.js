@@ -20,7 +20,6 @@ const NewPatientList = () => {
     setLoading(true);
     try {
       console.log("inside fetchdata function");
-
       // setCurrentPage(0)
       DoctorService.getAllPatients(currentPage,"NEW")
         .then((response) => {
@@ -54,7 +53,6 @@ const NewPatientList = () => {
     return <LoadingComponent/>
   }
   else {
-
   return (
     <div>
       <Header />
@@ -109,9 +107,9 @@ const NewPatientList = () => {
           </tbody>
         </table>
       </div>
-      <div className="flex gap-2 justify-center">
+      <div className="flex items-center justify-center gap-2 py-2">
         <button
-          className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
@@ -119,7 +117,7 @@ const NewPatientList = () => {
         </button>
         
         <button
-          className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >

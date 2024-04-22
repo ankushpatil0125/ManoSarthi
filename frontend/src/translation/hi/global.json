@@ -105,7 +105,12 @@
     "Doctor Profile": "डॉक्टर प्रोफ़ाइल",
     "Supervisor Profile": "सुपरवाइजर प्रोफ़ाइल"
   },
-    "admin":{
+
+  "ViewPatientDetails" : {
+    "Patient Details": "रोगी विवरण"
+  },
+  
+  "admin":{
       "Dashboard": "डैशबोर्ड",
       "Add": "जोड़ें",
       "Update": "अपडेट करें",
@@ -118,12 +123,12 @@
     "Ongoing Patient": "चल रहे रोगी",
     "Treated Patient": "इलाज किए गए रोगी",
     "New Patients": "नए रोगी",
-"FirstName": "पहला नाम",
-"LastName": "अंतिम नाम",
-"Gender": "लिंग",
-"Village": "गाँव",
-"View Details": "विवरण देखें",
-"Previous": "पिछला",
-"Next": "अगला"
+    "FirstName": "पहला नाम",
+    "LastName": "अंतिम नाम",
+    "Gender": "लिंग",
+    "Village": "गाँव",
+    "View Details": "विवरण देखें",
+    "Previous": "पिछला",
+    "Next": "अगला"
   }
 }

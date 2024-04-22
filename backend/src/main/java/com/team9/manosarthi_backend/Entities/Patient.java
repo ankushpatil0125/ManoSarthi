@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("PatientJSONFilter")
+@JsonFilter("PatientJSONFilter")
 public class Patient {
 
     @Id
@@ -89,4 +89,5 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient_pre")
     private List<Prescription> prescription;
+
 }

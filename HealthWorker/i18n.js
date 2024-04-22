@@ -12,13 +12,13 @@ export const translations = {
     "Register Patient": "Register Patient",
     "Missed Followup": "Missed Followup",
     "Sync Data": "Sync Data",
-    "Follow-up Schedule":"Follow-up Schedule",
-    "Name":"Name",
-    "Address":"Address",
-    "Status":"Status",
-    "Change Password":"Change Password",
-    "Enter Your Old Password":"Enter Your Old Password",
-    "Enter Your New Password":"Enter Your New Password"
+    "Follow-up Schedule": "Follow-up Schedule",
+    Name: "Name",
+    Address: "Address",
+    Status: "Status",
+    "Change Password": "Change Password",
+    "Enter Your Old Password": "Enter Your Old Password",
+    "Enter Your New Password": "Enter Your New Password",
     // Add more key-value pairs for English here
   },
   hi: {
@@ -31,13 +31,13 @@ export const translations = {
     "Register Patient": "रोगी का पंजीकरण",
     "Missed Followup": "फॉलोअप छूट गया",
     "Sync Data": "डेटा सिंक्रनाइज़ करें",
-    "Follow-up Schedule":"फॉलो-अप अनुसूची",
-    "Name":"नाम",
-    "Address":"पता",
-    "Status":"स्थिति",
-    "Change Password":"पासवर्ड बदलें",
+    "Follow-up Schedule": "फॉलो-अप अनुसूची",
+    Name: "नाम",
+    Address: "पता",
+    Status: "स्थिति",
+    "Change Password": "पासवर्ड बदलें",
     "Enter Your Old Password": "अपना पुराना पासवर्ड दर्ज करें",
-    "Enter Your New Password": "अपना नया पासवर्ड दर्ज करें"
+    "Enter Your New Password": "अपना नया पासवर्ड दर्ज करें",
     // Add more key-value pairs for Hindi here
   },
 };

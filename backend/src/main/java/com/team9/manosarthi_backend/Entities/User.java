@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
-//@JsonFilter("UserJSONFilter")
+@JsonFilter("UserJSONFilter")
 public class User {
     @Id
     @NotBlank (message = "Username cannot be blank")

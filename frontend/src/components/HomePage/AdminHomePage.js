@@ -419,7 +419,6 @@ const AdminHomePage = () => {
             </div>
           </aside>
         )}
-
         <div className={`p-4 ${isSidebarOpen ? "sm:ml-64" : ""}`}>
           {renderPage()}
         </div>

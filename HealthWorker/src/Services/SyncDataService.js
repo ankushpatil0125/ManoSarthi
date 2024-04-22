@@ -3,6 +3,7 @@ import DeleteService from "../Services/DatabaseServices/DeleteService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import RegisterPatientService from "./RegisterPatientService";
 import { Alert } from "react-native";
+import FollowupService from "./FollowupService";
 
 let v = 0;
 const SyncDataService = {
@@ -75,13 +76,13 @@ const SyncDataService = {
               );
 
               const status1 = await DeleteService.deletePatientByAabhaId(
-                response.data.aabhaId
+                response.data
               );
               console.log("deletePatientByAabhaId Status ", status1);
 
               const status2 =
                 await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
-                  response.data.aabhaId
+                  response.data
                 );
               console.log(
                 "deleteSurveyQuestionAnswersByAabhaId Status ",
@@ -90,7 +91,7 @@ const SyncDataService = {
 
               const status3 =
                 await DeleteService.deleteMedicalHistoryAnswersByAabhaId(
-                  response.data.aabhaId
+                  response.data
                 );
               console.log(
                 "deleteMedicalHistoryAnswersByAabhaId Status ",
@@ -112,6 +113,89 @@ const SyncDataService = {
       Alert.alert("Failed to sync data");
       console.error("Error Registering Patient:", error);
       throw error;
+    }
+  },
+
+  followUpData: async () => {
+    const followpatients = await SelectService.selectFollowUpReferNotRefer();
+    console.log("Sync Service:followpatients: ", followpatients);
+
+    for (const followup of followpatients) {
+      let status = followup.status===1? "true":"false";
+      const followupQNA =
+        await SelectService.getAllFollowUpQuestionAnswersByPID(
+          followup.patientId
+        );
+
+      console.log("Followup QNA Recieved: ", followupQNA);
+
+      const sendFollowupQNA = [];
+      for (const temp of followupQNA) {
+        const ques = {
+          question_ans: temp.answer,
+          questionarrie: {
+            question_id: temp.question_id,
+          },
+        };
+        sendFollowupQNA.push(ques);
+      }
+
+      console.log("FollowUPQNA to send: ", sendFollowupQNA);
+
+      const dataToSend = {
+        patientID: followup.patientId,
+        questionarrieAnsList: sendFollowupQNA,
+        referredDuringFollowUp:status,
+      };
+
+      console.log("Data Send To Server For Followup: ", dataToSend);
+
+      // const resp = FollowupService.addPatientFollowup(dataToSend);
+
+      try {
+        const response = await FollowupService.addPatientFollowup(
+          dataToSend
+        );
+        console.log("Response : ", response.data);
+
+        if (response) {
+          console.log(
+            `Followup with added successfully`
+          );
+
+          const status1 = await DeleteService.deleteFollowupReferNotReferByPID(
+            response.data
+          );
+          console.log("followupReferNotRefer Status ", status1);
+
+          const status2 =
+            await DeleteService.deleteFolloupScheduleByPID(
+              response.data
+            );
+          console.log(
+            "FollowUpSchedule Status ",
+            status2
+          );
+
+          const status3 =
+            await DeleteService.deleteFolloupQuestionAnswersByPID(
+              response.data
+            );
+          console.log(
+            "FollowUpQuestionAnswer Status ",
+            status3
+          );
+        
+        } else {
+          console.error("Failed to add patient");
+          Alert.alert("Failed to sync data");
+        }
+      } catch (error) {
+        console.error("Error during adding patient:", error);
+        Alert.alert("Failed to sync data");
+      }
+
+
     }
   },
 };

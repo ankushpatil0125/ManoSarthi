@@ -54,7 +54,6 @@ const AppNav = () => {
   return (
     <>
       <NavigationContainer>
-        {/* <ForwardedToast> */}
         {userToken !== null ? <AppStack /> : <AuthStack />}
       </NavigationContainer>
       <ForwardedToast />

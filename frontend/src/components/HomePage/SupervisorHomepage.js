@@ -11,6 +11,7 @@ import AddHealthWorker from "../Supervisor/AddHealthWorker";
 import ProfileComponent from "../Actors/ProfileComponent";
 import UpdateHealthWorker from "../HealthWorker/UpdateHealthWorker";
 import { useTranslation } from "react-i18next";
+import AdminDashboard from "../Dashboard/AdminDashboard";
 const SupervisorHomepage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

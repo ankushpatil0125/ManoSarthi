@@ -30,11 +30,7 @@ public class SubDistrictRestController {
     }
 
     @GetMapping("/")        // gives the list of subdistrict in a district
-    public MappingJacksonValue getSubDistrict(@RequestParam("districtcode") int districtcode, @RequestParam("role") String role,@RequestParam("assigned") boolean assigned){
-
-//        Optional<District> district = districtRepository.findById(districtcode);
-//
-//        List<SubDistrict>  subDistricts = subDistrictRepository.findSubDistrictof(district);
+    public Set<SubDistrict> getSubDistrict(@RequestParam("districtcode") int districtcode, @RequestParam("role") String role,@RequestParam("assigned") boolean assigned){
 
         try {
             Optional<District> district = districtRepository.findById(districtcode);
@@ -64,16 +60,7 @@ public class SubDistrictRestController {
                 throw new APIRequestException("SubDistrict cannot found");
             }
 
-            Set<String> subDistrictFilterProperties = new HashSet<>();
-            subDistrictFilterProperties.add("code");
-            subDistrictFilterProperties.add("name");
-            subDistrictFilterProperties.add("district");
-
-            SimpleBeanPropertyFilter SubDistrictFilter = SimpleBeanPropertyFilter.filterOutAllExcept(subDistrictFilterProperties);
-            FilterProvider filterProvider = new SimpleFilterProvider().addFilter("SubDistrictJSONFilter", SubDistrictFilter);
-            MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(subDistricts);
-            mappingJacksonValue.setFilters(filterProvider);
-            return mappingJacksonValue;
+            return subDistricts;
         }
         catch (Exception ex)
         {

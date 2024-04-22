@@ -1,14 +1,12 @@
-package com.team9.manosarthi_backend.Services;
+package com.team9.manosarthi_backend.ServicesImpl;
 import com.team9.manosarthi_backend.Entities.*;
-import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
+import com.team9.manosarthi_backend.Services.AdminService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +30,12 @@ public class AdminServiceImpl implements AdminService {
 
     private MedicalQueRepo medicalQueRepo;
 
+    private PatientRepository patientRepository;
+
+    private PrescriptionRepository prescriptionRepository;
+
+    private DiseaseRepository diseaseRepository;
+
     @Override
     public Doctor adddoctor(Doctor doctor) {
 
@@ -42,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
         user.setUsername("DOC" + newDoctor.getId());
 //        user.setPassword(passwordEncoder.encode("changeme"));
 
-        String password=PasswordGeneratorService.generatePassword();
+        String password= PasswordGeneratorService.generatePassword();
         user.setPassword(passwordEncoder.encode(password));
 
         user.setRole("ROLE_DOCTOR");
@@ -171,12 +175,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Supervisor ReassignSupervisor(Supervisor updatedSupervisor) {
         // Retrieve the existing worker from the database
-        System.out.println("updated details"+updatedSupervisor.getId());
-        System.out.println("exst sup"+supervisorRepository.findById(updatedSupervisor.getId()));
+        System.out.println("updatedSupervisor.getId() "+updatedSupervisor.getId());
         Supervisor existingSupervisor = supervisorRepository.findById(updatedSupervisor.getId()).orElse(null);
-
-        System.out.println(existingSupervisor);
-
+        System.out.println("existingSupervisor"+existingSupervisor);
+        System.out.println("updated details"+updatedSupervisor.getFirstname());
         if(existingSupervisor!=null) {
             //you can update subdistrict code only in reassignment
             System.out.println("updatedSupervisor.getSubdistrictcode() "+updatedSupervisor.getSubdistrictcode());
@@ -220,7 +222,15 @@ public class AdminServiceImpl implements AdminService {
             return medicalQueRepo.save(medicalque);
         }
 
+        @Override
+        public List<Object[]> getdistrictstat()
+        {
+            return patientRepository.patientCountForDistrict();
+        }
 
-
+        @Override
+        public List<Object[]> getdiseasecount(){
+           return diseaseRepository.getDiseaseAndCount();
+        }
 
 }

@@ -1,6 +1,7 @@
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
+import AddPrescription from "./components/Doctor/AddPrescription"
 import LoginComponent from "./components/Login/LoginComponent";
 import ForgotPasswordComponent from "./components/Login/ForgotPasswordComponent";
 import ChangePasswordComponent from "./components/Login/ChangePasswordComponent";
@@ -20,7 +21,7 @@ import { AuthProvider } from "./components/Context/AuthContext";
 import NewPatientDetails from "./components/Doctor/NewPatientDetails";
 import UpdateDeleteActor from "./components/Actors/UpdateDeleteActor";
 // import DoctorOperation from "./components/Doctor/DoctorOperation";
-import AddPrescription from "./components/Doctor/AddPrescription";
+// import AddPrescription from "./components/Doctor/AddPrescription";
 import OngoingPatientDetails from "./components/Doctor/OngoingPatientDetails";
 import ReferredDuringFollowUpDetails from "./components/Doctor/ReferredDuringFollowUpDetails";
 
