@@ -25,17 +25,20 @@ const Preview = ({ navigation, route }) => {
   const [medicalDetails, setMedicalDetails] = useState([]);
   const [medicalQuestions, setMedicalQuestions] = useState([]);
   const [surveyQuestions, setSurveyQuestions] = useState([]);
+  const [followupQuestions, setFollowupQuestions] = useState([]);
   const [isConnected, setIsConnected] = useState(true);
 
   const [surveyQuestionsAnswers, setSurveyQuestionsAnswers] = useState([]);
+  const [followupQuestionsAnswers, setFollowupQuestionsAnswers] = useState([]);
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
-  const { age } = route.params;
+  const { type, pid, age } = route.params;
   const { aabhaId } = useContext(PatientContext);
 
   // const checkNetworkConnectivity = async () => {
   //   const state = await NetInfo.fetch();
   //   return state.isConnected;
   // };
+
   const checkNetworkConnectivity = async () => {
     const state = await NetInfo.fetch();
     console.log("State Response: ", state);
@@ -58,52 +61,70 @@ const Preview = ({ navigation, route }) => {
   };
 
   const handleSubmit = async () => {
-    if (consentChecked) {
-      const res3 = await UpdateService.updatePatientStatus(aabhaId);
-      console.log(res3);
-      if (isConnected) {
-        console.log("Inside Isconected");
+    if (type === "normal") {
+      if (consentChecked) {
+        const res3 = await UpdateService.updatePatientStatus(aabhaId);
+        console.log(res3);
+        if (isConnected) {
+          console.log("Inside Isconected");
 
-        await SyncDataService.registrationData();
-      }
-      await InsertService.insertAabhaId(aabhaId, "old");
-      try {
-        // const res = await SelectService.getMedicalHistoryAnswers();
-        Alert.alert("Data saved in local DB successfully!", "OK", [
-          {
-            text: "OK",
-            onPress: () => {
-              console.log(
-                "Patient data has been successfully saved to the local database"
-              );
-              navigation.navigate("HomeScreen");
+          await SyncDataService.registrationData();
+        }
+        await InsertService.insertAabhaId(aabhaId, "old");
+        try {
+          // const res = await SelectService.getMedicalHistoryAnswers();
+          Alert.alert("Data saved in local DB successfully!", "OK", [
+            {
+              text: "OK",
+              onPress: () => {
+                console.log(
+                  "Patient data has been successfully saved to the local database"
+                );
+                navigation.navigate("HomeScreen");
+              },
             },
-          },
-        ]);
-        // console.log("All data entries in table: ", res);
-        // navigation.navigate("HomeScreen");
-      } catch (error) {
-        Alert.alert("Error!", "Failed to fetch data from local DB.", [
-          { text: "OK" },
-        ]);
-        console.error(error);
+          ]);
+          // console.log("All data entries in table: ", res);
+          // navigation.navigate("HomeScreen");
+        } catch (error) {
+          Alert.alert("Error!", "Failed to fetch data from local DB.", [
+            { text: "OK" },
+          ]);
+          console.error(error);
+        }
+      } else {
+        Alert.alert(
+          "Please provide consent!",
+          "You need to provide consent before submitting.",
+          [{ text: "OK" }]
+        );
       }
-    } else {
-      Alert.alert(
-        "Please provide consent!",
-        "You need to provide consent before submitting.",
-        [{ text: "OK" }]
-      );
+    }else if(type=== "followup"){
+      Alert.alert("Data saved in local DB successfully!", "OK", [
+        {
+          text: "OK",
+          onPress: () => {
+            console.log(
+              "Patient data has been successfully saved to the local database"
+            );
+            navigation.navigate("HomeScreen");
+          },
+        },
+      ]);
+
     }
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    console.log("date:", date);
+    const year = date.getFullYear().toString().substr(-2); // Get last two digits of the year
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month and pad with leading zero if needed
+    const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if needed
+    return `${day}/${month}/${year}`;
   };
 
   // const { aabhaId } = useContext(PatientContext);
-
   const fieldNames = {
     aabhaId: "Aabha ID",
     firstName: "First Name",
@@ -113,46 +134,86 @@ const Preview = ({ navigation, route }) => {
     age: "Age",
     address: "Address",
     status: "Status",
+    patient_fname: "First Name",
+    patient_lname: "Last Name",
+    patient_adress: "Address",
+    followUpDate: "Follow up Date",
   };
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const medicalDetailsRes = await SelectService.getMedicalHistoryAnswers(
-          aabhaId
-        );
-        setMedicalDetails(medicalDetailsRes);
+      if (type === "normal") {
+        try {
+          const medicalDetailsRes =
+            await SelectService.getMedicalHistoryAnswers(aabhaId);
+          setMedicalDetails(medicalDetailsRes);
 
-        const medicalQuestionsRes =
-          await SelectService.getAllMedicalQuestions();
-        setMedicalQuestions(medicalQuestionsRes);
+          const medicalQuestionsRes =
+            await SelectService.getAllMedicalQuestions();
+          setMedicalQuestions(medicalQuestionsRes);
 
-        const surveyQuestionsRes = await SelectService.getAllQuestions(
-          age,
-          "normal"
-        );
-        // console.log("quesiton surveyQuestionsRes",surveyQuestionsRes);
-        setSurveyQuestions(surveyQuestionsRes);
-        // console.log("quesiton surveyQuestions",surveyQuestions);
-        const surveyQuestionsAnswers =
-          await SelectService.getAllSurveyQuestionAnswersByAabhaId(aabhaId);
-        setSurveyQuestionsAnswers(surveyQuestionsAnswers);
+          const surveyQuestionsRes = await SelectService.getAllQuestions(
+            age,
+            "normal"
+          );
+          // console.log("quesiton surveyQuestionsRes",surveyQuestionsRes);
+          setSurveyQuestions(surveyQuestionsRes);
+          // console.log("quesiton surveyQuestions",surveyQuestions);
+          const surveyQuestionsAnswers =
+            await SelectService.getAllSurveyQuestionAnswersByAabhaId(aabhaId);
+          setSurveyQuestionsAnswers(surveyQuestionsAnswers);
 
-        const patient_details = await SelectService.getPatientDetailsByID(
-          aabhaId
-        );
-        setPatientPersonalDeatils(patient_details);
-        // console.log("Patient details array: ",patientPersonalDetails);
-      } catch (error) {
-        console.error("Error fetching data for preview:", error);
+          const patient_details = await SelectService.getPatientDetailsByID(
+            aabhaId
+          );
+          setPatientPersonalDeatils(patient_details);
+
+          // const followupQues = await SelectService.get
+          // console.log("Patient details array: ",patientPersonalDetails);
+        } catch (error) {
+          console.error("Error fetching data for preview:", error);
+        }
+      } else {
+        try {
+          const patient_details =
+            await SelectService.getFollowupPatientDetailsByID(pid);
+          setPatientPersonalDeatils(patient_details);
+
+          const followupQuestionsRes = await SelectService.getAllQuestions(
+            age,
+            "followup"
+          );
+          setFollowupQuestions(followupQuestionsRes);
+
+          const followupQuestionsAnswers =
+            await SelectService.getAllFollowUpQuestionAnswersByPID(pid);
+          setFollowupQuestionsAnswers(followupQuestionsAnswers);
+        } catch (error) {
+          console.error("Error fetching followup data for preview:", error);
+        }
       }
     }
     fetchData();
-  }, [aabhaId]);
+  }, [aabhaId, type]);
   useEffect(() => {
     const fun = async () => {
-      const data = await SelectService.getMedicalHistoryAnswers();
-      console.log("[PreviewScreen]Medical QNA Fetched From Database", data);
+      if (type === "normal") {
+        const data = await SelectService.getMedicalHistoryAnswers();
+        console.log("[PreviewScreen]Medical QNA Fetched From Database", data);
+      } else {
+        const followupQuestionsAnswers =
+          await SelectService.getAllFollowUpQuestionAnswers();
+        console.log(
+          "[PreviewScreen]FollowUp QNA Fetched From Database",
+          followupQuestionsAnswers
+        );
+
+        const frnr = await SelectService.selectFollowUpReferNotRefer();
+        console.log(
+          "[PreviewScreen]FollowUp status Fetched From Database",
+          frnr
+        );
+      }
     };
     fun();
   }, []);
@@ -166,46 +227,64 @@ const Preview = ({ navigation, route }) => {
             <Text style={styles.cardTitle}>Patient Details:</Text>
             {patientPersonalDetails.map((detail, index) => (
               <View key={index}>
-                {Object.keys(detail).map((key) => (
-                  <Text key={key}>
-                    {fieldNames[key]}:{" "}
-                    {key === "dob" ? formatDate(detail[key]) : detail[key]}
-                  </Text>
-                ))}
+                {Object.keys(detail).map(
+                  (key) =>
+                    fieldNames.hasOwnProperty(key) && (
+                      <Text key={key}>
+                        {fieldNames[key]}:{" "}
+                        {key === "followUpDate"
+                          ? formatDate(detail[key])
+                          : detail[key]}
+                      </Text>
+                    )
+                )}
               </View>
             ))}
           </View>
 
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Survey Questionnaire:</Text>
-            {surveyQuestionsAnswers.map((detail, index) => (
-              <Text key={index}>
-                {surveyQuestions[index]?.question} - {detail.answer}
-              </Text>
-            ))}
-          </View>
+          {type === "normal" ? (
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Survey Questionnaire:</Text>
+              {surveyQuestionsAnswers.map((detail, index) => (
+                <Text key={index}>
+                  {surveyQuestions[index]?.question} - {detail.answer}
+                </Text>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Followup Questionnaire:</Text>
+              {followupQuestionsAnswers.map((detail, index) => (
+                <Text key={index}>
+                  {followupQuestions[index]?.question} - {detail.answer}
+                </Text>
+              ))}
+            </View>
+          )}
 
           {/* Medical Details */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Medical Details:</Text>
-            {medicalQuestions.map((question, index) => {
-              // Find the corresponding detail in medicalDetails based on question_id
-              const detail = medicalDetails.find(
-                (detail) => detail.question_id === question.question_id
-              );
-              // If detail exists, display the question and answer
-              if (detail && question.question_id !== commentID) {
-                return (
-                  <Text key={index}>
-                    {question.question}- {detail.question_ans}
-                  </Text>
+          {type === "normal" ? (
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Medical Details:</Text>
+              {medicalQuestions.map((question, index) => {
+                // Find the corresponding detail in medicalDetails based on question_id
+                const detail = medicalDetails.find(
+                  (detail) => detail.question_id === question.question_id
                 );
-              } else {
-                return null; // If detail doesn't exist, return null
-              }
-            })}
-            <Text>Comment: {comment}</Text>
-          </View>
+                // If detail exists, display the question and answer
+                if (detail && question.question_id !== commentID) {
+                  return (
+                    <Text key={index}>
+                      {question.question}- {detail.question_ans}
+                    </Text>
+                  );
+                } else {
+                  return null; // If detail doesn't exist, return null
+                }
+              })}
+              <Text>Comment: {comment}</Text>
+            </View>
+          ) : null}
         </View>
 
         <View style={styles.checkboxContainer}>

@@ -231,6 +231,7 @@ public class WorkerRestController {
             String token = authorizationHeader.substring(7);
             String workerId = helper.getIDFromToken(token);
             List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
+//            System.out.println("schedules"+schedules.toString());
             List<FollowupScheduleDTO> followupScheduleDTOList=new ArrayList<>();
             for(FollowUpSchedule schedule:schedules)
             {
@@ -262,6 +263,7 @@ public class WorkerRestController {
                 followupScheduleDTOList.add(followupScheduleDTO);
 
             }
+            for (FollowupScheduleDTO followupScheduleDTO : followupScheduleDTOList) System.out.println("followupScheduleDTO   "+followupScheduleDTO.getFollowUpDate());
           return followupScheduleDTOList;
         }
         else {

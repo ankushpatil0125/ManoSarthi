@@ -24,6 +24,15 @@ const CreateService = {
     const res7 = await CreateService.createFollowUpTable();
     console.log("Create Res7: ", res7);
 
+    const res8 = await CreateService.createFollowUpQuestionAnswerTable();
+    console.log("Create Res8: ", res8);
+
+    const res9 = await CreateService.createFollowUpReferNotReferTable();
+    console.log("Create Res9: ", res9);
+
+    const res10 = await CreateService.createPrescriptionTable();
+    console.log("Create Res10: ", res10);
+
     // Add more table creation functions here if needed
   },
   createAabhaIdInfoTable: () => {
@@ -56,11 +65,12 @@ const CreateService = {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS FollowUpSchedule (
-            followup_id INTEGER PRIMARY KEY,
+            patientId INTEGER PRIMARY KEY,
             patient_fname TEXT,
             patient_lname TEXT,
             patient_adress TEXT,
             followUpDate TEXT,
+            age INTEGER,
             type TEXT
             );`,
           [],
@@ -76,6 +86,45 @@ const CreateService = {
           }
         );
       });
+    });
+  },
+  createPrescriptionTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            `CREATE TABLE IF NOT EXISTS prescriptions (
+            aabhaId INTEGER,
+            prescription_id INTEGER PRIMARY KEY,
+            patient_fname TEXT,
+            patient_lname TEXT,
+            patient_age INTEGER,
+            patient_village_name TEXT,
+            disease_code TEXT,
+            treatment TEXT,
+            medicine TEXT,
+            date TEXT
+          )`,
+            [],
+            (_, result) => {
+              if (result.rowsAffected > 0) {
+                resolve("Prescription table created successfully");
+              } else {
+                resolve("Prescription table already exists");
+              }
+            },
+            (_, error) => {
+              reject("Error creating prescription table: " + error.message);
+            }
+          );
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
     });
   },
 
@@ -137,6 +186,30 @@ const CreateService = {
     });
   },
 
+  createFollowUpReferNotReferTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS followupReferNotRefer (
+            patientId INTEGER PRIMARY KEY,
+            status BOOLEAN              
+          );`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("followupReferNotRefer table created successfully");
+            } else {
+              resolve("followupReferNotRefer table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating followupReferNotRefer table: " + error);
+          }
+        );
+      });
+    });
+  },
+
   createSurveyQuestionAnswerTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -163,6 +236,31 @@ const CreateService = {
     });
   },
 
+  createFollowUpQuestionAnswerTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS FollowUpQuestionAnswer (
+            patientId INTEGER,
+            question_id INTEGER,
+            answer TEXT,
+            PRIMARY KEY (patientId, question_id)
+          );`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("FollowUpQuestionAnswer table created successfully");
+            } else {
+              resolve("FollowUpQuestionAnswer table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating FollowUpQuestionAnswer table: " + error);
+          }
+        );
+      });
+    });
+  },
   createMedicalQuestionTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
