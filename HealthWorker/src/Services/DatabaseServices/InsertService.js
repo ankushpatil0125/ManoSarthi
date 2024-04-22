@@ -12,13 +12,51 @@ const InsertService = {
             [aabha, status],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data inserted into AabhaIdInfo successfully");
+                resolve(
+                  rowsAffected + " Data inserted into AabhaIdInfo successfully"
+                );
               } else {
                 reject("Failed to insert data into AabhaIdInfo");
               }
             },
             (_, error) => {
               reject("Error inserting data into AabhaIdInfo: " + error);
+            }
+          );
+        });
+      });
+    });
+  },
+
+  insertFollowUpTable: (followUpScheduleList) => {
+    // console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        followUpScheduleList.forEach((followUpSchedule) => {
+          tx.executeSql(
+            "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [
+              followUpSchedule.patientID,
+              followUpSchedule.patient_fname,
+              followUpSchedule.patient_lname,
+              followUpSchedule.patient_address,
+              followUpSchedule.followUpDate,
+              followUpSchedule.age,
+              followUpSchedule.type,
+            ],
+            (_, { rowsAffected }) => {
+              // console.log("insertFollowUpTable" + rowsAffected);
+              if (rowsAffected > 0) {
+                resolve(
+                  rowsAffected +
+                    " Data Inserted Into FollowUpSchedule Table Successfully"
+                );
+              } else {
+                reject("Failed To Insert Data Into FollowUpSchedule Table");
+              }
+            },
+            (_, error) => {
+              reject("Error inserting data into FollowUpSchedule: " + error);
             }
           );
         });
@@ -45,12 +83,11 @@ const InsertService = {
       });
     });
   },
-  
+
   insertPatientDetails: (patientDetails) => {
-    console.log("before inside insertPatientD");
+    // console.log("before inside insertPatientD");
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
-        console.log("in trans inside insertPatientD");
         tx.executeSql(
           "INSERT OR REPLACE INTO PatientDetails (aabhaId, firstName, lastName, email, gender, age, address) VALUES (?, ?, ?, ?, ?, ?, ?)",
           [
@@ -63,15 +100,10 @@ const InsertService = {
             patientDetails.address,
           ],
           (_, { rowsAffected }) => {
-            console.log("inside insertPatientD");
-            console.log(
-              "inside insertPatientDetails after ",
-              rowsAffected._array
-            );
             if (rowsAffected > 0) {
-              resolve("Data inserted into PatientDetails successfully");
+              resolve("Data Inserted Into PatientDetails Table Successfully");
             } else {
-              reject("Failed to insert data into PatientDetails");
+              reject("Failed To Insert Data Into PatientDetails Table");
             }
           },
           (_, error) => {
@@ -79,6 +111,88 @@ const InsertService = {
           }
         );
       });
+    });
+  },
+  insertFollowUpReferNotRefer: (pid, state) => {
+    // console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT OR REPLACE INTO followupReferNotRefer (patientId, status) VALUES (?, ?)",
+          [pid, state],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve(
+                "Data Inserted Into followupReferNotRefer Table Successfully"
+              );
+            } else {
+              reject("Failed To Insert Data Into followupReferNotRefer Table");
+            }
+          },
+          (_, error) => {
+            reject("Error inserting data into followupReferNotRefer: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  insertPrescriptionTable: (prescriptions) => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          prescriptions.forEach((prescription) => {
+            const {
+              aabhaId,
+              prescription_id,
+              patient_fname,
+              patient_lname,
+              patient_age,
+              patient_village_name,
+              disease_code,
+              treatment,
+              medicine,
+              date,
+            } = prescription;
+
+            tx.executeSql(
+              `INSERT INTO prescriptions 
+            (aabhaId, prescription_id, patient_fname, patient_lname, patient_age, patient_village_name, disease_code, treatment, medicine, date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+              [
+                aabhaId,
+                prescription_id,
+                patient_fname,
+                patient_lname,
+                patient_age,
+                patient_village_name,
+                disease_code,
+                treatment,
+                medicine,
+                date,
+              ],
+              (_, result) => {
+                if (result.rowsAffected < 1) {
+                  reject(
+                    "Failed to insert prescription with ID: " + prescription_id
+                  );
+                }
+              },
+              (_, error) => {
+                reject("Error inserting prescription: " + error.message);
+              }
+            );
+          });
+
+          resolve("Prescriptions inserted successfully");
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
     });
   },
 
@@ -98,7 +212,10 @@ const InsertService = {
             ],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data Inserted Into SurveyQuestion Successfully");
+                resolve(
+                  rowsAffected +
+                    " Data Inserted Into SurveyQuestion Successfully"
+                );
               } else {
                 reject("Failed To Insert Data Into SurveyQuestion");
               }
@@ -121,7 +238,10 @@ const InsertService = {
             [question.question_id, question.question],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
-                resolve("Data Inserted Into Medical Questions Successfully");
+                resolve(
+                  rowsAffected +
+                    " Data Inserted Into Medical Questions Successfully"
+                );
               } else {
                 reject("Failed To Insert Data Into Medical Questions");
               }
@@ -156,29 +276,25 @@ const InsertService = {
   //   });
   // },
 
-  insertSurveyQuestionAnswer : (aabhaId, questionId, answer) => {
+  insertSurveyQuestionAnswer: (aabhaId, questionId, answer) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           `SELECT * FROM SurveyQuestionAnswer WHERE aabhaId = ? AND question_id = ?`,
-          [aabhaId,questionId],
+          [aabhaId, questionId],
           (_, result) => {
             if (result.rows.length > 0) {
-              console.log("Inside condition")
+              // console.log("Inside condition");
               // Record with the same primary key already exists, perform an update
               tx.executeSql(
                 `UPDATE SurveyQuestionAnswer SET answer = ? WHERE aabhaId = ? AND question_id = ?`,
-                [
-                  answer,
-                  aabhaId,
-                  questionId,
-                ],
+                [answer, aabhaId, questionId],
                 (_, { rowsAffected }) => {
                   if (rowsAffected > 0) {
-                    console.log("resolved update query")
+                    // console.log("resolved update query");
                     resolve("SurveyQuestionAnswer updated successfully");
                   } else {
-                    console.log("reject update query")
+                    console.log("reject update query");
                     reject("Failed to update SurveyQuestionAnswer");
                   }
                 },
@@ -190,26 +306,87 @@ const InsertService = {
               // Record does not exist, perform an insert
               tx.executeSql(
                 `INSERT INTO SurveyQuestionAnswer (aabhaId, question_id, answer) VALUES (?, ?, ?)`,
-                [
-                  aabhaId,
-                  questionId,
-                  answer,
-                ],
+                [aabhaId, questionId, answer],
                 (_, { rowsAffected }) => {
                   if (rowsAffected > 0) {
-                    resolve("Data inserted into SurveyQuestionAnswer successfully");
+                    resolve(
+                      "Data inserted into SurveyQuestionAnswer successfully"
+                    );
                   } else {
                     reject("Failed to insert data into SurveyQuestionAnswer");
                   }
                 },
                 (_, error) => {
-                  reject("Error inserting data into SurveyQuestionAnswer: " + error);
+                  reject(
+                    "Error inserting data into SurveyQuestionAnswer: " + error
+                  );
                 }
               );
             }
           },
           (_, error) => {
-            reject("Error checking existing record in SurveyQuestionAnswer: " + error);
+            reject(
+              "Error checking existing record in SurveyQuestionAnswer: " + error
+            );
+          }
+        );
+      });
+    });
+  },
+
+  insertFollowUpQuestionAnswer: (patientId, questionId, answer) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM FollowUpQuestionAnswer WHERE patientId = ? AND question_id = ?`,
+          [patientId, questionId],
+          (_, result) => {
+            if (result.rows.length > 0) {
+              // console.log("Inside condition");
+              // Record with the same primary key already exists, perform an update
+              tx.executeSql(
+                `UPDATE FollowUpQuestionAnswer SET answer = ? WHERE patientId = ? AND question_id = ?`,
+                [answer, patientId, questionId],
+                (_, { rowsAffected }) => {
+                  if (rowsAffected > 0) {
+                    // console.log("resolved update query");
+                    resolve("FollowUpQuestionAnswer updated successfully");
+                  } else {
+                    console.log("reject update query");
+                    reject("Failed to update FollowUpQuestionAnswer");
+                  }
+                },
+                (_, error) => {
+                  reject("Error updating FollowUpQuestionAnswer: " + error);
+                }
+              );
+            } else {
+              // Record does not exist, perform an insert
+              tx.executeSql(
+                `INSERT INTO FollowUpQuestionAnswer (patientId, question_id, answer) VALUES (?, ?, ?)`,
+                [patientId, questionId, answer],
+                (_, { rowsAffected }) => {
+                  if (rowsAffected > 0) {
+                    resolve(
+                      "Data inserted into FollowUpQuestionAnswer successfully"
+                    );
+                  } else {
+                    reject("Failed to insert data into FollowUpQuestionAnswer");
+                  }
+                },
+                (_, error) => {
+                  reject(
+                    "Error inserting data into FollowUpQuestionAnswer: " + error
+                  );
+                }
+              );
+            }
+          },
+          (_, error) => {
+            reject(
+              "Error checking existing record in FollowUpQuestionAnswer: " +
+                error
+            );
           }
         );
       });
@@ -261,7 +438,7 @@ const InsertService = {
   //                 );
   //             }
   //           }
-            
+
   //         );
   //       }
   //       tx.executeSql(
@@ -276,11 +453,11 @@ const InsertService = {
   //           reject(error); // Reject the promise if there's an error
   //         }
   //       );
-        
+
   //     });
   //   });
   // },
-  insertMedicalHistoryAnswers : (
+  insertMedicalHistoryAnswers: (
     medicalQuestions,
     answers,
     comment,
@@ -300,24 +477,42 @@ const InsertService = {
                 // Record with the same aabha_id and question_id already exists, perform an update
                 tx.executeSql(
                   `UPDATE medical_history_answers SET question_ans = ? WHERE aabha_id = ? AND question_id = ?`,
-                  [answers[index], aabha_id, medicalQuestions[index].question_id],
+                  [
+                    answers[index],
+                    aabha_id,
+                    medicalQuestions[index].question_id,
+                  ],
                   (_, { rowsAffected }) => {
-                    console.log(`Data for question ${index + 1} updated successfully`);
+                    console.log(
+                      `Data for question ${index + 1} updated successfully`
+                    );
                   },
                   (_, error) => {
-                    console.error(`Error updating data for question ${index + 1}`, error);
+                    console.error(
+                      `Error updating data for question ${index + 1}`,
+                      error
+                    );
                   }
                 );
               } else {
                 // Record does not exist, perform an insert
                 tx.executeSql(
                   `INSERT INTO medical_history_answers (aabha_id, question_id, question_ans) VALUES (?, ?, ?)`,
-                  [aabha_id, medicalQuestions[index].question_id, answers[index]],
+                  [
+                    aabha_id,
+                    medicalQuestions[index].question_id,
+                    answers[index],
+                  ],
                   (_, result) => {
-                    console.log(`Data for question ${index + 1} saved successfully`);
+                    console.log(
+                      `Data for question ${index + 1} saved successfully`
+                    );
                   },
                   (_, error) => {
-                    console.error(`Error saving data for question ${index + 1}`, error);
+                    console.error(
+                      `Error saving data for question ${index + 1}`,
+                      error
+                    );
                   }
                 );
               }
@@ -327,7 +522,7 @@ const InsertService = {
             }
           );
         }
-  
+
         // Insert or update the comment
         tx.executeSql(
           `SELECT * FROM medical_history_answers WHERE aabha_id = ? AND question_id = ?`,
@@ -365,6 +560,34 @@ const InsertService = {
           },
           (_, error) => {
             console.error("Error checking existing comment", error);
+          }
+        );
+      });
+    });
+  },
+
+  updateWorkerDetails: (workerDetails) => {
+    console.log("before inside insertPatientD");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        console.log("in trans inside insertPatientD");
+        tx.executeSql(
+          "UPDATE profile_details_table SET firstname = ?, lastname=?,gender=? where email = ?",
+          [
+            workerDetails.firstName,
+            workerDetails.lastName,
+            workerDetails.gender,
+            workerDetails.email,
+          ],
+          (_, { rowsAffected }) => {
+            if (rowsAffected > 0) {
+              resolve("Data updated into profile_details_table successfully");
+            } else {
+              reject("Failed to update data into profile_details_table");
+            }
+          },
+          (_, error) => {
+            reject("Error updating data into profile_details_table: " + error);
           }
         );
       });

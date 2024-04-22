@@ -1,20 +1,31 @@
-import { KeyboardAvoidingView,TextInput, Platform, StyleSheet, Text, View, TouchableOpacity,Alert } from 'react-native'
-import React,{useContext, useState,useEffect} from 'react'
-import PatientContext from '../context/PatientContext';
-import SelectService from '../Services/DatabaseServices/SelectService';
+import {
+  KeyboardAvoidingView,
+  TextInput,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import PatientContext from "../context/PatientContext";
+import SelectService from "../Services/DatabaseServices/SelectService";
 
-const RegisterPatientScreen = ({navigation}) => {
+const RegisterPatientScreen = ({ navigation }) => {
   const [abhaId, setAbhaId] = useState("");
-  const [abhaTable,setAbhaTable] =useState([]);
+  const [abhaTable, setAbhaTable] = useState([]);
   const { setAabhaId } = useContext(PatientContext);
   // const navigation = useNavigation();
 
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllAabhaIdInfo();
-      console.log("DATA :",data);
       setAbhaTable(data);
-      console.log("AabhaId Fetched From Data: ", data);
+      console.log(
+        "[RegisterPatientScreen]AabhaId Fetched From Database: ",
+        data
+      );
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -29,35 +40,31 @@ const RegisterPatientScreen = ({navigation}) => {
       Alert.alert("Error", "Please enter ABHA ID");
       return;
     }
-    if(abhaTable.length > 0){
+    if (abhaTable.length > 0) {
       let aabhaId_not_in_array = true;
-    console.log("Desired :",abhaId);
-    console.log("In Array : ",abhaTable[0].aabhaId);
-    for (let i = 0; i < abhaTable.length; i++) {
-      if (abhaTable[i]["aabhaId"] === abhaId ) {
-        aabhaId_not_in_array = false;
-        break;
+      console.log("Desired :", abhaId);
+      console.log("In Array : ", abhaTable[0].aabhaId);
+      for (let i = 0; i < abhaTable.length; i++) {
+        if (abhaTable[i]["aabhaId"] === abhaId) {
+          aabhaId_not_in_array = false;
+          break;
+        }
       }
-    }
 
-    if (aabhaId_not_in_array) {
-      console.log(abhaId + " is not in the array");
-      setAabhaId(abhaId);
-      console.log("ABHA ID registered:", abhaId);
-      navigation.navigate("PatientDetailsScreen");
+      if (aabhaId_not_in_array) {
+        console.log(abhaId + " is not in the array");
+        setAabhaId(abhaId);
+        console.log("ABHA ID registered:", abhaId);
+        navigation.navigate("PatientDetailsScreen");
+      } else {
+        console.log(abhaId + " is in the array");
+        Alert.alert("Aabha Id Already Registered");
+      }
     } else {
-      console.log(abhaId + " is in the array");
-      Alert.alert("Aabha Id Already Registered");
-
+      setAabhaId(abhaId);
+      console.log("ABHA ID Entered: ", abhaId);
+      navigation.navigate("PatientDetailsScreen");
     }
-    
-  }
-  else{
-    setAabhaId(abhaId);
-    console.log("ABHA ID registered:", abhaId);
-    navigation.navigate("PatientDetailsScreen");
-  }
-   
   };
   return (
     <KeyboardAvoidingView
@@ -87,10 +94,10 @@ const RegisterPatientScreen = ({navigation}) => {
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default RegisterPatientScreen
+export default RegisterPatientScreen;
 
 const styles = StyleSheet.create({
   container: {

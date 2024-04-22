@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   Alert,
+  StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -15,7 +16,7 @@ import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService
 import InsertService from "../Services/DatabaseServices/InsertService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
 
-const MedicalDetails = () => {
+const MedicalDetails = ({ route }) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   const [comment, setComment] = useState("");
@@ -28,10 +29,10 @@ const MedicalDetails = () => {
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
   // var commentID;
   const [commentID, setCommentID] = useState(0);
-
+  const { age,type } = route.params;
 
   useEffect(() => {
-    fetchQuestionsFromDatabase();
+    fetchDataFromDatabase();
   }, []);
 
   useEffect(() => {
@@ -43,26 +44,40 @@ const MedicalDetails = () => {
     };
   }, []);
 
-  const fetchQuestionsFromDatabase = async () => {
+  const fetchDataFromDatabase = async () => {
     try {
       const data2 = await SelectService.getAllSurveyQuestionAnswers();
-      console.log("QUestionaire Answers",data2);
+      console.log(
+        "[MedicalDetailsScreen]Suvery QNA Fetched From Database",
+        data2
+      );
       const data = await SelectService.getAllMedicalQuestions();
       // setMedicalQuestions(data);
-      console.log("Medical Questions res data (IN MedicalDetails Screen): ", data);
+      console.log(
+        "[MedicalDetailsScreen]Medical Questions Need To Render: ",
+        data
+      );
       // Find the index of the question with the "comment" value
-      const commentIndex = data.findIndex(medical_question => medical_question.question === "comment");
-      const updatedMedicalQuestions = [...data.slice(0, commentIndex), ...data.slice(commentIndex + 1)];
+      const commentIndex = data.findIndex(
+        (medical_question) => medical_question.question === "comment"
+      );
+      const updatedMedicalQuestions = [
+        ...data.slice(0, commentIndex),
+        ...data.slice(commentIndex + 1),
+      ];
       // commentID = data[commentIndex].question_id;
       setCommentID(data[commentIndex].question_id);
-      console.log("CommentID: ", commentID);
+      // console.log("CommentID: ", commentID);
       setMedicalQuestions(updatedMedicalQuestions);
-      console.log("updatedMedicalQuestions: ", medicalQuestions);
+      console.log(
+        "[MedicalDetailsScreen]Updated Medical Questions: ",
+        medicalQuestions
+      );
     } catch (error) {
       console.error("Error fetching from DB: ", error);
     }
   };
-  
+
   const handleAnswerChange = (index, answer) => {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
@@ -91,18 +106,19 @@ const MedicalDetails = () => {
         try {
           await saveDataToDatabase(answers, comment);
           // await sendDataToServer(answers, comment);
-          console.log("Data submitted to local DB successfully");
+          console.log("Medical QNA Stored Successfully");
         } catch (error) {
           console.error("Error submitting data to server:", error);
         }
       } else {
         await saveDataToDatabase(answers, comment);
       }
-      navigation.navigate('Preview', {
+      navigation.navigate("Preview", {
         commentID,
-        comment
+        comment,
+        age,
+        type
       });
-
     } else {
       Alert.alert(
         "Missing Information",
@@ -112,26 +128,8 @@ const MedicalDetails = () => {
     }
   };
 
-  // const sendDataToServer = async (answers, comment) => {
-  //   // const data = [];
-  //   try {
-  //     console.log("Data to be send: ", data);
-  //     // Need to define sendMedicalQuestionarrieAnswers in MedicalQuestionarrieService
-  //     const response =
-  //       await MedicalQuestionarrieService.sendMedicalQuestionarrieAnswers();
-  //     if (response) {
-  //       alert(`Medical que, ans sent successfully`);
-  //     } else {
-  //       alert(`Failed to send medical que, ans data`);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error during sending medical que, ans, ${error}`);
-  //   }
-  // };
-
   const saveDataToDatabase = async (answers, comment) => {
     try {
-      console.log("before res: ");
       const res = await InsertService.insertMedicalHistoryAnswers(
         medicalQuestions,
         answers,
@@ -139,47 +137,36 @@ const MedicalDetails = () => {
         commentID,
         aabhaId
       );
-      console.log("res: ", res);
+      // console.log("[MedicalDetailsScreen]",res);
     } catch (error) {
-      console.error("Error while storing data locally", error);
+      console.error("Error While Storing Data Locally", error);
     }
   };
 
   return (
-    <ScrollView style={{ flex: 1}}>
-      <View style={{ flex:1,marginTop: 30, paddingLeft: 10,}}>
-        {medicalQuestions.map((question, index) => (
-          <View key={index} style={{ marginBottom: 15 }}>
-            <Text>{question.question}</Text>
-            <View style={{ paddingTop: 5,flexDirection:'row',}}>
-              <View style={{ marginRight: 10 }}>
-                <TouchableOpacity
-                  style={{
-                    
-                    backgroundColor:
-                      clickedButtons[index] && answers[index] === "Yes"
-                        ? "#3498db"
-                        : "lightblue",
-                    padding: 10,
-                    borderRadius: 5,
-                  }}
-                  onPress={() => handleAnswerChange(index, "Yes")}
-                >
-                  <Text style={{ fontSize: 16 }}>Yes</Text>
-                </TouchableOpacity>
-              </View>
+    <View style={styles.container}>
+      <ScrollView>
+        {medicalQuestions.map((item, index) => (
+          <View key={index} style={styles.questionContainer}>
+            <Text style={styles.questionText}>{item.question}</Text>
+            <View style={styles.radioButtonContainer}>
               <TouchableOpacity
-                style={{
-                  backgroundColor:
-                    clickedButtons[index] && answers[index] === "No"
-                      ? "#3498db"
-                      : "lightblue",
-                  padding: 10,
-                  borderRadius: 5,
-                }}
-                onPress={() => handleAnswerChange(index, "No")}
+                style={[
+                  styles.radioButton,
+                  answers[index] === "yes" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleAnswerChange(index, "yes")}
               >
-                <Text style={{ fontSize: 16 }}>No</Text>
+                <Text style={styles.radioButtonText}>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.radioButton,
+                  answers[index] === "no" && styles.radioButtonSelected,
+                ]}
+                onPress={() => handleAnswerChange(index, "no")}
+              >
+                <Text style={styles.radioButtonText}>No</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -199,23 +186,55 @@ const MedicalDetails = () => {
             width: "50%",
           }}
         />
-        <View style={{ width: 200, marginBottom: 20 }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: "lightblue",
-              padding: 10,
-              borderRadius: 5,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onPress={handleFormSubmit}
-          >
-            <Text style={{ fontSize: 16 }}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <TouchableOpacity style={styles.nextButton} onPress={handleFormSubmit}>
+        <Text style={styles.nextButtonText}>Next</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "space-between",
+  },
+  questionContainer: {
+    marginBottom: 20,
+  },
+  questionText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  radioButtonContainer: {
+    flexDirection: "row",
+  },
+  radioButton: {
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginRight: 10,
+  },
+  radioButtonSelected: {
+    backgroundColor: "#3498db",
+  },
+  radioButtonText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  nextButton: {
+    backgroundColor: "#3498db",
+    paddingVertical: 15,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+});
 
 export default MedicalDetails;

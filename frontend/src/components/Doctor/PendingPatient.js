@@ -2,16 +2,16 @@ import "../../css/PendingPatient.css";
 import DoctorService from "../../Services/DoctorService";
 import Header from "../Header/Header";
 import React, { useEffect, useState } from "react";
-// import { useHistory } from 'react-router-dom';
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import PatientDetails from "../Patient/PatientDetails";
+import {  useNavigate } from "react-router-dom";
 import LoadingComponent from "../Loading/LoadingComponent";
+import { useTranslation } from "react-i18next";
 
 const PendingPatient = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [t] = useTranslation("global");
   // const history = useHistory();
   useEffect(() => {
     fetchData();
@@ -21,7 +21,6 @@ const PendingPatient = () => {
     setLoading(true);
     try {
       console.log("inside fetchdata function");
-
       // setCurrentPage(0)
       DoctorService.getAllPatients(currentPage)
         .then((response) => {
@@ -54,11 +53,10 @@ const PendingPatient = () => {
     return <LoadingComponent/>
   }
   else {
-
   return (
     <div>
       <Header />
-      <div className="pending">
+      <div className="pt-32">
         <div
           style={{
             padding: 10,
@@ -66,17 +64,17 @@ const PendingPatient = () => {
             justifyContent: "center",
           }}
         >
-          <h4>New Patients : </h4>
+          <h4 className="flex justify-center items-center text-[#6467c0]">{t('doctor.New Patients')}</h4>
         </div>
         <table className="table-auto border border-collapse border-gray-400">
           <thead className="bg-gray-200">
             <tr>
-              <th className="border border-gray-400 px-4 py-2">FirstNamme</th>
-              <th className="border border-gray-400 px-4 py-2">LastName</th>
-              <th className="border border-gray-400 px-4 py-2">Gender</th>
+              <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t('doctor.FirstName')}</th>
+              <th className="border border-gray-400 px-4 py-2 text-[#6467c0] ">{t('doctor.LastName')}</th>
 
-              <th className="border border-gray-400 px-4 py-2">Village</th>
-              <th className="border border-gray-400 px-4 py-2">View Details</th>
+              <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.Village")}</th>
+              <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.Gender")}</th>
+              <th className="border border-gray-400 px-4 py-2 text-[#6467c0]">{t("doctor.View Details")}</th>
               {/* <th className="border border-gray-400 px-4 py-2">Age</th> */}
             </tr>
           </thead>
@@ -96,12 +94,12 @@ const PendingPatient = () => {
                 <td className="border border-gray-400 px-4 py-2">
                   {patient.gender}
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 px-4 py-2 ">
                   <button
                     onClick={()=>handlePatient(patient.patient_id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded"
                   >
-                    View Details
+                    {t("doctor.View Details")}
                   </button>
                 </td>
               </tr>
@@ -109,21 +107,21 @@ const PendingPatient = () => {
           </tbody>
         </table>
       </div>
-      <div className="flex gap-2 justify-center">
+      <div className="flex items-center justify-center gap-2 py-2">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
-          Previous
+          {t("doctor.Previous")}
         </button>
-
+        
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#8182a8] text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
-          Next
+          {t("doctor.Next")}
         </button>
       </div>
     </div>

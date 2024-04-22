@@ -3,7 +3,6 @@ package com.team9.manosarthi_backend.Controllers;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.UserRepository;
-import com.team9.manosarthi_backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

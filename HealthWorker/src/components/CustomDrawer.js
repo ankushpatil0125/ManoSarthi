@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image,Pressable } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React, { useContext } from "react";
 import {
   DrawerContentScrollView,
@@ -12,11 +12,13 @@ import LanguageToggleButton from "../MultiLingual/LanguageButton";
 import { useLanguageContext } from "../context/LanguageProvider";
 import SyncDataService from "../Services/SyncDataService";
 const CustomDrawer = (props) => {
-  const {logout} = useContext(AuthContext);
+  const { logout, userName } = useContext(AuthContext);
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
+  // console.log("USername: " , userName)
   handleSync = async () => {
     console.log("Before Syncing :");
-    SyncDataService.registrationData();
+    // SyncDataService.registrationData();
+    SyncDataService.followUpData();
   };
   return (
     <View style={{ flex: 1 }}>
@@ -42,7 +44,7 @@ const CustomDrawer = (props) => {
             marginHorizontal: 10,
           }}
         >
-          John Doe
+          {userName}
         </Text>
         <View style={{ flex: 1, backgroundColor: "#fff", paddingTop: 10 }}>
           <DrawerItemList {...props} />
@@ -68,7 +70,12 @@ const CustomDrawer = (props) => {
         />
       </View>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
-        <TouchableOpacity onPress={() => {logout()}} style={{ paddingVertical: 15 }}>
+        <TouchableOpacity
+          onPress={() => {
+            logout();
+          }}
+          style={{ paddingVertical: 15 }}
+        >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialIcons name="logout" size={24} color="black" />
             <Text style={{ fontSize: 15, marginLeft: 5 }}>Signout</Text>

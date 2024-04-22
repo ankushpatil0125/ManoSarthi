@@ -5,27 +5,20 @@ import axios from "axios";
 import { Alert } from "react-native";
 import { createDatabase, fetchData } from "../Services/initService";
 import DropService from "../Services/DatabaseServices/DropService";
-
+import IsPasswordChangeService from "../Services/ChangePasswordService.js/IsPasswordChangeService";
+// import {navigation }
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
+  const [userName, setUserName] = useState("");
+  // const [changePassword,setChangePassword] = useState(false);
   const storeData = async (value) => {
     try {
       await AsyncStorage.setItem("JWT", value);
-    } catch (e) {
-    }
+    } catch (e) {}
   };
-  useEffect(()=>{
-    const fetchToken = async () => {
-      const fetchedToken = await getToken();
-      setUserToken(fetchedToken);
-      // setInitializing(false);
-    };
-    
-    fetchToken();
-  },[]);
 
   const login = async (username, password) => {
     // console.log("login");
@@ -37,39 +30,55 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await axios.post(BASE_URL + "auth/login", user);
-      // console.log("response: ", response);
+      console.log("Login Response Data: ", response.data);
       if (response) {
         await storeData(response?.data?.jwtToken);
         const token = await getToken();
         setUserToken(token);
+        setUserName(response?.data?.username);
         // await DropService.dropTables();
-        createDatabase().then((message) => {
-          console.log(message);
-        })
-        .catch((message) => {
-          console.log(message);
-        });
-        fetchData()
-        .then((message) => {
-          Alert.alert(message);
-        })
-        .catch((message) => {
-          Alert.alert(message);
-        });
+
+        createDatabase()
+          .then((createMessage) => {
+            console.log(createMessage);
+            // Only call fetchData() if createDatabase() is successful
+            return fetchData();
+          })
+          .then((fetchMessage) => {
+            console.log("Data fetched:", fetchMessage);
+            Alert.alert(fetchMessage);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            Alert.alert("Error:", error);
+          });
+        const changepass_response =
+          await IsPasswordChangeService.isPasswordChanged(response);
+        console.log("Change Password Response: ", changepass_response);
+        setChangePassword(changepass_response);
+        console.log("after setting change password", changePassword);
+
         setIsLoading(false);
-        console.log("Token", getToken());
+        // console.log("Token", getToken());
       } else {
+        console.log("Before login failure alert");
+
         Alert.alert("Login Failure");
+        setIsLoading(false);
       }
     } catch (error) {
-      Alert.alert("Login Failure", "An error occurred during login.");
+      // console.log('error',error)
+      console.log("Before catch failure error");
+
+      // Alert.alert("Login Failure", error.response);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
   const logout = () => {
     setIsLoading(true);
     setUserToken(null);
     AsyncStorage.removeItem("JWT");
+    // setChangePassword(false);
     setIsLoading(false);
   };
   const isLoggedIn = async () => {
@@ -77,17 +86,26 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       let userToken = await AsyncStorage.getItem("JWT");
       setUserToken(userToken);
+      // setUserName(response?.data?.username);
+      // setChangePassword(changePassword);
+      // console.log("In useeffect after setting change password",changePassword);
+
       setIsLoading(false);
     } catch (e) {
       console.log(`isLoggedIn error ${e}`);
+      setIsLoading(false);
     }
   };
   useEffect(() => {
     isLoggedIn();
   }, []);
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
+    <AuthContext.Provider
+      value={{ login, logout, isLoading, userToken, userName }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
+
+// ,changePassword,setChangePassword pass this in authcontext.provider

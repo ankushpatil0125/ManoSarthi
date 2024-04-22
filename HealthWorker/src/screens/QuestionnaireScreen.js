@@ -12,48 +12,37 @@ import SelectService from "../Services/DatabaseServices/SelectService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
 import InsertService from "../Services/DatabaseServices/InsertService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
+import UpdateService from "../Services/DatabaseServices/UpdateService";
 
-const QuestionnaireScreen = ({ navigation }) => {
+const QuestionnaireScreen = ({ navigation, route }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
-
+  const { age, type, pid } = route.params; // console.log("age", age);
   // State to hold the answers for each question
-  const [answers, setAnswers] = useState(
-    Array(surveyquestions.length).fill(null)
-  );
+  const [answers, setAnswers] = useState([]);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
 
-  // Sample questions
-  // const questions = [
-  //   "Are you feeling well today?",
-  //   "Did you sleep well last night?",
-  //   "Have you experienced any pain in the last 24 hours?",
-  //   "Did you consume alcohol in the last 24 hours?",
-  //   "Have you taken any medication today?",
-  //   "Did you exercise today?",
-  //   "Have you been following a healthy diet?",
-  //   "Did you experience any stress today?",
-  //   "Have you been smoking recently?",
-  //   "Did you drink enough water today?",
-  // ];
   const fetchPatientDataFromDatabase = async () => {
-    // const navigation = useNavigation();
-    console.log("Inside fetchPatientDataFromDatabase");
     try {
-      console.log("In");
-  
       const patient_data = await SelectService.getAllPatients();
-      console.log("Homescreen Patients: ", patient_data);
+      console.log(
+        "[QuestionarieScreen]Patients Fetched from Database: ",
+        patient_data
+      );
     } catch (error) {
-      console.error("Error fetching data from database(HomeScreen):", error);
+      console.error("Error fetching data from database:", error);
     }
   };
 
-  const fetchSurveyQuestionsFromDatabase = async () => {
+  const fetchQuestionsFromDatabase = async () => {
     try {
-      const data = await SelectService.getAllQuestions();
-      setsurveyquestions(data);
+      const data = await SelectService.getAllQuestions(age, type);
 
-      console.log("Survey Questions Need To Render: ", data);
+      setsurveyquestions(data);
+      setAnswers(Array(data.length).fill(null));
+      console.log(
+        "[QuestionarieScreen] Questions Need To Render: ",
+        data
+      );
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -71,8 +60,8 @@ const QuestionnaireScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchPatientDataFromDatabase();
-    fetchSurveyQuestionsFromDatabase();
-    fetchSurveyQuestionsAnswersFromDatabase();
+    fetchQuestionsFromDatabase();
+    // fetchSurveyQuestionsAnswersFromDatabase();
     // DeleteService.deleteAllSurveyQuestions();
   }, []);
 
@@ -88,41 +77,85 @@ const QuestionnaireScreen = ({ navigation }) => {
     // Perform any necessary validation before proceeding
     // For example, you can check if all questions are answered
     if (answers.some((answer) => answer === null)) {
-      console.log("Please answer all questions.");
+      Alert.alert("Please answer all questions.");
       return;
     }
 
-    console.log("Answers: ", answers);
+    console.log("[QuestionarieScreen]Entered Answers: ", answers);
+    let promises;
     try {
-      const promises = surveyquestions.map(async (question, index) => {
-        const answer = answers[index];
-        await InsertService.insertSurveyQuestionAnswer(
-          aabhaId,
-          question.question_id,
-          answer
-        );
-      });
-      await Promise.all(promises).then((msg)=>{console.log("msg success",msg)}).catch((err)=>{console.log("err catch",err)});
-      
+      if (type === "normal") {
+         promises = surveyquestions.map(async (question, index) => {
+          const answer = answers[index];
+          await InsertService.insertSurveyQuestionAnswer(
+            aabhaId,
+            question.question_id,
+            answer
+          );
+        });
+      } else if (type === "followup") {
+         promises = surveyquestions.map(async (question, index) => {
+          const answer = answers[index];
+          await InsertService.insertFollowUpQuestionAnswer(
+            pid,
+            question.question_id,
+            answer
+          );
+        });
+      }
+
+      await Promise.all(promises)
+        .then((msg) => {
+          console.log("Success Message: ", msg);
+        })
+        .catch((err) => {
+          console.log("Caught Error: ", err);
+        });
+
       // Matching the answers with the default ans
       const unmatchedCount = countUnmatchedAnswers(surveyquestions, answers);
-      console.log("Unmatched count:", unmatchedCount);
+      console.log("[QuestionarieScreen]Unmatched count: ", unmatchedCount);
 
-      // Navigate to the next screen 
-      if(unmatchedCount >= 3){
-        await InsertService.insertAabhaId(aabhaId,"old");
-        navigation.navigate('MedicalDetails');
-      }
-      else{
-        await InsertService.insertAabhaId(aabhaId,"new");
-        DeleteService.deleteSurveyQuestionAnswersByAabhaId(aabhaId);
-        DeleteService.deletePatientByAabhaId(aabhaId);
-        const deldata = await SelectService.getAllSurveyQuestionAnswers();
-        console.log("QAdata after deletion from DB: ", deldata);
-        const delpdata = await SelectService.getAllPatients();
-        console.log("Pdata after deletion from DB: ", delpdata);
-        Alert.alert("Not referring to the doctor", "Related data is deleted from DB");
-        navigation.navigate('HomeScreen');
+      // Navigate to the next screen
+      if (type === "normal") {
+        if (unmatchedCount >= surveyquestions.length / 2) {
+          // await InsertService.insertAabhaId(aabhaId, "old");
+          navigation.navigate("MedicalDetails", { age,type });
+        } else {
+          const res1 = await InsertService.insertAabhaId(aabhaId, "new");
+          console.log(
+            "[QuestionarieScreen]Res1- Not Reffered Patient AabhaId Noted: ",
+            res1
+          );
+          const res2 = await DeleteService.deleteSurveyQuestionAnswersByAabhaId(
+            aabhaId
+          );
+          console.log(
+            "[QuestionarieScreen]Res2- Not Reffered Patient SurveyQNA: ",
+            res2
+          );
+
+          const res3 = await DeleteService.deletePatientByAabhaId(aabhaId);
+          console.log(
+            "[QuestionarieScreen]Res3- Not Reffered Patient Details: ",
+            res3
+          );
+          Alert.alert(
+            "Not referring to the doctor",
+            "Related data is deleted from DB"
+          );
+          navigation.navigate("HomeScreen");
+        }
+      } else if (type === "followup") {
+        if (unmatchedCount >= surveyquestions.length / 2) {
+          // await InsertService.insertAabhaId(aabhaId, "old");
+          InsertService.insertFollowUpReferNotRefer(pid, "1");
+          navigation.navigate("Preview", { age, pid, type });
+        } else {
+          InsertService.insertFollowUpReferNotRefer(pid, "0");
+
+          navigation.navigate("Preview", { age, pid, type });
+        }
       }
     } catch (error) {
       console.error("Error inserting survey answers:", error);
@@ -134,7 +167,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     questions.forEach((question, index) => {
       if (answers[index] !== question.default_ans) {
         unmatchedCount++;
-      } 
+      }
     });
     return unmatchedCount;
   };
