@@ -7,6 +7,7 @@ import RegisterPatientService from "./RegisterPatientService";
 import CreateService from "./DatabaseServices/CreateService";
 import FetchFollowUp from "./FetchFollowUp";
 import PrescriptionService from "./PrescriptionService";
+import SelectService from "./DatabaseServices/SelectService";
 
 export const createDatabase = () =>
   new Promise(async (resolve, reject) => {
@@ -51,7 +52,6 @@ export const fetchData = () =>
 
         console.log("Fetched Survey Questions From Server:", questions);
         console.log("Fetched AbhaId Table From Server: ", abhaIDTable);
-        console.log("Fetched prescriptions Table From Server: ", prescriptionsTable);
         console.log(
           "Fetched Medical Questions From Server: ",
           medicalQuestions
@@ -97,9 +97,9 @@ export const fetchData = () =>
         }
 
         resolve("Data fetched and inserted successfully");
-        const insertedPres = await SelectService.getAllPrescriptions();
+        const insertedPres = await SelectService.selectAllPrescriptions();
         console.log("Inserted Prescriptions in a table: ", insertedPres);
-        console.log("Inserted Parsed Prescriptions in a table: ", JSON.parse(insertedPres[0].disease_code));
+        // console.log("Inserted Parsed Prescriptions in a table: ", JSON.parse(insertedPres[0]?.disease_code));
       } else {
         console.log("Failed to fetch required data");
         reject("Failed to fetch required data");

@@ -18,22 +18,6 @@ const PrescriptionScreen = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState(""); // State to hold search text
 
-  // useEffect(() => {
-  //   fetchData("https://randomuser.me/api/?results=30");
-  // }, []);
-
-  // const fetchData = async (url) => {
-  //   try {
-  //     const response = await fetch(url);
-  //     const json = await response.json();
-  //     setData(json.results);
-  //     setFilteredData(json.results);
-  //     console.log(json.results);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const fetchDataFromDatabase = async () => {
     try {
       const prescRes = await SelectService.selectAllPrescriptions();
@@ -43,6 +27,7 @@ const PrescriptionScreen = () => {
         prescRes
       );
       setData(prescRes);
+      
       setFilteredData(prescRes);
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);

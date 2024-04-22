@@ -128,38 +128,6 @@ const CreateService = {
     });
   },
 
-  createPrescriptionTable: () => {
-    return new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        tx.executeSql(
-          `CREATE TABLE IF NOT EXISTS prescriptions (
-            patient_abha TEXT,
-            prescription_id INTEGER PRIMARY KEY,
-            patient_fname TEXT,
-            patient_lname TEXT,
-            patient_age INTEGER,
-            patient_village_name TEXT,
-            disease_code TEXT,
-            treatement TEXT,
-            medicine TEXT,
-            date TEXT
-          )`,
-          [],
-          (_, result) => {
-            if(result.rowsAffected > 0){
-              resolve("Prescription table created successfully")
-            } else{
-              resolve("Prescription table already exist")
-            }
-          },
-          (_, error) => {
-            reject("Error creating prescription table: " + error)
-          }
-        )
-      })
-    })
-  },
-
   createPatientDetailsTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

@@ -64,45 +64,6 @@ const InsertService = {
     });
   },
 
-  insertPrescriptions: (prescriptionsList) => {
-    // console.log("before inside insertPatientD");
-    return new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        prescriptionsList.forEach((pres) => {
-          tx.executeSql(
-            "INSERT OR REPLACE INTO prescriptions (patient_abha, prescription_id, patient_fname, patient_lname, patient_age, patient_village_name, disease_code, treatement, medicine, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [
-              pres.patient_abha,
-              pres.prescription_id,
-              pres.patient_fname,
-              pres.patient_lname,
-              pres.patient_age,
-              pres.patient_village_name,
-              pres.disease_code,
-              pres.treatement,
-              pres.medicine,
-              pres.date
-            ],
-            (_, { rowsAffected }) => {
-              // console.log("insertFollowUpTable" + rowsAffected);
-              if (rowsAffected > 0) {
-                resolve(
-                  rowsAffected +
-                    " Data Inserted Into prescriptions Table Successfully"
-                );
-              } else {
-                reject("Failed To Insert Data Into prescriptions Table");
-              }
-            },
-            (_, error) => {
-              reject("Error inserting data into prescriptions: " + error);
-            }
-          );
-        });
-      });
-    });
-  },
-
   insertAabhaId: (AabhaId, status) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
