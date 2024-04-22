@@ -65,8 +65,8 @@ const SelectService = {
           "SELECT * FROM prescriptions",
           [],
           (_, { rows }) => {
-            const patients = rows._array;
-            resolve(patients);
+            const prescription = rows._array;
+            resolve(prescription);
           },
           (_, error) => {
             reject("Error fetching all prescriptions: " + error);

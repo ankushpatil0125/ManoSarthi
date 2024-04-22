@@ -36,6 +36,24 @@ const DeleteService = {
       });
     });
   },
+  deletePrescriptionsTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM prescriptions",
+          [],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " Rows Deleted From prescriptions");
+          },
+          (_, error) => {
+            reject(
+              "Error deleting records from prescriptions table: " + error
+            );
+          }
+        );
+      });
+    });
+  },
   deleteAllPatients: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

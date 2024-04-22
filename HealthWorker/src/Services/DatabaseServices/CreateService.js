@@ -87,15 +87,14 @@ const CreateService = {
       db.transaction((tx) => {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS prescriptions (
-            aabhaId INTEGER,
-            prescription_id INTEGER,
+            patient_abha TEXT,
+            prescription_id INTEGER PRIMARY KEY,
             patient_fname TEXT,
             patient_lname TEXT,
-            patient_adress TEXT,
             patient_age INTEGER,
-            patient_village_name,
+            patient_village_name TEXT,
             disease_code TEXT,
-            treatment TEXT,
+            treatement TEXT,
             medicine TEXT,
             date TEXT
           )`,

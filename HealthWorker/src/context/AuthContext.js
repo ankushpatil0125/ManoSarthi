@@ -36,22 +36,23 @@ export const AuthProvider = ({ children }) => {
         const token = await getToken();
         setUserToken(token);
         setUserName(response?.data?.username);
-        await DropService.dropTables();
+        console.log("Inside If Response");
+        // await DropService.dropTables();
 
-        // createDatabase()
-        //   .then((createMessage) => {
-        //     console.log(createMessage);
-        //     // Only call fetchData() if createDatabase() is successful
-        //     return fetchData();
-        //   })
-        //   .then((fetchMessage) => {
-        //     console.log("Data fetched:", fetchMessage);
-        //     Alert.alert(fetchMessage);
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error:", error);
-        //     Alert.alert("Error:", error);
-        //   });
+        createDatabase()
+          .then((createMessage) => {
+            console.log(createMessage);
+            // Only call fetchData() if createDatabase() is successful
+            return fetchData();
+          })
+          .then((fetchMessage) => {
+            console.log("Data fetched:", fetchMessage);
+            Alert.alert(fetchMessage);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            Alert.alert("Error:", error);
+          });
 
         const changepass_response =
           await IsPasswordChangeService.isPasswordChanged(response);
