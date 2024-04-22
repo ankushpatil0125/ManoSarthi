@@ -223,4 +223,23 @@ public class WorkerServiceImpl implements WorkerService {
         }
 
     }
+
+//    public List<Prescription> get_recent_presc(int workerid)
+//    {
+//        Optional<Worker> worker=workerRepository.findById(workerid);
+//        if(worker.isPresent())
+//        {
+////            Calendar calendar = Calendar.getInstance();
+////            Date startDate = new Date(calendar.getTimeInMillis());
+//            Date startDate = Date.valueOf(LocalDate.now().plusDays(-7));
+//            Date endDate = Date.valueOf(LocalDate.now());
+//
+//            int villagecode=worker.get().getVillagecode().getCode();
+//            return prescriptionRepository.findbyDateAndVill(startDate,endDate,villagecode);
+//        }
+//        else {
+//            throw new APIRequestException("Worker not found");
+//        }
+//
+//    }
 }

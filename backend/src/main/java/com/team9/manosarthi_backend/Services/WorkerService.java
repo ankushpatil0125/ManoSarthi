@@ -22,4 +22,5 @@ public interface WorkerService {
     List<FollowUpSchedule> get_followup_schedule(int workerid);
 
     List<Prescription> getprescriptions(int workerid);
+
 }

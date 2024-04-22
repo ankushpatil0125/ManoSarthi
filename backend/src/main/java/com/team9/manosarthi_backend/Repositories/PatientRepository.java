@@ -23,4 +23,9 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("SELECT p.village.subDistrict.district.name, COUNT(p) FROM Patient p GROUP BY p.village.subDistrict.district.code")
     List<Object[]> patientCountForDistrict();
+
+    @Query(value = "SELECT * FROM patient WHERE AES_DECRYPT(FROM_BASE64(aabha_id), ?1, ?2) = ?3", nativeQuery = true)
+    Patient findByEncryptedAbhaId(String secretKey, String salt, String encryptedAbhaId);
+//    @Query("SELECT p FROM Patient p WHERE decrypt(p.aabhaId, :secretKey, :salt) = :abhaId")
+//    Patient findByEncryptedAbhaId(@Param("abhaId") String abhaId, @Param("secretKey") String secretKey, @Param("salt") String salt);
 }
