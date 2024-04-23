@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Controllers;
 
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
@@ -8,6 +9,18 @@ import com.amazonaws.util.IOUtils;
 import com.team9.manosarthi_backend.DTO.*;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
+
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.team9.manosarthi_backend.DTO.*;
+import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
+import com.team9.manosarthi_backend.Filters.PatientFilter;
+import com.team9.manosarthi_backend.Filters.SupervisorFilter;
+import com.team9.manosarthi_backend.Filters.WorkerFilter;
+import com.team9.manosarthi_backend.Repositories.PatientRepository;
+import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.Services.PatientService;
 import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
@@ -20,6 +33,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +41,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -102,6 +122,7 @@ public class WorkerRestController {
         try {
             List<Questionarrie> questions = questionarrieService.getquestions();
             System.out.println("questions"+questions);
+
             return questions;
         } catch (Exception ex) {
             throw new APIRequestException("Error while getting questionarrie", ex.getMessage());
@@ -335,6 +356,7 @@ public class WorkerRestController {
     }
 
 
+
 //    @Autowired private AmazonS3 amazonS3;
 //    @Value("${aws.s3.bucket}")
 //    private String bucketName;
@@ -377,6 +399,5 @@ public class WorkerRestController {
 ////                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
 //                .body(new InputStreamResource(content));
 //    }
-
 
 }

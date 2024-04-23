@@ -119,6 +119,7 @@ public class DoctorRestController {
             else
                 throw new APIRequestException("Error while adding prescription-followup",ex.getMessage());
         }
+
     }
 
     @GetMapping("/getfollowups")

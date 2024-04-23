@@ -24,6 +24,29 @@ const UpdateService = {
       });
     });
   },
+
+  updateFollowUpStatus: (pid) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `UPDATE followupReferNotRefer SET status = 1 WHERE patientId = ?;`,
+          [pid],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve(`Status updated successfully for pid: ${pid}`);
+            } else {
+              reject(
+                `No rows were affected. Check if pid exists: ${pid}`
+              );
+            }
+          },
+          (_, error) => {
+            reject("Error updating status: " + error);
+          }
+        );
+      });
+    });
+  },
 };
 
 export default UpdateService;

@@ -169,7 +169,7 @@ public class DoctorServiceImpl implements DoctorService {
                     prescriptionRepository.save(oldActivePrescription);
 
                     if(patientFollowUpPrescriptionDTO.isUpdateFollowUpSchedule())
-                    {
+     {
                         Optional<FollowUpSchedule> followUpSchedule = followUpScheduleRepository.findByPatientID(patient.get().getPatient_id());
                         if(followUpSchedule.isPresent())
                         {

@@ -22,6 +22,4 @@ public interface WorkerService {
     List<Prescription> getprescriptions(int workerid);
 
     int addFollowUpDetails(RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, int workerid);
-
-
 }

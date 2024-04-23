@@ -18,6 +18,49 @@ const DeleteService = {
       });
     });
   },
+  deleteFollowUpTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM FollowUpSchedule",
+          [],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " Rows Deleted From FollowUpSchedule");
+          },
+          (_, error) => {
+            reject(
+              "Error deleting records from FollowUpSchedule table: " + error
+            );
+          }
+        );
+      });
+    });
+  },
+  deleteAllPrescriptions: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            `DELETE FROM prescriptions`,
+            [],
+            (_, result) => {
+              resolve("All prescriptions deleted successfully");
+            },
+            (_, error) => {
+              reject("Error deleting prescriptions: " + error.message);
+            }
+          );
+        },
+        (error) => {
+          reject("Transaction error: " + error.message);
+        },
+        () => {
+          resolve("Transaction completed successfully.");
+        }
+      );
+    });
+  },
+
   deleteAllPatients: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -35,12 +78,12 @@ const DeleteService = {
     });
   },
   deletePatientByAabhaId: (aabhaId) => {
-    // console.log("delete, id", aabhaId);
+    console.log("delete, id", aabhaId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           "DELETE FROM PatientDetails WHERE aabhaId=?",
-          [aabhaId],
+          [String(aabhaId)],
           (_, { rowsAffected }) => {
             resolve(rowsAffected + " rows deleted from PatientDetails");
           },
@@ -51,6 +94,25 @@ const DeleteService = {
       });
     });
   },
+
+  deleteFollowupReferNotReferByPID: (pid) => {
+    console.log("delete, id", pid);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM followupReferNotRefer WHERE patientId=?",
+          [pid],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from followupReferNotRefer");
+          },
+          (_, error) => {
+            reject("Error deleting followupReferNotRefer: " + error);
+          }
+        );
+      });
+    });
+  },
+
   deleteAllSurveyQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction(
@@ -92,12 +154,12 @@ const DeleteService = {
   },
 
   deleteSurveyQuestionAnswersByAabhaId: (aabhaId) => {
-    // console.log("delete, id", aabhaId);
+    console.log("delete, id", aabhaId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
           "DELETE FROM SurveyQuestionAnswer WHERE aabhaId=?",
-          [aabhaId],
+          [String(aabhaId)],
           (_, { rowsAffected }) => {
             resolve(rowsAffected + " rows deleted from SurveyQuestionAnswer");
           },
@@ -108,6 +170,43 @@ const DeleteService = {
       });
     });
   },
+
+  deleteFolloupQuestionAnswersByPID: (pid) => {
+    console.log("delete, id", pid);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM FollowUpQuestionAnswer WHERE patientId=?",
+          [pid],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from FollowUpQuestionAnswer");
+          },
+          (_, error) => {
+            reject("Error deleting FollowUpQuestionAnswer: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  deleteFolloupScheduleByPID: (pid) => {
+    console.log("delete, id", pid);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM FollowUpSchedule WHERE patientId=?",
+          [pid],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from FollowUpSchedule");
+          },
+          (_, error) => {
+            reject("Error deleting FollowUpSchedule: " + error);
+          }
+        );
+      });
+    });
+  },
+
   deleteAllMedicalQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

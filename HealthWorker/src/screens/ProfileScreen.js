@@ -19,19 +19,22 @@ const ProfileScreen = ({ navigation }) => {
   const [district, setDistrict] = useState("");
   const [subdistrict, setSubdistrict] = useState("");
   const [village, setVillage] = useState("");
+  const [dob, setDob] = useState("");
 
   useEffect(() => {
     const handleProfileDetails = async () => {
       try {
         const res = await ProfileService.getHealthWorkerData();
+        console.log("Profile Response: ", res);
         setUsername(res?.user?.username);
         setFirstname(res?.firstname);
         setLastname(res?.lastname);
         setEmail(res?.email);
         setGender(res?.gender);
-        setDistrict(res?.villagecode?.subDistrict?.district?.name);
-        setSubdistrict(res?.villagecode?.subDistrict?.name);
-        setVillage(res?.villagecode?.name);
+        setDistrict(res?.districtname);
+        setSubdistrict(res?.subdistrictname);
+        setVillage(res?.villagename);
+        setDob(res?.dob);
       } catch (err) {
         console.log("err healthworker details", err);
       }
@@ -92,6 +95,10 @@ const ProfileScreen = ({ navigation }) => {
                 <Paragraph style={styles.detailText}>
                   District: {district}
                 </Paragraph>
+              </View>
+              <View style={styles.detailContainer}>
+                <Entypo name="location-pin" size={24} color="black" />
+                <Paragraph style={styles.detailText}>DOB: {dob}</Paragraph>
               </View>
               <View style={styles.detailContainer}>
                 <Entypo name="location-pin" size={24} color="black" />

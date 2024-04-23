@@ -20,31 +20,44 @@ import i18n from "../../i18n";
 import tw from "twrnc";
 import ChangePasswordService from "../Services/ChangePasswordService.js/ChangePasswordService";
 import { Alert } from "react-native";
-const ChangePasswordScreen = ({navigation}) => {
+const ChangePasswordScreen = ({ navigation }) => {
   const [passwordOld, setPasswordOld] = useState("");
   const [passwordNew, setPasswordNew] = useState("");
-  const [requestData,setRequestData]=useState({oldPassword:"",newPassword:""});
-  const {setChangePassword} = useContext(AuthContext);
+  const [requestData, setRequestData] = useState({
+    oldPassword: "",
+    newPassword: "",
+  });
+  const { setChangePassword } = useContext(AuthContext);
   // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
-  const [isValid,setIsValid] = useState(false);
-  
+  const [isValid, setIsValid] = useState(false);
+
   const handleLogout = async () => {
-    if (requestData.oldPassword.trim() === "" || requestData.newPassword.trim() === "") {
+    if (
+      requestData.oldPassword.trim() === "" ||
+      requestData.newPassword.trim() === ""
+    ) {
       Alert.alert("Please enter both old and new passwords");
       return;
     }
     setRequestData({
       oldPassword: passwordOld,
-      newPassword: passwordNew
+      newPassword: passwordNew,
     });
-    console.log('Requeste Data',requestData);          
-    console.log("Old password", requestData.oldPassword, "New password", requestData.newPassword);
+    console.log("Requeste Data", requestData);
+    console.log(
+      "Old password",
+      requestData.oldPassword,
+      "New password",
+      requestData.newPassword
+    );
     try {
-      if(!isValid){
-      console.log(requestData)
-        const response = await ChangePasswordService.ChangePassword(requestData);
-        console.log("response of changePassword",response);
+      if (!isValid) {
+        console.log(requestData);
+        const response = await ChangePasswordService.ChangePassword(
+          requestData
+        );
+        console.log("response of changePassword", response);
 
         if (response) {
           alert("Password Successfully Changed");
@@ -55,13 +68,12 @@ const ChangePasswordScreen = ({navigation}) => {
         } else {
           Alert.alert("Failed");
         }
-      }
-      else{
+      } else {
         Alert.alert("Please enter a valid password");
       }
     } catch (error) {
-      Alert.alert("Catch Error of Change Password",error.response);
-        // setLoading(false);
+      Alert.alert("Catch Error of Change Password", error.response);
+      // setLoading(false);
     }
   };
 
@@ -86,7 +98,13 @@ const ChangePasswordScreen = ({navigation}) => {
       >
         {/* Language Toggle Button */}
         <View
-          style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc",justifyContent: "center",alignItems:'center' }}
+          style={{
+            padding: 20,
+            borderTopWidth: 1,
+            borderTopColor: "#ccc",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
           <LanguageToggleButton
             onPress={handleLanguageToggle}
@@ -122,7 +140,9 @@ const ChangePasswordScreen = ({navigation}) => {
             />
             <TextInput
               value={requestData.oldPassword}
-              onChangeText={(text) => setRequestData({...requestData, oldPassword: text})}
+              onChangeText={(text) =>
+                setRequestData({ ...requestData, oldPassword: text })
+              }
               secureTextEntry={true}
               style={{
                 color: "gray",
@@ -156,7 +176,9 @@ const ChangePasswordScreen = ({navigation}) => {
             />
             <TextInput
               value={requestData.newPassword}
-              onChangeText={(text) => setRequestData({...requestData, newPassword: text})}
+              onChangeText={(text) =>
+                setRequestData({ ...requestData, newPassword: text })
+              }
               secureTextEntry={true}
               style={{
                 color: "gray",
@@ -202,4 +224,17 @@ export default ChangePasswordScreen;
 
 const styles = StyleSheet.create({});
 
+// import { StyleSheet, Text, View } from 'react-native'
+// import React from 'react'
 
+// const ChangePasswordScreen = () => {
+//   return (
+//     <View>
+//       <Text>ChangePasswordScreen</Text>
+//     </View>
+//   )
+// }
+
+// export default ChangePasswordScreen
+
+// const styles = StyleSheet.create({})

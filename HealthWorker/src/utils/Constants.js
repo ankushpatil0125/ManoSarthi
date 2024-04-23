@@ -2,7 +2,9 @@
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const BASE_URL = "http://192.168.72.54:9090/";
+
+export const BASE_URL = "http://192.168.213.199:9090/";
+
 
 export const getToken = async () => {
   try {
