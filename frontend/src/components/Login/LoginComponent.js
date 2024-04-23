@@ -199,13 +199,10 @@ const LoginComponent = () => {
         setLoading(false);
       }
     } catch (error) {
-      alert(error.response.data.message);
+      console.log("error",error)
+      // alert(error.response.data);
       setLoading(false);
-      if (error.response.data === "CREDENTIALS INVALID ! ")
-        alert("CREDENTIALS INVALID !!! Please Enter valid CREDENTIALS");
-      else if (error.response.data)
-        alert("Access restricted. Please log in during operating hours");
-      else alert(`Login Failed : ${error.response.data}`);
+      alert(`Login Failed : ${error.response.data}`);
     }
   };
 

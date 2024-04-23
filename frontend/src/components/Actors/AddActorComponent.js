@@ -124,14 +124,15 @@ const AddDoctorComponent = () => {
     try {
       // Perform the appropriate action based on the selected actor
       setLoading(true);
-      let response;
+      // let response;
       if (actor === "DOCTOR") {
         const response = await AdminService.addDoctor(actorData);
         // console.log("ADD RESP: ", response);
         if (response) {
           // Handle successful password change, e.g., display a success message
-          alert(`Doctor with name ${actorData.firstname} Added Successfully`);
-          navigate("/admin-home");
+          alert(`Doctor with name ${response?.firstname} Added Successfully`);
+          window.location.reload();
+          // navigate("/admin-home");
           setLoading(false);
         } else {
           // Handle password change failure
@@ -142,9 +143,10 @@ const AddDoctorComponent = () => {
         if (response) {
           // Handle successful password change, e.g., display a success message
           alert(
-            `Supervisor with name ${actorData.firstname} Added Successfully`
+            `Supervisor with name ${response?.firstname} Added Successfully`
           );
-          navigate("/admin-home");
+          window.location.reload();
+          // navigate("/admin-home");
           setLoading(false);
         } else {
           // Handle password change failure

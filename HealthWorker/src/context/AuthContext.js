@@ -60,11 +60,6 @@ export const AuthProvider = ({ children }) => {
 
         setIsLoading(false);
         // console.log("Token", getToken());
-      } else {
-        console.log("Before login failure alert");
-
-        Alert.alert("Login Failure");
-        setIsLoading(false);
       }
     } catch (error) {
       // console.log('error',error)

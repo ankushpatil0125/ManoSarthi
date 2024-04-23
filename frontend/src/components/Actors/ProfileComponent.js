@@ -22,6 +22,7 @@ const Profile = () => {
         setLoading(true);
         if(localStorage.getItem("ROLE") === "[ROLE_DOCTOR]") {
           const data = await ProfileService.getDoctorData();
+          console.log("data",data);
           setUser(data);
           
         }
@@ -53,7 +54,7 @@ const Profile = () => {
           <p>
             <span className="key">{t("Profile.Username")} :</span>
             <span className="gap"></span>
-            <span className="value">{user?.user?.username}</span>
+            <span className="value">{user?.username}</span>
           </p>
           <p>
             <span className="key">{t("Profile.First Name")} :</span>
@@ -74,13 +75,13 @@ const Profile = () => {
             <span className="key">{t("Profile.District")} :</span>
             <span className="gap"></span>
             <span className="value">
-              {user?.subdistrictcode?.district?.name}
+              {user?.districtName}
             </span>
           </p>
           <p>
             <span className="key">{t("Profile.Subdistrict")} :</span>
             <span className="gap"></span>
-            <span className="value">{user?.subdistrictcode?.name}</span>
+            <span className="value">{user?.subDistrictName}</span>
           </p>
           <p>
             <span className="key">{t("Profile.Gender")}</span>

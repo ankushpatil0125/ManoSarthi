@@ -150,7 +150,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
                   {healthworker.email || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {healthworker.villagecode?.name || "N/A"}
+                  {healthworker.villagename || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   <button

@@ -162,11 +162,11 @@ const ViewDoctors = ({ district, subdistrictcode, action }) => {
   }, [fetchData]);
 
   const handlePrevPage = () => {
+    console.log("currentpage", currentPage)
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
   const handleNextPage = () => {
-    console.log("currentpage", currentPage)
     setCurrentPage((prevPage) => prevPage + 1);
 };
 
@@ -199,16 +199,16 @@ const ViewDoctors = ({ district, subdistrictcode, action }) => {
             {data.map((doctor, index) => (
               <tr key={index}>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.firstname}
+                  {doctor?.firstname}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.subdistrictcode?.district?.name || "N/A"}
+                  {doctor?.districtName || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.subdistrictcode?.name || "N/A"}
+                  {doctor?.subDistrictName || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {doctor.email || "N/A"}
+                  {doctor?.email || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   <button className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded">
@@ -232,7 +232,7 @@ const ViewDoctors = ({ district, subdistrictcode, action }) => {
         <button
           className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
-          disabled={data.length < 5} // Disable next button when data length is less than 5
+          disabled={data.length < 3} // Disable next button when data length is less than 5
         >
           {t("UpdateDeleteActor.Next")}
         </button>

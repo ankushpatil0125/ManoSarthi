@@ -66,7 +66,6 @@ const PatientDetailsScreen = ({ navigation }) => {
     if (
       !firstName.trim() ||
       !lastName.trim() ||
-      !email.trim() ||
       !gender.trim() ||
       !age.trim() ||
       !address.trim()
@@ -186,7 +185,7 @@ const PatientDetailsScreen = ({ navigation }) => {
         />
 
         <Text style={styles.label}>
-          Email:<Text style={{ color: "red" }}>*</Text>
+          Email:
         </Text>
         <TextInput
           style={styles.input}
@@ -270,7 +269,7 @@ const PatientDetailsScreen = ({ navigation }) => {
           title="Submit"
           onPress={handleSubmit}
           disabled={
-            !firstName || !lastName || !email || !gender || !age || !address
+            !firstName || !lastName || !gender || !age || !address
           }
         />
       </ScrollView>
