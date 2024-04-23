@@ -6,6 +6,8 @@ import { Alert } from "react-native";
 import { createDatabase, fetchData } from "../Services/initService";
 import DropService from "../Services/DatabaseServices/DropService";
 import IsPasswordChangeService from "../Services/ChangePasswordService.js/IsPasswordChangeService";
+
+
 // import {navigation }
 export const AuthContext = createContext();
 
@@ -13,6 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userName, setUserName] = useState("");
+
+
   // const [changePassword,setChangePassword] = useState(false);
   const storeData = async (value) => {
     try {

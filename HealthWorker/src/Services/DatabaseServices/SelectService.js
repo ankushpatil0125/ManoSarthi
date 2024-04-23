@@ -39,7 +39,8 @@ const SelectService = {
       });
     });
   },
-  selectAllPrescriptions: () => {
+
+   selectAllPrescriptions: () => {
     return new Promise((resolve, reject) => {
       db.transaction(
         (tx) => {

@@ -144,7 +144,7 @@ const InsertService = {
         (tx) => {
           prescriptions.forEach((prescription) => {
             const {
-              aabhaId,
+              patient_abha,
               prescription_id,
               patient_fname,
               patient_lname,
@@ -161,7 +161,7 @@ const InsertService = {
             (aabhaId, prescription_id, patient_fname, patient_lname, patient_age, patient_village_name, disease_code, treatment, medicine, date) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
               [
-                aabhaId,
+                patient_abha,
                 prescription_id,
                 patient_fname,
                 patient_lname,

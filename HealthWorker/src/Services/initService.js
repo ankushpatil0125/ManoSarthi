@@ -97,8 +97,6 @@ export const fetchData = () =>
         }
 
         resolve("Data fetched and inserted successfully");
-        const insertedPres = await SelectService.selectAllPrescriptions();
-        console.log("Inserted Prescriptions in a table: ", insertedPres);
         // console.log("Inserted Parsed Prescriptions in a table: ", JSON.parse(insertedPres[0]?.disease_code));
       } else {
         console.log("Failed to fetch required data");

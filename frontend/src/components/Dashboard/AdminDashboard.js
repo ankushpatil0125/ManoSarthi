@@ -7,7 +7,7 @@ const AdminDashboard = () => {
   const [chartData, setChartData] = useState(null);
   const [pieChartData, setPieChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
-  const [surveyStats, setSurveyStats] = useState([]); // [{dictrict: patientCount}]
+  const [surveyStats, setSurveyStats] = useState([]); // [{district: patientCount}]
   const chartRef = useRef(null);
   const pieChartRef = useRef(null);
   const barChartRef = useRef(null);
