@@ -11,9 +11,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
-@JsonFilter("UserJSONFilter")
+
 public class User {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int user_id;
+
     @NotBlank (message = "Username cannot be blank")
     private String username;
 

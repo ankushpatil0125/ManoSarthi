@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonFilter("VillageJSONFilter")
+
 public class Village {
 
     @NotNull(message = "village code cannot be null")

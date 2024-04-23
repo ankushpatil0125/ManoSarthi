@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@JsonFilter("FollowUpDetailsJSONFilter")
+
 public class FollowUpDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

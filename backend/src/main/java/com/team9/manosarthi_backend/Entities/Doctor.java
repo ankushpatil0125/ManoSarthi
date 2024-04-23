@@ -20,7 +20,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-@JsonFilter("DoctorJSONFilter")
+
 public class Doctor {
 
     @Id
