@@ -1,5 +1,15 @@
 package com.team9.manosarthi_backend.Controllers;
 
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
+import com.team9.manosarthi_backend.DTO.*;
+import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
+
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -16,9 +26,22 @@ import com.team9.manosarthi_backend.Services.QuestionarrieService;
 import com.team9.manosarthi_backend.Services.WorkerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -29,6 +52,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.team9.manosarthi_backend.security.JwtHelper;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Validated
@@ -97,6 +121,8 @@ public class WorkerRestController {
     public List<Questionarrie> getquestionarrie() {
         try {
             List<Questionarrie> questions = questionarrieService.getquestions();
+            System.out.println("questions"+questions);
+
             return questions;
         } catch (Exception ex) {
             throw new APIRequestException("Error while getting questionarrie", ex.getMessage());
@@ -329,5 +355,49 @@ public class WorkerRestController {
         return patientService.findPatientByEncryptedAbhaId(abhaid);
     }
 
+
+
+//    @Autowired private AmazonS3 amazonS3;
+//    @Value("${aws.s3.bucket}")
+//    private String bucketName;
+//
+//
+//
+//    @PostMapping("/upload-image")
+//    public PutObjectResult uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+//        File convFile = new File(file.getOriginalFilename());
+//        FileOutputStream fos = new FileOutputStream(convFile);
+//        fos.write(file.getBytes());
+//        fos.close();
+////        return convFile;
+//        return amazonS3.putObject(bucketName,"test1",convFile);
+//
+////        amazonS3.putObject(bucketName,"test", (InputStream) file,null)
+////        return  amazonS3.putObject(bucketName,"test", (File) file);
+//    }
+//
+//    @GetMapping("/view-image")
+//    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
+////        try {
+////            S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
+////
+////
+////            byte[] content = IOUtils.toByteArray(s3Object.getObjectContent());
+////            ByteArrayResource resource = new ByteArrayResource(content);
+////            return  resource;
+////
+////        }catch (Exception e){
+////            throw new Exception(e.getMessage()) ;
+////        }
+////        return new InputStreamResource(s3Object.getObjectContent());
+//
+//        S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
+//        S3ObjectInputStream content = s3Object.getObjectContent();
+////            ByteArrayResource resource = new ByteArrayResource(content);
+//        return ResponseEntity.ok()
+//                .contentType(MediaType.IMAGE_PNG) // This content type can change by your file :)
+////                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
+//                .body(new InputStreamResource(content));
+//    }
 
 }
