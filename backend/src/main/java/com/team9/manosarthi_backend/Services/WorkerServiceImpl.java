@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -193,12 +194,12 @@ public class WorkerServiceImpl implements WorkerService{
         if(worker.isPresent())
         {
             int villagecode=worker.get().getVillagecode().getCode();
-            return followUpScheduleRepository.findbyDateAndVill(Date.valueOf(java.time.LocalDate.now()),villagecode);
-
+                return followUpScheduleRepository.findbyDateAndVill(Date.valueOf(LocalDate.now()),villagecode);
         }
         else {
             throw new APIRequestException("Worker not found");
         }
+//        return null;
 
     }
 }

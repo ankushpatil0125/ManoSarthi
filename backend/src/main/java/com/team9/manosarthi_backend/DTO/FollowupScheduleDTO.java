@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team9.manosarthi_backend.Entities.FollowUpSchedule;
 import com.team9.manosarthi_backend.Entities.Patient;
 import com.team9.manosarthi_backend.Entities.Village;
@@ -23,7 +24,8 @@ public class FollowupScheduleDTO {
     private String patient_address;
 
     //Date when followup has to take
-    private Date FollowUpDate;
+    @JsonFormat(pattern="dd-MMM-yyyy")
+    private Date followUpDate;
 
     //missed or regular follow up
     private String type;
@@ -34,7 +36,7 @@ public class FollowupScheduleDTO {
         this.patient_fname=followUpSchedule.getPatient().getFirstname();
         this.patient_lname=followUpSchedule.getPatient().getLastname();
         this.patient_address=followUpSchedule.getPatient().getAddress();
-        this.FollowUpDate=followUpSchedule.getNextFollowUpDate(); //until followup get complete this date remain the date when it has to taken
+        this.followUpDate=followUpSchedule.getNextFollowUpDate(); //until followup get complete this date remain the date when it has to taken
         this.type=null;
     }
 }
