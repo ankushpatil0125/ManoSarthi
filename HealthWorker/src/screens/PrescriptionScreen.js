@@ -3,36 +3,22 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  TouchableHighlight,
   ScrollView,
   Image,
   TextInput, // Import TextInput
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SelectService from "../Services/DatabaseServices/SelectService";
-
+import PrescriptionModal from "../components/PrescriptionModal"; // Import the modal component
 
 const PrescriptionScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState(""); // State to hold search text
-
-  // useEffect(() => {
-  //   fetchData("https://randomuser.me/api/?results=30");
-  // }, []);
-
-  // const fetchData = async (url) => {
-  //   try {
-  //     const response = await fetch(url);
-  //     const json = await response.json();
-  //     setData(json.results);
-  //     setFilteredData(json.results);
-  //     console.log(json.results);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const [selectedPrescription, setSelectedPrescription] = useState(null); // State to track selected prescription
+  const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
 
   const fetchDataFromDatabase = async () => {
     try {
@@ -57,8 +43,8 @@ const PrescriptionScreen = () => {
     setSearchText(text); // Update search text state
     if (text) {
       const newData = data.filter((item) => {
-        const itemData = item.name.first
-          ? item.name.first.toUpperCase()
+        const itemData = item.patient_fname
+          ? item.patient_fname.toUpperCase()
           : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -67,6 +53,15 @@ const PrescriptionScreen = () => {
     } else {
       setFilteredData(data);
     }
+  };
+
+  const openModal = (prescription) => {
+    setSelectedPrescription(prescription);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -87,21 +82,27 @@ const PrescriptionScreen = () => {
       <ScrollView>
         {filteredData.map((item, index) => {
           return (
-            <View key={index} style={styles.itemContainer}>
-              <Image
-                source={{ uri: item.picture.large }}
-                style={styles.image}
-              />
+            <TouchableHighlight
+              key={index}
+              style={styles.itemContainer}
+              onPress={() => openModal(item)}
+            >
               <View>
                 <Text style={styles.textName}>
-                  {item.name.first} {item.name.last}
+                  {item.patient_fname} {item.patient_lname}
                 </Text>
-                <Text style={styles.textEmail}>{item.login.username}</Text>
               </View>
-            </View>
+            </TouchableHighlight>
           );
         })}
       </ScrollView>
+      {selectedPrescription && (
+        <PrescriptionModal
+          visible={modalVisible}
+          closeModal={closeModal}
+          prescription={selectedPrescription}
+        />
+      )}
     </View>
   );
 };
