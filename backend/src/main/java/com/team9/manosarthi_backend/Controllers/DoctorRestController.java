@@ -102,7 +102,7 @@ public class DoctorRestController {
     public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 //        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
         System.out.println("/doctor/prescription-followup");
-        /*
+
         try {
 
             Prescription prescription = doctorService.givePrescription(patientFollowUpPrescriptionDTO);
@@ -120,10 +120,6 @@ public class DoctorRestController {
                 throw new APIRequestException("Error while adding prescription-followup",ex.getMessage());
         }
 
-
-
-         */
-        return false;
     }
 
     @GetMapping("/getfollowups")

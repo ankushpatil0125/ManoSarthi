@@ -118,7 +118,7 @@
   
   "doctor":{
     "Dashboard":"Dashboard",
-    "Pending Patient": "Pending Patient",
+    "New Patient": "New Patient",
     "Ongoing Patient": "Ongoing Patient",
     "Treated Patient": "Treated Patient",
     "New Patients" : "New Patients",
@@ -128,6 +128,7 @@
     "Village":"Village",
     "View Details":"View Details",
     "Previous":"Previous",
-    "Next":"Next"
+    "Next":"Next",
+    "Referred During FollowUp":"Referred During FollowUp"
   }
 }

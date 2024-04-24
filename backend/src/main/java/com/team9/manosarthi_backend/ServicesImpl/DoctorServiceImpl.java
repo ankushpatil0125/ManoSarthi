@@ -133,7 +133,7 @@ public class DoctorServiceImpl implements DoctorService {
                     }
                     else throw new APIRequestException("Follow Up Type not specified correctly");
 
-                    if (patientFollowUpPrescriptionDTO.getFollowUpSchedule()==null){
+                    if (patientFollowUpPrescriptionDTO.isUpdateFollowUpSchedule()){
                         patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
                         patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
                         patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
@@ -168,8 +168,8 @@ public class DoctorServiceImpl implements DoctorService {
                     System.out.println("old diseases set");
                     prescriptionRepository.save(oldActivePrescription);
 
-                    if(patientFollowUpPrescriptionDTO.getFollowUpSchedule()!=null)
-                    {
+                    if(patientFollowUpPrescriptionDTO.isUpdateFollowUpSchedule())
+     {
                         Optional<FollowUpSchedule> followUpSchedule = followUpScheduleRepository.findByPatientID(patient.get().getPatient_id());
                         if(followUpSchedule.isPresent())
                         {

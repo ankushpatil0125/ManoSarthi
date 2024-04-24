@@ -62,7 +62,7 @@ const PrivateRoute = ({ children, type }) => {
   else if (
     JWT &&
     localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
-    type === "pendingpatient"
+    type === "new-patient"
   )
     return children;
   else if (
@@ -122,7 +122,13 @@ const PrivateRoute = ({ children, type }) => {
   else if (
     JWT &&
     localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
-    type === "patient-details"
+    type === "new-patient-details"
+  )
+  return children;
+  else if (
+    JWT &&
+    localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
+    type === "ongoing-patient-details"
   )
   return children;
   else if(
@@ -131,6 +137,13 @@ const PrivateRoute = ({ children, type }) => {
     type === "add-prescription"
   )
   return children;
+  else if(
+    JWT &&
+    localStorage.getItem("ROLE") === "[ROLE_DOCTOR]" &&
+    type === "referred-during-followup-patient"
+  )
+  return children;
+  
   else return <Navigate to="/" />;
 };
 export default PrivateRoute;
