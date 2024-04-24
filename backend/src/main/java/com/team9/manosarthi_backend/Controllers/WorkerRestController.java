@@ -47,6 +47,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.InputStream;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -357,12 +359,12 @@ public class WorkerRestController {
 
 
 
-//    @Autowired private AmazonS3 amazonS3;
-//    @Value("${aws.s3.bucket}")
-//    private String bucketName;
-//
-//
-//
+    @Autowired private AmazonS3 amazonS3;
+    @Value("${aws.s3.bucket}")
+    private String bucketName;
+
+
+
 //    @PostMapping("/upload-image")
 //    public PutObjectResult uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
 //        File convFile = new File(file.getOriginalFilename());
@@ -370,34 +372,43 @@ public class WorkerRestController {
 //        fos.write(file.getBytes());
 //        fos.close();
 ////        return convFile;
-//        return amazonS3.putObject(bucketName,"test1",convFile);
+//        return amazonS3.putObject(bucketName,"t1",convFile);
 //
-////        amazonS3.putObject(bucketName,"test", (InputStream) file,null)
+////        return amazonS3.putObject(bucketName,"t1", (InputStream) file,null);
 ////        return  amazonS3.putObject(bucketName,"test", (File) file);
 //    }
+
+    @PostMapping("/upload-image")
+    public PutObjectResult uploadImage(@RequestBody String file) throws IOException {
+
+        return amazonS3.putObject(bucketName,"team",file);
+
+//        return amazonS3.putObject(bucketName,"t1", (InputStream) file,null);
+//        return  amazonS3.putObject(bucketName,"test", (File) file);
+    }
+
+    @GetMapping("/view-image")
+    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
+//        try {
+//            S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
 //
-//    @GetMapping("/view-image")
-//    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
-////        try {
-////            S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
-////
-////
-////            byte[] content = IOUtils.toByteArray(s3Object.getObjectContent());
-////            ByteArrayResource resource = new ByteArrayResource(content);
-////            return  resource;
-////
-////        }catch (Exception e){
-////            throw new Exception(e.getMessage()) ;
-////        }
-////        return new InputStreamResource(s3Object.getObjectContent());
 //
-//        S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
-//        S3ObjectInputStream content = s3Object.getObjectContent();
-////            ByteArrayResource resource = new ByteArrayResource(content);
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.IMAGE_PNG) // This content type can change by your file :)
-////                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
-//                .body(new InputStreamResource(content));
-//    }
+//            byte[] content = IOUtils.toByteArray(s3Object.getObjectContent());
+//            ByteArrayResource resource = new ByteArrayResource(content);
+//            return  resource;
+//
+//        }catch (Exception e){
+//            throw new Exception(e.getMessage()) ;
+//        }
+//        return new InputStreamResource(s3Object.getObjectContent());
+
+        S3Object   s3Object= amazonS3.getObject(bucketName,"team9");
+        S3ObjectInputStream content = s3Object.getObjectContent();
+//            ByteArrayResource resource = new ByteArrayResource(content);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG) // This content type can change by your file :)
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
+                .body(new InputStreamResource(content));
+    }
 
 }

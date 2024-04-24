@@ -17,7 +17,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-@JsonFilter("SupervisorJSONFilter")
+//@JsonFilter("SupervisorJSONFilter")
 public class Supervisor {
 
     @Id

@@ -1,8 +1,12 @@
 target
 .idea
+.idea/*
 target/
 .idea/
 applog*
-appLog*
+appLog.log
 .idea/*
 target/*
+./src/main/resources/application.properties
+./appLog.log
+./.idea
