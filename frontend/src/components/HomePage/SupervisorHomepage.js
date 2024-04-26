@@ -12,6 +12,8 @@ import ProfileComponent from "../Actors/ProfileComponent";
 import UpdateHealthWorker from "../HealthWorker/UpdateHealthWorker";
 import { useTranslation } from "react-i18next";
 import AdminDashboard from "../Dashboard/AdminDashboard";
+import ShowHealthWorkerActivity from "../Supervisor/ShowHealthWorkerActivity"
+
 const SupervisorHomepage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -287,7 +289,7 @@ const SupervisorHomepage = () => {
       case "delete":
         return <></>;
       case "show-activity":
-        return <></>;
+        return <ShowHealthWorkerActivity/>;
       default:
         return null;
     }

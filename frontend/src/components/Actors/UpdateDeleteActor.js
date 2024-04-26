@@ -18,8 +18,6 @@ const UpdateDeleteActor = ({ action }) => {
   // Determine the value based on the action prop
   const valueToPass = action === "Delete" ? "Delete" : "Reassign";
 
- 
-
   useEffect(() => {
     // Clear district and subdistrictcode immediately when actor is set
     setDistrict("");
