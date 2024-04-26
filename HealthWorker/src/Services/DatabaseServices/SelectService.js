@@ -199,6 +199,44 @@ const SelectService = {
     });
   },
 
+  getFollowupDetailsByID: (patientId) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM FollowUpSchedule WHERE patientId=?`,
+          [patientId],
+          (_, result) => {
+            resolve(result.rows._array);
+          },
+          (_, error) => {
+            reject("Error fetching FollowUpSchedule details: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  getAllFollowUpQuestionAnswersByPID: (pid) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT question_id ,answer FROM FollowUpQuestionAnswer WHERE patientId=?`,
+          [pid],
+          (_, result) => {
+            const len = result.rows.length;
+            const surveyQuestionAnswers = [];
+            // console.log("result.rows._array ", result.rows._array);
+
+            resolve(result.rows._array);
+          },
+          (_, error) => {
+            reject("Error fetching survey FollowUpQuestionAnswer: " + error);
+          }
+        );
+      });
+    });
+  },
+
   getAllMedicalQuestionAnswersByAabhaId: (aabhaId) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

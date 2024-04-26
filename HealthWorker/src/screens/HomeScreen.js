@@ -1,12 +1,22 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Button,
+} from "react-native";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
+import { DataTable, Card, Title } from "react-native-paper";
 import Table from "../components/Table";
 import { ScrollView } from "react-native";
 import i18n from "../../i18n";
 
 const HomeScreen = ({ navigation }) => {
+  const [folloupSch, setFolloupSch] = useState([]);
+
   const fetchDataFromDatabase = async () => {
     try {
       const patient_data = await SelectService.getAllPatients();
@@ -23,6 +33,15 @@ const HomeScreen = ({ navigation }) => {
       );
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
+    }
+  };
+  const fetchFollowUpScedule = async () => {
+    try {
+      const data = await SelectService.getFollowUpSchedule();
+      setFolloupSch(data);
+      console.log("[HomeScreen]Follow-Up Schedule Need To Render: ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
     }
   };
 
@@ -48,7 +67,8 @@ const HomeScreen = ({ navigation }) => {
     const fetchDataWithDelay = () => {
       setTimeout(() => {
         fetchDataFromDatabase();
-      }, 3000); // 3 seconds delay
+        fetchFollowUpScedule();
+      }, 10000); // 3 seconds delay
     };
 
     fetchDataWithDelay();
@@ -64,6 +84,9 @@ const HomeScreen = ({ navigation }) => {
   const handleMissedFollowup = () => {
     // Navigate or perform action for missed followup
     navigation.navigate("MissedFollowupScreen");
+  };
+  const handleCompleteFollowUp = (age, pid) => {
+    navigation.navigate("QuestionnaireScreen", { type: "followup", age, pid });
   };
 
   return (
@@ -86,7 +109,46 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       <View style={{ marginTop: 50 }}>
-        <Table />
+        <View style={styles.container}>
+          <Card style={styles.card}>
+            <Card.Content>
+              <Title style={styles.title}>{i18n.t("Follow-up Schedule")}</Title>
+
+              <DataTable>
+                <DataTable.Header style={styles.head}>
+                  <DataTable.Title>Patient Id</DataTable.Title>
+                  <DataTable.Title>First Name</DataTable.Title>
+                  <DataTable.Title>Last Name</DataTable.Title>
+                  <DataTable.Title>Adress</DataTable.Title>
+                  <DataTable.Title>Follow-Up Date</DataTable.Title>
+                  <DataTable.Title>Age</DataTable.Title>
+                  <DataTable.Title>Follow-Up Type</DataTable.Title>
+                  <DataTable.Title>Action</DataTable.Title>
+                </DataTable.Header>
+                {folloupSch.map((item, patientId) => (
+                  <DataTable.Row key={patientId} style={styles.row}>
+                    <DataTable.Cell>{item.patientId}</DataTable.Cell>
+                    <DataTable.Cell>{item.patient_fname}</DataTable.Cell>
+                    <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
+                    <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
+                    <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
+                    <DataTable.Cell>{item.age}</DataTable.Cell>
+
+                    <DataTable.Cell>{item.type}</DataTable.Cell>
+                    <DataTable.Cell>
+                      <Button
+                        title="Proceed"
+                        onPress={() =>
+                          handleCompleteFollowUp(item.age, item.patientId)
+                        }
+                      />
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              </DataTable>
+            </Card.Content>
+          </Card>
+        </View>
       </View>
     </ScrollView>
   );
@@ -131,4 +193,25 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  container: { flex: 1, paddingTop: 10, paddingHorizontal: 30 },
+  card: {
+    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  title: {
+    marginBottom: 10,
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  head: { height: 44, backgroundColor: "lightblue" },
+  row: { height: 50 },
 });

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { DataTable, Card, Title } from "react-native-paper";
 import { useLanguageContext } from "../context/LanguageProvider";
 import i18n from "../../i18n";
 import SelectService from "../Services/DatabaseServices/SelectService";
 
-const Table = () => {
+const Table = ({ navigation }) => {
   const [folloupSch, setFolloupSch] = useState([]);
 
   const fetchFollowUpScedule = async () => {
@@ -42,7 +42,9 @@ const Table = () => {
               <DataTable.Title>Last Name</DataTable.Title>
               <DataTable.Title>Adress</DataTable.Title>
               <DataTable.Title>Follow-Up Date</DataTable.Title>
-              <DataTable.Title>Follow-Up Type</DataTable.Title>
+              <DataTable.Title>Age</DataTable.Title>
+             <DataTable.Title>Follow-Up Type</DataTable.Title>
+              <DataTable.Title>Action</DataTable.Title>
             </DataTable.Header>
             {folloupSch.map((item, followup_id) => (
               <DataTable.Row key={followup_id} style={styles.row}>
@@ -51,7 +53,15 @@ const Table = () => {
                 <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
                 <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
                 <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
+                <DataTable.Cell>{item.age}</DataTable.Cell>
+
                 <DataTable.Cell>{item.type}</DataTable.Cell>
+                <DataTable.Cell>
+                  <Button
+                    title="Proceed"
+                    onPress={() => handleCompleteFollowUp(item.followup_id)}
+                  />
+                </DataTable.Cell>
               </DataTable.Row>
             ))}
           </DataTable>

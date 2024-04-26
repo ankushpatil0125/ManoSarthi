@@ -29,7 +29,7 @@ const MedicalDetails = ({ route }) => {
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
   // var commentID;
   const [commentID, setCommentID] = useState(0);
-  const { age } = route.params;
+  const { age,type } = route.params;
 
   useEffect(() => {
     fetchDataFromDatabase();
@@ -117,6 +117,7 @@ const MedicalDetails = ({ route }) => {
         commentID,
         comment,
         age,
+        type
       });
     } else {
       Alert.alert(
