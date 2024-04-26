@@ -13,6 +13,7 @@ import UpdateHealthWorker from "../HealthWorker/UpdateHealthWorker";
 import { useTranslation } from "react-i18next";
 import AdminDashboard from "../Dashboard/AdminDashboard";
 import ShowHealthWorkerActivity from "../Supervisor/ShowHealthWorkerActivity"
+import DeleteHealthWorker from "../Supervisor/DeleteHealthWorker";
 
 const SupervisorHomepage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -287,7 +288,7 @@ const SupervisorHomepage = () => {
       case "update":
         return <UpdateHealthWorker />;
       case "delete":
-        return <></>;
+        return <DeleteHealthWorker/>;
       case "show-activity":
         return <ShowHealthWorkerActivity/>;
       default:

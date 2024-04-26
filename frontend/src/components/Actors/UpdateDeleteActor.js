@@ -71,7 +71,6 @@ const UpdateDeleteActor = ({ action }) => {
   return (
     <div className="flex flex-col">
       {/* <Header /> */}
-
       <div className="flex flex-col items-center justify-center">
         <h4 className="mb-4 text-xl font-bold text-[#6467c0]">
           {t("UpdateDeleteActor.Reassign")}
