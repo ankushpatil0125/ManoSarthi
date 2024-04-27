@@ -83,7 +83,7 @@ const HomeScreen = ({ navigation }) => {
 
   const handleMissedFollowup = () => {
     // Navigate or perform action for missed followup
-    navigation.navigate("MissedFollowupScreen");
+    navigation.navigate("MissedFollowupScreen", { ftype: "Missed" });
   };
   const handleCompleteFollowUp = (age, pid) => {
     navigation.navigate("QuestionnaireScreen", { type: "followup", age, pid });
@@ -125,26 +125,28 @@ const HomeScreen = ({ navigation }) => {
                   <DataTable.Title>Follow-Up Type</DataTable.Title>
                   <DataTable.Title>Action</DataTable.Title>
                 </DataTable.Header>
-                {folloupSch.map((item, patientId) => (
-                  <DataTable.Row key={patientId} style={styles.row}>
-                    <DataTable.Cell>{item.patientId}</DataTable.Cell>
-                    <DataTable.Cell>{item.patient_fname}</DataTable.Cell>
-                    <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
-                    <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
-                    <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
-                    <DataTable.Cell>{item.age}</DataTable.Cell>
+                {folloupSch
+                  .filter((item) => item.type === "Normal")
+                  .map((item, patientID) => (
+                    <DataTable.Row key={patientID} style={styles.row}>
+                      <DataTable.Cell>{item.patientId}</DataTable.Cell>
+                      <DataTable.Cell>{item.patient_fname}</DataTable.Cell>
+                      <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
+                      <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
+                      <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
+                      <DataTable.Cell>{item.age}</DataTable.Cell>
 
-                    <DataTable.Cell>{item.type}</DataTable.Cell>
-                    <DataTable.Cell>
-                      <Button
-                        title="Proceed"
-                        onPress={() =>
-                          handleCompleteFollowUp(item.age, item.patientId)
-                        }
-                      />
-                    </DataTable.Cell>
-                  </DataTable.Row>
-                ))}
+                      <DataTable.Cell>{item.type}</DataTable.Cell>
+                      <DataTable.Cell>
+                        <Button
+                          title="Proceed"
+                          onPress={() =>
+                            handleCompleteFollowUp(item.age, item.patientId)
+                          }
+                        />
+                      </DataTable.Cell>
+                    </DataTable.Row>
+                  ))}
               </DataTable>
             </Card.Content>
           </Card>

@@ -69,6 +69,25 @@ const DeleteService = {
       });
     });
   },
+
+  deleteFollowupReferNotReferByPID: (pid) => {
+    console.log("delete, id", pid);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM followupReferNotRefer WHERE patientId=?",
+          [pid],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from followupReferNotRefer");
+          },
+          (_, error) => {
+            reject("Error deleting followupReferNotRefer: " + error);
+          }
+        );
+      });
+    });
+  },
+
   deleteAllSurveyQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction(
@@ -126,6 +145,44 @@ const DeleteService = {
       });
     });
   },
+
+
+  deleteFolloupQuestionAnswersByPID: (pid) => {
+    console.log("delete, id", pid);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM FollowUpQuestionAnswer WHERE patientId=?",
+          [pid],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from FollowUpQuestionAnswer");
+          },
+          (_, error) => {
+            reject("Error deleting FollowUpQuestionAnswer: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  deleteFolloupScheduleByPID: (pid) => {
+    console.log("delete, id", pid);
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DELETE FROM FollowUpSchedule WHERE patientId=?",
+          [pid],
+          (_, { rowsAffected }) => {
+            resolve(rowsAffected + " rows deleted from FollowUpSchedule");
+          },
+          (_, error) => {
+            reject("Error deleting FollowUpSchedule: " + error);
+          }
+        );
+      });
+    });
+  },
+
   deleteAllMedicalQuestions: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

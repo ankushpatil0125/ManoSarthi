@@ -195,12 +195,17 @@ public class WorkerServiceImpl implements WorkerService {
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent())
         {
-            Calendar calendar = Calendar.getInstance();
-            Date startDate = new Date(calendar.getTimeInMillis());
+//            Calendar calendar = Calendar.getInstance();
+//            Date startDate = new Date(calendar.getTimeInMillis());
+            Date startDate;
+            startDate= Date.valueOf(LocalDate.now());
+
+            Date endDate;
+            endDate = Date.valueOf(LocalDate.now().plusWeeks(1));
 
             // Calculate the end date (today + 6 days)
-            calendar.add(Calendar.DAY_OF_MONTH, 6);
-            Date endDate = new Date(calendar.getTimeInMillis());
+//            calendar.add(Calendar.DAY_OF_MONTH, 6);
+//            Date endDate = new Date(calendar.getTimeInMillis());
             int villagecode=worker.get().getVillagecode().getCode();
             return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
         }

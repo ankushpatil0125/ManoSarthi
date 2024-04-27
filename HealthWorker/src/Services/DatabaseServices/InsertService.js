@@ -36,7 +36,7 @@ const InsertService = {
           tx.executeSql(
             "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type) VALUES (?, ?, ?, ?, ?, ?, ?)",
             [
-              followUpSchedule.patientId,
+              followUpSchedule.patientID,
               followUpSchedule.patient_fname,
               followUpSchedule.patient_lname,
               followUpSchedule.patient_address,

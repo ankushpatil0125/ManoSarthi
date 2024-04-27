@@ -5,8 +5,12 @@ import { useLanguageContext } from "../context/LanguageProvider";
 import i18n from "../../i18n";
 import SelectService from "../Services/DatabaseServices/SelectService";
 
-const Table = ({ navigation }) => {
+const Table = ({ navigation ,ftype}) => {
   const [folloupSch, setFolloupSch] = useState([]);
+
+  const handleCompleteFollowUp = (age, pid) => {
+    navigation.navigate("QuestionnaireScreen", { type: "followup", age, pid });
+  };
 
   const fetchFollowUpScedule = async () => {
     try {
@@ -21,8 +25,9 @@ const Table = ({ navigation }) => {
   useEffect(() => {
     const fetchDataWithDelay = () => {
       setTimeout(() => {
+        // fetchDataFromDatabase();
         fetchFollowUpScedule();
-      }, 5000); // 3 seconds delay
+      }, 10000); // 3 seconds delay
     };
 
     fetchDataWithDelay();
@@ -33,22 +38,22 @@ const Table = ({ navigation }) => {
     <View style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.title}>{i18n.t("Follow-up Schedule")}</Title>
+          {/* <Title style={styles.title}>{i18n.t("Follow-up Schedule")}</Title> */}
 
           <DataTable>
             <DataTable.Header style={styles.head}>
-              <DataTable.Title>Follow-Up Id</DataTable.Title>
+              <DataTable.Title>Patient Id</DataTable.Title>
               <DataTable.Title>First Name</DataTable.Title>
               <DataTable.Title>Last Name</DataTable.Title>
               <DataTable.Title>Adress</DataTable.Title>
               <DataTable.Title>Follow-Up Date</DataTable.Title>
               <DataTable.Title>Age</DataTable.Title>
-             <DataTable.Title>Follow-Up Type</DataTable.Title>
+              <DataTable.Title>Follow-Up Type</DataTable.Title>
               <DataTable.Title>Action</DataTable.Title>
             </DataTable.Header>
-            {folloupSch.map((item, followup_id) => (
-              <DataTable.Row key={followup_id} style={styles.row}>
-                <DataTable.Cell>{item.followup_id}</DataTable.Cell>
+            {folloupSch.filter(item => item.type === ftype).map((item, patientID) => (
+              <DataTable.Row key={patientID} style={styles.row}>
+                <DataTable.Cell>{item.patientId}</DataTable.Cell>
                 <DataTable.Cell>{item.patient_fname}</DataTable.Cell>
                 <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
                 <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
@@ -59,7 +64,9 @@ const Table = ({ navigation }) => {
                 <DataTable.Cell>
                   <Button
                     title="Proceed"
-                    onPress={() => handleCompleteFollowUp(item.followup_id)}
+                    onPress={() =>
+                      handleCompleteFollowUp(item.age, item.patientId)
+                    }
                   />
                 </DataTable.Cell>
               </DataTable.Row>

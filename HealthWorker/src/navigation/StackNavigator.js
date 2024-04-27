@@ -10,6 +10,7 @@ import MedicalDetails from "../screens/MedicalDetails";
 import Preview from "../screens/Preview";
 import { PatientProvider } from "../context/PatientContext";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
+import Table from "../components/Table";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -35,6 +36,7 @@ const StackNavigator = () => {
           name="MissedFollowupScreen"
           component={MissedFollowupScreen}
         />
+        
         <Stack.Screen
           name="PatientDetailsScreen"
           component={PatientDetailsScreen}
@@ -45,6 +47,10 @@ const StackNavigator = () => {
         />
         <Stack.Screen name="MedicalDetails" component={MedicalDetails} />
         <Stack.Screen name="Preview" component={Preview} />
+        <Stack.Screen
+          name="TableComponent"
+          component={Table}
+        />
       </Stack.Navigator>
     </PatientProvider>
   );

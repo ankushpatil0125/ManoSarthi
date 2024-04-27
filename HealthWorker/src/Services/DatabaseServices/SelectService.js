@@ -199,7 +199,7 @@ const SelectService = {
     });
   },
 
-  getFollowupDetailsByID: (patientId) => {
+  getFollowupPatientDetailsByID: (patientId) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
@@ -215,12 +215,33 @@ const SelectService = {
       });
     });
   },
+  getAllFollowUpQuestionAnswers: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM FollowUpQuestionAnswer;`,
+          [],
+          (_, result) => {
+            const len = result.rows.length;
+            const surveyQuestionAnswers = [];
+            for (let i = 0; i < len; i++) {
+              surveyQuestionAnswers.push(result.rows.item(i));
+            }
+            resolve(surveyQuestionAnswers);
+          },
+          (_, error) => {
+            reject("Error fetching survey question answers: " + error);
+          }
+        );
+      });
+    });
+  },
 
   getAllFollowUpQuestionAnswersByPID: (pid) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          `SELECT question_id ,answer FROM FollowUpQuestionAnswer WHERE patientId=?`,
+          `SELECT patientId,question_id ,answer FROM FollowUpQuestionAnswer WHERE patientId=?`,
           [pid],
           (_, result) => {
             const len = result.rows.length;
@@ -230,13 +251,35 @@ const SelectService = {
             resolve(result.rows._array);
           },
           (_, error) => {
-            reject("Error fetching survey FollowUpQuestionAnswer: " + error);
+            reject("Error fetching FollowUpQuestionAnswer: " + error);
           }
         );
       });
     });
   },
-
+  selectFollowUpReferNotRefer: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM followupReferNotRefer;",
+          [],
+          (_, result) => {
+            const rows = result.rows;
+            const data = [];
+            for (let i = 0; i < rows.length; i++) {
+              data.push(rows.item(i));
+            }
+            resolve(data);
+          },
+          (_, error) => {
+            reject(
+              "Error selecting data from followupReferNotRefer table: " + error
+            );
+          }
+        );
+      });
+    });
+  },
   getAllMedicalQuestionAnswersByAabhaId: (aabhaId) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

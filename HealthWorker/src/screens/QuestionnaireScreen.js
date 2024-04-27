@@ -40,7 +40,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       setsurveyquestions(data);
       setAnswers(Array(data.length).fill(null));
       console.log(
-        "[QuestionarieScreen]Survey Questions Need To Render: ",
+        "[QuestionarieScreen] Questions Need To Render: ",
         data
       );
     } catch (error) {

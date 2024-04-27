@@ -17,7 +17,8 @@ const CustomDrawer = (props) => {
   // console.log("USername: " , userName)
   handleSync = async () => {
     console.log("Before Syncing :");
-    SyncDataService.registrationData();
+    // SyncDataService.registrationData();
+    SyncDataService.followUpData();
   };
   return (
     <View style={{ flex: 1 }}>
