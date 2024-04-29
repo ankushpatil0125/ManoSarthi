@@ -7,10 +7,14 @@
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/FollowupScheduleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/FollowupScheduleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/PatientFollowUpPrescriptionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/PatientFollowUpPrescriptionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/PatientResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/PatientResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/DoctorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/DoctorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/DoctorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/DoctorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,19 +93,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="backend" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="backend" />
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

@@ -27,7 +27,8 @@ public class FollowupScheduleDTO {
     private int age;
 
     //Date when followup has to take
-    @JsonFormat(pattern="dd-MMM-yyyy")
+//    @JsonFormat(pattern="dd-MMM-yyyy")
+    @JsonFormat(pattern = "dd-MMMM-yyyy", timezone = "Asia/Kolkata")
     private Date followUpDate;
 
     //missed or regular follow up
@@ -41,7 +42,9 @@ public class FollowupScheduleDTO {
         this.patient_lname=followUpSchedule.getPatient().getLastname();
         this.patient_address=followUpSchedule.getPatient().getAddress();
         this.age=followUpSchedule.getPatient().getAge();
+//        System.out.println("followUpSchedule.getNextFollowUpDate()"+followUpSchedule.getNextFollowUpDate());
         this.followUpDate=followUpSchedule.getNextFollowUpDate(); //until followup get complete this date remain the date when it has to taken
+//        System.out.println("this.followUpDate  "+this.followUpDate);
         this.type=type;
     }
 }

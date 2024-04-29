@@ -82,43 +82,102 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional
     public Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
-//        System.out.println("patientFollowUpPrescriptionDTO"+patientFollowUpPrescriptionDTO);
+
 
 
         System.out.println("patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id()   "+patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         Optional<Patient> patient = patientRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
-//        Optional<Patient> patient = patientRepository.findByAabha("7709");
-        System.out.println("hello");
         System.out.println("patient "+patient.isPresent());
-//        System.out.println("patient "+patient);
+
         if(patient.isPresent())
         {
-            System.out.println("byee");
             Patient newPatient = patient.get();
             System.out.println("newPatient"+newPatient.getPatient_id());
-//            System.out.println("Patient "+patient.get());
-            System.out.println("in patient.isPresent() patient");
+
             patientFollowUpPrescriptionDTO.getPrescription().setDate(Date.valueOf(java.time.LocalDate.now()));
             // get latest follow up id
             System.out.println("patient.get().getFollowUpNumber() "+patient.get().getFollowUpNumber());
             int latestFollowUpId = patient.get().getFollowUpNumber();
             Optional<FollowUpDetails> latestFollowUp = followUpDetailsRepository.findFollowUpDetailsByFollowUpNo(patient.get().getPatient_id(),latestFollowUpId);
 ////            Optional<FollowUpDetails> followUpDetails = followUpDetailsRepository.findById(patientFollowUpPrescriptionDTO.getPrescription().getFollowUpDetails().getId());
-            System.out.println("latestFollowUp "+latestFollowUp.get().getId());
             if( latestFollowUp.isPresent())
             {
+                System.out.println("latestFollowUp "+latestFollowUp.get().getId());
                 patientFollowUpPrescriptionDTO.getPrescription().setFollowUpDetails(latestFollowUp.get());
-                if(latestFollowUp.get().getFollowUpNo()!=0)    //set previous active prescription to false
-
+                if(latestFollowUp.get().getFollowUpNo()==0) // add a new entry to followup schedule
                 {
+                    // change patient from status=new to ongoing as followupno=0 for new registered patient
+                    patient.get().setStatus("ONGOING");
+                    patientRepository.save(patient.get());
+                    // add follow up schedule
+                    //For NEW Patient add new schedule
+                    Date nextDate;
+                    System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
+                    if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {
+                        System.out.println("nextDate WEEKLY");
+                        nextDate = Date.valueOf(LocalDate.now().plusWeeks(1));
+                    }
+                    else if (patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="BIWEEKLY")
+                    {
+                        System.out.println("nextDate BIWEEKLY");
+                        nextDate = Date.valueOf(LocalDate.now().plusWeeks(2));
+                    }
+                    else if (patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="MONTHLY")
+                    {
+                        System.out.println("nextDate MONTHLY");
+                        nextDate = Date.valueOf(LocalDate.now().plusMonths(1));
+                    }
+                    else throw new APIRequestException("Follow Up Type not specified correctly");
+
+                    patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
+                    patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
+                    patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
+                    FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
+                    System.out.println("followUpSchedule  "+followUpSchedule.getId());
+
+                }
+                    //
+                else {
+                    //set reffered during followup to false
+                    patient.get().setReferred(false);
+                    patientRepository.save(patient.get());
+
+                    //set previous active prescription to false and update follow-up schedule
                     Prescription oldActivePrescription = prescriptionRepository.getActivePrescription(patient.get().getPatient_id());
                     oldActivePrescription.setActive(false);
                     prescriptionRepository.save(oldActivePrescription);
-                }
-                else    // change patient from status=new to ongoing as followupno=0 for new registered patient
-                {
-                    patient.get().setStatus("ONGOING");
-                    patientRepository.save(patient.get());
+
+                    if(patientFollowUpPrescriptionDTO.getFollowUpSchedule()!=null)
+                    {
+                        Optional<FollowUpSchedule> followUpSchedule = followUpScheduleRepository.findByPatientID(patient.get().getPatient_id());
+                        if(followUpSchedule.isPresent())
+                        {
+                            Date nextDate;
+                            System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
+                            if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {
+                                System.out.println("nextDate WEEKLY");
+                                nextDate = Date.valueOf(LocalDate.now().plusWeeks(1));
+                            }
+                            else if (patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="BIWEEKLY")
+                            {
+                                System.out.println("nextDate BIWEEKLY");
+                                nextDate = Date.valueOf(LocalDate.now().plusWeeks(2));
+                            }
+                            else if (patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="MONTHLY")
+                            {
+                                System.out.println("nextDate MONTHLY");
+                                nextDate = Date.valueOf(LocalDate.now().plusMonths(1));
+                            }
+                            else throw new APIRequestException("Follow Up Type not specified correctly");
+
+                            followUpSchedule.get().setNextFollowUpDate(nextDate);
+                            followUpSchedule.get().setFollowUpRemaining(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getFollowUpRemaining());
+                            FollowUpSchedule newfollowUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
+                            System.out.println("newfollowUpSchedule  "+newfollowUpSchedule.getId());
+
+                        }
+                        else throw new APIRequestException("Follow Up Schedule not found");
+                    }
                 }
                 patientFollowUpPrescriptionDTO.getPrescription().setActive(true);
             }
@@ -127,9 +186,6 @@ public class DoctorServiceImpl implements DoctorService {
                 throw new APIRequestException("No followUpDetails with id : "+patientFollowUpPrescriptionDTO.getPrescription().getFollowUpDetails().getId());
             }
 
-
-//            Set<Disease> diseaseSet= new HashSet<>(patientFollowUpPrescriptionDTO.getDiseaseList());
-//            System.out.println("diseaseSet"+diseaseSet);
             Set<Disease> diseasetostore=new HashSet<>();
             for (Disease disease : patientFollowUpPrescriptionDTO.getDiseaseList()) {
                 System.out.println("Disease"+disease);
@@ -141,21 +197,10 @@ public class DoctorServiceImpl implements DoctorService {
                 }
             }
             System.out.println("diseasetostore"+diseasetostore);
-//            for(Disease disease:patientFollowUpPrescriptionDTO.getDiseaseList())
-//            {
-//                Optional<Disease> temp = diseaseRepository.findById(disease.getCode());
-//                if(temp.isPresent()) {
-//                    patientFollowUpPrescriptionDTO.getPrescription().getDisease_code().add(temp.get());
-//                }
-//                else {
-//                    System.out.println("Invalid disease");
-//                }
-//            }
+
             patientFollowUpPrescriptionDTO.getPrescription().setDisease_code(diseasetostore);
-//            System.out.println("disease"+ diseaseRepository.findById(diseaseSet.get(0)));
-//            System.out.println("prescription"+patientFollowUpPrescriptionDTO.getPrescription());
             System.out.println("Disease");
-//            System.out.println("PRESCRIPTION"+patientFollowUpPrescriptionDTO.getPrescription().getDisease_code());
+
             Prescription newPrescription = prescriptionRepository.save(patientFollowUpPrescriptionDTO.getPrescription());
             System.out.println("newPrescription"+newPrescription.getPrescription_id());
             latestFollowUp.get().setPrescription(newPrescription);
@@ -166,28 +211,6 @@ public class DoctorServiceImpl implements DoctorService {
                 medicine.setPrescription(newPrescription);
                 medicineRepository.save(medicine);
             }
-            // add follow up schedule
-            System.out.println("HELLO TYPE");
-            Date nextDate;
-            System.out.println("FollowupType"+patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType());
-            if(Objects.equals(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType(), "WEEKLY")) {
-                System.out.println("nextDate WEEKLY");
-                nextDate = Date.valueOf(LocalDate.now().plusWeeks(1));
-            }
-            else if (patientFollowUpPrescriptionDTO.getFollowUpSchedule().getType()=="MONTHLY")
-            {
-                System.out.println("nextDate MONTHLY");
-                nextDate = Date.valueOf(LocalDate.now().plusMonths(1));
-
-            }
-            else throw new APIRequestException("Follow Up Type not specified correctly");
-
-            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
-            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
-            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
-            FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
-            System.out.println("followUpSchedule  "+followUpSchedule.getId());
-
 
             System.out.println("service completed");
             Prescription prescr= prescriptionRepository.findById(newPrescription.getPrescription_id()).orElseThrow(()->  new APIRequestException("Failed to add Prescription"));
@@ -204,5 +227,13 @@ public class DoctorServiceImpl implements DoctorService {
         Pageable pageable = PageRequest.of(pagenumber,pagesize);
         Page<FollowUpDetails> followups= followUpDetailsRepository.findFollowUpDetailsByDoctorAndPatient(patientId,doctorId,pageable);
         return followups.getContent();
+    }
+
+    @Override
+    public List<Patient> getReferredPatient(int doctorId,int pagenumber, int pagesize) {
+        Pageable pageable = PageRequest.of(pagenumber,pagesize);
+        Page<Patient> patientList= patientRepository.getReferredPatientsDuringFollowup(doctorId,pageable);
+
+        return patientList.getContent();
     }
 }
