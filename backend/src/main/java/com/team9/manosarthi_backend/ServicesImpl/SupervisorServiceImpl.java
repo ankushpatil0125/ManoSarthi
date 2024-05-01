@@ -1,4 +1,4 @@
-package com.team9.manosarthi_backend.Services;
+package com.team9.manosarthi_backend.ServicesImpl;
 
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.Village;
@@ -7,29 +7,24 @@ import com.team9.manosarthi_backend.Entities.Worker;
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
+import com.team9.manosarthi_backend.Services.SupervisorService;
 import lombok.AllArgsConstructor;
 
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class SupervisorServiceImpl implements SupervisorService{
+public class SupervisorServiceImpl implements SupervisorService {
     private WorkerRepository workerRepository;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
@@ -66,7 +61,7 @@ public class SupervisorServiceImpl implements SupervisorService{
 //        user.setPassword(passwordEncoder.encode("changeme"));
 
 
-            String password=PasswordGeneratorService.generatePassword();
+            String password= PasswordGeneratorService.generatePassword();
             System.out.println(password);
             user.setPassword(passwordEncoder.encode(password));
 

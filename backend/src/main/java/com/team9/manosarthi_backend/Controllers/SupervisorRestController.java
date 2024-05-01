@@ -1,31 +1,18 @@
 package com.team9.manosarthi_backend.Controllers;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.DTO.WorkerResponseDTO;
 import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
 import com.team9.manosarthi_backend.Entities.Village;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
-import com.team9.manosarthi_backend.Filters.SupervisorFilter;
-import com.team9.manosarthi_backend.Filters.WorkerFilter;
-import com.team9.manosarthi_backend.Repositories.VillageRepository;
-import com.team9.manosarthi_backend.Services.EmailService;
+import com.team9.manosarthi_backend.ServicesImpl.EmailService;
 import com.team9.manosarthi_backend.Services.SupervisorService;
-import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.Supervisor;
 import com.team9.manosarthi_backend.Entities.Worker;
-import com.team9.manosarthi_backend.Repositories.DoctorRepository;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.security.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

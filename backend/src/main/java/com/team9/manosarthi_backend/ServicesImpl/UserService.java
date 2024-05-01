@@ -1,4 +1,4 @@
-package com.team9.manosarthi_backend.Services;
+package com.team9.manosarthi_backend.ServicesImpl;
 
 import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Repositories.UserRepository;

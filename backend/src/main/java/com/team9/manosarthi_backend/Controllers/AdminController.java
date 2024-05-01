@@ -1,38 +1,23 @@
 package com.team9.manosarthi_backend.Controllers;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.DTO.DoctorResponseDTO;
 import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Exceptions.GlobalExceptionhandler;
-import com.team9.manosarthi_backend.Filters.DoctorFilter;
-import com.team9.manosarthi_backend.Filters.SupervisorFilter;
 import com.team9.manosarthi_backend.Services.AdminService;
-import com.team9.manosarthi_backend.Services.EmailService;
-import com.team9.manosarthi_backend.Services.UserService;
+import com.team9.manosarthi_backend.ServicesImpl.EmailService;
+import com.team9.manosarthi_backend.ServicesImpl.UserService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Null;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 //import javax.validation.Valid;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Validated
 @RestController
