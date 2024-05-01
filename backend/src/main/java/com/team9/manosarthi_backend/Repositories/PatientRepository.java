@@ -22,5 +22,5 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     List<String> findAllByVillage(@Param("villagecode") Integer villagecode);
 
     @Query("SELECT p.village.subDistrict.district.name, COUNT(p) FROM Patient p GROUP BY p.village.subDistrict.district.code")
-    List<Object[]> patientCountForDistrict(@Param("villagecode") Integer villagecode);
+    List<Object[]> patientCountForDistrict();
 }

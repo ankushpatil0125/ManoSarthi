@@ -23,6 +23,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import com.team9.manosarthi_backend.security.JwtHelper;
@@ -232,7 +233,15 @@ public class WorkerRestController {
             for(FollowUpSchedule schedule:schedules)
             {
                 FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
-                followupScheduleDTO.FollowupScheduleToDTO(schedule);
+
+                Date today = Calendar.getInstance().getTime();
+                Date nextFollowUpDate = schedule.getNextFollowUpDate();
+                if(nextFollowUpDate.compareTo(today) < 0) {
+                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Missed");
+                }
+                else {
+                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
+                }
                 followupScheduleDTOList.add(followupScheduleDTO);
 
             }

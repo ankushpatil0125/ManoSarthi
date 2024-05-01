@@ -30,6 +30,8 @@ public class AdminServiceImpl implements AdminService {
 
     private MedicalQueRepo medicalQueRepo;
 
+    private PatientRepository patientRepository;
+
     @Override
     public Doctor adddoctor(Doctor doctor) {
 
@@ -216,6 +218,11 @@ public class AdminServiceImpl implements AdminService {
             return medicalQueRepo.save(medicalque);
         }
 
+        @Override
+        public List<Object[]> getdistrictstat()
+        {
+            return patientRepository.patientCountForDistrict();
+        }
 
 
 

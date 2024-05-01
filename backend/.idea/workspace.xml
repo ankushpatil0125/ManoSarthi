@@ -7,14 +7,12 @@
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/WorkerResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/WorkerResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpDetailsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/FollowupScheduleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/FollowupScheduleDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PrescriptionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PrescriptionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +205,7 @@
       <workItem from="1713344447599" duration="14301000" />
       <workItem from="1713377743476" duration="881000" />
       <workItem from="1713418560781" duration="9605000" />
-      <workItem from="1714567945737" duration="3554000" />
+      <workItem from="1714567945737" duration="9296000" />
     </task>
     <servers />
   </component>

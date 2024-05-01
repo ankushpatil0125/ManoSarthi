@@ -30,13 +30,13 @@ public class FollowupScheduleDTO {
     //missed or regular follow up
     private String type;
 
-    public void FollowupScheduleToDTO(FollowUpSchedule followUpSchedule)
+    public void FollowupScheduleToDTO(FollowUpSchedule followUpSchedule,String type)
     {
         this.followup_id=followUpSchedule.getId();
         this.patient_fname=followUpSchedule.getPatient().getFirstname();
         this.patient_lname=followUpSchedule.getPatient().getLastname();
         this.patient_address=followUpSchedule.getPatient().getAddress();
         this.followUpDate=followUpSchedule.getNextFollowUpDate(); //until followup get complete this date remain the date when it has to taken
-        this.type=null;
+        this.type=type;
     }
 }

@@ -398,4 +398,15 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/districtstats")
+    public  List<Object[]> viewDistrictsStats(){
+
+        List<Object[]> stats=adminService.getdistrictstat();
+        if(stats.isEmpty())
+        {
+            throw new APIRequestException("No Stats found");
+        }
+
+        return stats;
+    }
 }
