@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Services;
 
+import com.team9.manosarthi_backend.DTO.FollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -73,8 +74,6 @@ public class DoctorServiceImpl implements DoctorService{
                 return null;
             return patient.get();
         }
-
-
        return null;
     }
 
@@ -193,7 +192,11 @@ public class DoctorServiceImpl implements DoctorService{
             throw new APIRequestException("Patient not found with id "+ patientFollowUpPrescriptionDTO.getPrescription().getPatient().getPatient_id());
         }
 
-
-
+    }
+    @Override
+    public List<FollowUpDetails> getFollowups(int pagenumber,int pagesize,int doctorId, int patientId) {
+        Pageable pageable = PageRequest.of(pagenumber,pagesize);
+        Page<FollowUpDetails> followups= followUpDetailsRepository.findFollowUpDetailsByDoctorAndPatient(patientId,doctorId,pageable);
+        return followups.getContent();
     }
 }

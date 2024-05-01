@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -193,13 +194,18 @@ public class WorkerServiceImpl implements WorkerService{
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent())
         {
+            Calendar calendar = Calendar.getInstance();
+            Date startDate = new Date(calendar.getTimeInMillis());
+
+            // Calculate the end date (today + 6 days)
+            calendar.add(Calendar.DAY_OF_MONTH, 6);
+            Date endDate = new Date(calendar.getTimeInMillis());
             int villagecode=worker.get().getVillagecode().getCode();
-                return followUpScheduleRepository.findbyDateAndVill(Date.valueOf(LocalDate.now()),villagecode);
+                return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
         }
         else {
             throw new APIRequestException("Worker not found");
         }
-//        return null;
 
     }
 }

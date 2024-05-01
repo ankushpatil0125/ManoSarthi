@@ -1,8 +1,10 @@
 package com.team9.manosarthi_backend.Controllers;
 
 import com.team9.manosarthi_backend.DTO.DoctorResponseDTO;
+import com.team9.manosarthi_backend.DTO.FollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
 import com.team9.manosarthi_backend.DTO.PatientResponseDTO;
+import com.team9.manosarthi_backend.Entities.FollowUpDetails;
 import com.team9.manosarthi_backend.Entities.Patient;
 import com.team9.manosarthi_backend.Entities.Prescription;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -254,5 +256,43 @@ public class DoctorRestController {
         }
 
     }
+
+    @GetMapping("/getfollowups")
+    public List<FollowUpDetailsDTO> getFollowups(@RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader,@RequestParam("patientId") int patientId){
+
+        int pagesize = 1;
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+                String token = authorizationHeader.substring(7);
+                String doctorId = helper.getIDFromToken(token);
+                List<FollowUpDetails> followups = doctorService.getFollowups(pagenumber, pagesize,Integer.parseInt(doctorId),patientId);
+
+
+                List<FollowUpDetailsDTO> followupDTOList=new ArrayList<>();
+                for(FollowUpDetails followup:followups)
+                {
+                    FollowUpDetailsDTO followUpDetailsDTO=new FollowUpDetailsDTO();
+                    followUpDetailsDTO.followup(followup);
+                    followupDTOList.add(followUpDetailsDTO);
+                }
+                return followupDTOList;
+            }
+            else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting followup details",ex.getMessage());
+        }
+    }
+
+
 
 }
