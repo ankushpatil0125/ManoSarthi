@@ -31,6 +31,14 @@ public class WorkerResponseDTO {
 
     private String username;
 
+    private int districtcode;
+
+    private String districtname;
+
+    private int subdistrictcode;
+
+    private String subdistrictname;
+
     private int villagecode;
 
     private String villagename;
@@ -47,6 +55,10 @@ public class WorkerResponseDTO {
         this.email=worker.getEmail();
         this.villagecode=worker.getVillagecode().getCode();
         this.villagename=worker.getVillagecode().getName();
+        this.districtcode=worker.getVillagecode().getSubDistrict().getDistrict().getCode();
+        this.districtname=worker.getVillagecode().getSubDistrict().getDistrict().getName();
+        this.subdistrictcode=worker.getVillagecode().getSubDistrict().getCode();
+        this.subdistrictname=worker.getVillagecode().getSubDistrict().getName();
         this.id=worker.getId();
     }
     public void WorkerResponse(Worker worker)
@@ -56,6 +68,10 @@ public class WorkerResponseDTO {
         this.email= worker.getEmail();
         this.villagecode=worker.getVillagecode().getCode();
         this.villagename=worker.getVillagecode().getName();
+        this.districtcode=worker.getVillagecode().getSubDistrict().getDistrict().getCode();
+        this.districtname=worker.getVillagecode().getSubDistrict().getDistrict().getName();
+        this.subdistrictcode=worker.getVillagecode().getSubDistrict().getCode();
+        this.subdistrictname=worker.getVillagecode().getSubDistrict().getName();
         this.gender= worker.getGender();
         this.username=worker.getUser().getUsername();
         this.dob=worker.getDob();

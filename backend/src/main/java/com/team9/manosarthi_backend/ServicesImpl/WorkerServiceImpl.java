@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
 import com.team9.manosarthi_backend.Config.AesEncryptor;
+import com.team9.manosarthi_backend.DTO.PrescriptionDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -38,6 +39,8 @@ public class WorkerServiceImpl implements WorkerService {
     private AesEncryptor aesEncryptor;
 
     private FollowUpScheduleRepository followUpScheduleRepository;
+
+    private PrescriptionRepository prescriptionRepository;
 
     @Override
     public Worker viewProfile(int id) {
@@ -147,7 +150,7 @@ public class WorkerServiceImpl implements WorkerService {
 //    }
 
     @Override
-    public List<String> getAabhaid(Integer workerid)
+    public List<String> getAabhaid(int workerid)
     {
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent()) {
@@ -187,7 +190,7 @@ public class WorkerServiceImpl implements WorkerService {
             throw new APIRequestException("worker with given id not found");
     }
 
-    public List<FollowUpSchedule> get_followup_schedule(Integer workerid)
+    public List<FollowUpSchedule> get_followup_schedule(int workerid)
     {
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent())
@@ -199,7 +202,21 @@ public class WorkerServiceImpl implements WorkerService {
             calendar.add(Calendar.DAY_OF_MONTH, 6);
             Date endDate = new Date(calendar.getTimeInMillis());
             int villagecode=worker.get().getVillagecode().getCode();
-                return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+            return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+        }
+        else {
+            throw new APIRequestException("Worker not found");
+        }
+
+    }
+
+    public List<Prescription> getprescriptions(int workerid)
+    {
+        Optional<Worker> worker=workerRepository.findById(workerid);
+        if(worker.isPresent())
+        {
+            int villagecode=worker.get().getVillagecode().getCode();
+            return prescriptionRepository.getActivePrescriptionsOfVillage(villagecode);
         }
         else {
             throw new APIRequestException("Worker not found");

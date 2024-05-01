@@ -3,10 +3,7 @@ package com.team9.manosarthi_backend.Controllers;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.team9.manosarthi_backend.DTO.FollowupScheduleDTO;
-import com.team9.manosarthi_backend.DTO.PatientResponseDTO;
-import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
-import com.team9.manosarthi_backend.DTO.WorkerResponseDTO;
+import com.team9.manosarthi_backend.DTO.*;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Filters.PatientFilter;
@@ -240,6 +237,28 @@ public class WorkerRestController {
 
             }
           return followupScheduleDTOList;
+        }
+        else {
+            throw new APIRequestException("Error in authorizing");
+        }
+    }
+
+    @GetMapping("/getprescriptions")
+    public List<PrescriptionDTO> getPrescriptions(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+            List<Prescription> prescriptions = workerService.getprescriptions(Integer.parseInt(workerId));
+            List<PrescriptionDTO> prescriptionDTOList=new ArrayList<>();
+            for(Prescription prescription:prescriptions)
+            {
+                PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
+                prescriptionDTO.PrescriptionToDTO(prescription);
+                prescriptionDTOList.add(prescriptionDTO);
+
+            }
+            return prescriptionDTOList;
         }
         else {
             throw new APIRequestException("Error in authorizing");

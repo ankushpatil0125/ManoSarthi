@@ -15,6 +15,6 @@ public interface FollowUpDetailsRepository extends JpaRepository<FollowUpDetails
     @Query("select f from FollowUpDetails f where f.patient.patient_id=:patientId and f.followUpNo=:followUpNo")
     Optional<FollowUpDetails> findFollowUpDetailsByFollowUpNo(@Param("patientId") int patientId ,@Param("followUpNo") int followUpNo);
 
-    @Query("select f from FollowUpDetails f where f.patient.patient_id=:patientId and f.doctor.id=:doctorId ORDER BY f.followUpNo")
+    @Query("select f from FollowUpDetails f where f.patient.patient_id=:patientId and f.doctor.id=:doctorId ORDER BY f.followUpNo DESC ")
     Page<FollowUpDetails> findFollowUpDetailsByDoctorAndPatient(@Param("patientId") int patientId , @Param("doctorId") int doctorId, Pageable p);
 }
