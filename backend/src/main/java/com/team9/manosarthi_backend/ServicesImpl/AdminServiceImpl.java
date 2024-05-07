@@ -50,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
         user.setPassword(passwordEncoder.encode(password));
 
         user.setRole("ROLE_DOCTOR");
+        user.setEmail(newDoctor.getEmail());
         User newuser = userRepository.save(user);
 
         //Increase count of doctor in subdistrict
@@ -82,7 +83,7 @@ public class AdminServiceImpl implements AdminService {
         String password=PasswordGeneratorService.generatePassword();
         user.setPassword(passwordEncoder.encode(password));
         user.setRole("ROLE_SUPERVISOR");
-
+        user.setEmail(newSupervisor.getEmail());
         User newuser = userRepository.save(user);
 
         //Increase count of supervisor in subdistrict

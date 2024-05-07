@@ -43,7 +43,6 @@ public class Doctor {
     @Column(name = "email",unique = true)
     private String email;
 
-
     @OneToOne
     @JoinColumn(name = "username")
     private User user;

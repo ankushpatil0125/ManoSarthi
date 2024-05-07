@@ -6,22 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Disease.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Disease.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Doctor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpSchedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQueAns.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/MedicalQueAns.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Medicine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Medicine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Prescription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Prescription.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie_ans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Questionarrie_ans.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/SubDistrict.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/SubDistrict.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Supervisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Token.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Village.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Village.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/TokenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -190,7 +192,11 @@
       <workItem from="1713330694664" duration="2791000" />
       <workItem from="1713343533510" duration="1280000" />
       <workItem from="1713635379721" duration="9187000" />
-      <workItem from="1713880055831" duration="1492000" />
+      <workItem from="1713880055831" duration="6624000" />
+      <workItem from="1713954093627" duration="9228000" />
+      <workItem from="1714135898345" duration="10170000" />
+      <workItem from="1714221567322" duration="10482000" />
+      <workItem from="1715087309594" duration="589000" />
     </task>
     <servers />
   </component>

@@ -3,14 +3,14 @@ package com.team9.manosarthi_backend.Entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "token")
 public class Token {
     @Id
@@ -24,8 +24,8 @@ public class Token {
     @Column(name = "expired")
     private boolean expired;
 
-//    @Column(name = "revoked")
-//    private boolean revoked;
+    @Column(name = "revoked")
+    private boolean revoked;
 
     @ManyToOne
     @JoinColumn(name = "username")

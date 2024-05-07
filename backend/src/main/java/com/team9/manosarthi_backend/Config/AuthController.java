@@ -128,6 +128,7 @@ public class AuthController {
                         .expired(false)
                         .user(user)
                         .build();
+                revokeToken(user);
                 tokenRepository.save(storedtoken);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -142,11 +143,12 @@ public class AuthController {
 
     private void revokeToken(User user)
     {
-        List<Token> validTokens=tokenRepository.findAllValidTokensByUser(user.getUser_id());
+        List<Token> validTokens=tokenRepository.findAllValidTokensByUser(user.getUsername());
         if(validTokens.isEmpty())
             return;
         for(Token token:validTokens) {
             token.setExpired(true);
+            token.setRevoked(true);
         }
         tokenRepository.saveAll(validTokens);
     }
