@@ -238,7 +238,7 @@ public class WorkerServiceImpl implements WorkerService {
         Optional<Patient> patient = patientRepository.findById(registerFollowUpDetailsDTO.getPatientID());
         if(worker.isPresent() && patient.isPresent()) {
 
-
+            // check for the location of followup
             FollowUpDetails followUpDetails=new FollowUpDetails();
             followUpDetails.setPatient(patient.get());
             followUpDetails.setDoctor(patient.get().getDoctor());
