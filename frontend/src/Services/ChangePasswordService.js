@@ -17,6 +17,19 @@ const ChangePasswordService = {
       throw error;
     }
   },
+  ChangePasswordForgotPassword: async (requestData,email) => {
+    console.log("inside change pass service");
+    try {
+      const resp = axios.post(BASE_URL + "user/setPassword/"+email, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return resp;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default ChangePasswordService;
