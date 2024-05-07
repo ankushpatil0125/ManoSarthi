@@ -71,98 +71,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean verifyEmail(String email)
-    {
-        User user=userRepository.findByEmail(email);
-        if(user==null)
+    public Boolean verifyEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
             throw new APIRequestException("User not found");
 
 
         String otp = Integer.toString(otpGenerator());
-                //for sending email
-                String subject = "OTP for Forgot Password Request";
-                String msg = "Hello " + "\nThis is OTP for forgot password request from Manosarthi Application. Please enter this in your system  " + otp;
-                String to = email;
-                if (emailService.sendEmail(subject, msg, to)) {
-                    System.out.println("mail success");
-                } else {
-                    System.out.println("mail failed");
-                    throw new APIRequestException("Sending mail failed");
-                }
-                ForgotPassword fp=ForgotPassword.builder()
-                        .otp(otp)
-                        .ExpirationTime(new Date(System.currentTimeMillis()+30*1000))
-                        .user(user)
-                        .build();
-                forgotPasswordRepository.save(fp);
-                return true;
-
-/*
-        else if(role=="ROLE_WORKER")
-        {
-            Worker worker = workerRepository.findById(Integer.parseInt(userID))
-                    .orElseThrow(() -> new APIRequestException("Worker not found"));
-            if(worker.getEmail()==email) {
-                Integer otp = otpGenerator();
-                //for sending email
-                String subject = "OTP for Forgot Password Request";
-                String msg = "Hello " + worker.getFirstname() + " " + worker.getLastname() + "\nThis is OTP for forgot password request. Please enter this in your system  " + otp;
-                String to = worker.getEmail();
-                if (emailService.sendEmail(subject, msg, to)) {
-                    System.out.println("mail success");
-                } else {
-                    System.out.println("mail failed");
-                    throw new APIRequestException("Sending mail failed");
-                }
-                ForgotPassword fp=ForgotPassword.builder()
-                        .otp(otp)
-                        .ExpirationTime(new Date(System.currentTimeMillis()+30*1000))
-                        .user(user)
-                        .build();
-                forgotPasswordRepository.save(fp);
-                return true;
-
-            }
-            else
-            {
-                throw new APIRequestException("Email is not same as registered");
-            }
+        //for sending email
+        String subject = "OTP for Forgot Password Request";
+        String msg = "Hello " + "\nThis is OTP for forgot password request from Manosarthi Application. Please enter this in your system  " + otp;
+        String to = email;
+        if (emailService.sendEmail(subject, msg, to)) {
+            System.out.println("mail success");
+        } else {
+            System.out.println("mail failed");
+            throw new APIRequestException("Sending mail failed");
         }
-        else if(role=="ROLE_DOCTOR")
-        {
-            Doctor doctor  = doctorRepository.findById(Integer.parseInt(userID))
-                    .orElseThrow(() -> new APIRequestException("Worker not found"));
-            if(doctor.getEmail()==email) {
-                Integer otp = otpGenerator();
-                //for sending email
-                String subject = "OTP for Forgot Password Request";
-                String msg = "Hello " + doctor.getFirstname() + " " + doctor.getLastname() + "\nThis is OTP for forgot password request. Please enter this in your system  " + otp;
-                String to = doctor.getEmail();
-                if (emailService.sendEmail(subject, msg, to)) {
-                    System.out.println("mail success");
-                } else {
-                    System.out.println("mail failed");
-                    throw new APIRequestException("Sending mail failed");
-                }
-                ForgotPassword fp=ForgotPassword.builder()
-                        .otp(otp)
-                        .ExpirationTime(new Date(System.currentTimeMillis()+30*1000))
-                        .user(user)
-                        .build();
-                forgotPasswordRepository.save(fp);
-                return true;
-
-            }
-            else
-            {
-                throw new APIRequestException("Email is not same as registered");
-            }
-        }supervisor.getEmail()
-        return false;
-        */
-
+        ForgotPassword fp = ForgotPassword.builder()
+                .otp(otp)
+                .ExpirationTime(new Date(System.currentTimeMillis() + 30 * 1000))
+                .user(user)
+                .build();
+        forgotPasswordRepository.save(fp);
+        return true;
     }
 
+    
     private Integer otpGenerator()
     {
         Random random=new Random();
