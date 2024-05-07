@@ -23,10 +23,7 @@
       <change beforePath="$PROJECT_DIR$/../HealthWorker/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/utils/Constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/AdminHomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HomePage/SupervisorHomepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HomePage/SupervisorHomepage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/Constants.js" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -73,7 +70,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kuldip&quot;,
+
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
@@ -195,6 +192,11 @@
       <workItem from="1713330694664" duration="2791000" />
       <workItem from="1713343533510" duration="1280000" />
       <workItem from="1713635379721" duration="9187000" />
+      <workItem from="1713880055831" duration="6624000" />
+      <workItem from="1713954093627" duration="9228000" />
+      <workItem from="1714135898345" duration="10170000" />
+      <workItem from="1714221567322" duration="10482000" />
+      <workItem from="1715087309594" duration="589000" />
     </task>
     <servers />
   </component>

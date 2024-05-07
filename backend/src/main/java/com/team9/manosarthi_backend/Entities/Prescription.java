@@ -19,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("PrescriptionJSONFilter")
+
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

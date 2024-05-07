@@ -1,6 +1,7 @@
 package com.team9.manosarthi_backend.security;
 
 import com.team9.manosarthi_backend.Config.UserDetailsServiceImpl;
+import com.team9.manosarthi_backend.Repositories.TokenRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -30,6 +31,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         @Autowired
         private UserDetailsServiceImpl userDetailsService;
+
+        @Autowired
+        private TokenRepository tokenRepository;
 
         @Override
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -79,8 +83,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 //fetch user detail from username
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                Boolean isTokenValid=tokenRepository.findByToken(token).map(t->!t.isExpired() && !t.isRevoked() ).orElse(false);
                 Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
-                if (validateToken) {
+                if (isTokenValid && validateToken) {
 
                     //set the authentication
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

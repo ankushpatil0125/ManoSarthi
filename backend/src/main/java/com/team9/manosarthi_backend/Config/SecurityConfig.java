@@ -11,10 +11,15 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -29,6 +34,9 @@ public class SecurityConfig {
     private JwtAuthenticationEntryPoint point;
     @Autowired
     private JwtAuthenticationFilter filter;
+
+    @Autowired
+    private LogoutHandler logoutHandler;
     @Bean
     public UserDetailsService getUserDetailService()
     {
@@ -65,8 +73,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+
+//            DelegatingServerLogoutHandler logoutHandler = new DelegatingServerLogoutHandler(
+//                    new SecurityContextServerLogoutHandler(), new WebSessionServerLogoutHandler()
+//            );
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+
+//                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
+
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
@@ -82,7 +98,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/change-password").hasAnyRole("DOCTOR","ADMIN","SUPERVISOR","WORKER")
                         .requestMatchers("/v3/api-docs").permitAll()
 
-//                        .requestMatchers("/doctor/**").permitAll()
+//
 
                         .requestMatchers("/worker/**").hasRole("WORKER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -106,7 +122,12 @@ public class SecurityConfig {
 
                 .csrf(csrf-> csrf.disable())
 //                .cors(cors-> cors.disable());
-                .cors(withDefaults());
+                .cors(withDefaults())
+                .logout((logout) -> logout
+                        .logoutUrl("/api/v1/auth/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext())));
+
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
@@ -126,9 +147,6 @@ public class SecurityConfig {
 
         return daoAuthenticationProvider;
     }
-
-
-
 
 
     //Tried work

@@ -66,6 +66,7 @@ public class SupervisorServiceImpl implements SupervisorService {
             user.setPassword(passwordEncoder.encode(password));
 
             user.setRole("ROLE_WORKER");
+            user.setEmail(newWorker.getEmail());
             User newuser = userRepository.save(user);
 
 
