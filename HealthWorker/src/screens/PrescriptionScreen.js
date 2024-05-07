@@ -3,287 +3,22 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  TouchableHighlight,
   ScrollView,
   Image,
   TextInput, // Import TextInput
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SelectService from "../Services/DatabaseServices/SelectService";
-
+import PrescriptionModal from "../components/PrescriptionModal"; // Import the modal component
 
 const PrescriptionScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState(""); // State to hold search text
-
-  const sample_data = [
-    {
-      "aabhaId": null,
-      "date": "24-April-2024",
-      "disease_code": [
-        {
-          "code": "F10282",
-          "diseaseSubCategory": {
-            "code": "F10",
-            "diseaseCategory": {
-              "code": "F10-F19",
-              "name": "Mental and behavioral disorders due to psychoactive substance use"
-            },
-            "diseaseName": "Alcohol related disorders"
-          },
-          "shortDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "longDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "patient_count": 1
-        },
-        {
-          "code": "F0150",
-          "diseaseSubCategory": {
-            "code": "F01",
-            "diseaseCategory": {
-              "code": "F01-F09",
-              "name": "Mental disorders due to known physiological conditions"
-            },
-            "diseaseName": "Vascular dementia"
-          },
-          "shortDescription": "Vascular dementia, unsp severity, without beh/psych/mood/anx",
-          "longDescription": "Vascular dementia, unspecified severity, without behavioral disturbance, psychotic disturbance, mood disturbance, and anxiety",
-          "patient_count": 1
-        }
-      ],
-      "medicine": [
-        {
-          "id": 13,
-          "name": "abc",
-          "dosage": "10 ml",
-          "timing": "2 times"
-        },
-        {
-          "id": 14,
-          "name": "cde",
-          "dosage": "20 ml",
-          "timing": "3 times"
-        }
-      ],
-      "patient_age": 0,
-      "patient_fname": "Nik",
-      "patient_lname": "s",
-      "patient_village_name": "Kuganari",
-      "prescription_id": 22,
-      "treatment": null
-    },
-    {
-      "aabhaId": null,
-      "date": "24-April-2024",
-      "disease_code": [
-        {
-          "code": "F10282",
-          "diseaseSubCategory": {
-            "code": "F10",
-            "diseaseCategory": {
-              "code": "F10-F19",
-              "name": "Mental and behavioral disorders due to psychoactive substance use"
-            },
-            "diseaseName": "Alcohol related disorders"
-          },
-          "shortDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "longDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "patient_count": 1
-        },
-        {
-          "code": "F0150",
-          "diseaseSubCategory": {
-            "code": "F01",
-            "diseaseCategory": {
-              "code": "F01-F09",
-              "name": "Mental disorders due to known physiological conditions"
-            },
-            "diseaseName": "Vascular dementia"
-          },
-          "shortDescription": "Vascular dementia, unsp severity, without beh/psych/mood/anx",
-          "longDescription": "Vascular dementia, unspecified severity, without behavioral disturbance, psychotic disturbance, mood disturbance, and anxiety",
-          "patient_count": 1
-        }
-      ],
-      "medicine": [
-        {
-          "id": 15,
-          "name": "abc",
-          "dosage": "10 ml",
-          "timing": "2 times"
-        },
-        {
-          "id": 16,
-          "name": "cde",
-          "dosage": "20 ml",
-          "timing": "3 times"
-        }
-      ],
-      "patient_age": 0,
-      "patient_fname": "Nik",
-      "patient_lname": "s",
-      "patient_village_name": "Kuganari",
-      "prescription_id": 23,
-      "treatment": null
-    },
-    {
-      "aabhaId": null,
-      "date": "01-May-2024",
-      "disease_code": [
-        {
-          "code": "F10282",
-          "diseaseSubCategory": {
-            "code": "F10",
-            "diseaseCategory": {
-              "code": "F10-F19",
-              "name": "Mental and behavioral disorders due to psychoactive substance use"
-            },
-            "diseaseName": "Alcohol related disorders"
-          },
-          "shortDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "longDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "patient_count": 1
-        },
-        {
-          "code": "F0150",
-          "diseaseSubCategory": {
-            "code": "F01",
-            "diseaseCategory": {
-              "code": "F01-F09",
-              "name": "Mental disorders due to known physiological conditions"
-            },
-            "diseaseName": "Vascular dementia"
-          },
-          "shortDescription": "Vascular dementia, unsp severity, without beh/psych/mood/anx",
-          "longDescription": "Vascular dementia, unspecified severity, without behavioral disturbance, psychotic disturbance, mood disturbance, and anxiety",
-          "patient_count": 1
-        }
-      ],
-      "medicine": [
-        {
-          "id": 17,
-          "name": "abc",
-          "dosage": "10 ml",
-          "timing": "2 times"
-        },
-        {
-          "id": 18,
-          "name": "cde",
-          "dosage": "20 ml",
-          "timing": "3 times"
-        }
-      ],
-      "patient_age": 0,
-      "patient_fname": "Nik",
-      "patient_lname": "s",
-      "patient_village_name": "Kuganari",
-      "prescription_id": 24,
-      "treatment": null
-    },
-    {
-      "aabhaId": null,
-      "date": "21-April-2024",
-      "disease_code": [
-        {
-          "code": "F10282",
-          "diseaseSubCategory": {
-            "code": "F10",
-            "diseaseCategory": {
-              "code": "F10-F19",
-              "name": "Mental and behavioral disorders due to psychoactive substance use"
-            },
-            "diseaseName": "Alcohol related disorders"
-          },
-          "shortDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "longDescription": "Alcohol dependence with alcohol-induced sleep disorder",
-          "patient_count": 1
-        },
-        {
-          "code": "F0150",
-          "diseaseSubCategory": {
-            "code": "F01",
-            "diseaseCategory": {
-              "code": "F01-F09",
-              "name": "Mental disorders due to known physiological conditions"
-            },
-            "diseaseName": "Vascular dementia"
-          },
-          "shortDescription": "Vascular dementia, unsp severity, without beh/psych/mood/anx",
-          "longDescription": "Vascular dementia, unspecified severity, without behavioral disturbance, psychotic disturbance, mood disturbance, and anxiety",
-          "patient_count": 1
-        }
-      ],
-      "medicine": [
-        {
-          "id": 35,
-          "name": "abc",
-          "dosage": "10 ml",
-          "timing": "2 times"
-        },
-        {
-          "id": 36,
-          "name": "cde",
-          "dosage": "20 ml",
-          "timing": "3 times"
-        }
-      ],
-      "patient_age": 24,
-      "patient_fname": "Sanket",
-      "patient_lname": "Patil",
-      "patient_village_name": "Kuganari",
-      "prescription_id": 33,
-      "treatment": null
-    },
-    {
-      "aabhaId": null,
-      "date": "28-April-2024",
-      "disease_code": [
-        {
-          "code": "F3012",
-          "diseaseSubCategory": {
-            "code": "F30",
-            "diseaseCategory": {
-              "code": "F30-F39",
-              "name": "Mood [affective] disorders"
-            },
-            "diseaseName": "Manic episode"
-          },
-          "shortDescription": "Manic episode without psychotic symptoms, moderate",
-          "longDescription": "Manic episode without psychotic symptoms, moderate",
-          "patient_count": 1
-        },
-        {
-          "code": "F3013",
-          "diseaseSubCategory": {
-            "code": "F30",
-            "diseaseCategory": {
-              "code": "F30-F39",
-              "name": "Mood [affective] disorders"
-            },
-            "diseaseName": "Manic episode"
-          },
-          "shortDescription": "Manic episode, severe, without psychotic symptoms",
-          "longDescription": "Manic episode, severe, without psychotic symptoms",
-          "patient_count": 1
-        }
-      ],
-      "medicine": [
-        {
-          "id": 37,
-          "name": "ASDF",
-          "dosage": "ASF",
-          "timing": "ASF"
-        }
-      ],
-      "patient_age": 30,
-      "patient_fname": "Shahrukh",
-      "patient_lname": "Khan",
-      "patient_village_name": "Kuganari",
-      "prescription_id": 34,
-      "treatment": null
-    }
-  ]
+  const [selectedPrescription, setSelectedPrescription] = useState(null); // State to track selected prescription
+  const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
 
   const fetchDataFromDatabase = async () => {
     try {
@@ -325,6 +60,15 @@ const PrescriptionScreen = () => {
     }
   };
 
+  const openModal = (prescription) => {
+    setSelectedPrescription(prescription);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.textFriends}>Search Prescription</Text>
@@ -342,17 +86,27 @@ const PrescriptionScreen = () => {
       <ScrollView>
         {filteredData.map((item, index) => {
           return (
-            <View key={index} style={styles.itemContainer}>
+            <TouchableHighlight
+              key={index}
+              style={styles.itemContainer}
+              onPress={() => openModal(item)}
+            >
               <View>
-                <Text onPress={handleShowPrescription(item.aabhaId)} style={styles.textName}>
+                <Text style={styles.textName}>
                   {item.patient_fname} {item.patient_lname}
                 </Text>
-                {/* <Text style={styles.textEmail}>{item.login.username}</Text> */}
               </View>
-            </View>
+            </TouchableHighlight>
           );
         })}
       </ScrollView>
+      {selectedPrescription && (
+        <PrescriptionModal
+          visible={modalVisible}
+          closeModal={closeModal}
+          prescription={selectedPrescription}
+        />
+      )}
     </View>
   );
 };

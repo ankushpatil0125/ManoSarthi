@@ -583,3 +583,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
 };
 
 export default ViewSupervisor;
+
+
+
+

@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonFilter("SubDistrictJSONFilter")
+//@JsonFilter("SubDistrictJSONFilter")
 public class SubDistrict {
 
     @NotNull(message = "subdistrict code cannot be null")

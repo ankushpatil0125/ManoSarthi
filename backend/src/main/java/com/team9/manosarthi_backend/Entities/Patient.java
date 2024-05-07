@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@JsonFilter("PatientJSONFilter")
+//@JsonFilter("PatientJSONFilter")
 public class Patient {
 
     @Id
