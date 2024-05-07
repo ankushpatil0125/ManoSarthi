@@ -11,6 +11,7 @@ import {
 import React, { useContext, useState, useEffect } from "react";
 import PatientContext from "../context/PatientContext";
 import SelectService from "../Services/DatabaseServices/SelectService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RegisterPatientScreen = ({ navigation }) => {
   const [abhaId, setAbhaId] = useState("");
@@ -21,10 +22,15 @@ const RegisterPatientScreen = ({ navigation }) => {
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllAabhaIdInfo();
+      const data2 = await SelectService.selectFollowUpReferNotRefer();
       setAbhaTable(data);
       console.log(
         "[RegisterPatientScreen]AabhaId Fetched From Database: ",
         data
+      );
+      console.log(
+        "[RegisterPatientScreen]Followup Refer Fetched from database: ",
+        data2
       );
     } catch (error) {
       console.error("Error fetching data from database:", error);
@@ -33,8 +39,34 @@ const RegisterPatientScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchDataFromDatabase();
+    getLocationFromStorage();
+    removeLocationFromStorage();
   }, []);
 
+  const removeLocationFromStorage = async () => {
+    try {
+      await AsyncStorage.removeItem("currentLocation");
+      console.log("Location removed from AsyncStorage.");
+    } catch (error) {
+      console.error("Error removing location from AsyncStorage:", error);
+    }
+  };
+  const getLocationFromStorage = async () => {
+    try {
+      const jsonLocation = await AsyncStorage.getItem("currentLocation");
+      if (jsonLocation !== null) {
+        const location = JSON.parse(jsonLocation);
+        console.log("Location from AsyncStorage:", location);
+        return location;
+      } else {
+        console.log("No location data found in AsyncStorage.");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error getting location from AsyncStorage:", error);
+      return null;
+    }
+  };
   const handleRegister = () => {
     if (abhaId.trim() === "") {
       Alert.alert("Error", "Please enter ABHA ID");

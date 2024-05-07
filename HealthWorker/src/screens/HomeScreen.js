@@ -10,12 +10,15 @@ import {
 import SelectService from "../Services/DatabaseServices/SelectService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import { DataTable, Card, Title } from "react-native-paper";
-import Table from "../components/Table";
 import { ScrollView } from "react-native";
 import i18n from "../../i18n";
+import { useLanguageContext } from "../context/LanguageProvider";
+
 
 const HomeScreen = ({ navigation }) => {
   const [folloupSch, setFolloupSch] = useState([]);
+  const languageContext = useLanguageContext(); // Accessing the entire language context
+
 
   const fetchDataFromDatabase = async () => {
     try {
@@ -26,14 +29,17 @@ const HomeScreen = ({ navigation }) => {
       const survey_ques = await SelectService.getAllSurveyQuestions();
       const medical_ques = await SelectService.getAllMedicalQuestions();
       const prescRes = await SelectService.selectAllPrescriptions();
+
       console.log("[Homescreen]Patients Fetched From Database: ", patient_data);
       console.log("[Homescreen]Survey QNA Fetched From Database: ", survey_qna);
       console.log(
         "[Homescreen]Medical QNA Fetched From Database: ",
         medical_qna
       );
-      console.log("[Homescreen]Prescriptions Fetched From Database: ", prescRes);
-
+      console.log(
+        "[Homescreen]Prescriptions Fetched From Database: ",
+        prescRes
+      );
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }
@@ -122,7 +128,7 @@ const HomeScreen = ({ navigation }) => {
                   <DataTable.Title>Patient Id</DataTable.Title>
                   <DataTable.Title>First Name</DataTable.Title>
                   <DataTable.Title>Last Name</DataTable.Title>
-                  <DataTable.Title>Adress</DataTable.Title>
+                  <DataTable.Title>{i18n.t("Address")}</DataTable.Title>
                   <DataTable.Title>Follow-Up Date</DataTable.Title>
                   <DataTable.Title>Age</DataTable.Title>
                   <DataTable.Title>Follow-Up Type</DataTable.Title>

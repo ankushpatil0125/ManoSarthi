@@ -46,6 +46,43 @@ const UpdateService = {
       });
     });
   },
+
+  updateFollowUpReferNotRefer: (patientId, status, latitude, longitude) => {
+    console.log("Inside Update");
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        let query = "";
+        let params = [];
+
+        if (status !== undefined && latitude === undefined && longitude === undefined) {
+          query = "UPDATE followupReferNotRefer SET status = ? WHERE patientId = ?";
+          params = [status, patientId];
+        } else if (status === undefined && (latitude !== undefined || longitude !== undefined)) {
+          query = "UPDATE followupReferNotRefer SET latitude = ?, longitude = ? WHERE patientId = ?";
+          params = [latitude, longitude, patientId];
+        } else {
+          reject("Invalid parameters provided for update");
+          return;
+        }
+
+        tx.executeSql(
+          query,
+          params,
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("Follow-up record updated successfully");
+            } else {
+              resolve("No records updated");
+            }
+          },
+          (_, error) => {
+            reject("Error updating follow-up record: " + error);
+          }
+        );
+      });
+    });
+  }
+
 };
 
 export default UpdateService;

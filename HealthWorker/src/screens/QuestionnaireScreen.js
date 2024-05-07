@@ -149,10 +149,17 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       } else if (type === "followup") {
         if (unmatchedCount >= surveyquestions.length / 2) {
           // await InsertService.insertAabhaId(aabhaId, "old");
-          InsertService.insertFollowUpReferNotRefer(pid, "1");
+          // InsertService.insertFollowUpReferNotRefer(pid, "1");
+          const res1= await InsertService.insertFollowUpReferNotRefer(pid);
+          console.log("[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",res1);
+
+          const res2= UpdateService.updateFollowUpReferNotRefer(pid,true);
+          console.log("[QuestionarieScreen]Refer staus storing Response: ",res2);
           navigation.navigate("Preview", { age, pid, type });
         } else {
-          InsertService.insertFollowUpReferNotRefer(pid, "0");
+          // InsertService.insertFollowUpReferNotRefer(pid, "0");
+          const res1= await InsertService.insertFollowUpReferNotRefer(pid);
+          console.log("[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",res1);
 
           navigation.navigate("Preview", { age, pid, type });
         }
@@ -227,7 +234,8 @@ const styles = StyleSheet.create({
   radioButton: {
     borderWidth: 1,
     borderColor: "#000",
-    borderRadius: 10,
+    borderRadius: 10,  // const [newLatitude, setNewLatitude] = useState("NULL");
+    // const [newLongitude, setNewLongitude] = useState("NULL");
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginRight: 10,
