@@ -7,6 +7,7 @@ import RegisterPatientService from "./RegisterPatientService";
 import CreateService from "./DatabaseServices/CreateService";
 import FetchFollowUp from "./FetchFollowUp";
 import PrescriptionService from "./PrescriptionService";
+import SelectService from "./DatabaseServices/SelectService";
 
 export const createDatabase = () =>
   new Promise(async (resolve, reject) => {
@@ -22,6 +23,8 @@ export const createDatabase = () =>
 export const fetchData = () =>
   new Promise(async (resolve, reject) => {
     try {
+      console.log("Inside FetchData");
+
       // Fetch questions from the service
       const questionsResponse = await SurveyQuestionsService.getQuestions();
       const medicalQuestionsResponse =
@@ -58,6 +61,7 @@ export const fetchData = () =>
 
         // Delete old entries from the tables
         try {
+          console.log("Before Deleting");
           const deleteResults = await Promise.all([
             DeleteService.deleteAllSurveyQuestions(),
             DeleteService.deleteAllMedicalQuestions(),
@@ -73,7 +77,7 @@ export const fetchData = () =>
           reject("Failed to delete old entries");
           return;
         }
-
+        console.log("Before inserting tables data")
         // Insert fetched data into the tables
         try {
           const insertResults = await Promise.all([
@@ -93,6 +97,7 @@ export const fetchData = () =>
         }
 
         resolve("Data fetched and inserted successfully");
+        // console.log("Inserted Parsed Prescriptions in a table: ", JSON.parse(insertedPres[0]?.disease_code));
       } else {
         console.log("Failed to fetch required data");
         reject("Failed to fetch required data");

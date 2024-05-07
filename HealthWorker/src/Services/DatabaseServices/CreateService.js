@@ -192,8 +192,9 @@ const CreateService = {
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS followupReferNotRefer (
             patientId INTEGER PRIMARY KEY,
-            status BOOLEAN              
-          );`,
+            status BOOLEAN DEFAULT 0,
+            latitude TEXT DEFAULT NULL,
+            longitude TEXT DEFAULT NULL);`,
           [],
           (_, result) => {
             if (result.rowsAffected > 0) {

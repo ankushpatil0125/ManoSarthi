@@ -146,6 +146,8 @@ const SyncDataService = {
         patientID: followup.patientId,
         questionarrieAnsList: sendFollowupQNA,
         referredDuringFollowUp:status,
+        latitude:followup.latitude,
+        longitude:followup.longitude
       };
 
       console.log("Data Send To Server For Followup: ", dataToSend);

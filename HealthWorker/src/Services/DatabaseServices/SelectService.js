@@ -39,7 +39,8 @@ const SelectService = {
       });
     });
   },
-  selectAllPrescriptions: () => {
+
+   selectAllPrescriptions: () => {
     return new Promise((resolve, reject) => {
       db.transaction(
         (tx) => {
@@ -86,6 +87,22 @@ const SelectService = {
     });
   },
 
+  getFollowupDetailsByID: (patientId) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM FollowUpSchedule WHERE patientId=?`,
+          [patientId],
+          (_, result) => {
+            resolve(result.rows._array);
+          },
+          (_, error) => {
+            reject("Error fetching FollowUpSchedule details: " + error);
+          }
+        );
+      });
+    });
+  },
   getPatientDetailsByID: (aabhaId) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -123,6 +140,25 @@ const SelectService = {
       });
     });
   },
+
+  // getFollowupQuestions: () => {
+  //   return new Promise((resolve, reject) => {
+  //     db.transaction((tx) =>{
+  //       tx.executeSql(
+  //         `SELECT * FROM FollowupQuestions`,
+  //         [],
+  //         (_, {rows}) => {
+  //           const questions = rows._array;
+  //           resolve(questions);
+  //         },
+  //         (_, error) => {
+  //           reject("Error fetching followup questions: " + error);
+  //         }
+  //       );
+  //     });
+  //   });
+  // },
+
   getAllQuestions: (age, type) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {

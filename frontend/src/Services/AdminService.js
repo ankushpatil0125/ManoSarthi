@@ -230,6 +230,26 @@ const AdminService = {
     }
   },
 
+  getSurveyStats: async() => {
+    try{
+      console.log("Calling getSurveyStats")
+      const response = await axios.get(
+        BASE_URL + "admin/districtstats",
+        {
+          headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      )
+      console.log("SurveyStats: ", response.data);
+      return response;
+    }
+    catch(error){
+      throw error;
+    }
+  },
+
   getAllSupervisors: async (pagenumber) => {
     try {
       console.log("before calling getAll");

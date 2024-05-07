@@ -1,8 +1,8 @@
 package com.team9.manosarthi_backend.Config;
 
-import com.team9.manosarthi_backend.Repositories.DoctorRepository;
-import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
-import com.team9.manosarthi_backend.Repositories.WorkerRepository;
+import com.team9.manosarthi_backend.Entities.Token;
+import com.team9.manosarthi_backend.Entities.User;
+import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.models.JwtRequest;
 import com.team9.manosarthi_backend.models.JwtResponse;
 import com.team9.manosarthi_backend.security.JwtHelper;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -48,6 +49,11 @@ public class AuthController {
     @Autowired
     private WorkerRepository workerRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TokenRepository tokenRepository;
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -108,7 +114,7 @@ public class AuthController {
                 }
                 System.out.println("userDetails.getAuthorities() = "+userDetails.getAuthorities());
 
-                String userid=Integer.toString(id);
+                String userid=Integer.toString(id); //role specific id
                 String token = this.helper.generateToken(userDetails, milliseconds,userid);
 
                 JwtResponse response = JwtResponse.builder()
@@ -116,6 +122,14 @@ public class AuthController {
                         .username(userDetails.getUsername())
                         .role(userDetails.getAuthorities().toString()).build();
 
+                User user=userRepository.findByUsername(userDetails.getUsername());
+                Token storedtoken= Token.builder()
+                        .token(token)
+                        .expired(false)
+                        .user(user)
+                        .build();
+                revokeToken(user);
+                tokenRepository.save(storedtoken);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
@@ -127,6 +141,17 @@ public class AuthController {
 
     }
 
+    private void revokeToken(User user)
+    {
+        List<Token> validTokens=tokenRepository.findAllValidTokensByUser(user.getUsername());
+        if(validTokens.isEmpty())
+            return;
+        for(Token token:validTokens) {
+            token.setExpired(true);
+            token.setRevoked(true);
+        }
+        tokenRepository.saveAll(validTokens);
+    }
     private void doAuthenticate(String username, String password) {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);

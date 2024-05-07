@@ -16,6 +16,8 @@ import UpdateService from "../Services/DatabaseServices/UpdateService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import NetInfo from "@react-native-community/netinfo";
 import SyncDataService from "../Services/SyncDataService";
+import * as Location from "expo-location";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { useNavigation } from "@react-navigation/native";
 
@@ -33,6 +35,8 @@ const Preview = ({ navigation, route }) => {
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { type, pid, age } = route.params;
   const { aabhaId } = useContext(PatientContext);
+  // const [newLatitude, setNewLatitude] = useState("NULL");
+  // const [newLongitude, setNewLongitude] = useState("NULL");
 
   // const checkNetworkConnectivity = async () => {
   //   const state = await NetInfo.fetch();
@@ -58,6 +62,22 @@ const Preview = ({ navigation, route }) => {
 
   const handleCheckboxChange = () => {
     setConsentChecked(!consentChecked);
+  };
+
+  const getLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status === "granted") {
+      // Permission granted, you can now access location
+      console.log("Permission Status: ", status);
+
+      return true;
+    } else {
+      // Permission denied
+      console.log("Permission Status: ", status);
+
+      return false;
+    }
   };
 
   const handleSubmit = async () => {
@@ -99,7 +119,34 @@ const Preview = ({ navigation, route }) => {
           [{ text: "OK" }]
         );
       }
-    }else if(type=== "followup"){
+    } else if (type === "followup") {
+      const permissionGranted = await getLocationPermission();
+      if (permissionGranted) {
+        try {
+          const location = await Location.getCurrentPositionAsync({});
+          console.log("Location:", location);
+          // await storeLocationInStorage(location);
+          // setNewLatitude(location.coords.latitude);
+          // setNewLongitude(location.coords.longitude);
+          const newLatitude = location.coords.latitude;
+          const newLongitude = location.coords.longitude;
+          const res = await UpdateService.updateFollowUpReferNotRefer(
+            pid,
+            undefined,
+            newLatitude,
+            newLongitude
+          );
+          console.log(
+            "[PreviewScreen]Longitude Lattitude status storing Response: ",
+            res
+          );
+        } catch (error) {
+          console.error("Error getting location:", error);
+        }
+      } else {
+        console.log("Location permission not granted.");
+      }
+
       Alert.alert("Data saved in local DB successfully!", "OK", [
         {
           text: "OK",
@@ -111,13 +158,12 @@ const Preview = ({ navigation, route }) => {
           },
         },
       ]);
-
     }
   };
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
-    console.log("date:", date);
+    // console.log("date:", date);
     const year = date.getFullYear().toString().substr(-2); // Get last two digits of the year
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month and pad with leading zero if needed
     const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if needed

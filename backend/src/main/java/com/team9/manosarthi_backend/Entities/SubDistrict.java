@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-//@JsonFilter("SubDistrictJSONFilter")
+
 public class SubDistrict {
 
     @NotNull(message = "subdistrict code cannot be null")
@@ -31,9 +31,9 @@ public class SubDistrict {
     @JoinColumn(name = "districtcode")
     private District district;
 
-    @Column(name = "doctor_count")
+    @Column(name = "doctor_count",columnDefinition = "INT DEFAULT 0")
     private int doctor_count=0;
 
-    @Column(name = "supervisor_count")
+    @Column(name = "supervisor_count",columnDefinition = "INT DEFAULT 0")
     private int supervisor_count=0;
 }

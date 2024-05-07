@@ -11,11 +11,11 @@ NativeWindStyleSheet.setOutput({
 const App = () => {
   // verifyInstallation();
   return (
-    <AuthProvider>
-      <LanguageProvider>
+    <LanguageProvider>
+      <AuthProvider>
         <AppNav />
-      </LanguageProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 };
 
