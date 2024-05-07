@@ -13,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("MedicalQueJSONFilter")
+
 public class MedicalQue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

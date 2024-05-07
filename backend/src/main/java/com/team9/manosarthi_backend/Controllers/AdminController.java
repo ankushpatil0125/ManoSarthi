@@ -7,7 +7,7 @@ import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Exceptions.GlobalExceptionhandler;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.ServicesImpl.EmailService;
-import com.team9.manosarthi_backend.ServicesImpl.UserService;
+import com.team9.manosarthi_backend.ServicesImpl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,7 +26,7 @@ import java.util.List;
 //@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private EmailService emailService;

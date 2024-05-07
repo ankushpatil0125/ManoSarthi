@@ -398,14 +398,14 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       "Are you sure you want to delete the actor?"
     );
     if (confirmation) {
-      console.log("Delete supervisorId", supervisorId);
+      setLoading(true);
+      // console.log("Delete supervisorId", supervisorId);
       setSelectedSupervisorId(supervisorId);
       const Id = {
         id: supervisorId,
       };
 
       try {
-        setLoading(true);
         const response = AdminService.deleteSupervisor(Id);
         if (response) {
           alert("Supervisor Deleted Successfully");
@@ -437,7 +437,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
       setLoading(true);
       const response = AdminService.reassignSupervisor(reasignSupervisor);
       if (response) {
-        alert("Supervidor Reassigned Successfully");
+        alert("Supervisor Reassigned Successfully");
         window.location.reload();
         // setActor(actor);
         setLoading(false);
@@ -491,16 +491,16 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
             {data.map((supervisor) => (
               <tr key={supervisor.id}>
                 <td className="border border-gray-400 px-4 py-2">
-                  {supervisor.firstname}
+                  {supervisor?.firstname}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {supervisor.subdistrictcode?.district?.name || "N/A"}
+                  {supervisor?.districtName || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {supervisor.subdistrictcode?.name || "N/A"}
+                  {supervisor?.subDistrictName || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {supervisor.email || "N/A"}
+                  {supervisor?.email || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                 <button
@@ -533,7 +533,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
         <button
           className="bg-[#6467c0] hover:bg-[#9fa1d5] text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
-          disabled={data.length < 5} // Disable next button when data length is less than 5
+          disabled={data.length < 3} // Disable next button when data length is less than 5
         >
           {t("UpdateDeleteActor.Next")}
         </button>
@@ -583,3 +583,7 @@ const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
 };
 
 export default ViewSupervisor;
+
+
+
+

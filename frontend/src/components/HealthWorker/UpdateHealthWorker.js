@@ -6,7 +6,7 @@ import ViewHealthWorker from "./viewHealthWorker";
 import SupervisorService from "../../Services/SupervisorService";
 import LoadingComponent from "../Loading/LoadingComponent";
 
-const UpdateHealthWorker = () => {
+const UpdateHealthWorker = ({action}) => {
   const [village, setVillage] = useState("");
   //   const [subdistrictcode, setSubDistrictcode] = useState("");
   const [villageOptions, setVillageOptions] = useState([]);
@@ -14,6 +14,8 @@ const UpdateHealthWorker = () => {
   const [allHealWorker, setAllHealthWorker] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("global");
+  const valueToPass = action === "Delete" ? "Delete" : "Update";
+
 
   useEffect(() => {
     // Fetch district options
@@ -55,7 +57,7 @@ const UpdateHealthWorker = () => {
           </div>
         </div>
       </div>
-      <ViewHealthWorker allHealWorker={allHealWorker} village={village} />
+      <ViewHealthWorker allHealWorker={allHealWorker} village={village} action={valueToPass} />
     </div>
   );
 };

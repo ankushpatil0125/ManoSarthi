@@ -64,10 +64,10 @@ const DoctorService = {
     }
   },
 
-  getAllPatients: async (pagenumber) => {
+  getAllPatients: async (pagenumber,type) => {
     try {
       console.log('before calling getAll')
-      const response = await axios.get(BASE_URL + "doctor/new-patient?pagenumber="+pagenumber, {
+      const response = await axios.get(BASE_URL + "doctor/patient?pagenumber="+pagenumber+"&type="+type, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,
@@ -81,5 +81,58 @@ const DoctorService = {
       throw error;
     }
   },
+ 
+  addPrescription: async (obj) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "doctor/prescription-followup",
+        obj,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  getNextFollowUp : async (currentPage,patientId) =>{
+    try{
+      const response = await axios.get(BASE_URL + "doctor/getfollowups?pagenumber="+currentPage+"&patientId="+patientId,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+          // withCredentials:false
+        },
+      });
+      return response;
+    }
+    catch (error) {
+      throw error;
+    }
+  },
+  getReferredDuringFollowUpPatientList: async (pagenumber) => {
+    try {
+      console.log('before calling getAll')
+      const response = await axios.get(BASE_URL + "doctor/referred-during-followup?pagenumber="+pagenumber, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+
+        },
+      });
+      console.log("New Patient list :",response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+
+
 };
 export default DoctorService;

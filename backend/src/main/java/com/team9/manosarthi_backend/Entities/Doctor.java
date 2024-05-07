@@ -20,7 +20,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("DoctorJSONFilter")
+
 public class Doctor {
 
     @Id
@@ -42,7 +42,6 @@ public class Doctor {
     @Email(message = "Enter valid email")
     @Column(name = "email",unique = true)
     private String email;
-
 
     @OneToOne
     @JoinColumn(name = "username")

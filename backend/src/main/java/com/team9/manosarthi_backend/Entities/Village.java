@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-//@JsonFilter("VillageJSONFilter")
+
 public class Village {
 
     @NotNull(message = "village code cannot be null")
@@ -31,6 +31,6 @@ public class Village {
     @JoinColumn(name = "subdistrictcode")
     private SubDistrict subDistrict;
 
-    @Column(name = "worker_count")
+    @Column(name = "worker_count",columnDefinition = "INT DEFAULT 0")
     private int worker_count=0;
 }

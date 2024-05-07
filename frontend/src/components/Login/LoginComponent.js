@@ -199,13 +199,10 @@ const LoginComponent = () => {
         setLoading(false);
       }
     } catch (error) {
-      alert(error.response.data.message);
+      console.log("error",error)
+      // alert(error.response.data);
       setLoading(false);
-      if (error.response.data === "CREDENTIALS INVALID ! ")
-        alert("CREDENTIALS INVALID !!! Please Enter valid CREDENTIALS");
-      else if (error.response.data)
-        alert("Access restricted. Please log in during operating hours");
-      else alert(`Login Failed : ${error.response.data}`);
+      alert(`Login Failed : ${error.response.data}`);
     }
   };
 
@@ -228,29 +225,31 @@ const LoginComponent = () => {
   }, []);
   if (loading) return <LoadingComponent />;
   return (
-    <div class="font-[sans-serif] text-[#333]">
+    <div>
       <div className="absolute top-0 right-0 mt-4 mr-4">
         <LanguageButton />
       </div>
-      <div class="min-h-screen flex fle-col items-center justify-center py-6 px-4">
-        <div class="grid md:grid-cols-2 items-center gap-4 max-w-7xl w-full">
-          <div class="border border-gray-300 rounded-md p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
-            <form class="space-y-6" onSubmit={handleSubmit}>
-              <div class="mb-10">
-                <h3 class="text-3xl font-extrabold text-[#6467c0]">
+      <div className="font-[sans-serif] text-[#333]">
+      
+      <div className="min-h-screen flex fle-col items-center justify-center py-6 px-4">
+        <div className="grid md:grid-cols-2 items-center gap-4 max-w-7xl w-full">
+          <div className="border border-gray-300 rounded-md p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="mb-10">
+                <h3 className="text-3xl font-extrabold text-[#6467c0]">
                   {t("login.Sign in to your Account")}
                 </h3>
               </div>
               <div>
-                <label class="text-sm mb-2 block text-[#6467c0]">
+                <label className="text-sm mb-2 block text-[#6467c0]">
                   {t("login.User name")}
                 </label>
-                <div class="relative flex items-center">
+                <div className="relative flex items-center">
                   <input
                     name="username"
                     type="text"
                     required
-                    class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]"
+                    className="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]"
                     placeholder={t("login.Enter user name")}
                     value={requestData.username}
                     onChange={handleChange}
@@ -259,7 +258,7 @@ const LoginComponent = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="#bbb"
                     stroke="#bbb"
-                    class="w-[18px] h-[18px] absolute right-4"
+                    className="w-[18px] h-[18px] absolute right-4"
                     viewBox="0 0 24 24"
                   >
                     <circle
@@ -276,15 +275,15 @@ const LoginComponent = () => {
                 </div>
               </div>
               <div>
-                <label class="text-sm mb-2 block text-[#6467c0]">
+                <label className="text-sm mb-2 block text-[#6467c0]">
                   {t("login.Password")}
                 </label>
-                <div class="relative flex items-center">
+                <div className="relative flex items-center">
                   <input
                     name="password"
                     type={passwordVisible ? 'text' : 'password'}
                     required
-                    class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]"
+                    className="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]"
                     placeholder={t("login.Enter password")}
                     value={requestData.password}
                     onChange={handleChange}
@@ -294,7 +293,7 @@ const LoginComponent = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="#bbb"
                     stroke="#bbb"
-                    class="w-[18px] h-[18px] absolute right-4 cursor-pointer"
+                    className="w-[18px] h-[18px] absolute right-4 cursor-pointer"
                     viewBox="0 0 128 128"
                     onClick={togglePasswordVisibility}
                   >
@@ -305,37 +304,39 @@ const LoginComponent = () => {
                   </svg>
                 </div>
               </div>
-              <div class="flex items-center justify-between gap-2">
-                <div class="text-sm">
+              <div className="flex items-center justify-between gap-2">
+                <div className="text-sm">
                   {t("login.Forgot-password")}?
                   <Link
                     to="/forgot-password"
-                    class="text-blue-600 hover:underline items-center"
+                    className="text-blue-600 hover:underline items-center"
                   >
                     {t("login.Click_Here")}!
                   </Link>
                 </div>
               </div>
-              <div class="!mt-10">
+              <div className="!mt-10">
                 <button
                   type="submit"
-                  class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-[#6467c0] hover:bg-[#696bab] focus:outline-none"
+                  className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-[#6467c0] hover:bg-[#696bab] focus:outline-none"
                 >
                   {t("login.LOGIN")}
                 </button>
               </div>
             </form>
           </div>
-          <div class="lg:h-[400px] md:h-[300px] max-md:mt-10">
+          <div className="lg:h-[400px] md:h-[300px] max-md:mt-10">
             <img
               src="https://readymadeui.com/login-image.webp"
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               alt="Dining Experience"
             />
           </div>
         </div>
       </div>
     </div>
+    </div>
+    
   );
 };
 

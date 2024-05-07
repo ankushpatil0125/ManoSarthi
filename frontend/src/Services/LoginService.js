@@ -11,6 +11,24 @@ const LoginService = {
       throw error;
     }
   },
+  verifyEmail :async (requestData) => {
+    try{
+      const resp = axios.post(BASE_URL + "user/verify-email/"+ requestData?.email);
+      return resp;
+    }
+    catch(error){
+      throw error;
+    }
+  },
+  verifyOTP :async (requestData) => {
+    try{
+      const resp = axios.post(BASE_URL + "user/verify-otp", requestData);
+      return resp;
+    }
+    catch(error){
+      throw error;
+    }
+  }
 };
 
 export default LoginService;

@@ -6,6 +6,8 @@ import { Alert } from "react-native";
 import { createDatabase, fetchData } from "../Services/initService";
 import DropService from "../Services/DatabaseServices/DropService";
 import IsPasswordChangeService from "../Services/ChangePasswordService.js/IsPasswordChangeService";
+
+
 // import {navigation }
 export const AuthContext = createContext();
 
@@ -13,6 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userName, setUserName] = useState("");
+
+
   // const [changePassword,setChangePassword] = useState(false);
   const storeData = async (value) => {
     try {
@@ -36,6 +40,7 @@ export const AuthProvider = ({ children }) => {
         const token = await getToken();
         setUserToken(token);
         setUserName(response?.data?.username);
+        console.log("Inside If Response");
         // await DropService.dropTables();
 
         createDatabase()
@@ -52,6 +57,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Error:", error);
             Alert.alert("Error:", error);
           });
+
         const changepass_response =
           await IsPasswordChangeService.isPasswordChanged(response);
         console.log("Change Password Response: ", changepass_response);
@@ -60,11 +66,6 @@ export const AuthProvider = ({ children }) => {
 
         setIsLoading(false);
         // console.log("Token", getToken());
-      } else {
-        console.log("Before login failure alert");
-
-        Alert.alert("Login Failure");
-        setIsLoading(false);
       }
     } catch (error) {
       // console.log('error',error)

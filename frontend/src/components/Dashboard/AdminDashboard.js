@@ -1,360 +1,156 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
-import Chart from 'chart.js/auto'; // Import Chart.js
+import React, { useRef, useEffect, useState } from "react";
+import { Bar, Line, Pie } from "react-chartjs-2";
+import Chart from "chart.js/auto"; // Import Chart.js
+import AdminService from "../../Services/AdminService";
 
 const AdminDashboard = () => {
   const [chartData, setChartData] = useState(null);
   const [pieChartData, setPieChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
+  const [surveyStats, setSurveyStats] = useState([]); // [{dictrict: patientCount}]
+  const [PatientAccordingtoSubcategory, setfetchPatientAccordingtoSubcategory] =
+    useState([]);
   const chartRef = useRef(null);
   const pieChartRef = useRef(null);
   const barChartRef = useRef(null);
 
   useEffect(() => {
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    fetchPatientCountAccordingtoDistrict();
+    fetchPatientAccordingtoSubcategory();
+  }, []);
+
+  const fetchPatientCountAccordingtoDistrict = async () => {
+    try {
+      const response = await AdminService.getPatientCountAccordingtoDistrict();
+      setSurveyStats(response.data);
+      console.log("getPatientCountAccordingtoDistrict response", response.data);
+    } catch (error) {
+      console.error("Error fetching survey stats: ", error);
+    }
+  };
+  const fetchPatientAccordingtoSubcategory = async () => {
+    try {
+      const response = await AdminService.getPatientAccordingtoSubcategory();
+      setfetchPatientAccordingtoSubcategory(response.data);
+      console.log("getPatientAccordingtoSubcategory response", response.data);
+    } catch (error) {
+      console.error("Error fetching survey stats: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (surveyStats.length === 0) return; // Don't proceed if surveyStats is empty
+
+    const labels = ["jan", "feb", "march", "april", "may", "june", "july"];
     const data = {
       labels: labels,
-      datasets: [{
-        label: 'Survey Dataset',
-        data: [100, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
+      datasets: [
+        {
+          label: "Survey Dataset",
+          data: [23, 6, 7, 12, 8, 30, 3],
+          fill: false,
+          borderColor: "rgb(75, 192, 192)",
+          tension: 0.1,
+        },
+      ],
     };
     setChartData(data);
 
-    const pieLabels = ['Referred', 'Not Referred', 'Not Surveyed'];
+    const pieLabels = ["Referred", "Not Referred", "Not Surveyed"];
     const pieData = {
       labels: pieLabels,
-      datasets: [{
-        label: 'Pie Dataset',
-        data: [12, 19, 3,],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)',
-        ],
-        hoverOffset: 4
-      }]
+      datasets: [
+        {
+          label: "Pie Dataset",
+          data: [12, 19, 3],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
     };
     setPieChartData(pieData);
 
+
     // Sample data for the bar chart
-    const barLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    const barLabels = surveyStats.map((stat) => stat[0]); //All Districts
     const barData = {
-        labels: barLabels,
-        datasets: [{
-        label: 'Bar Dataset',
-        data: [12, 19, 3, 5, 2, 3, 9],
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 1
-        }]
+      labels: barLabels,
+      datasets: [
+        {
+          label: "Bar Dataset",
+          data: surveyStats.map((stat) => stat[1]), // Patient count in a district
+          backgroundColor: "rgb(75, 192, 192)",
+          borderColor: "rgb(75, 192, 192)",
+          borderWidth: 1,
+        },
+      ],
     };
     setBarChartData(barData);
-  }, []);
+  }, [surveyStats]);
 
   return (
-    <div class="flex mb-4">
-        <div class="w-1/2 bg-gray-400 h-12">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
-                {pieChartData && <Pie data={pieChartData} options={{}} ref={pieChartRef} />}
-                    
-                </div>
-        </div>
-        <div class="w-1/2 bg-gray-500 h-12">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
-                            {chartData && (
-                                <Line data={chartData} options={{ scales: { x: { type: 'category' } } }} ref={chartRef} />
-                            )}
-              
+    <div>
+      <div>
+      <div className="flex justify-center items-center">
+      <p className="text-lg font-semibold mb-4">Top 5 Diseases Count Based on SubCategory</p>
+      </div>
+      <div className="row-gap-8 flex grid-cols-2 md:grid-cols-4  justify-center items-center">
+        {PatientAccordingtoSubcategory.map((subcategory, index) => (
+          <div
+            key={index}
+            className="mb-12 text-center md:mb-0 md:border-r-2 dark:md:border-slate-500 p-3"
+          >
+            <div className="font-heading text-[2.6rem] font-bold dark:text-white lg:text-5xl xl:text-6xl">
+              {subcategory[1]}
             </div>
-
-            
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-lg font-semibold mb-4">Bar Chart Title</h2>
-                    {barChartData && <Bar data={barChartData} options={{}} ref={barChartRef} />}
-                </div>
-  </div>
-</div>
-    // <div className="flex justify-around">
-    //     <div className='flex flex-col justify-between gap-10'>
-            
-                
-       
-    //     </div>
-        // <div>
-            
-        //     <div className="bg-white p-6 rounded-lg shadow-md">
-        //     <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
-        //     {pieChartData && <Pie data={pieChartData} options={{}} ref={pieChartRef} />}
-            
-        // </div>
-    //     </div>
-      
-    // </div>
+            <p className="text-sm font-medium uppercase tracking-widest text-gray-800 dark:text-slate-400 lg:text-base">
+              {subcategory[0]}
+            </p>
+          </div>
+        ))}
+      </div>
+      </div>
+      <div className="flex gap-2 px-1 py-1 mb-4 h-12">
+        <div className="w-1/2 bg-gray-400 mt-10">
+          <div className="bg-white p-6 shadow-md">
+            <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
+            {pieChartData && (
+              <Pie data={pieChartData} options={{}} ref={pieChartRef} />
+            )}
+          </div>
+        </div>
+        <div className="w-1/2 bg-gray-500">
+          <div className="bg-white p-6 shadow-md">
+            <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
+            {chartData && (
+              <Line
+                data={chartData}
+                options={{ scales: { x: { type: "category" } } }}
+                ref={chartRef}
+              />
+            )}
+          </div>
+          <div className="bg-white p-6 shadow-md">
+            <h2 className="text-lg font-semibold mb-4">
+              District wise patients stats
+            </h2>
+            {barChartData && (
+              <Bar
+                data={barChartData}
+                options={{ scales: { y: { suggestedMin: 1 } } }}
+                ref={barChartRef}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto max-w-6xl px-4 py-4 sm:px-6 md:px-24 md:py-16 lg:px-8 lg:py-20 dark:bg-gray-800"></div>
+    </div>
   );
-}
+};
 
 export default AdminDashboard;
-
-
-
-{/* <div className="p-4 bg-blue-100 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-              <p className="text-2xl text-gray-400 dark:text-gray-500">
-                <svg
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 18 18"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 1v16M1 9h16"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-              <p className="text-2xl text-gray-400 dark:text-gray-500">
-                <svg
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 18 18"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 1v16M1 9h16"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-              <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 18 18"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 1v16M1 9h16"
-                    />
-                  </svg>
-                </p>
-              </div>
-            </div>
-          </div> */}

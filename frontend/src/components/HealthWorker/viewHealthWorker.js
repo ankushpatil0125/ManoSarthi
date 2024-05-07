@@ -3,9 +3,10 @@ import SupervisorService from "../../Services/SupervisorService";
 import "../../css/modal.css";
 import { useTranslation } from "react-i18next";
 import LoadingComponent from "../Loading/LoadingComponent";
+import { FaSyncAlt, FaTimes, FaTrash } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 
-const ViewHealthWorker = ({ allHealWorker, village }) => {
+const ViewHealthWorker = ({action,  allHealWorker, village }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageHealthWorker, setCurrentPageHealthWorker] = useState(0);
   const [villageOptions, setVillageOptions] = useState([]);
@@ -36,6 +37,7 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
         setLoading(false);
         });
     }
+    setLoading(false)   
   }, [showModal]);
 
   const fetchData = async () => {
@@ -80,6 +82,11 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
     setShowModal(true);
     setSelectedHealthWorkerId(healthWorkerId);
   };
+
+  const handleDelete = (healthWorkerId) => {
+    setSelectedHealthWorkerId(healthWorkerId);
+    alert(`Do you want to delete the health worker with id:${healthWorkerId}`)
+  }
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -150,14 +157,28 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
                   {healthworker.email || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {healthworker.villagecode?.name || "N/A"}
+                  {healthworker.villagename || "N/A"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  <button
+                  {/* <button
                     onClick={() => handleUpdate(healthworker.id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                   >
+                    <FaSyncAlt className="mr-2"/>
                     Update
+                  </button> */}
+                  <button
+                    onClick={() => {
+                      if (action === "Update") {
+                        handleUpdate(healthworker.id);
+                      } else if (action === "Delete") {
+                        handleDelete(healthworker.id);
+                      }
+                    }}
+                    className={`${action === 'Update' ? 'bg-blue-500 hover:bg-blue-700' : 'bg-red-500 hover:bg-red-600'} text-white font-bold py-2 px-4 rounded inline-flex items-center`}
+                    >
+                    {action === 'Update'?<FaSyncAlt className="mr-2"/>: <FaTrash className="mr-2" />}
+                    {action}
                   </button>
                 </td>
               </tr>
@@ -183,31 +204,38 @@ const ViewHealthWorker = ({ allHealWorker, village }) => {
         </button>
       </div>
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseModal}>
-              &times;
-            </span>
-            <h2>Select Village for Reassignment:</h2>
-            <select
-              value={selectedVillage}
-              onChange={(e) => setSelectedVillage(e.target.value)}
-            >
-              <option value="">Select Village</option>
-              {villageOptions.map((village) => (
-                <option key={village.code} value={village.code}>
-                  {village.name}
-                </option>
-              ))}
-            </select>
+        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
+        <div className="bg-white p-8 rounded shadow-md max-w-lg w-full z-50" style={{ height: "350px" }}>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Select Village for Reassignment:</h2>
+            <button onClick={handleCloseModal} className="text-gray-600 hover:text-gray-800">
+              <FaTimes className="text-lg" />
+            </button>
+          </div>
+          <select
+            value={selectedVillage}
+            onChange={(e) => setSelectedVillage(e.target.value)}
+            className="block w-full border border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:border-blue-500"
+          >
+            <option value="">Select Village</option>
+            {villageOptions.map((village) => (
+              <option key={village.code} value={village.code}>
+                {village.name}
+              </option>
+            ))}
+          </select>
+          <div className="flex justify-end">
             <button
               onClick={handleUpdateWorker}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="mt-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
+              <FaSyncAlt className="mr-2" />
               Update
             </button>
           </div>
         </div>
+      </div>
       )}
     </div>
   );

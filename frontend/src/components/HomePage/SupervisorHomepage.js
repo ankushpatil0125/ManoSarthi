@@ -12,6 +12,10 @@ import ProfileComponent from "../Actors/ProfileComponent";
 import UpdateHealthWorker from "../HealthWorker/UpdateHealthWorker";
 import { useTranslation } from "react-i18next";
 import AdminDashboard from "../Dashboard/AdminDashboard";
+import ShowHealthWorkerActivity from "../Supervisor/ShowHealthWorkerActivity"
+import DeleteHealthWorker from "../Supervisor/DeleteHealthWorker";
+
+import MissedFollowups from "../Supervisor/MissedFollowups";
 const SupervisorHomepage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -23,271 +27,18 @@ const SupervisorHomepage = () => {
     switch (currentPage) {
       case "dashboard":
         return (
-          // <div className="p-4 bg-blue-100 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-          //   <div className="grid grid-cols-3 gap-4 mb-4">
-          //     <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //   </div>
-          //   <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-          //     <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //       <svg
-          //         className="w-3.5 h-3.5"
-          //         aria-hidden="true"
-          //         xmlns="http://www.w3.org/2000/svg"
-          //         fill="none"
-          //         viewBox="0 0 18 18"
-          //       >
-          //         <path
-          //           stroke="currentColor"
-          //           strokeLinecap="round"
-          //           strokeLinejoin="round"
-          //           strokeWidth="2"
-          //           d="M9 1v16M1 9h16"
-          //         />
-          //       </svg>
-          //     </p>
-          //   </div>
-          //   <div className="grid grid-cols-2 gap-4 mb-4">
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //   </div>
-          //   <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-          //     <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //       <svg
-          //         className="w-3.5 h-3.5"
-          //         aria-hidden="true"
-          //         xmlns="http://www.w3.org/2000/svg"
-          //         fill="none"
-          //         viewBox="0 0 18 18"
-          //       >
-          //         <path
-          //           stroke="currentColor"
-          //           strokeLinecap="round"
-          //           strokeLinejoin="round"
-          //           strokeWidth="2"
-          //           d="M9 1v16M1 9h16"
-          //         />
-          //       </svg>
-          //     </p>
-          //   </div>
-          //   <div className="grid grid-cols-2 gap-4">
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //     <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          //       <p className="text-2xl text-gray-400 dark:text-gray-500">
-          //         <svg
-          //           className="w-3.5 h-3.5"
-          //           aria-hidden="true"
-          //           xmlns="http://www.w3.org/2000/svg"
-          //           fill="none"
-          //           viewBox="0 0 18 18"
-          //         >
-          //           <path
-          //             stroke="currentColor"
-          //             strokeLinecap="round"
-          //             strokeLinejoin="round"
-          //             strokeWidth="2"
-          //             d="M9 1v16M1 9h16"
-          //           />
-          //         </svg>
-          //       </p>
-          //     </div>
-          //   </div>
-          // </div>
-          <AdminDashboard/>
+          <></>
         );
       case "add":
         return <AddHealthWorker />;
       case "update":
-        return <UpdateHealthWorker />;
+        return <UpdateHealthWorker action={"Update"}/>;
       case "delete":
-        return <></>;
+        return <UpdateHealthWorker action={"Delete"}/>;
+      case "missed-followups":
+          return <MissedFollowups/>;
       case "show-activity":
-        return <></>;
+        return <ShowHealthWorkerActivity/>;
       default:
         return null;
     }
@@ -439,6 +190,24 @@ const SupervisorHomepage = () => {
                     </span>
                     <span className="flex-1 ms-3 whitespace-nowrap">
                      {t('Actor.Show Activity')}
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => setCurrentPage("missed-followups")}
+                    to="#"
+                    className={`flex items-center p-2 rounded-lg group no-underline ${
+                      currentPage === "missed-followups"
+                        ? "text-white bg-[#6467c0]"
+                        : "text-gray-900"
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                      <ChartBarIcon className="text-black" />
+                    </span>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                     {t('Actor.Missed FollwUps')}
                     </span>
                   </Link>
                 </li>

@@ -19,7 +19,14 @@
   "Sign in to your Account":"साइन इन टू योर अकाउंट",
     "Password": "पासवर्ड",
     "forgot-password": "पासवर्ड भूल गए हैं",
-    "Click_Here": "यहाँ क्लिक करें"
+    "Click_Here": "यहाँ क्लिक करें",
+    "Forgot Password": "पासवर्ड भूल गए",
+  "Email Address": "ईमेल पता",
+  "Enter Email Address": "ईमेल पता दर्ज करें",
+  "Verify Email Address": "ईमेल पता सत्यापित करें",
+  "Enter 6 Digit OTP": "6 अंकों का ओटीपी दर्ज करें",
+  "Verify OTP": "ओटीपी सत्यापित करें",
+  "OTP":"ओटीपी"
   },
   "Select_Language": "भाषा चुनें",
   "Actor": {
@@ -103,7 +110,8 @@
     "Gender": "लिंग",
     "Change Password": "पासवर्ड बदलें",
     "Doctor Profile": "डॉक्टर प्रोफ़ाइल",
-    "Supervisor Profile": "सुपरवाइजर प्रोफ़ाइल"
+    "Supervisor Profile": "सुपरवाइजर प्रोफ़ाइल",
+    "Other Details":"अन्य विवरण"
   },
 
   "ViewPatientDetails" : {
@@ -119,7 +127,7 @@
   },
   "doctor": {
     "Dashboard": "डैशबोर्ड",
-    "Pending Patient": "अपूर्ण रोगी",
+    "New Patient": "नए रोगी",
     "Ongoing Patient": "चल रहे रोगी",
     "Treated Patient": "इलाज किए गए रोगी",
     "New Patients": "नए रोगी",

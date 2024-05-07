@@ -19,7 +19,14 @@
     "Sign in to your Account":"Sign in to your Account",
     "Password": "Password",
     "forgot-password": "Forgot-password",
-    "Click_Here": "Click_Here"
+    "Click_Here": "Click_Here",
+    "Forgot Password": "Forgot-password",
+    "Email Address": "Email Address",
+    "Enter Email Address": "Enter Email Address",
+    "Verify Email Address": "Verify Email Address",
+    "Enter 6 Digit OTP": "Enter 6 Digit OTP",
+    "Verify OTP": "Verify OTP",
+    "OTP": "OTP"
   },
   "Select_Language": "Select Language",
   "Actor": {
@@ -102,7 +109,8 @@
     "Gender": "Gender",
     "Change Password": "Change Password",
     "Doctor Profile": "Doctor Profile",
-    "Supervisor Profile": "Supervisor Profile"
+    "Supervisor Profile": "Supervisor Profile",
+    "Other Details": "Other Details"
   },
 
   "ViewPatientDetails" : {
@@ -118,7 +126,7 @@
   
   "doctor":{
     "Dashboard":"Dashboard",
-    "Pending Patient": "Pending Patient",
+    "New Patient": "New Patient",
     "Ongoing Patient": "Ongoing Patient",
     "Treated Patient": "Treated Patient",
     "New Patients" : "New Patients",
@@ -128,6 +136,7 @@
     "Village":"Village",
     "View Details":"View Details",
     "Previous":"Previous",
-    "Next":"Next"
+    "Next":"Next",
+    "Referred During FollowUp":"Referred During FollowUp"
   }
 }
