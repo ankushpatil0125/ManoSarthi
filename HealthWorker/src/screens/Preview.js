@@ -33,6 +33,8 @@ const Preview = ({ navigation, route }) => {
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { type, pid, age } = route.params;
   const { aabhaId } = useContext(PatientContext);
+  const { patientId = -1} = route.params;
+
 
   // const checkNetworkConnectivity = async () => {
   //   const state = await NetInfo.fetch();

@@ -79,8 +79,10 @@ public class SecurityConfig {
 //                    new SecurityContextServerLogoutHandler(), new WebSessionServerLogoutHandler()
 //            );
         http.authorizeHttpRequests(auth -> auth
+
 //                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
+
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()

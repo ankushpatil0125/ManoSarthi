@@ -1,5 +1,5 @@
 
-  import React, { useState } from "react";
+  import React, { useEffect, useState } from "react";
   import Header from "../Header/Header";
   import { Link } from "react-router-dom";
   import {
@@ -14,6 +14,7 @@
 import { useTranslation } from "react-i18next";
 import OngoingPatientList from "../Doctor/OngoingPatientList";
 import ReferredDuringFollowUpList from "../Doctor/ReferredDuringFollowUpList";
+import axios from "axios";
   const DoctorHomePage = () => {
     const [currentPage, setCurrentPage] = useState("dashboard");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -21,11 +22,35 @@ import ReferredDuringFollowUpList from "../Doctor/ReferredDuringFollowUpList";
     const toggleSidebar = () => {
       setIsSidebarOpen(!isSidebarOpen);
     };
+    const [base64Image, setBase64Image] = useState('');
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await axios.get('http://192.168.213.253:9090/worker/view-image');
+        const { data } = response;
+        console.log("response",response);
+        setBase64Image(data); // Assuming the response contains the base64 image as a string
+      } catch (error) {
+        console.error('Error fetching image:', error);
+      }
+    };
+
+    fetchImage();
+  }, []);
     const renderPage = () => {
       switch (currentPage) {
         case "dashboard":
           return (
-            <></>
+            <div>
+      {base64Image && (
+        <img
+          src={`data:image/png;base64,${base64Image}`} // Assuming the image format is PNG
+          alt="Fetched Image"
+          style={{ width: '100%', maxWidth: '500px', maxHeight: '500px' }}
+        />
+      )}
+    </div>
             // <div className="p-4 bg-blue-100 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
             //   <div className="grid grid-cols-3 gap-4 mb-4">
             //     <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
