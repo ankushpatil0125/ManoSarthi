@@ -28,8 +28,9 @@ const PrescriptionScreen = () => {
         "[PrescriptionScreeen]Prescriptions Fetched From Database: ",
         prescRes
       );
-      setData(prescRes);
-      setFilteredData(prescRes);
+      setData(sample_data);
+      
+      setFilteredData(sample_data);
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }
@@ -38,6 +39,10 @@ const PrescriptionScreen = () => {
   useEffect(() => {
     fetchDataFromDatabase();
   }, []);
+
+  const handleShowPrescription = (aabhaId) => {
+    
+  }
 
   const searchFilterFunction = (text) => {
     setSearchText(text); // Update search text state
@@ -67,7 +72,6 @@ const PrescriptionScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.textFriends}>Search Prescription</Text>
-
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}

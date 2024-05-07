@@ -84,7 +84,7 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("RegisterPatientScreen");
   };
 
-  const handleMissedFollowup = () => {
+  const handleMissedFollowup = async() => {
     // Navigate or perform action for missed followup
     navigation.navigate("MissedFollowupScreen", { ftype: "Missed" });
   };

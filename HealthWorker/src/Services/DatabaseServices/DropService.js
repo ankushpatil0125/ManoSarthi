@@ -157,6 +157,26 @@ const DropService = {
       });
     });
   },
+  dropPrescriptionsTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DROP TABLE IF EXISTS prescriptions`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("prescriptions table dropped successfully");
+            } else {
+              resolve("prescriptions table does not exist");
+            }
+          },
+          (_, error) => {
+            reject("Error dropping prescriptions table: " + error);
+          }
+        );
+      });
+    });
+  },
 
   dropMedicalHistoryAnswersTable: () => {
     return new Promise((resolve, reject) => {

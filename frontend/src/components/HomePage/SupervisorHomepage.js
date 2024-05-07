@@ -12,6 +12,9 @@ import ProfileComponent from "../Actors/ProfileComponent";
 import UpdateHealthWorker from "../HealthWorker/UpdateHealthWorker";
 import { useTranslation } from "react-i18next";
 import AdminDashboard from "../Dashboard/AdminDashboard";
+import ShowHealthWorkerActivity from "../Supervisor/ShowHealthWorkerActivity"
+import DeleteHealthWorker from "../Supervisor/DeleteHealthWorker";
+
 import MissedFollowups from "../Supervisor/MissedFollowups";
 const SupervisorHomepage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -29,13 +32,13 @@ const SupervisorHomepage = () => {
       case "add":
         return <AddHealthWorker />;
       case "update":
-        return <UpdateHealthWorker />;
+        return <UpdateHealthWorker action={"Update"}/>;
       case "delete":
-        return <></>;
+        return <UpdateHealthWorker action={"Delete"}/>;
       case "missed-followups":
           return <MissedFollowups/>;
       case "show-activity":
-        return <></>;
+        return <ShowHealthWorkerActivity/>;
       default:
         return null;
     }
