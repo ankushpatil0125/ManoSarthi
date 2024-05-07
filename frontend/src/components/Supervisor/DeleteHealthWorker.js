@@ -45,7 +45,7 @@ const DeleteHealthWorker = () => {
     fetchData();
   }, [villageCode]);
 
-  const handleDelete = () => {
+  const handleDeleted = () => {
     // Handle delete action here
     console.log("Delete action triggered");
   };
@@ -94,8 +94,8 @@ const DeleteHealthWorker = () => {
               </div>
               <div className="col-span-2 flex justify-end">
                 <button
-                  onClick={handleDelete}
-                  className="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md focus:outline-none"
+                  onClick={handleDeleted}
+                  className="flex items-center justify-center  bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md focus:outline-none"
                 >
                   <FaTrash className="mr-2" /> Delete
                 </button>

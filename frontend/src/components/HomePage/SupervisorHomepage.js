@@ -286,9 +286,9 @@ const SupervisorHomepage = () => {
       case "add":
         return <AddHealthWorker />;
       case "update":
-        return <UpdateHealthWorker />;
+        return <UpdateHealthWorker action={"Update"}/>;
       case "delete":
-        return <DeleteHealthWorker/>;
+        return <UpdateHealthWorker action={"Delete"}/>;
       case "show-activity":
         return <ShowHealthWorkerActivity/>;
       default:
