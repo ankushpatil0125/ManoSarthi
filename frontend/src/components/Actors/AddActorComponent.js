@@ -130,6 +130,7 @@ const AddDoctorComponent = () => {
         // console.log("ADD RESP: ", response);
         if (response) {
           // Handle successful password change, e.g., display a success message
+          console.log("Add doctor response: ", response)
           alert(`Doctor with name ${response?.firstname} Added Successfully`);
           window.location.reload();
           // navigate("/admin-home");

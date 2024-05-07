@@ -110,5 +110,27 @@ const SupervisorService = {
       throw error;
     }
   },
+  getMissedFollowupsofWorker: async (pagenumber) => {
+    try {
+      console.log("before calling getAll");
+      const response = await axios.get(
+        BASE_URL +
+          "supervisor/get-missed-workers?pagenumber=" +
+          pagenumber,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+        }
+      );
+      console.log("Healthworker list", response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
 };
 export default SupervisorService;
