@@ -20,5 +20,7 @@ public class PatientFollowUpPrescriptionDTO {
     private boolean updateFollowUpSchedule;
     private FollowUpSchedule followUpSchedule;  //set null if schedule is not to be updated
     private List<Disease> diseaseList;
+    private String latitude;
+    private String longitude;
 
 }
