@@ -12,23 +12,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsConfiguration {
 
-    @Value("${aws.access.key}")
-    private String awsAccessKey;
-
-
-    @Value("${aws.secret.key}")
-    private String awsSecretKey;
-
-    @Bean
-    public AmazonS3 s3client() {
-
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
-        var awsS3Config = AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                .withRegion(Regions.EU_NORTH_1) // This field if not exist throws an exception
-                .build();
-
-        return awsS3Config;
-    }
+//    @Value("${aws.access.key}")
+//    private String awsAccessKey;
+//
+//
+//    @Value("${aws.secret.key}")
+//    private String awsSecretKey;
+//
+//    @Bean
+//    public AmazonS3 s3client() {
+//
+//        BasicAWSCredentials awsCreds = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+//        var awsS3Config = AmazonS3ClientBuilder.standard()
+//                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+//                .withRegion(Regions.EU_NORTH_1) // This field if not exist throws an exception
+//                .build();
+//
+//        return awsS3Config;
+//    }
 
 }
