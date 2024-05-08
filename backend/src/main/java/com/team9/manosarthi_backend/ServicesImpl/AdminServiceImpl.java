@@ -125,6 +125,18 @@ public class AdminServiceImpl implements AdminService {
             return doctorRepository.findDoctorBySubDistrict(subdistrictcode);
         }
 
+    @Override
+    public Doctor reassignDoctor(int doctorID, int oldSubDistrict, int newSubDistrict) {
+        Optional<Doctor> doctor = doctorRepository.findById(doctorID);
+        if (doctor.isPresent()) {
+//            SubDistrict oldSubDistrict = subDistrictRepository.findById(oldSubDistrict);
+        }
+        else throw new RuntimeException("Doctor not found");
+
+        return null;
+
+    }
+
 
     @Override
     public List<Supervisor> viewSupervisorByDistrict(int districtcode, int pagenumber, int pagesize) {
