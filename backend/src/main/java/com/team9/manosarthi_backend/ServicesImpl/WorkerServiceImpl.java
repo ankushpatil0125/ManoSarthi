@@ -81,6 +81,7 @@ public class WorkerServiceImpl implements WorkerService {
 
 
     @Override
+    @Transactional
     public Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
 
         Optional<Worker> worker =workerRepository.findById(workerId);

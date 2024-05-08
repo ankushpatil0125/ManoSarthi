@@ -143,6 +143,14 @@ const PrivateRoute = ({ children, type }) => {
     type === "referred-during-followup-patient"
   )
   return children;
+  else if(
+    type === "otp-verify"
+  )
+  return children;
+  else if(
+    type === "forgot-change-password"
+  )
+  return children;
   
   else return <Navigate to="/" />;
 };

@@ -61,7 +61,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody JwtRequest request) {
 
-        this.doAuthenticate(request.getUsername(), request.getPassword());
+        this.doAuthenticate(request.getUsername(),request.getPassword());
 
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());

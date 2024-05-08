@@ -74,6 +74,7 @@ const AdminDashboard = () => {
     };
     setPieChartData(pieData);
 
+
     // Sample data for the bar chart
     const barLabels = surveyStats.map((stat) => stat[0]); //All Districts
     const barData = {
