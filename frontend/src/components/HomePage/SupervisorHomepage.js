@@ -16,6 +16,7 @@ import ShowHealthWorkerActivity from "../Supervisor/ShowHealthWorkerActivity"
 import DeleteHealthWorker from "../Supervisor/DeleteHealthWorker";
 
 import MissedFollowups from "../Supervisor/MissedFollowups";
+import SupervisorDashboard from "../Dashboard/SupervisorDashboard";
 const SupervisorHomepage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -27,7 +28,7 @@ const SupervisorHomepage = () => {
     switch (currentPage) {
       case "dashboard":
         return (
-          <></>
+          <><SupervisorDashboard></SupervisorDashboard></>
         );
       case "add":
         return <AddHealthWorker />;

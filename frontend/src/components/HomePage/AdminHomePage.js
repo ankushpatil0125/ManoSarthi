@@ -11,6 +11,7 @@ import AddActorComponent from "../Actors/AddActorComponent";
 import UpdateDeleteActor from "../Actors/UpdateDeleteActor";
 import { useTranslation } from "react-i18next";
 import AdminDashboard from "../Dashboard/AdminDashboard";
+import AddQuestionarrie from "../Admin/AddQuestionarrie";
 const AdminHomePage = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -285,6 +286,8 @@ const AdminHomePage = () => {
         return <UpdateDeleteActor action={"Reassign"} />;
       case "delete":
         return <UpdateDeleteActor action={"Delete"}/>;
+      case "AddQuestionarrie":
+        return <AddQuestionarrie/>
       default:
         return null;
     }
@@ -412,6 +415,24 @@ const AdminHomePage = () => {
                     </span>
                     <span className="flex-1 ms-3 whitespace-nowrap">
                       {t("admin.Delete")}
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setCurrentPage("AddQuestionarrie")}
+                    className={`flex items-center p-2 rounded-lg group no-underline ${
+                      currentPage === "delete"
+                        ? "text-white bg-[#6467c0]"
+                        : "text-gray-900"
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                    <PlusIcon className="text-black" />
+                    </span>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      {/* {t("admin.Delete")} */}
+                      Add Questionarrie
                     </span>
                   </button>
                 </li>

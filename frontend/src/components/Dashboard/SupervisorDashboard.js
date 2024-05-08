@@ -18,7 +18,7 @@ const SupervisorDashboard = () => {
 
   const fetchData = async () => {
     try {
-      const response = await AdminService.getSurveyStats();
+      const response = await AdminService.getPatientCountAccordingtoDistrict();
       setSurveyStats(response.data);    
     } catch (error) {
       console.error("Error fetching survey stats: ", error);
@@ -56,7 +56,6 @@ const SupervisorDashboard = () => {
       }]
     };
     setPieChartData(pieData);
-
 
     // Sample data for the bar chart
     const barLabels =  surveyStats.map((stat) => stat[0]); //All Districts

@@ -19,6 +19,27 @@ const AdminService = {
       throw error;
     }
   },
+  addQuestionarrie: async(questionarrieData) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "admin/questionarrie",
+        questionarrieData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      // console.error("Service: Error Adding Supervisor: ", error);
+      // throw error;
+      throw error;
+    }
+  },
+
   addSupervisor: async (supervisorData) => {
     try {
       const response = await axios.post(
@@ -230,26 +251,6 @@ const AdminService = {
     }
   },
 
-  getSurveyStats: async() => {
-    try{
-      console.log("Calling getSurveyStats")
-      const response = await axios.get(
-        BASE_URL + "admin/districtstats",
-        {
-          headers:{
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      )
-      console.log("SurveyStats: ", response.data);
-      return response;
-    }
-    catch(error){
-      throw error;
-    }
-  },
-
   getAllSupervisors: async (pagenumber) => {
     try {
       console.log("before calling getAll");
@@ -323,7 +324,7 @@ const AdminService = {
   },
   getPatientCountAccordingtoDistrict: async() => {
     try{
-      console.log("Calling getSurveyStats")
+      console.log("Calling getPatientCountAccordingtoDistrict")
       const response = await axios.get(
         BASE_URL + "admin/districtstats",
         {
@@ -333,7 +334,7 @@ const AdminService = {
           }
         }
       )
-      console.log("SurveyStats: ", response.data);
+      console.log("getPatientCountAccordingtoDistrict: ", response.data);
       return response;
     }
     catch(error){
