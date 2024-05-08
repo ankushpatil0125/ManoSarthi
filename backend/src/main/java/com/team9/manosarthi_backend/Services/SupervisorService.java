@@ -1,9 +1,6 @@
 package com.team9.manosarthi_backend.Services;
 
-import com.team9.manosarthi_backend.Entities.Doctor;
-import com.team9.manosarthi_backend.Entities.Supervisor;
-import com.team9.manosarthi_backend.Entities.Village;
-import com.team9.manosarthi_backend.Entities.Worker;
+import com.team9.manosarthi_backend.Entities.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,6 +19,6 @@ public interface SupervisorService {
 
     Worker ReassignWorker(Worker updatedWorker);
 
-//    List<Village> findSubAllVillage(int userid);
+    List<List<FollowUpSchedule>> subdistMissedFollowup(int userid);
 
 }

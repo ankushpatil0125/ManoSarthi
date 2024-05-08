@@ -197,17 +197,17 @@ public class WorkerServiceImpl implements WorkerService {
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent())
         {
-//            Calendar calendar = Calendar.getInstance();
-//            Date startDate = new Date(calendar.getTimeInMillis());
 
-            Date startDate = Date.valueOf(LocalDate.now().plusDays(-7));
-            Date endDate = Date.valueOf(LocalDate.now().plusDays(7));
 
-            // Calculate the end date (today + 6 days)
-//            calendar.add(Calendar.DAY_OF_MONTH, 6);
-//            Date endDate = new Date(calendar.getTimeInMillis());
+//            Date startDate = Date.valueOf(LocalDate.now().plusDays(-7));
+//            Date endDate = Date.valueOf(LocalDate.now().plusDays(7));
+
+            Date requiredDate = Date.valueOf(LocalDate.now().plusDays(7));
+
             int villagecode=worker.get().getVillagecode().getCode();
-            return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+//            return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+            return followUpScheduleRepository.findbyDateAndVill(requiredDate,villagecode);
+
         }
         else {
             throw new APIRequestException("Worker not found");

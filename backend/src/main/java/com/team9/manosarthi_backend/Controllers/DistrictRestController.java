@@ -8,7 +8,6 @@ import com.team9.manosarthi_backend.Repositories.SubDistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,20 +35,20 @@ public class DistrictRestController {
         try {
         if(Objects.equals(role, "DOCTOR") && assigned)
             {
-                districts =  subDistrictRepository.getAssignedDoctorDistinct();
+                districts =  subDistrictRepository.getAssignedDoctorDistrict();
             }
             else if ( Objects.equals(role, "DOCTOR") && !assigned )
             {
-                districts = subDistrictRepository.getNotAssignedDoctorDistinct();
+                districts = subDistrictRepository.getNotAssignedDoctorDistrict();
             }
 
             else if(Objects.equals(role, "SUPERVISOR") && assigned)
             {
-                districts = subDistrictRepository.getAssignedSupervisorDistinct();
+                districts = subDistrictRepository.getAssignedSupervisorDistrict();
             }
             else if(Objects.equals(role, "SUPERVISOR") &&  !assigned)
             {
-                districts = subDistrictRepository.getNotAssignedSupervisorDistinct();
+                districts = subDistrictRepository.getNotAssignedSupervisorDistrict();
             }
             else {
             throw new APIRequestException("Error while getting districts");

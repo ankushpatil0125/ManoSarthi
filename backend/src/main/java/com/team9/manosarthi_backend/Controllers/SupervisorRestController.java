@@ -1,9 +1,13 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.DTO.MissedFollowupsSupDTO;
+import com.team9.manosarthi_backend.DTO.VillageDetailsDTO;
 import com.team9.manosarthi_backend.DTO.WorkerResponseDTO;
 import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
+import com.team9.manosarthi_backend.Entities.FollowUpSchedule;
 import com.team9.manosarthi_backend.Entities.Village;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
+import com.team9.manosarthi_backend.Repositories.WorkerRepository;
 import com.team9.manosarthi_backend.ServicesImpl.EmailService;
 import com.team9.manosarthi_backend.Services.SupervisorService;
 import com.team9.manosarthi_backend.Entities.Supervisor;
@@ -35,6 +39,8 @@ public class SupervisorRestController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private WorkerRepository workerRepository;
     @GetMapping("/viewdetails")
     public SupervisorResponseDTO getDetails(@RequestHeader("Authorization") String authorizationHeader){
         try {
@@ -225,7 +231,6 @@ public class SupervisorRestController {
             System.out.println("updatedWorker "+updatedworker);
             if (updatedworker != null) {
 
-
                 //for sending email
 
                 String subject = "You are reassigned for Manosarthi scheme";
@@ -247,6 +252,57 @@ public class SupervisorRestController {
         catch (Exception ex)
         {
             throw new APIRequestException("Error while reassigning worker.",ex.getMessage());
+        }
+    }
+
+    @GetMapping("/all-missed-followups")
+    public List<VillageDetailsDTO> getMissedFollowups(@RequestHeader("Authorization") String authorizationHeader){
+
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                // Extract the token part after "Bearer "
+                String token = authorizationHeader.substring(7);
+                String userid = helper.getIDFromToken(token);
+
+                List<List<FollowUpSchedule>> allmissedfoll = supervisorService.subdistMissedFollowup(Integer.parseInt(userid));
+
+                List<VillageDetailsDTO> villageDetailsDTOList=new ArrayList<>();
+                for(List<FollowUpSchedule> ListVillageFollo : allmissedfoll) {
+                    VillageDetailsDTO villageDetailsDTO=new VillageDetailsDTO();
+                    List<MissedFollowupsSupDTO> missedFollowupsSupDTOList=new ArrayList<>();
+                    Integer count=0;
+                    for(FollowUpSchedule followUpSchedule:ListVillageFollo)
+                    {
+                        List<Worker> worker=workerRepository.findWorkerByVillage(followUpSchedule.getVillage().getCode());
+                        if(worker==null)
+                            throw new APIRequestException("Worker Not found of village provided in followup schedule");
+                        //set village details
+                        villageDetailsDTO.setVillageCode(followUpSchedule.getVillage().getCode());
+                        villageDetailsDTO.setVillageName(followUpSchedule.getVillage().getName());
+                        //set missedFollowups
+                        MissedFollowupsSupDTO missedfollowup=new MissedFollowupsSupDTO();
+                        missedfollowup.setVillageCode(followUpSchedule.getVillage().getCode());
+                        missedfollowup.setWorkerId(worker.get(0).getId());
+                        missedfollowup.setWorkerEmail(worker.get(0).getEmail());
+                        missedfollowup.setPatient_fname(followUpSchedule.getPatient().getFirstname());
+                        missedfollowup.setPatient_lname(followUpSchedule.getPatient().getLastname());
+                        missedfollowup.setFollowup_date(followUpSchedule.getNextFollowUpDate());
+                        missedFollowupsSupDTOList.add(missedfollowup);
+                        count++;
+                    }
+                    villageDetailsDTO.setMissedFollowupsCount(count);
+                    villageDetailsDTO.setMissedFollowupsSupDTOList(missedFollowupsSupDTOList);
+                    villageDetailsDTOList.add(villageDetailsDTO);
+                }
+                return villageDetailsDTOList;
+            }
+            else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting missed followups.",ex.getMessage());
         }
     }
 }
