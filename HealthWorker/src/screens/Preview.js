@@ -17,7 +17,6 @@ import InsertService from "../Services/DatabaseServices/InsertService";
 import NetInfo from "@react-native-community/netinfo";
 import SyncDataService from "../Services/SyncDataService";
 import * as Location from "expo-location";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { useNavigation } from "@react-navigation/native";
 
@@ -130,6 +129,7 @@ const Preview = ({ navigation, route }) => {
           // setNewLongitude(location.coords.longitude);
           const newLatitude = location.coords.latitude;
           const newLongitude = location.coords.longitude;
+          console.log("NL:: NL:::",newLongitude,newLatitude);
           const res = await UpdateService.updateFollowUpReferNotRefer(
             pid,
             undefined,

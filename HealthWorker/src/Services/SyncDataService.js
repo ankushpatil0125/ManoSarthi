@@ -7,6 +7,7 @@ import FollowupService from "./FollowupService";
 
 let v = 0;
 const SyncDataService = {
+  
   registrationData: async () => {
     try {
       // console.log("Hello");
@@ -117,11 +118,15 @@ const SyncDataService = {
   },
 
   followUpData: async () => {
+    // const [list, SetList] = useState([]);
+
+    console.log("Inside Followup Sync:");
+   
     const followpatients = await SelectService.selectFollowUpReferNotRefer();
     console.log("Sync Service:followpatients: ", followpatients);
-
+    const lst = [];
     for (const followup of followpatients) {
-      let status = followup.status===1? "true":"false";
+      let status = followup.status === 1 ? "true" : "false";
       const followupQNA =
         await SelectService.getAllFollowUpQuestionAnswersByPID(
           followup.patientId
@@ -145,60 +150,48 @@ const SyncDataService = {
       const dataToSend = {
         patientID: followup.patientId,
         questionarrieAnsList: sendFollowupQNA,
-        referredDuringFollowUp:status,
-        latitude:followup.latitude,
-        longitude:followup.longitude
+        referredDuringFollowUp: status,
+        latitude: followup.latitude,
+        longitude: followup.longitude,
       };
 
       console.log("Data Send To Server For Followup: ", dataToSend);
 
-      // const resp = FollowupService.addPatientFollowup(dataToSend);
 
       try {
-        const response = await FollowupService.addPatientFollowup(
-          dataToSend
-        );
+        const response = await FollowupService.addPatientFollowup(dataToSend);
         console.log("Response : ", response.data);
 
-        if (response) {
-          console.log(
-            `Followup with added successfully`
-          );
+        if (response.data != -1) {
+          console.log(`Followup with added successfully`);
 
           const status1 = await DeleteService.deleteFollowupReferNotReferByPID(
             response.data
           );
           console.log("followupReferNotRefer Status ", status1);
 
-          const status2 =
-            await DeleteService.deleteFolloupScheduleByPID(
-              response.data
-            );
-          console.log(
-            "FollowUpSchedule Status ",
-            status2
+          const status2 = await DeleteService.deleteFolloupScheduleByPID(
+            response.data
           );
+          console.log("FollowUpSchedule Status ", status2);
 
-          const status3 =
-            await DeleteService.deleteFolloupQuestionAnswersByPID(
-              response.data
-            );
-          console.log(
-            "FollowUpQuestionAnswer Status ",
-            status3
+          const status3 = await DeleteService.deleteFolloupQuestionAnswersByPID(
+            response.data
           );
-        
+          console.log("FollowUpQuestionAnswer Status ", status3);
         } else {
+          lst.push(followup.patientId);
           console.error("Failed to add patient");
           Alert.alert("Failed to sync data");
+          console.log(lst[0]);
         }
       } catch (error) {
-        console.error("Error during adding patient:", error);
+        console.error("Error during adding patient:", error.data);
         Alert.alert("Failed to sync data");
       }
-
-
     }
+    // SetList(lst);
+
   },
 };
 export default SyncDataService;

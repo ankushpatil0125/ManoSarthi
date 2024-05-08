@@ -39,10 +39,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
 
       setsurveyquestions(data);
       setAnswers(Array(data.length).fill(null));
-      console.log(
-        "[QuestionarieScreen] Questions Need To Render: ",
-        data
-      );
+      console.log("[QuestionarieScreen] Questions Need To Render: ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -85,7 +82,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
     let promises;
     try {
       if (type === "normal") {
-         promises = surveyquestions.map(async (question, index) => {
+        promises = surveyquestions.map(async (question, index) => {
           const answer = answers[index];
           await InsertService.insertSurveyQuestionAnswer(
             aabhaId,
@@ -94,7 +91,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
           );
         });
       } else if (type === "followup") {
-         promises = surveyquestions.map(async (question, index) => {
+        promises = surveyquestions.map(async (question, index) => {
           const answer = answers[index];
           await InsertService.insertFollowUpQuestionAnswer(
             pid,
@@ -120,7 +117,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       if (type === "normal") {
         if (unmatchedCount >= surveyquestions.length / 2) {
           // await InsertService.insertAabhaId(aabhaId, "old");
-          navigation.navigate("MedicalDetails", { age,type });
+          navigation.navigate("MedicalDetails", { age, type });
         } else {
           const res1 = await InsertService.insertAabhaId(aabhaId, "new");
           console.log(
@@ -150,16 +147,28 @@ const QuestionnaireScreen = ({ navigation, route }) => {
         if (unmatchedCount >= surveyquestions.length / 2) {
           // await InsertService.insertAabhaId(aabhaId, "old");
           // InsertService.insertFollowUpReferNotRefer(pid, "1");
-          const res1= await InsertService.insertFollowUpReferNotRefer(pid);
-          console.log("[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",res1);
+          const res1 = await InsertService.insertFollowUpReferNotRefer(pid);
+          console.log(
+            "[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",
+            res1
+          );
 
-          const res2= UpdateService.updateFollowUpReferNotRefer(pid,true);
-          console.log("[QuestionarieScreen]Refer staus storing Response: ",res2);
+          const res2 = await UpdateService.updateFollowUpReferNotRefer(
+            pid,
+            true
+          );
+          console.log(
+            "[QuestionarieScreen]Refer staus storing Response: ",
+            res2
+          );
           navigation.navigate("Preview", { age, pid, type });
         } else {
           // InsertService.insertFollowUpReferNotRefer(pid, "0");
-          const res1= await InsertService.insertFollowUpReferNotRefer(pid);
-          console.log("[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",res1);
+          const res1 = await InsertService.insertFollowUpReferNotRefer(pid);
+          console.log(
+            "[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",
+            res1
+          );
 
           navigation.navigate("Preview", { age, pid, type });
         }
@@ -234,7 +243,7 @@ const styles = StyleSheet.create({
   radioButton: {
     borderWidth: 1,
     borderColor: "#000",
-    borderRadius: 10,  // const [newLatitude, setNewLatitude] = useState("NULL");
+    borderRadius: 10, // const [newLatitude, setNewLatitude] = useState("NULL");
     // const [newLongitude, setNewLongitude] = useState("NULL");
     paddingHorizontal: 15,
     paddingVertical: 10,

@@ -23,7 +23,6 @@ const PrescriptionScreen = () => {
   const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
   const languageContext = useLanguageContext(); // Accessing the entire language context
 
-
   const fetchDataFromDatabase = async () => {
     try {
       const prescRes = await SelectService.selectAllPrescriptions();
@@ -32,9 +31,9 @@ const PrescriptionScreen = () => {
         "[PrescriptionScreeen]Prescriptions Fetched From Database: ",
         prescRes
       );
-      setData(sample_data);
-      
-      setFilteredData(sample_data);
+      setData(prescRes);
+
+      setFilteredData(prescRes);
     } catch (error) {
       console.error("Error fetching data from database(HomeScreen):", error);
     }
@@ -44,9 +43,7 @@ const PrescriptionScreen = () => {
     fetchDataFromDatabase();
   }, []);
 
-  const handleShowPrescription = (aabhaId) => {
-    
-  }
+  const handleShowPrescription = (aabhaId) => {};
 
   const searchFilterFunction = (text) => {
     setSearchText(text); // Update search text state

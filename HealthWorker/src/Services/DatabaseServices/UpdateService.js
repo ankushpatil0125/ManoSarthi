@@ -49,6 +49,7 @@ const UpdateService = {
 
   updateFollowUpReferNotRefer: (patientId, status, latitude, longitude) => {
     console.log("Inside Update");
+    // console.log("Lat::Log:: ", latitude,longitude,patientId);
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         let query = "";

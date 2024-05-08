@@ -23,7 +23,7 @@
     "expo": "~50.0.14",
     "expo-file-system": "^16.0.8",
     "expo-localization": "^14.8.3",
-    "expo-location": "^16.5.5",
+    "expo-location": "^17.0.1",
     "expo-permissions": "^14.4.0",
     "expo-secure-store": "~12.8.1",
     "expo-sqlite": "~13.4.0",

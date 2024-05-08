@@ -25,30 +25,30 @@ const AppNav = () => {
   const [locationAddress, setLocationAddress] = useState();
 
 
-  useEffect(() => {
-    const getPermissions = async () => {
-     let {status} = await Location.requestForegroundPermissionsAsync();
-     if (status !== 'granted'){
-       console.log("Please grant location permissions");
-       return;
-     }
-     let currLocation = await Location.getCurrentPositionAsync({});
-     setLocation(currLocation);
-     console.log("Location: ", currLocation);
+  // useEffect(() => {
+  //   const getPermissions = async () => {
+  //    let {status} = await Location.requestForegroundPermissionsAsync();
+  //    if (status !== 'granted'){
+  //      console.log("Please grant location permissions");
+  //      return;
+  //    }
+  //    let currLocation = await Location.getCurrentPositionAsync({});
+  //    setLocation(currLocation);
+  //    console.log("Location: ", currLocation);
  
-    } 
-    getPermissions()
+  //   } 
+  //   getPermissions()
 
-    const reverseGeocode = async () =>{
-      const reverseGeocodeAddress = await Location.reverseGeocodeAsync({
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude
-      });
-      setLocationAddress(reverseGeocodeAddress);
-      console.log("location address: ", locationAddress)
-    }
-    reverseGeocode()
-   }, [])
+  //   const reverseGeocode = async () =>{
+  //     const reverseGeocodeAddress = await Location.reverseGeocodeAsync({
+  //       longitude: location.coords.longitude,
+  //       latitude: location.coords.latitude
+  //     });
+  //     setLocationAddress(reverseGeocodeAddress);
+  //     console.log("location address: ", locationAddress)
+  //   }
+  //   reverseGeocode()
+  //  }, [])
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(async (state) => {

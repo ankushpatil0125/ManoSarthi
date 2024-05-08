@@ -14,11 +14,9 @@ import { ScrollView } from "react-native";
 import i18n from "../../i18n";
 import { useLanguageContext } from "../context/LanguageProvider";
 
-
 const HomeScreen = ({ navigation }) => {
   const [folloupSch, setFolloupSch] = useState([]);
   const languageContext = useLanguageContext(); // Accessing the entire language context
-
 
   const fetchDataFromDatabase = async () => {
     try {
@@ -90,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("RegisterPatientScreen");
   };
 
-  const handleMissedFollowup = async() => {
+  const handleMissedFollowup = async () => {
     // Navigate or perform action for missed followup
     navigation.navigate("MissedFollowupScreen", { ftype: "Missed" });
   };
@@ -133,6 +131,7 @@ const HomeScreen = ({ navigation }) => {
                   <DataTable.Title>Age</DataTable.Title>
                   <DataTable.Title>Follow-Up Type</DataTable.Title>
                   <DataTable.Title>Action</DataTable.Title>
+                  <DataTable.Title>Status</DataTable.Title>
                 </DataTable.Header>
                 {folloupSch
                   .filter((item) => item.type === "Normal")
@@ -144,8 +143,9 @@ const HomeScreen = ({ navigation }) => {
                       <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
                       <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
                       <DataTable.Cell>{item.age}</DataTable.Cell>
-
                       <DataTable.Cell>{item.type}</DataTable.Cell>
+                      <DataTable.Cell>Pending</DataTable.Cell>
+
                       <DataTable.Cell>
                         <Button
                           title="Proceed"
