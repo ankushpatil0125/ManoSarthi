@@ -245,6 +245,10 @@ public class WorkerServiceImpl implements WorkerService {
     @Transactional
     public int addFollowUpDetails(RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, int workerid) {
 
+        //return -1 for location error
+        //return -2 if follow up is taken before date
+        //return patientId if everyhing is ok
+
         Optional<Worker> worker = workerRepository.findById(workerid);
         Optional<Patient> patient = patientRepository.findById(registerFollowUpDetailsDTO.getPatientID());
         if(worker.isPresent() && patient.isPresent()) {
@@ -266,8 +270,26 @@ public class WorkerServiceImpl implements WorkerService {
 
             //check if message status is 200 or nor
             if(!jsonObject.get("message").equals("200")) throw new APIRequestException("ERROR in location checking "+jsonObject.get("message").toString());
-            if(jsonObject.get("LGD_VillageCode") != worker.get().getVillagecode()) return -1;   //return -1 if village code does not match
+            int locationVillage = Integer.parseInt(jsonObject.get("LGD_VillageCode").toString());
+            if(locationVillage != worker.get().getVillagecode().getCode() )
+            {
+                System.out.println("jsonObject.get(\"LGD_VillageCode\").equals(worker.get().getVillagecode().getCode()  "+jsonObject.get("LGD_VillageCode").equals(worker.get().getVillagecode().getCode()));
+                System.out.println("village code does not matched api res "+ jsonObject.get("LGD_VillageCode")+"worker village code"+worker.get().getVillagecode().getCode());
+                return -1;   //return -1 if village code does not match
+            }
             System.out.println("village code matched "+ jsonObject.get("LGD_VillageCode"));
+
+            Optional<FollowUpSchedule> getfollowUpSchedule = followUpScheduleRepository.findByPatientID(registerFollowUpDetailsDTO.getPatientID());
+            if(getfollowUpSchedule.isPresent()) {
+                if (getfollowUpSchedule.get().getNextFollowUpDate().after(java.sql.Date.valueOf(LocalDate.now())) )
+                {
+                    System.out.println("follow up before date");
+                    return -2;
+                }
+            }
+            else throw new APIRequestException("FollowUpSchedule not found");
+
+            System.out.println("add follow up");
 
 
             // check for the location of followup
@@ -290,7 +312,7 @@ public class WorkerServiceImpl implements WorkerService {
             patient.get().setReferred(registerFollowUpDetailsDTO.isReferredDuringFollowUp());
             patientRepository.save(patient.get());
 
-            Optional<FollowUpSchedule> getfollowUpSchedule = followUpScheduleRepository.findByPatientID(registerFollowUpDetailsDTO.getPatientID());
+
 
             if(getfollowUpSchedule.isPresent() ) {
                 FollowUpSchedule followUpSchedule = getfollowUpSchedule.get();
