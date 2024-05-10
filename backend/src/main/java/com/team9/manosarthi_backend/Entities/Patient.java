@@ -78,6 +78,9 @@ public class Patient {
     @Column(name = "referred_during_follow_up")
     private boolean referred;
 
+    @Column(name = "registered_date")
+    private Date RegisteredDate;
+
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference
     private List<FollowUpDetails> followUpDetailsList;

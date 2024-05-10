@@ -15,6 +15,7 @@ import com.team9.manosarthi_backend.Entities.Worker;
 import com.team9.manosarthi_backend.Repositories.SupervisorRepository;
 import com.team9.manosarthi_backend.security.JwtHelper;
 import jakarta.validation.Valid;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.annotation.Validated;
@@ -224,10 +225,12 @@ public class SupervisorRestController {
 
     //For reassigning worker to another village
     @PutMapping("/reassign-worker")
-    public WorkerResponseDTO ReassignWorker(@RequestBody Worker updateWorker) {
+    public Pair<WorkerResponseDTO,Boolean> ReassignWorker(@RequestBody Worker updateWorker) {
         System.out.println("updateWorker "+updateWorker);
         try {
-            Worker updatedworker = supervisorService.ReassignWorker(updateWorker);
+            Pair<Worker,Boolean> result = supervisorService.ReassignWorker(updateWorker);
+            Worker updatedworker=result.getKey();
+            Boolean needToAssign=result.getValue();
             System.out.println("updatedWorker "+updatedworker);
             if (updatedworker != null) {
 
@@ -244,7 +247,7 @@ public class SupervisorRestController {
 
                 WorkerResponseDTO workerResponseDTO=new WorkerResponseDTO();
                 workerResponseDTO.SupResponse(updatedworker);
-                return workerResponseDTO;
+                return Pair.of(workerResponseDTO,needToAssign);
             } else {
                 throw new APIRequestException("Worker with given ID not found");
             }
@@ -271,19 +274,23 @@ public class SupervisorRestController {
                     VillageDetailsDTO villageDetailsDTO=new VillageDetailsDTO();
                     List<MissedFollowupsSupDTO> missedFollowupsSupDTOList=new ArrayList<>();
                     Integer count=0;
+                    Boolean villageDetailsSet=false;
                     for(FollowUpSchedule followUpSchedule:ListVillageFollo)
                     {
                         List<Worker> worker=workerRepository.findWorkerByVillage(followUpSchedule.getVillage().getCode());
                         if(worker==null)
                             throw new APIRequestException("Worker Not found of village provided in followup schedule");
-                        //set village details
-                        villageDetailsDTO.setVillageCode(followUpSchedule.getVillage().getCode());
-                        villageDetailsDTO.setVillageName(followUpSchedule.getVillage().getName());
+                        if(!villageDetailsSet) {
+                            //set village details
+                            villageDetailsDTO.setVillageCode(followUpSchedule.getVillage().getCode());
+                            villageDetailsDTO.setVillageName(followUpSchedule.getVillage().getName());
+                            villageDetailsDTO.setWorkerEmail(worker.get(0).getEmail());
+                            villageDetailsDTO.setWorkerName(worker.get(0).getFirstname() + " " + worker.get(0).getLastname());
+                        }
                         //set missedFollowups
                         MissedFollowupsSupDTO missedfollowup=new MissedFollowupsSupDTO();
                         missedfollowup.setVillageCode(followUpSchedule.getVillage().getCode());
                         missedfollowup.setWorkerId(worker.get(0).getId());
-                        missedfollowup.setWorkerEmail(worker.get(0).getEmail());
                         missedfollowup.setPatient_fname(followUpSchedule.getPatient().getFirstname());
                         missedfollowup.setPatient_lname(followUpSchedule.getPatient().getLastname());
                         missedfollowup.setFollowup_date(followUpSchedule.getNextFollowUpDate());
@@ -294,6 +301,8 @@ public class SupervisorRestController {
                     villageDetailsDTO.setMissedFollowupsSupDTOList(missedFollowupsSupDTOList);
                     villageDetailsDTOList.add(villageDetailsDTO);
                 }
+                Collections.sort(villageDetailsDTOList, Comparator.comparingInt(VillageDetailsDTO::getMissedFollowupsCount).reversed());
+
                 return villageDetailsDTOList;
             }
             else {

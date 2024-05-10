@@ -15,7 +15,7 @@ public interface FollowUpScheduleRepository extends JpaRepository<FollowUpSchedu
 //    @Query("SELECT f FROM FollowUpSchedule f WHERE f.nextFollowUpDate BETWEEN :startDate AND :endDate AND f.village.code = :villagecode")
 //    List<FollowUpSchedule> findbyDateAndVill(@Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("villagecode") int villagecode );
 
-    @Query("SELECT f FROM FollowUpSchedule f WHERE f.nextFollowUpDate <= :requiredDate AND f.village.code = :villagecode")
+    @Query("SELECT f FROM FollowUpSchedule f WHERE f.nextFollowUpDate <= :requiredDate AND f.village.code = :villagecode AND f.followUpRemaining>0")
     List<FollowUpSchedule> findbyDateAndVill(@Param("requiredDate") Date requiredDate,@Param("villagecode") int villagecode );
 
     @Query("SELECT f from FollowUpSchedule f WHERE f.patient.patient_id=:patientID")

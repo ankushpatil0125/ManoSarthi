@@ -112,7 +112,9 @@ public class WorkerServiceImpl implements WorkerService {
             registerPatientDTO.getPatient().setFollowUpNumber(0);
             registerPatientDTO.getPatient().setStatus("NEW");
 
-            Patient patient = patientRepository.save(registerPatientDTO.getPatient());
+            Patient registeredpatient = patientRepository.save(registerPatientDTO.getPatient());
+            registeredpatient.setRegisteredDate(Date.valueOf(LocalDate.now()));
+            Patient patient=patientRepository.save(registeredpatient);
             System.out.println("Patient after save"+ patient);
 
             doctorRepository.save(doctor);

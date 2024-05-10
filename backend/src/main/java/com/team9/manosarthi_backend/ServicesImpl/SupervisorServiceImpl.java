@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+import org.apache.commons.lang3.tuple.Pair;
 @Service
 @AllArgsConstructor
 public class SupervisorServiceImpl implements SupervisorService {
@@ -144,7 +144,8 @@ public class SupervisorServiceImpl implements SupervisorService {
     }
 
     @Override
-    public Worker ReassignWorker(Worker updatedWorker) {
+    public Pair<Worker,Boolean> ReassignWorker(Worker updatedWorker) {
+        Boolean NeedtoAssign=false;
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
         System.out.println("updated details"+updatedWorker.getFirstname());
@@ -156,10 +157,17 @@ public class SupervisorServiceImpl implements SupervisorService {
 
                 int oldvillagecode=existingWorker.getVillagecode().getCode();
                 Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
-                oldvillage.ifPresent( villagetemp ->{
-                    villagetemp.setWorker_count(villagetemp.getWorker_count()-1);
-                    villageRepository.save(villagetemp);
-                } );
+                if(oldvillage.isPresent())
+                {
+                        Village villagetemp=oldvillage.get();
+                        if(!followUpScheduleRepository.findbyDateAndVill(Date.valueOf(LocalDate.now()), oldvillagecode).isEmpty())
+                            NeedtoAssign=true;
+                        villagetemp.setWorker_count(villagetemp.getWorker_count()-1);
+                        villageRepository.save(villagetemp);
+                }
+                else {
+                    throw new APIRequestException("Existing village not found");
+                }
                 int newvillagecode=updatedWorker.getVillagecode().getCode();
                 Optional<Village> newvillage=villageRepository.findById(newvillagecode);
                 newvillage.ifPresent( villagetemp ->{
@@ -168,15 +176,15 @@ public class SupervisorServiceImpl implements SupervisorService {
                     existingWorker.setVillagecode(villagetemp);
                 } );
                 // Save the updated worker to the database
-                return workerRepository.save(existingWorker);
+                Worker updatedSavedWorker= workerRepository.save(existingWorker);
+                return Pair.of(updatedSavedWorker,NeedtoAssign);
+            }
+            else {
+                throw new APIRequestException("Either new village code is empty or existing and updated are same");
             }
 
-
-            return null;
-
         } else {
-            System.out.println("Worker not found with ID: " + updatedWorker.getId());
-            return null;
+            throw new APIRequestException("Worker not found with ID: " + updatedWorker.getId());
         }
     }
 
