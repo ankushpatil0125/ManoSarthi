@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "abha_id")
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class AbhaId {
+public class NotRefAbhaId {
     @Convert(converter = AesEncryptor.class)
     @Id
     @Column(name = "aabha_id")
@@ -24,4 +26,11 @@ public class AbhaId {
     @ManyToOne
     @JoinColumn(name = "villagecode")
     private Village villagecode;
+
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Worker workerid;
+
+    @Column(name = "registered_date")
+    private Date RegisteredDate;
 }

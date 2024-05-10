@@ -100,6 +100,30 @@ public class UserController {
         }
     }
 
+    /*
+    @Validated
+    @GetMapping("/resend-otp/{email}")
+    public ResponseEntity<?> resendOtp(@PathVariable String email)
+    {
+        try {
+
+            if (userService.resendOTP(email)) {
+                return new ResponseEntity<>("OTP send Successfully", HttpStatus.OK);
+            } else
+                return new ResponseEntity<>("Cannot resend OTP", HttpStatus.EXPECTATION_FAILED);
+
+        }
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while resending otp.", ex.getMessage());
+        }
+    }
+    */
+
     @Validated
     @PostMapping("/setPassword/{email}")
     public ResponseEntity<?> setPassword(@PathVariable String email, @RequestBody ChangePassword changePassword)

@@ -1,15 +1,11 @@
 package com.team9.manosarthi_backend.Controllers;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.team9.manosarthi_backend.Entities.District;
 import com.team9.manosarthi_backend.Entities.SubDistrict;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.DistrictRepository;
 import com.team9.manosarthi_backend.Repositories.SubDistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,20 +37,20 @@ public class SubDistrictRestController {
 
         if(Objects.equals(role, "DOCTOR") && assigned)
         {
-            subDistricts = subDistrictRepository.getAssignedDoctorSubDistinct(districtcode);
+            subDistricts = subDistrictRepository.getAssignedDoctorSubDistrict(districtcode);
         }
         else if ( Objects.equals(role, "DOCTOR") && !assigned )
         {
-            subDistricts = subDistrictRepository.getNotAssignedDoctorSubDistinct(districtcode);
+            subDistricts = subDistrictRepository.getNotAssignedDoctorSubDistrict(districtcode);
         }
 
         else if(Objects.equals(role, "SUPERVISOR") && assigned)
         {
-            subDistricts = subDistrictRepository.getAssignedSupervisorSubDistinct(districtcode);
+            subDistricts = subDistrictRepository.getAssignedSupervisorSubDistrict(districtcode);
         }
         else if(Objects.equals(role, "SUPERVISOR") && !assigned)
         {
-            subDistricts = subDistrictRepository.getNotAssignedSupervisorSubDistinct(districtcode);
+            subDistricts = subDistrictRepository.getNotAssignedSupervisorSubDistrict(districtcode);
         }
             if (subDistricts == null) {
                 throw new APIRequestException("SubDistrict cannot found");

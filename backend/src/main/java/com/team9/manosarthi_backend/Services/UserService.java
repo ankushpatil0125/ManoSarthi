@@ -11,5 +11,5 @@ public interface UserService {
     Boolean changePassword(String oldPassword, String newPassword, Principal principal);
 
     Boolean setNewPassword(String password,String reenteredPassword,String email);
-
+//    Boolean resendOTP(String email);
 }

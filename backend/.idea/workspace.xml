@@ -5,25 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/DeleteService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/DeleteService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/InsertService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/InsertService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/SelectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/DatabaseServices/SelectService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/FetchDataService.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/SyncDataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/SyncDataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/Services/initService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/Services/initService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/context/AuthContext.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/navigation/AuthStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/navigation/AuthStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/HomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/MedicalDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/MedicalDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/PatientDetailsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/PatientDetailsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/Preview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/Preview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/ProfileScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/QuestionnaireScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/QuestionnaireScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/screens/RegisterPatientScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/screens/RegisterPatientScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HealthWorker/src/utils/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../HealthWorker/src/utils/Constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/LogoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/LogoutService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/MissedFollowupsSupDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/MissedFollowupsSupDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/VillageDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/VillageDetailsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/AbhaId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/NotRefAbhaId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/AbhaIdRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/AbhaIdRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +70,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-
+    &quot;git-widget-placeholder&quot;: &quot;Manasi&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
@@ -84,8 +84,13 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication (1)">
     <configuration name="ManosarthiBackendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
@@ -115,11 +120,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Application.ManosarthiBackendApplication" />
-      <item itemvalue="Spring Boot.ManosarthiBackendApplication (1)" />
-      <item itemvalue="Spring Boot.ManosarthiBackendApplication" />
-    </list>
     <list>
       <item itemvalue="Application.ManosarthiBackendApplication" />
       <item itemvalue="Spring Boot.ManosarthiBackendApplication (1)" />
@@ -197,6 +197,9 @@
       <workItem from="1714135898345" duration="10170000" />
       <workItem from="1714221567322" duration="10482000" />
       <workItem from="1715087309594" duration="589000" />
+      <workItem from="1715105306049" duration="8929000" />
+      <workItem from="1715171389714" duration="7377000" />
+      <workItem from="1715332027794" duration="7028000" />
     </task>
     <servers />
   </component>

@@ -381,10 +381,10 @@ public class AdminController {
 
     @Validated
     @PostMapping("/questionarrie")
-    public Questionarrie addQuestionarrie(@Valid @RequestBody Questionarrie questionarrie) throws Exception
+    public List<Questionarrie> addQuestionarrie(@Valid @RequestBody List<Questionarrie> questionarrie) throws Exception
     {
         try {
-            Questionarrie que = adminService.addQuestionarrie(questionarrie);
+            List<Questionarrie> que = adminService.addQuestionarrie(questionarrie);
 
             return que;
         }
@@ -396,12 +396,12 @@ public class AdminController {
 
     @Validated
     @PostMapping("/med-questionarrie")
-    public MedicalQue addMedQuestionarrie(@Valid @RequestBody MedicalQue medquest) throws Exception
+    public List<MedicalQue> addMedQuestionarrie(@Valid @RequestBody List<MedicalQue> medquest) throws Exception
     {
         try {
-            MedicalQue que = adminService.addMedicalQuestionarrie(medquest);
+            List<MedicalQue> ques = adminService.addMedicalQuestionarrie(medquest);
 
-            return que;
+            return ques;
         }
         catch (Exception ex)
         {

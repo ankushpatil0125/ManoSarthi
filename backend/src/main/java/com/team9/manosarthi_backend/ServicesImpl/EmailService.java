@@ -26,14 +26,14 @@ public class EmailService {
         properties.put("mail.smtp.properties","465");
         properties.put("mail.smtp.ssl.enable","true");
         properties.put("mail.smtp.auth","true");
-        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.starttls.enable","true");
 
 
         //step1 = to get session object
         Session session=Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("manosarthihealthscheme@gmail.com","rrcq wwbw nbam xkkp"); //Manosarthi@123
+                return new PasswordAuthentication("manosarthihealthscheme@gmail.com","ehch cfbv jtwd mnrf"); //Manosarthi@123
             }
         });
 

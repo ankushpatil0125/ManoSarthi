@@ -224,15 +224,15 @@ public class AdminServiceImpl implements AdminService {
         }
     }
         @Override
-        public Questionarrie addQuestionarrie(Questionarrie que)
+        public List<Questionarrie> addQuestionarrie(List<Questionarrie> ques)
         {
-            return questionarrieRepo.save(que);
+            return questionarrieRepo.saveAll(ques);
         }
 
         @Override
-        public MedicalQue addMedicalQuestionarrie(MedicalQue medicalque)
+        public List<MedicalQue> addMedicalQuestionarrie(List<MedicalQue> medicalque)
         {
-            return medicalQueRepo.save(medicalque);
+            return medicalQueRepo.saveAll(medicalque);
         }
 
         @Override

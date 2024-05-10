@@ -1,10 +1,7 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
-import com.team9.manosarthi_backend.Entities.Supervisor;
-import com.team9.manosarthi_backend.Entities.Village;
-import com.team9.manosarthi_backend.Entities.Worker;
+import com.team9.manosarthi_backend.Entities.*;
 
-import com.team9.manosarthi_backend.Entities.User;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.Services.SupervisorService;
@@ -18,10 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+import org.apache.commons.lang3.tuple.Pair;
 @Service
 @AllArgsConstructor
 public class SupervisorServiceImpl implements SupervisorService {
@@ -30,6 +30,7 @@ public class SupervisorServiceImpl implements SupervisorService {
     private PasswordEncoder passwordEncoder;
     private VillageRepository villageRepository;
     private SupervisorRepository supervisorRepository;
+    private FollowUpScheduleRepository followUpScheduleRepository;
 
     @Override
     public Supervisor viewProfile(int id) {
@@ -143,7 +144,8 @@ public class SupervisorServiceImpl implements SupervisorService {
     }
 
     @Override
-    public Worker ReassignWorker(Worker updatedWorker) {
+    public Pair<Worker,Boolean> ReassignWorker(Worker updatedWorker) {
+        Boolean NeedtoAssign=false;
         // Retrieve the existing worker from the database
         Worker existingWorker = workerRepository.findById(updatedWorker.getId()).orElse(null);
         System.out.println("updated details"+updatedWorker.getFirstname());
@@ -155,10 +157,17 @@ public class SupervisorServiceImpl implements SupervisorService {
 
                 int oldvillagecode=existingWorker.getVillagecode().getCode();
                 Optional<Village> oldvillage=villageRepository.findById(oldvillagecode);
-                oldvillage.ifPresent( villagetemp ->{
-                    villagetemp.setWorker_count(villagetemp.getWorker_count()-1);
-                    villageRepository.save(villagetemp);
-                } );
+                if(oldvillage.isPresent())
+                {
+                        Village villagetemp=oldvillage.get();
+                        if(!followUpScheduleRepository.findbyDateAndVill(Date.valueOf(LocalDate.now()), oldvillagecode).isEmpty())
+                            NeedtoAssign=true;
+                        villagetemp.setWorker_count(villagetemp.getWorker_count()-1);
+                        villageRepository.save(villagetemp);
+                }
+                else {
+                    throw new APIRequestException("Existing village not found");
+                }
                 int newvillagecode=updatedWorker.getVillagecode().getCode();
                 Optional<Village> newvillage=villageRepository.findById(newvillagecode);
                 newvillage.ifPresent( villagetemp ->{
@@ -167,15 +176,37 @@ public class SupervisorServiceImpl implements SupervisorService {
                     existingWorker.setVillagecode(villagetemp);
                 } );
                 // Save the updated worker to the database
-                return workerRepository.save(existingWorker);
+                Worker updatedSavedWorker= workerRepository.save(existingWorker);
+                return Pair.of(updatedSavedWorker,NeedtoAssign);
+            }
+            else {
+                throw new APIRequestException("Either new village code is empty or existing and updated are same");
             }
 
-
-            return null;
-
         } else {
-            System.out.println("Worker not found with ID: " + updatedWorker.getId());
-            return null;
+            throw new APIRequestException("Worker not found with ID: " + updatedWorker.getId());
+        }
+    }
+
+    @Override
+    public List<List<FollowUpSchedule>> subdistMissedFollowup(int userid)
+    {
+        Optional<Supervisor> supervisor=supervisorRepository.findById(userid);
+        if (supervisor.isPresent()) {
+            int subdid = supervisor.get().getSubdistrictcode().getCode();
+            List<Worker> allworkers= workerRepository.findAllWorkerOfSubistrict(subdid);
+            List<List<FollowUpSchedule>> allmissedFollowups=new ArrayList<>();
+            for(Worker worker:allworkers)
+            {
+                //worker has 3 days time period of syncing.
+                // after that period also date is not changed to next followup date show that as missed followup to supervisor
+                Date requiredDate = Date.valueOf(LocalDate.now().minusDays(3));
+                //List contain list of all missed of particular village
+                allmissedFollowups.add(followUpScheduleRepository.findbyDateAndVill(requiredDate,worker.getVillagecode().getCode()));
+            }
+            return allmissedFollowups;
+        } else {
+            throw new APIRequestException("Supervisor not found");
         }
     }
 }

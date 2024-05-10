@@ -21,9 +21,9 @@ public interface AdminService  {
     Doctor reassignDoctor(int doctorID,int oldSubDistrict,int newSubDistrict);
 
     Supervisor ReassignSupervisor(Supervisor updatedSupervisor);
-    Questionarrie addQuestionarrie(Questionarrie questionarrie);
+    List<Questionarrie> addQuestionarrie(List<Questionarrie> questionarrie);
 
-    MedicalQue addMedicalQuestionarrie(MedicalQue medicalques);
+    List<MedicalQue> addMedicalQuestionarrie(List<MedicalQue> medicalques);
 
     List<Supervisor> viewSupervisorByDistrict(int districtcode, int pagenumber, int pagesize);
     List<Supervisor> viewSupervisorBySubDistrict(int subdistrictcode);
