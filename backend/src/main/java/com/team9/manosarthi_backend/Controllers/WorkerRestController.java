@@ -54,7 +54,9 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.team9.manosarthi_backend.security.JwtHelper;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 @Validated
@@ -359,9 +361,9 @@ public class WorkerRestController {
 
 
 
-    @Autowired private AmazonS3 amazonS3;
-    @Value("${aws.s3.bucket}")
-    private String bucketName;
+//    @Autowired private AmazonS3 amazonS3;
+//    @Value("${aws.s3.bucket}")
+//    private String bucketName;
 
 
 
@@ -378,37 +380,87 @@ public class WorkerRestController {
 ////        return  amazonS3.putObject(bucketName,"test", (File) file);
 //    }
 
-    @PostMapping("/upload-image")
-    public PutObjectResult uploadImage(@RequestBody String file) throws IOException {
+//    @PostMapping("/upload-image")   //working
+//    public PutObjectResult uploadImage(@RequestBody String file) throws IOException {
+//
+//        return amazonS3.putObject(bucketName,"team",file);
+//
+////        return amazonS3.putObject(bucketName,"t1", (InputStream) file,null);
+////        return  amazonS3.putObject(bucketName,"test", (File) file);
+//    }
 
-        return amazonS3.putObject(bucketName,"team",file);
+//    @GetMapping("/view-image")    //working
+//    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
+////        try {
+////            S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
+////
+////
+////            byte[] content = IOUtils.toByteArray(s3Object.getObjectContent());
+////            ByteArrayResource resource = new ByteArrayResource(content);
+////            return  resource;
+////
+////        }catch (Exception e){
+////            throw new Exception(e.getMessage()) ;
+////        }
+////        return new InputStreamResource(s3Object.getObjectContent());
+//
+//        S3Object   s3Object= amazonS3.getObject(bucketName,"team9");
+//        S3ObjectInputStream content = s3Object.getObjectContent();
+////            ByteArrayResource resource = new ByteArrayResource(content);
+//        return ResponseEntity.ok()
+//                .contentType(MediaType.IMAGE_PNG) // This content type can change by your file :)
+////                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
+//                .body(new InputStreamResource(content));
+//    }
 
-//        return amazonS3.putObject(bucketName,"t1", (InputStream) file,null);
-//        return  amazonS3.putObject(bucketName,"test", (File) file);
-    }
 
-    @GetMapping("/view-image")
-    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
-//        try {
-//            S3Object   s3Object= amazonS3.getObject(bucketName,"test1");
+
+
+////     check of location access
+//    @GetMapping("/location")
+//    public String getLocation() {
+//
+////        RestClient restClient = RestClient.create();
+////        String result = restClient.get()
+////                .uri("https://kgis.ksrsac.in:9000/genericwebservices/ws/getlocationdetails?coordinates=12.844988,77.663201&type=dd")
+////                .retrieve()
+////                .body(String.class);
+//
+//        RestClient restClient = RestClient.create();
+////
+//        String result = restClient.get()
+//                .uri("https://kgis.ksrsac.in:9000/genericwebservices/ws/getlocationdetails?coordinates=12.844988,77.663201&type=dd")
+//                .retrieve()
+//                .body(String.class);
+//        System.out.println(result);
+//
+////        RestClient restClient = RestClient.create();
+//
+////        String result = restClient.get()
+////                .uri("https://jsonplaceholder.typicode.com/comments?postId=1")
+////                .retrieve()
+////                .body(String.class);
+////        System.out.println(result);
+//
+//        System.out.println(result);
 //
 //
-//            byte[] content = IOUtils.toByteArray(s3Object.getObjectContent());
-//            ByteArrayResource resource = new ByteArrayResource(content);
-//            return  resource;
-//
-//        }catch (Exception e){
-//            throw new Exception(e.getMessage()) ;
-//        }
-//        return new InputStreamResource(s3Object.getObjectContent());
+//        return "result";
+//    }
 
-        S3Object   s3Object= amazonS3.getObject(bucketName,"team9");
-        S3ObjectInputStream content = s3Object.getObjectContent();
-//            ByteArrayResource resource = new ByteArrayResource(content);
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_PNG) // This content type can change by your file :)
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
-                .body(new InputStreamResource(content));
+    @Autowired
+    private WebClient webClientBuilder;
+    @GetMapping("/location")
+    public String getLocation() {
+       String result= webClientBuilder
+                .get()
+                .uri("https://kgis.ksrsac.in:9000/genericwebservices/ws/getlocationdetails?coordinates=12.844988,77.663201&type=dd")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        System.out.println("result "+result);
+       return result;
     }
 
 }
+
