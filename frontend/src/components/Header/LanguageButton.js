@@ -21,7 +21,7 @@ const LanguageButton = () => {
   return (
     <div>
       <Dropdown className="mr-5">
-        <Dropdown.Toggle className="text-black bg-transparent" id="dropdown-basic">
+        <Dropdown.Toggle className="text-gray-900 bg-transparent" id="dropdown-basic">
           {t('Select_Language')}
         </Dropdown.Toggle>
         <Dropdown.Menu>

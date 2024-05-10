@@ -147,7 +147,7 @@ const Profile = () => {
         }
         setLoading(false);
       } catch (error) {
-        alert(error.response.data.message);
+        alert(error.response.data);
         setLoading(false);
       }
     };
@@ -211,10 +211,10 @@ const Profile = () => {
         <h2 className="text-center text-2xl font-semibold mt-3">
           {user?.firstname} {user?.lastname}
         </h2>
-        <p className="justify-center text-gray-600 mt-1 flex flex-row">
+        <div className="justify-center text-gray-600 mt-1 flex flex-row">
           {t("Profile.Username")} :{" "}
           <p className="font-semibold">{user?.username}</p>
-        </p>
+        </div>
 
         {/* Other Profile Fields */}
         <div className="mt-5 flex justify-center items-center">

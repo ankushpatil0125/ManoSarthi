@@ -175,7 +175,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
                         handleDelete(healthworker.id);
                       }
                     }}
-                    className={`${action === 'Update' ? 'bg-blue-500 hover:bg-blue-700' : 'bg-red-500 hover:bg-red-600'} text-white font-bold py-2 px-4 rounded inline-flex items-center`}
+                    className={`${action === 'Update' ? 'bg-violet-500 hover:bg-violet-200' : 'bg-violet-500 hover:bg-violet-200'} text-white font-bold py-2 px-4 rounded inline-flex items-center`}
                     >
                     {action === 'Update'?<FaSyncAlt className="mr-2"/>: <FaTrash className="mr-2" />}
                     {action}
@@ -188,7 +188,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
       </div>
       <div className="flex gap-2 justify-center">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-violet-500 hover:bg-violet-200 text-white font-bold py-2 px-4 rounded"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
@@ -196,7 +196,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
         </button>
 
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-violet-500 hover:bg-violet-200 text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
@@ -228,7 +228,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
           <div className="flex justify-end">
             <button
               onClick={handleUpdateWorker}
-              className="mt-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+              className="mt-32 bg-violet-500 hover:bg-violet-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
               <FaSyncAlt className="mr-2" />
               Update

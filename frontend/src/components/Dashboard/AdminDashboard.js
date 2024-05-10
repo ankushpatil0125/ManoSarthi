@@ -148,7 +148,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div class="mx-auto max-w-6xl px-4 py-4 sm:px-6 md:px-24 md:py-16 lg:px-8 lg:py-20 dark:bg-gray-800"></div>
+      <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 md:px-24 md:py-16 lg:px-8 lg:py-20 dark:bg-gray-800"></div>
     </div>
   );
 };

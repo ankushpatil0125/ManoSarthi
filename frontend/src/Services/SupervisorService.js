@@ -110,13 +110,12 @@ const SupervisorService = {
       throw error;
     }
   },
-  getMissedFollowupsofWorker: async (pagenumber) => {
+  getMissedFollowupsofWorker: async () => {
     try {
       console.log("before calling getAll");
       const response = await axios.get(
         BASE_URL +
-          "supervisor/get-missed-workers?pagenumber=" +
-          pagenumber,
+          "supervisor/all-missed-followups",
         {
           headers: {
             "Content-Type": "application/json",

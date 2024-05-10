@@ -105,7 +105,7 @@ const AddHealthWorkerComponent = () => {
       console.log("response", response);
       if (response) {
         alert(
-          `Health worker with name ${response.data.firstname} added successfully`
+          `Health worker with name ${response?.data?.firstname} added successfully`
         );
         setLoading(false);
         window.location.reload();
@@ -114,7 +114,7 @@ const AddHealthWorkerComponent = () => {
         alert("Failed to add health worker");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error?.response?.data?.message);
       setLoading(false);
     }
   };
