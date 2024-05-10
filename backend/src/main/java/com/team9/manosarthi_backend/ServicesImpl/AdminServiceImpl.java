@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.Services.AdminService;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -124,6 +126,49 @@ public class AdminServiceImpl implements AdminService {
         public List<Doctor> viewDoctorBySubDistrict(int subdistrictcode) {
             return doctorRepository.findDoctorBySubDistrict(subdistrictcode);
         }
+
+    @Override
+    @Transactional
+    public Doctor reassignDoctor(int doctorID, int oldSubDistrictCode, int newSubDistrictCode) {
+        Optional<Doctor> doctor = doctorRepository.findById(doctorID);
+        if (doctor.isPresent()) {
+            Optional<SubDistrict> oldSubDistrict = subDistrictRepository.findById(oldSubDistrictCode);
+            Optional<SubDistrict> newSubDistrict = subDistrictRepository.findById(newSubDistrictCode);
+            if (oldSubDistrict.isPresent() && newSubDistrict.isPresent()) {
+                if(oldSubDistrict.get().getDoctor_count()<2) throw new APIRequestException("Cannot Reasign Doctor.Doctor count not 2  ");
+                oldSubDistrict.get().setDoctor_count(oldSubDistrict.get().getDoctor_count()-1);
+                subDistrictRepository.save(oldSubDistrict.get());
+
+                newSubDistrict.get().setDoctor_count(newSubDistrict.get().getDoctor_count()+1);
+                subDistrictRepository.save(newSubDistrict.get());
+
+                List<Doctor> doctorList= doctorRepository.findDoctorBySubDistrict(oldSubDistrictCode);
+                Doctor reassignPatienttoDoctor=null;
+                for (Doctor doc : doctorList) {
+                    if(doc.getId()!=doctorID){
+                        reassignPatienttoDoctor = doc;
+                        break;
+                    }
+                }
+                if(reassignPatienttoDoctor==null){ throw new APIRequestException("Cannot Reassign Doctor.Doctor count not 2  "); }
+
+                List<Patient> patientList=patientRepository.findByDoctorID(doctorID);
+                for (Patient patient : patientList) {
+                    patient.setDoctor(reassignPatienttoDoctor);
+                    reassignPatienttoDoctor.setPatient_count(reassignPatienttoDoctor.getPatient_count()+1);
+                    doctor.get().setPatient_count(doctor.get().getPatient_count()-1);
+                    patientRepository.save(patient);
+                }
+                doctor.get().setSubdistrictcode(newSubDistrict.get());
+                doctorRepository.save(doctor.get());
+            }
+            else throw new APIRequestException("SubDistrict not found");
+        }
+        else throw new RuntimeException("Doctor not found");
+
+        return null;
+
+    }
 
 
     @Override

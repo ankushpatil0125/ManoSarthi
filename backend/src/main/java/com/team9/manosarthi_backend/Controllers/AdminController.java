@@ -197,7 +197,18 @@ public class AdminController {
             else
                 throw new APIRequestException("Error while getting doctors of subdistrict",ex.getMessage());
         }
-        }
+    }
+
+    @PutMapping("/reassign-doctor")
+    public DoctorResponseDTO reassignDoctor(@RequestParam("doctorID") int doctorID,@RequestParam("oldDistrictCode") int oldSubDistrictCode, @RequestParam("newDistrictCode") int newSubDistrictCode){
+        Doctor doctor = adminService.reassignDoctor(doctorID, oldSubDistrictCode, newSubDistrictCode);
+        return null;
+
+
+    }
+
+
+
 
     @Validated
     @PostMapping("/supervisor")

@@ -9,8 +9,13 @@ import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.Services.WorkerService;
 import lombok.AllArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -230,13 +235,60 @@ public class WorkerServiceImpl implements WorkerService {
 
     }
 
+
+    @Autowired
+    private WebClient webClientBuilder;
+
     @Override
     @Transactional
     public int addFollowUpDetails(RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, int workerid) {
 
+        //return -1 for location error
+        //return -2 if follow up is taken before date
+        //return patientId if everyhing is ok
+
         Optional<Worker> worker = workerRepository.findById(workerid);
         Optional<Patient> patient = patientRepository.findById(registerFollowUpDetailsDTO.getPatientID());
         if(worker.isPresent() && patient.isPresent()) {
+
+            System.out.println("in add followup details");
+            String result= webClientBuilder
+                    .get()
+//                    .uri("https://kgis.ksrsac.in:9000/genericwebservices/ws/getlocationdetails?coordinates=12.844988,77.663201&type=dd")
+                    .uri("https://kgis.ksrsac.in:9000/genericwebservices/ws/getlocationdetails?coordinates="+registerFollowUpDetailsDTO.getLatitude()+","+registerFollowUpDetailsDTO.getLongitude()+"&type=dd")
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+//            if(!result.equals("")) throw new APIRequestException("unable to check location"+ result);
+            System.out.println("locatio fetch result"+ result);
+
+
+            JSONArray jsonArray = new JSONArray(result);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+            //check if message status is 200 or nor
+            if(!jsonObject.get("message").equals("200")) throw new APIRequestException("ERROR in location checking "+jsonObject.get("message").toString());
+            int locationVillage = Integer.parseInt(jsonObject.get("LGD_VillageCode").toString());
+            if(locationVillage != worker.get().getVillagecode().getCode() )
+            {
+                System.out.println("jsonObject.get(\"LGD_VillageCode\").equals(worker.get().getVillagecode().getCode()  "+jsonObject.get("LGD_VillageCode").equals(worker.get().getVillagecode().getCode()));
+                System.out.println("village code does not matched api res "+ jsonObject.get("LGD_VillageCode")+"worker village code"+worker.get().getVillagecode().getCode());
+                return -1;   //return -1 if village code does not match
+            }
+            System.out.println("village code matched "+ jsonObject.get("LGD_VillageCode"));
+
+            Optional<FollowUpSchedule> getfollowUpSchedule = followUpScheduleRepository.findByPatientID(registerFollowUpDetailsDTO.getPatientID());
+            if(getfollowUpSchedule.isPresent()) {
+                if (getfollowUpSchedule.get().getNextFollowUpDate().after(java.sql.Date.valueOf(LocalDate.now())) )
+                {
+                    System.out.println("follow up before date");
+                    return -2;
+                }
+            }
+            else throw new APIRequestException("FollowUpSchedule not found");
+
+            System.out.println("add follow up");
+
 
             // check for the location of followup
             FollowUpDetails followUpDetails=new FollowUpDetails();
@@ -258,7 +310,7 @@ public class WorkerServiceImpl implements WorkerService {
             patient.get().setReferred(registerFollowUpDetailsDTO.isReferredDuringFollowUp());
             patientRepository.save(patient.get());
 
-            Optional<FollowUpSchedule> getfollowUpSchedule = followUpScheduleRepository.findByPatientID(registerFollowUpDetailsDTO.getPatientID());
+
 
             if(getfollowUpSchedule.isPresent() ) {
                 FollowUpSchedule followUpSchedule = getfollowUpSchedule.get();
