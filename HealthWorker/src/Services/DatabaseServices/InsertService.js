@@ -8,7 +8,7 @@ const InsertService = {
       db.transaction((tx) => {
         AabhaIdInfo.forEach((aabha) => {
           tx.executeSql(
-            "INSERT INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
+            "INSERT OR REPLACE INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
             [aabha, status],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
@@ -34,7 +34,7 @@ const InsertService = {
       db.transaction((tx) => {
         followUpScheduleList.forEach((followUpSchedule) => {
           tx.executeSql(
-            "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type,status) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')",
             [
               followUpSchedule.patientID,
               followUpSchedule.patient_fname,
@@ -114,24 +114,22 @@ const InsertService = {
       });
     });
   },
-  insertFollowUpReferNotRefer: (pid, state) => {
-    // console.log("before inside insertPatientD");
+
+  insertFollowUpReferNotRefer: (patientId) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "INSERT OR REPLACE INTO followupReferNotRefer (patientId, status) VALUES (?, ?)",
-          [pid, state],
-          (_, { rowsAffected }) => {
-            if (rowsAffected > 0) {
-              resolve(
-                "Data Inserted Into followupReferNotRefer Table Successfully"
-              );
+          `INSERT OR REPLACE INTO followupReferNotRefer (patientId) VALUES (?);`,
+          [patientId],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("Patient ID inserted successfully");
             } else {
-              reject("Failed To Insert Data Into followupReferNotRefer Table");
+              reject("Failed to insert patient ID");
             }
           },
           (_, error) => {
-            reject("Error inserting data into followupReferNotRefer: " + error);
+            reject("Error inserting patient ID: " + error);
           }
         );
       });

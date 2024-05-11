@@ -31,12 +31,13 @@ export const fetchData = () =>
         await MedicalQuestionarrieService.getMedicalQuestionarrie();
       const AabhaResponse = await RegisterPatientService.getAabhaIdTable();
       const followUpRes = await FetchFollowUp.getFollowUpSchedule();
-      const PrescriptionResponse = await PrescriptionService.getAllPrescriptions();
+      const PrescriptionResponse =
+        await PrescriptionService.getAllPrescriptions();
       if (
         questionsResponse &&
         medicalQuestionsResponse &&
         AabhaResponse &&
-        followUpRes&&
+        followUpRes &&
         PrescriptionResponse
       ) {
         const questions = questionsResponse.data;
@@ -46,9 +47,9 @@ export const fetchData = () =>
         const prescriptionTable = PrescriptionResponse.data;
 
         prescriptionTable.map((pres) => {
-          pres.medicine =  JSON.stringify(pres.medicine)
-          pres.disease_code =  JSON.stringify(pres.disease_code)  
-        })
+          pres.medicine = JSON.stringify(pres.medicine);
+          pres.disease_code = JSON.stringify(pres.disease_code);
+        });
 
         console.log("Fetched Survey Questions From Server:", questions);
         console.log("Fetched AbhaId Table From Server: ", abhaIDTable);
@@ -77,7 +78,7 @@ export const fetchData = () =>
           reject("Failed to delete old entries");
           return;
         }
-        console.log("Before inserting tables data")
+        console.log("Before inserting tables data");
         // Insert fetched data into the tables
         try {
           const insertResults = await Promise.all([
