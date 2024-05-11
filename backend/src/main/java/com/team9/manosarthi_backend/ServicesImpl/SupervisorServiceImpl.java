@@ -174,7 +174,9 @@ public class SupervisorServiceImpl implements SupervisorService {
                 }
                 int newvillagecode=updatedWorker.getVillagecode().getCode();
                 Optional<Village> newvillage=villageRepository.findById(newvillagecode);
+
                 newvillage.ifPresent( villagetemp ->{
+                    if(villagetemp.getWorker_count()==1)throw new APIRequestException("Worker already assigned to new village");
                     villagetemp.setWorker_count(villagetemp.getWorker_count()+1);
                     villageRepository.save(villagetemp);
                     existingWorker.setVillagecode(villagetemp);
@@ -224,9 +226,11 @@ public class SupervisorServiceImpl implements SupervisorService {
             //worker has 3 days time period of syncing.
             // after that period also date is not changed to next followup date show that as missed followup to supervisor
             Date requiredDate = Date.valueOf(LocalDate.now().minusDays(3));
+            System.out.println("currmiss count"+workerid);
             //finding current missed followups
-            List<FollowUpSchedule> currfollowupsmissed = followUpScheduleRepository.findMissedByWorker(requiredDate, userid);
+            List<FollowUpSchedule> currfollowupsmissed = followUpScheduleRepository.findMissedByWorker(requiredDate, workerid);
             int currentmissedcount = currfollowupsmissed.size();
+            System.out.println("currmiss count"+currentmissedcount);
 
             WorkerDetailsDTO workerDetailsDTO = new WorkerDetailsDTO();
             workerDetailsDTO.setWorkerId(workerid);
@@ -252,7 +256,7 @@ public class SupervisorServiceImpl implements SupervisorService {
             //current missed followups
             workerDetailsDTO.setCurrentMissedFollowups(currfollowupsmissed);
             //previous missed followup
-            
+            System.out.println("worker details dto"+workerDetailsDTO);
             return workerDetailsDTO;
         }
         else {
@@ -261,10 +265,29 @@ public class SupervisorServiceImpl implements SupervisorService {
     }
 
     @Override
-    public Pair<Boolean,Boolean> DeleteWorker(Integer workerid)
-    {
-        Boolean NeedtoAssign=false;
+    public Pair<Boolean,Boolean> DeleteWorker(Worker worker) {
+        Boolean NeedtoAssign = false;
 //        Worker worker=workerRepository.findById(workerid);
-        return Pair.of(false,false);
+        Optional<Worker> deleteWorker = workerRepository.findById(worker.getId());
+
+        if (deleteWorker.isPresent()) {
+            Optional<Village> village = villageRepository.findById(deleteWorker.get().getVillagecode().getCode());
+            if(village.isPresent()) {
+                    village.get().setWorker_count(village.get().getWorker_count() - 1);
+                    //check folllowups are remaining in village or not
+                    if (!followUpScheduleRepository.findbyDateAndVill(Date.valueOf(LocalDate.now()),village.get().getCode()).isEmpty())
+                        NeedtoAssign = true;
+                    villageRepository.save(village.get());
+            }
+            String userName = deleteWorker.get().getUser().getUsername();
+
+            deleteWorker.get().setUser(null);
+            userRepository.deleteById(userName);
+            deleteWorker.get().setActive(false);
+            deleteWorker.get().setVillagecode(null);
+            workerRepository.save(deleteWorker.get());
+            return Pair.of(true, NeedtoAssign);
+        }
+        throw new APIRequestException("Worker not found");
     }
 }

@@ -145,9 +145,15 @@ public class DoctorServiceImpl implements DoctorService {
                         patientFollowUpPrescriptionDTO.getFollowUpSchedule().setPatient(patient.get());
                         patientFollowUpPrescriptionDTO.getFollowUpSchedule().setVillage(patient.get().getVillage());
                         patientFollowUpPrescriptionDTO.getFollowUpSchedule().setNextFollowUpDate(nextDate);
-                        //find current worker in patient village and assign followup to him
+//                        find current worker in patient village and assign followup to him
                         List<Worker> worker=workerRepository.findWorkerByVillage(patient.get().getVillage().getCode());
-                        patientFollowUpPrescriptionDTO.getFollowUpSchedule().setWorker(worker.get(0));
+                        if(!worker.isEmpty())
+                            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setWorker(worker.get(0));
+                        else
+                            System.out.println("worker not found");
+//                        //find current worker in patient village and assign followup to him
+//                        List<Worker> worker=workerRepository.findWorkerByVillage(patient.get().getVillage().getCode());
+//                        patientFollowUpPrescriptionDTO.getFollowUpSchedule().setWorker(worker.get(0));
                         FollowUpSchedule followUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
                         System.out.println("followUpSchedule  "+followUpSchedule.getId());
                     }
@@ -206,7 +212,10 @@ public class DoctorServiceImpl implements DoctorService {
                             followUpSchedule.get().setFollowUpRemaining(patientFollowUpPrescriptionDTO.getFollowUpSchedule().getFollowUpRemaining());
                             //assign current village worker to followup
                             List<Worker> worker=workerRepository.findWorkerByVillage(patient.get().getVillage().getCode());
-                            patientFollowUpPrescriptionDTO.getFollowUpSchedule().setWorker(worker.get(0));
+                            if(!worker.isEmpty())
+                                patientFollowUpPrescriptionDTO.getFollowUpSchedule().setWorker(worker.get(0));
+                            else
+                                System.out.println("worker not found");
                             FollowUpSchedule newfollowUpSchedule= followUpScheduleRepository.save(patientFollowUpPrescriptionDTO.getFollowUpSchedule());
                             System.out.println("newfollowUpSchedule  "+newfollowUpSchedule.getId());
 
