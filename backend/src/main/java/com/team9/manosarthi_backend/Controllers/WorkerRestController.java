@@ -402,7 +402,7 @@ public class WorkerRestController {
 ////        return amazonS3.putObject(bucketName,"t1", (InputStream) file,null);
 ////        return  amazonS3.putObject(bucketName,"test", (File) file);
 //    }
-
+//
 //    @GetMapping("/view-image")    //working
 //    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
 ////        try {
