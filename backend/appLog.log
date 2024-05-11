@@ -749,4 +749,483 @@ java.lang.IllegalArgumentException: When allowCredentials is true, allowedOrigin
 -[2m2024-05-10 18:50:48.744[0;39m [32m- INFO[0;39m [35m15157[0;39m [2m---[0;39m [2m[ionShutdownHook][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
 -[2m2024-05-10 18:50:48.747[0;39m [32m- INFO[0;39m [35m15157[0;39m [2m---[0;39m [2m[ionShutdownHook][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown initiated...
 -[2m2024-05-10 18:50:48.753[0;39m [32m- INFO[0;39m [35m15157[0;39m [2m---[0;39m [2m[ionShutdownHook][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown completed.
+-[2m2024-05-11 14:52:12.214[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m Starting ManosarthiBackendApplication using Java 17.0.10 with PID 15692 (/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend/target/classes started by nikhil in /home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend)
+-[2m2024-05-11 14:52:12.215[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+-[2m2024-05-11 14:52:12.636[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+-[2m2024-05-11 14:52:12.699[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 62 ms. Found 24 JPA repository interfaces.
+-[2m2024-05-11 14:52:13.028[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mptablePropertiesBeanFactoryPostProcessor[0;39m [2m:[0;39m Post-processing PropertySource instances
+-[2m2024-05-11 14:52:13.028[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+-[2m2024-05-11 14:52:13.029[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:13.029[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:13.029[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:13.029[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+-[2m2024-05-11 14:52:13.030[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+-[2m2024-05-11 14:52:13.030[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:13.030[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:13.139[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.filter.DefaultLazyPropertyFilter  [0;39m [2m:[0;39m Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+-[2m2024-05-11 14:52:13.147[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.r.DefaultLazyPropertyResolver     [0;39m [2m:[0;39m Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+-[2m2024-05-11 14:52:13.148[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.d.DefaultLazyPropertyDetector     [0;39m [2m:[0;39m Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+-[2m2024-05-11 14:52:13.307[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 9090 (http)
+-[2m2024-05-11 14:52:13.313[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+-[2m2024-05-11 14:52:13.314[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.18]
+-[2m2024-05-11 14:52:13.375[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat-1].[localhost].[/]    [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+-[2m2024-05-11 14:52:13.375[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1157 ms
+-[2m2024-05-11 14:52:13.477[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+-[2m2024-05-11 14:52:13.483[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+-[2m2024-05-11 14:52:13.492[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+-[2m2024-05-11 14:52:13.494[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-4 - Starting...
+-[2m2024-05-11 14:52:13.517[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7da12b67
+-[2m2024-05-11 14:52:13.517[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-4 - Start completed.
+-[2m2024-05-11 14:52:13.518[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+-[2m2024-05-11 14:52:13.519[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+-[2m2024-05-11 14:52:14.084[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+-[2m2024-05-11 14:52:14.533[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:14.905[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+-[2m2024-05-11 14:52:14.905[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:14.906[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-4 - Shutdown initiated...
+-[2m2024-05-11 14:52:14.913[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-4 - Shutdown completed.
+-[2m2024-05-11 14:52:14.915[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+-[2m2024-05-11 14:52:14.931[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+-[2m2024-05-11 14:52:14.935[0;39m [31m-ERROR[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
 -
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1418) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.2.jar:3.2.2]
+	at com.team9.manosarthi_backend.ManosarthiBackendApplication.main(ManosarthiBackendApplication.java:20) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.2.jar:3.2.2]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aws.access.key' in value "${aws.access.key}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:921) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.3.jar:6.1.3]
+	... 22 common frames omitted
+
+[2m2024-05-11 14:52:23.437[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m Starting ManosarthiBackendApplication using Java 17.0.10 with PID 15692 (/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend/target/classes started by nikhil in /home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend)
+-[2m2024-05-11 14:52:23.437[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+-[2m2024-05-11 14:52:23.882[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+-[2m2024-05-11 14:52:23.954[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 70 ms. Found 24 JPA repository interfaces.
+-[2m2024-05-11 14:52:24.205[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mptablePropertiesBeanFactoryPostProcessor[0;39m [2m:[0;39m Post-processing PropertySource instances
+-[2m2024-05-11 14:52:24.206[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+-[2m2024-05-11 14:52:24.206[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:24.206[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:24.206[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:24.207[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+-[2m2024-05-11 14:52:24.207[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+-[2m2024-05-11 14:52:24.207[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:24.207[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:24.358[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.filter.DefaultLazyPropertyFilter  [0;39m [2m:[0;39m Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+-[2m2024-05-11 14:52:24.367[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.r.DefaultLazyPropertyResolver     [0;39m [2m:[0;39m Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+-[2m2024-05-11 14:52:24.367[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.d.DefaultLazyPropertyDetector     [0;39m [2m:[0;39m Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+-[2m2024-05-11 14:52:24.575[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 9090 (http)
+-[2m2024-05-11 14:52:24.577[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+-[2m2024-05-11 14:52:24.577[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.18]
+-[2m2024-05-11 14:52:24.615[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat-2].[localhost].[/]    [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+-[2m2024-05-11 14:52:24.615[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1174 ms
+-[2m2024-05-11 14:52:24.815[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+-[2m2024-05-11 14:52:24.833[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+-[2m2024-05-11 14:52:24.856[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+-[2m2024-05-11 14:52:24.860[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-5 - Starting...
+-[2m2024-05-11 14:52:24.896[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@658de9c
+-[2m2024-05-11 14:52:24.897[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-5 - Start completed.
+-[2m2024-05-11 14:52:24.898[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+-[2m2024-05-11 14:52:24.898[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+-[2m2024-05-11 14:52:25.664[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+-[2m2024-05-11 14:52:26.085[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:26.545[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+-[2m2024-05-11 14:52:26.546[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:26.546[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-5 - Shutdown initiated...
+-[2m2024-05-11 14:52:26.551[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-5 - Shutdown completed.
+-[2m2024-05-11 14:52:26.553[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+-[2m2024-05-11 14:52:26.564[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+-[2m2024-05-11 14:52:26.568[0;39m [31m-ERROR[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+-
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1418) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.2.jar:3.2.2]
+	at com.team9.manosarthi_backend.ManosarthiBackendApplication.main(ManosarthiBackendApplication.java:20) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.2.jar:3.2.2]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aws.access.key' in value "${aws.access.key}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:921) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.3.jar:6.1.3]
+	... 22 common frames omitted
+
+[2m2024-05-11 14:52:49.119[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m Starting ManosarthiBackendApplication using Java 17.0.10 with PID 15692 (/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend/target/classes started by nikhil in /home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend)
+-[2m2024-05-11 14:52:49.119[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+-[2m2024-05-11 14:52:49.579[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+-[2m2024-05-11 14:52:49.640[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 60 ms. Found 24 JPA repository interfaces.
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mptablePropertiesBeanFactoryPostProcessor[0;39m [2m:[0;39m Post-processing PropertySource instances
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+-[2m2024-05-11 14:52:49.818[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+-[2m2024-05-11 14:52:49.819[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:49.819[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:49.916[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.filter.DefaultLazyPropertyFilter  [0;39m [2m:[0;39m Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+-[2m2024-05-11 14:52:49.926[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.r.DefaultLazyPropertyResolver     [0;39m [2m:[0;39m Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+-[2m2024-05-11 14:52:49.927[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.d.DefaultLazyPropertyDetector     [0;39m [2m:[0;39m Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+-[2m2024-05-11 14:52:50.065[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 9090 (http)
+-[2m2024-05-11 14:52:50.067[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+-[2m2024-05-11 14:52:50.067[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.18]
+-[2m2024-05-11 14:52:50.144[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat-3].[localhost].[/]    [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+-[2m2024-05-11 14:52:50.144[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1019 ms
+-[2m2024-05-11 14:52:50.261[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+-[2m2024-05-11 14:52:50.270[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+-[2m2024-05-11 14:52:50.281[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+-[2m2024-05-11 14:52:50.285[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-6 - Starting...
+-[2m2024-05-11 14:52:50.323[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f32c924
+-[2m2024-05-11 14:52:50.323[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-6 - Start completed.
+-[2m2024-05-11 14:52:50.324[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+-[2m2024-05-11 14:52:50.324[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+-[2m2024-05-11 14:52:50.771[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+-[2m2024-05-11 14:52:51.061[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:51.615[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+-[2m2024-05-11 14:52:51.615[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:51.616[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-6 - Shutdown initiated...
+-[2m2024-05-11 14:52:51.622[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-6 - Shutdown completed.
+-[2m2024-05-11 14:52:51.623[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+-[2m2024-05-11 14:52:51.635[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+-[2m2024-05-11 14:52:51.639[0;39m [31m-ERROR[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+-
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1418) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.2.jar:3.2.2]
+	at com.team9.manosarthi_backend.ManosarthiBackendApplication.main(ManosarthiBackendApplication.java:20) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.2.jar:3.2.2]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aws.access.key' in value "${aws.access.key}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:921) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.3.jar:6.1.3]
+	... 22 common frames omitted
+
+[2m2024-05-11 14:52:56.147[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m Starting ManosarthiBackendApplication using Java 17.0.10 with PID 15692 (/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend/target/classes started by nikhil in /home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend)
+-[2m2024-05-11 14:52:56.147[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+-[2m2024-05-11 14:52:56.708[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+-[2m2024-05-11 14:52:56.849[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 139 ms. Found 24 JPA repository interfaces.
+-[2m2024-05-11 14:52:57.201[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mptablePropertiesBeanFactoryPostProcessor[0;39m [2m:[0;39m Post-processing PropertySource instances
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+-[2m2024-05-11 14:52:57.202[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:57.203[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:52:57.294[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.filter.DefaultLazyPropertyFilter  [0;39m [2m:[0;39m Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+-[2m2024-05-11 14:52:57.298[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.r.DefaultLazyPropertyResolver     [0;39m [2m:[0;39m Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+-[2m2024-05-11 14:52:57.299[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.d.DefaultLazyPropertyDetector     [0;39m [2m:[0;39m Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+-[2m2024-05-11 14:52:57.412[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 9090 (http)
+-[2m2024-05-11 14:52:57.413[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+-[2m2024-05-11 14:52:57.413[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.18]
+-[2m2024-05-11 14:52:57.451[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat-4].[localhost].[/]    [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+-[2m2024-05-11 14:52:57.452[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1300 ms
+-[2m2024-05-11 14:52:57.628[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+-[2m2024-05-11 14:52:57.642[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+-[2m2024-05-11 14:52:57.663[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+-[2m2024-05-11 14:52:57.667[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-7 - Starting...
+-[2m2024-05-11 14:52:57.700[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@309e3ed7
+-[2m2024-05-11 14:52:57.701[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-7 - Start completed.
+-[2m2024-05-11 14:52:57.702[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+-[2m2024-05-11 14:52:57.702[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+-[2m2024-05-11 14:52:58.210[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+-[2m2024-05-11 14:52:58.511[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:58.917[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+-[2m2024-05-11 14:52:58.917[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:52:58.918[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-7 - Shutdown initiated...
+-[2m2024-05-11 14:52:58.922[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-7 - Shutdown completed.
+-[2m2024-05-11 14:52:58.923[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+-[2m2024-05-11 14:52:58.931[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+-[2m2024-05-11 14:52:58.933[0;39m [31m-ERROR[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+-
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1418) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.2.jar:3.2.2]
+	at com.team9.manosarthi_backend.ManosarthiBackendApplication.main(ManosarthiBackendApplication.java:20) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.2.jar:3.2.2]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aws.access.key' in value "${aws.access.key}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:921) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.3.jar:6.1.3]
+	... 22 common frames omitted
+
+[2m2024-05-11 14:53:04.397[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m Starting ManosarthiBackendApplication using Java 17.0.10 with PID 15692 (/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend/target/classes started by nikhil in /home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend)
+-[2m2024-05-11 14:53:04.397[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+-[2m2024-05-11 14:53:04.794[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+-[2m2024-05-11 14:53:04.848[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 53 ms. Found 24 JPA repository interfaces.
+-[2m2024-05-11 14:53:05.026[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mptablePropertiesBeanFactoryPostProcessor[0;39m [2m:[0;39m Post-processing PropertySource instances
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:53:05.027[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:53:05.103[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.filter.DefaultLazyPropertyFilter  [0;39m [2m:[0;39m Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+-[2m2024-05-11 14:53:05.111[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.r.DefaultLazyPropertyResolver     [0;39m [2m:[0;39m Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+-[2m2024-05-11 14:53:05.111[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.d.DefaultLazyPropertyDetector     [0;39m [2m:[0;39m Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+-[2m2024-05-11 14:53:05.224[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 9090 (http)
+-[2m2024-05-11 14:53:05.225[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+-[2m2024-05-11 14:53:05.226[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.18]
+-[2m2024-05-11 14:53:05.265[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat-5].[localhost].[/]    [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+-[2m2024-05-11 14:53:05.266[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 865 ms
+-[2m2024-05-11 14:53:05.399[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+-[2m2024-05-11 14:53:05.406[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+-[2m2024-05-11 14:53:05.414[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+-[2m2024-05-11 14:53:05.415[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-8 - Starting...
+-[2m2024-05-11 14:53:05.439[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@782e669e
+-[2m2024-05-11 14:53:05.440[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-8 - Start completed.
+-[2m2024-05-11 14:53:05.440[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+-[2m2024-05-11 14:53:05.440[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+-[2m2024-05-11 14:53:05.875[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+-[2m2024-05-11 14:53:06.212[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:53:06.645[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+-[2m2024-05-11 14:53:06.646[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:53:06.646[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-8 - Shutdown initiated...
+-[2m2024-05-11 14:53:06.655[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-8 - Shutdown completed.
+-[2m2024-05-11 14:53:06.657[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+-[2m2024-05-11 14:53:06.689[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+-[2m2024-05-11 14:53:06.696[0;39m [31m-ERROR[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+-
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1418) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.2.jar:3.2.2]
+	at com.team9.manosarthi_backend.ManosarthiBackendApplication.main(ManosarthiBackendApplication.java:20) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.2.jar:3.2.2]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aws.access.key' in value "${aws.access.key}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:921) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.3.jar:6.1.3]
+	... 22 common frames omitted
+
+[2m2024-05-11 14:53:12.172[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m Starting ManosarthiBackendApplication using Java 17.0.10 with PID 15692 (/home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend/target/classes started by nikhil in /home/nikhil/IIITB/SEM2/HAD/project/ManoSarthi/backend)
+-[2m2024-05-11 14:53:12.172[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.t.m.ManosarthiBackendApplication      [0;39m [2m:[0;39m No active profile set, falling back to 1 default profile: "default"
+-[2m2024-05-11 14:53:12.545[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+-[2m2024-05-11 14:53:12.604[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 59 ms. Found 24 JPA repository interfaces.
+-[2m2024-05-11 14:53:12.788[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mptablePropertiesBeanFactoryPostProcessor[0;39m [2m:[0;39m Post-processing PropertySource instances
+-[2m2024-05-11 14:53:12.788[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:53:12.789[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.EncryptablePropertySourceConverter[0;39m [2m:[0;39m Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+-[2m2024-05-11 14:53:12.901[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.filter.DefaultLazyPropertyFilter  [0;39m [2m:[0;39m Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+-[2m2024-05-11 14:53:12.908[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.r.DefaultLazyPropertyResolver     [0;39m [2m:[0;39m Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+-[2m2024-05-11 14:53:12.909[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mc.u.j.d.DefaultLazyPropertyDetector     [0;39m [2m:[0;39m Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+-[2m2024-05-11 14:53:13.102[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port 9090 (http)
+-[2m2024-05-11 14:53:13.103[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+-[2m2024-05-11 14:53:13.104[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardEngine   [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/10.1.18]
+-[2m2024-05-11 14:53:13.151[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat-6].[localhost].[/]    [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+-[2m2024-05-11 14:53:13.151[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 975 ms
+-[2m2024-05-11 14:53:13.280[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+-[2m2024-05-11 14:53:13.289[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.c.internal.RegionFactoryInitiator   [0;39m [2m:[0;39m HHH000026: Second-level cache disabled
+-[2m2024-05-11 14:53:13.299[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.o.j.p.SpringPersistenceUnitInfo     [0;39m [2m:[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+-[2m2024-05-11 14:53:13.301[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-9 - Starting...
+-[2m2024-05-11 14:53:13.329[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.pool.HikariPool       [0;39m [2m:[0;39m HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@50a1e634
+-[2m2024-05-11 14:53:13.330[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-9 - Start completed.
+-[2m2024-05-11 14:53:13.331[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+-[2m2024-05-11 14:53:13.331[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.hibernate.orm.deprecation           [0;39m [2m:[0;39m HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+-[2m2024-05-11 14:53:13.827[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+-[2m2024-05-11 14:53:14.058[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:53:14.382[0;39m [33m- WARN[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+-[2m2024-05-11 14:53:14.382[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+-[2m2024-05-11 14:53:14.382[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-9 - Shutdown initiated...
+-[2m2024-05-11 14:53:14.385[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-9 - Shutdown completed.
+-[2m2024-05-11 14:53:14.386[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Stopping service [Tomcat]
+-[2m2024-05-11 14:53:14.394[0;39m [32m- INFO[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.b.a.l.ConditionEvaluationReportLogger[0;39m [2m:[0;39m 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+-[2m2024-05-11 14:53:14.396[0;39m [31m-ERROR[0;39m [35m15692[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+-
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'awsConfiguration': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1418) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:959) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.2.jar:3.2.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.2.jar:3.2.2]
+	at com.team9.manosarthi_backend.ManosarthiBackendApplication.main(ManosarthiBackendApplication.java:20) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.2.jar:3.2.2]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aws.access.key' in value "${aws.access.key}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.3.jar:6.1.3]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:921) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.3.jar:6.1.3]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.3.jar:6.1.3]
+	... 22 common frames omitted
+

@@ -18,5 +18,6 @@ public class RegisterFollowUpDetailsDTO {
     private boolean referredDuringFollowUp;
     private String latitude;
     private String longitude;
+    private String image;
 
 }
