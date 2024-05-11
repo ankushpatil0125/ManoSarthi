@@ -3,7 +3,6 @@ package com.team9.manosarthi_backend.ServicesImpl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.team9.manosarthi_backend.Config.AesEncryptor;
-import com.team9.manosarthi_backend.DTO.PrescriptionDTO;
 import com.team9.manosarthi_backend.DTO.RegisterFollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Date;
@@ -42,7 +40,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     private FollowUpDetailsRepository followUpDetailsRepository;
 
-    private AbhaIdRepository abhaIdRepository;
+    private NotRefAbhaIdRepository abhaIdRepository;
 
     private AesEncryptor aesEncryptor;
 
@@ -272,7 +270,7 @@ public class WorkerServiceImpl implements WorkerService {
             Date requiredDate = Date.valueOf(LocalDate.now().plusDays(7));
 
             int villagecode=worker.get().getVillagecode().getCode();
-//            return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+            //followup schedule is from village code hence after reassigning of worker no problem
             return followUpScheduleRepository.findbyDateAndVill(requiredDate,villagecode);
 
         }
@@ -383,11 +381,12 @@ public class WorkerServiceImpl implements WorkerService {
                     missedFollowUp.setPatient(patient.get());
                     missedFollowUp.setFollowUpDate(followUpSchedule.getNextFollowUpDate());
                     missedFollowUp.setCompletedDate(Date.valueOf(LocalDate.now()));
-                    missedFollowUp.setWorker(worker.get());
+                    //add worker id of worker assigned to that followup
+                    missedFollowUp.setWorker(followUpSchedule.getWorker());
                     missedFollowUpRepository.save(missedFollowUp);
                 }
-
-
+                //add current worker id to updated followup schedule(this is useful when worker get reassigned)
+                followUpSchedule.setWorker(worker.get());
                 followUpSchedule.setFollowUpRemaining(followUpSchedule.getFollowUpRemaining() - 1);
                 if (followUpSchedule.getFollowUpRemaining() > 0) {
                     if (Objects.equals(followUpSchedule.getType(), "WEEKLY")) {

@@ -1,9 +1,6 @@
 package com.team9.manosarthi_backend.Controllers;
 
-import com.team9.manosarthi_backend.DTO.MissedFollowupsSupDTO;
-import com.team9.manosarthi_backend.DTO.VillageDetailsDTO;
-import com.team9.manosarthi_backend.DTO.WorkerResponseDTO;
-import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
+import com.team9.manosarthi_backend.DTO.*;
 import com.team9.manosarthi_backend.Entities.FollowUpSchedule;
 import com.team9.manosarthi_backend.Entities.Village;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -312,6 +309,34 @@ public class SupervisorRestController {
         catch (Exception ex)
         {
             throw new APIRequestException("Error while getting missed followups.",ex.getMessage());
+        }
+    }
+
+
+    @GetMapping("/get-worker-details/{village}")
+    public WorkerDetailsDTO getWorkerDetails(@RequestHeader("Authorization") String authorizationHeader,@PathVariable Integer village){
+
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                // Extract the token part after "Bearer "
+                String token = authorizationHeader.substring(7);
+                String userid = helper.getIDFromToken(token);
+                List<Worker> worker=workerRepository.findWorkerByVillage(village);
+                int workerid;
+                if(!worker.isEmpty())
+                    workerid=worker.get(0).getId();
+                else
+                    throw new APIRequestException("worker for given village not found");
+                return supervisorService.workerdetails(workerid,Integer.parseInt(userid));
+
+            }
+            else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new APIRequestException("Error while getting worker details.",ex.getMessage());
         }
     }
 }

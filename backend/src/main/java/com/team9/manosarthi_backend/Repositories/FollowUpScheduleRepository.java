@@ -20,4 +20,7 @@ public interface FollowUpScheduleRepository extends JpaRepository<FollowUpSchedu
 
     @Query("SELECT f from FollowUpSchedule f WHERE f.patient.patient_id=:patientID")
     Optional<FollowUpSchedule> findByPatientID(@Param("patientID") int patientID);
+
+    @Query("SELECT f FROM FollowUpSchedule f WHERE f.nextFollowUpDate <= :requiredDate AND f.worker.id = :workerid AND f.followUpRemaining>0")
+    List<FollowUpSchedule> findMissedByWorker(@Param("requiredDate") Date requiredDate,@Param("workerid")int workerid);
 }

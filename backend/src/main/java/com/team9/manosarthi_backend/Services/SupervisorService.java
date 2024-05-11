@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Services;
 
+import com.team9.manosarthi_backend.DTO.WorkerDetailsDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,10 @@ public interface SupervisorService {
     List<Worker> getVillWorker(int vilcode);
 
     Pair<Worker,Boolean> ReassignWorker(Worker updatedWorker);
+
+    Pair<Boolean,Boolean> DeleteWorker(Integer workerid);
+
+    WorkerDetailsDTO workerdetails(int workerid,int userid);
 
     List<List<FollowUpSchedule>> subdistMissedFollowup(int userid);
 

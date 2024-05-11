@@ -1,4 +1,5 @@
 package com.team9.manosarthi_backend.ServicesImpl;
+import com.team9.manosarthi_backend.DTO.AdminDashboardDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
@@ -37,6 +38,8 @@ public class AdminServiceImpl implements AdminService {
     private PrescriptionRepository prescriptionRepository;
 
     private DiseaseRepository diseaseRepository;
+
+    private NotRefAbhaIdRepository notRefAbhaIdRepository;
 
     @Override
     public Doctor adddoctor(Doctor doctor) {
@@ -315,6 +318,7 @@ public class AdminServiceImpl implements AdminService {
             return medicalQueRepo.saveAll(medicalque);
         }
 
+        /*
         @Override
         public List<Object[]> getdistrictstat()
         {
@@ -325,5 +329,19 @@ public class AdminServiceImpl implements AdminService {
         public List<Object[]> getdiseasecount(){
            return diseaseRepository.getDiseaseAndCount();
         }
-
+*/
+        @Override
+        public AdminDashboardDTO dashboard()
+        {
+            AdminDashboardDTO adminDashboardDTO=new AdminDashboardDTO();
+            int RefferedCount= patientRepository.getTotalPatientCount();
+            int NonRefferedCount= notRefAbhaIdRepository.getTotalNonRefCount();
+            int TotalSurveys=RefferedCount+NonRefferedCount;
+            adminDashboardDTO.setRefferedCount(RefferedCount);
+            adminDashboardDTO.setNonRefferedCount(NonRefferedCount);
+            adminDashboardDTO.setTotalSurveysTaken(TotalSurveys);
+            adminDashboardDTO.setDiseaseStats(diseaseRepository.getDiseaseAndCount());
+            adminDashboardDTO.setDistrictStats(patientRepository.patientCountForDistrict());
+            return adminDashboardDTO;
+        }
 }

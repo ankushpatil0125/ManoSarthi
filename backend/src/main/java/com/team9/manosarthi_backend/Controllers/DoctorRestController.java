@@ -31,13 +31,11 @@ import java.util.*;
 
 @EnableTransactionManagement
 public class DoctorRestController {
-    DoctorRepository doctorRepository;
     DoctorService doctorService;
     private JwtHelper helper;
 
     @Autowired
-    public DoctorRestController(DoctorRepository doctorRepository, DoctorService doctorService, JwtHelper helper) {
-        this.doctorRepository = doctorRepository;
+    public DoctorRestController(DoctorService doctorService, JwtHelper helper) {
         this.doctorService = doctorService;
         this.helper = helper;
     }

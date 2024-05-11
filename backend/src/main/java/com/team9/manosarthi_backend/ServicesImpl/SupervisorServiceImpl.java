@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
+import com.team9.manosarthi_backend.DTO.WorkerDetailsDTO;
 import com.team9.manosarthi_backend.Entities.*;
 
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
@@ -22,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.tuple.Pair;
+
+
 @Service
 @AllArgsConstructor
 public class SupervisorServiceImpl implements SupervisorService {
@@ -31,6 +34,7 @@ public class SupervisorServiceImpl implements SupervisorService {
     private VillageRepository villageRepository;
     private SupervisorRepository supervisorRepository;
     private FollowUpScheduleRepository followUpScheduleRepository;
+    private MissedFollowUpRepository missedFollowUpRepository;
 
     @Override
     public Supervisor viewProfile(int id) {
@@ -208,5 +212,59 @@ public class SupervisorServiceImpl implements SupervisorService {
         } else {
             throw new APIRequestException("Supervisor not found");
         }
+    }
+
+    @Override
+    public WorkerDetailsDTO workerdetails(int workerid,int userid)
+    {
+
+        Optional<Supervisor> supervisor = supervisorRepository.findById(userid);
+        Optional<Worker> worker=workerRepository.findById(workerid);
+        if(worker.get().getVillagecode().getSubDistrict().getCode()==supervisor.get().getSubdistrictcode().getCode()) {
+            //worker has 3 days time period of syncing.
+            // after that period also date is not changed to next followup date show that as missed followup to supervisor
+            Date requiredDate = Date.valueOf(LocalDate.now().minusDays(3));
+            //finding current missed followups
+            List<FollowUpSchedule> currfollowupsmissed = followUpScheduleRepository.findMissedByWorker(requiredDate, userid);
+            int currentmissedcount = currfollowupsmissed.size();
+
+            WorkerDetailsDTO workerDetailsDTO = new WorkerDetailsDTO();
+            workerDetailsDTO.setWorkerId(workerid);
+            workerDetailsDTO.setWorkerName(worker.get().getFirstname() + " " + worker.get().getLastname());
+            workerDetailsDTO.setWorkerEmail(worker.get().getEmail());
+            String currvill = worker.get().getVillagecode().getName();
+            workerDetailsDTO.setCurrentMissedFollowupsCounts(Pair.of(currvill, currentmissedcount));
+            //finding prev missed followups count
+            List<Object[]> prevfollowupsmissed = missedFollowUpRepository.findByWorker(workerid);
+            List<Pair<String, Integer>> prevFollMissCount = new ArrayList<>();
+            int prevmissedcount=0;
+            for (Object[] missFoll : prevfollowupsmissed) {
+
+                String villageCode = (String) missFoll[0]; // village code is at index 0
+                Integer count = (Integer) missFoll[1]; // count is at index 1
+                prevFollMissCount.add(Pair.of(villageCode, count)); // Construct pair and add to list
+                prevmissedcount+=count;
+            }
+            workerDetailsDTO.setPrevMissedFollowupsCounts(prevFollMissCount);
+            //Total missed followup count
+            int totalmissedcount=prevmissedcount+currentmissedcount;
+            workerDetailsDTO.setTotalmissedcount(totalmissedcount);
+            //current missed followups
+            workerDetailsDTO.setCurrentMissedFollowups(currfollowupsmissed);
+            //previous missed followup
+            
+            return workerDetailsDTO;
+        }
+        else {
+            throw new APIRequestException("worker and supervisor subdistrict not matches");
+        }
+    }
+
+    @Override
+    public Pair<Boolean,Boolean> DeleteWorker(Integer workerid)
+    {
+        Boolean NeedtoAssign=false;
+//        Worker worker=workerRepository.findById(workerid);
+        return Pair.of(false,false);
     }
 }
