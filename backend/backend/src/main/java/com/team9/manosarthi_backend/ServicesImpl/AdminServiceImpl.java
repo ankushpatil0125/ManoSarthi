@@ -4,6 +4,7 @@ import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.Services.AdminService;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -342,6 +344,16 @@ public class AdminServiceImpl implements AdminService {
             adminDashboardDTO.setTotalSurveysTaken(TotalSurveys);
             adminDashboardDTO.setDiseaseStats(diseaseRepository.getDiseaseAndCount());
             adminDashboardDTO.setDistrictStats(patientRepository.patientCountForDistrict());
+            List<Pair<Integer,Integer>> AgeRangeCount=new ArrayList<>();
+            int Age1C= patientRepository.countPatientsInAgeRange(1,20);
+            AgeRangeCount.add(Pair.of(1,Age1C));
+            int Age2C= patientRepository.countPatientsInAgeRange(20,40);
+            AgeRangeCount.add(Pair.of(2,Age2C));
+            int Age3C= patientRepository.countPatientsInAgeRange(40,60);
+            AgeRangeCount.add(Pair.of(3,Age3C));
+            int Age4C= patientRepository.countPatientsInAgeRange(60,100);
+            AgeRangeCount.add(Pair.of(4,Age4C));
+            adminDashboardDTO.setAgeStats(AgeRangeCount);
             return adminDashboardDTO;
         }
 }
