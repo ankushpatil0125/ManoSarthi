@@ -5,3 +5,5 @@ export const getToken = () => {
 export const getUserId = () => {
   return localStorage.getItem("User_Id");
 };
+
+//--> /admin/dashboard

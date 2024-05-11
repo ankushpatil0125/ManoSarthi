@@ -32,12 +32,10 @@ const AddDoctorComponent = () => {
       setEmailError("Email must contain '@'");
       return false;
     }
-
     if (dotIndex === -1 || dotIndex < atIndex) {
       setEmailError("Invalid email format");
       return false;
     }
-
     setEmailError(""); // Clear error if email format is correct
     return true;
   };
@@ -62,7 +60,6 @@ const AddDoctorComponent = () => {
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
-
     // Fetch subdistrict options based on selected district
     setLoading(true);
     AdminService.getSubDistrict(selectedDistrict, actor, false)

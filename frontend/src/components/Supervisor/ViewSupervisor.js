@@ -295,7 +295,6 @@ import LoadingComponent from "../Loading/LoadingComponent";
 
 const ViewSupervisor = ({ district, subdistrictcode, action, actor }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  // const [currentPageSupervisor, setCurrentPageSupervisor] = useState(0);
   const [subDistrictOptions, setSubDistrictOptions] = useState([]);
   const [districtOptions, setDistrictOptions] = useState([]);
 
