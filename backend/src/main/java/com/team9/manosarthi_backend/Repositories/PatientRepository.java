@@ -35,4 +35,6 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     @Query(value="SELECT count(p) from Patient p")
     Integer getTotalPatientCount();
 
+    @Query("select p from Patient p where p.doctor.id=:doctorID")
+    List<Patient> findByDoctorID(@Param("doctorID") int doctorID);
 }

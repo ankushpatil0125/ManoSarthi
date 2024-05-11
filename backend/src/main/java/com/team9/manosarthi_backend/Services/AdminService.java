@@ -20,7 +20,7 @@ public interface AdminService  {
     List<Doctor> viewAllDoctor(int pagenumber,int pagesize);
     List<Doctor> viewDoctorByDistrict(int districtcode, int pagenumber, int pagesize);
     List<Doctor> viewDoctorBySubDistrict(int subdistrictcode);
-    Doctor reassignDoctor(int doctorID,int oldSubDistrict,int newSubDistrict);
+    Doctor reassignDoctor(int doctorID,int oldSubDistrictCode,int newSubDistrictCode);
 
     Supervisor ReassignSupervisor(Supervisor updatedSupervisor);
     List<Questionarrie> addQuestionarrie(List<Questionarrie> questionarrie);
