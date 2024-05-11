@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Services;
 
+import com.team9.manosarthi_backend.DTO.FollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
 import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.FollowUpDetails;
@@ -20,7 +21,7 @@ public interface DoctorService {
 
     Prescription givePrescription(PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO);
 
-    List<FollowUpDetails> getFollowups(int pagenumber, int pagesize, int doctorId, int patientId);
+    List<FollowUpDetailsDTO> getFollowups(int pagenumber, int pagesize, int doctorId, int patientId);
 
     //to get the Referred patient during followup
     List<Patient> getReferredPatient(int doctorId,int pagenumber, int pagesize);

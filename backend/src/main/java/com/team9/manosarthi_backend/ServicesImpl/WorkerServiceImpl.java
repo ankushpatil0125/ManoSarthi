@@ -95,7 +95,7 @@ public class WorkerServiceImpl implements WorkerService {
     public Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
 
         Optional<Worker> worker =workerRepository.findById(workerId);
-        System.out.println("RegisterPatient DTO"+ registerPatientDTO);
+        System.out.println("RegisterPatient ");
 
 
         if (worker.isPresent())
@@ -149,32 +149,35 @@ public class WorkerServiceImpl implements WorkerService {
                 System.out.println("medicalQueAnsRepo"+medicalQueAnsRepo.save(medicalQueAns));
             }
             //consent image save
-//            PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(patient.getPatient_id()),registerPatientDTO.getConsentImage());
-//            System.out.println("putObjectResult register patient "+putObjectResult);     //patient info image
-            if(!registerPatientDTO.getImage().equals("-1"))
+            if (!registerPatientDTO.getConsentImage().isEmpty() && !registerPatientDTO.getConsentImage().equals("-1"))
             {
-                PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(newFollowUpDetails.getId()),registerPatientDTO.getImage());
-                newFollowUpDetails.setImage(String.valueOf(newFollowUpDetails.getId()));
+                try {
+                    System.out.println("in consent image");
+                    PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(patient.getPatient_id()),registerPatientDTO.getConsentImage());
+                    System.out.println(" after image upload");
+                    System.out.println("putObjectResult register patient "+putObjectResult);     //patient info image
+
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+            else throw new APIRequestException("Consent image not sent");
+
+            //patient info image
+            if(!registerPatientDTO.getImage().equals("-1") && !registerPatientDTO.getImage().isEmpty())
+            {
+                System.out.println("follow up upload image");
+                PutObjectResult putObjectResult1 = amazonS3.putObject("manosarthi", patient.getPatient_id() +"_"+ newFollowUpDetails.getId(),registerPatientDTO.getImage());
+                newFollowUpDetails.setImage(patient.getPatient_id() +"_"+ newFollowUpDetails.getId());
                 followUpDetailsRepository.save(newFollowUpDetails);
-                System.out.println("putObjectResult register patient "+putObjectResult);
+                System.out.println("putObjectResult register patient "+putObjectResult1);
             }
             else {
                 newFollowUpDetails.setImage("-1");
                 followUpDetailsRepository.save(newFollowUpDetails);
             }
-
-//            //patient info image
-//            if(!registerPatientDTO.getImage().equals("-1"))
-//            {
-//                PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(newFollowUpDetails.getId()),registerPatientDTO.getImage());
-//                newFollowUpDetails.setImage(String.valueOf(newFollowUpDetails.getId()));
-//                followUpDetailsRepository.save(newFollowUpDetails);
-//                System.out.println("putObjectResult register patient "+putObjectResult);
-//            }
-//            else {
-//                newFollowUpDetails.setImage("-1");
-//                followUpDetailsRepository.save(newFollowUpDetails);
-//            }
 
 
 
@@ -407,12 +410,13 @@ public class WorkerServiceImpl implements WorkerService {
 
 
             // save image
-            if(!registerFollowUpDetailsDTO.getImage().equals("-1"))
+            if(!registerFollowUpDetailsDTO.getImage().equals("-1") && !registerFollowUpDetailsDTO.getImage().isEmpty())
             {
-                PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(newFollowUpDetails.getId()),registerFollowUpDetailsDTO.getImage());
-                newFollowUpDetails.setImage(String.valueOf(newFollowUpDetails.getId()));
+                System.out.println("follow up upload image");
+                PutObjectResult putObjectResult1 = amazonS3.putObject("manosarthi", patient.get().getPatient_id() +"_"+ newFollowUpDetails.getId(),registerFollowUpDetailsDTO.getImage());
+                newFollowUpDetails.setImage(patient.get().getPatient_id() +"_"+ newFollowUpDetails.getId());
                 followUpDetailsRepository.save(newFollowUpDetails);
-                System.out.println("putObjectResult register patient "+putObjectResult);
+                System.out.println("putObjectResult register patient "+putObjectResult1);
             }
             else {
                 newFollowUpDetails.setImage("-1");

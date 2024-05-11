@@ -1,5 +1,8 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.team9.manosarthi_backend.DTO.FollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
 import com.team9.manosarthi_backend.Entities.*;
@@ -7,9 +10,12 @@ import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.Services.DoctorService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -33,6 +39,7 @@ public class DoctorServiceImpl implements DoctorService {
     private FollowUpScheduleRepository followUpScheduleRepository;
     private DiseaseRepository diseaseRepository;
     private WorkerRepository workerRepository;
+    private AmazonS3 amazonS3;
 
 
     @Override
@@ -267,10 +274,40 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<FollowUpDetails> getFollowups(int pagenumber,int pagesize,int doctorId, int patientId) {
+    public List<FollowUpDetailsDTO> getFollowups(int pagenumber,int pagesize,int doctorId, int patientId) {
         Pageable pageable = PageRequest.of(pagenumber,pagesize);
         Page<FollowUpDetails> followups= followUpDetailsRepository.findFollowUpDetailsByDoctorAndPatient(patientId,doctorId,pageable);
-        return followups.getContent();
+
+        List<FollowUpDetailsDTO> followupDTOList=new ArrayList<>();
+        for(FollowUpDetails followup:followups)
+        {
+            FollowUpDetailsDTO followUpDetailsDTO=new FollowUpDetailsDTO();
+
+            if(!followup.getImage().isEmpty() && !followup.getImage().equals("-1"))
+            {
+                System.out.println("in follow up image "+followup.getImage());
+                String res = amazonS3.getObjectAsString("manosarthi",followup.getImage());
+//                S3Object s3Object= amazonS3.getObject("manosarthi",followup.getImage());
+//                S3ObjectInputStream content = s3Object.getObjectContent();
+//                System.out.println("content"+content.readAllBytes());
+                System.out.println("image fetched");
+//                System.out.println("res" + res);
+                followUpDetailsDTO.setFollowUpImage(res);
+//                try {
+//
+//                    followUpDetailsDTO.setFollowUpImage(new InputStreamResource(content));
+//                }
+//                catch (Exception e){
+//                    System.out.println(e.getMessage());
+//                    throw new RuntimeException(e);
+//                }
+            }
+
+            followUpDetailsDTO.followup(followup);
+            followupDTOList.add(followUpDetailsDTO);
+        }
+//        return followups.getContent();
+        return followupDTOList;
     }
 
     @Override
