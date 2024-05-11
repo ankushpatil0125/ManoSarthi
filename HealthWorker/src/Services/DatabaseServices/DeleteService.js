@@ -6,7 +6,7 @@ const DeleteService = {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          "DELETE FROM AabhaIdInfo",
+          "DELETE FROM AabhaIdInfo WHERE status = 'old'",
           [],
           (_, { rowsAffected }) => {
             resolve(rowsAffected + " Rows Deleted From AabhaIdTable");
@@ -18,6 +18,7 @@ const DeleteService = {
       });
     });
   },
+
   deleteFollowUpTable: () => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -261,7 +262,6 @@ const DeleteService = {
       });
     });
   },
-  
 };
 
 export default DeleteService;

@@ -184,9 +184,7 @@ const PatientDetailsScreen = ({ navigation }) => {
           placeholder="Enter last name"
         />
 
-        <Text style={styles.label}>
-          Email:
-        </Text>
+        <Text style={styles.label}>Email:</Text>
         <TextInput
           style={styles.input}
           value={email}
@@ -268,9 +266,7 @@ const PatientDetailsScreen = ({ navigation }) => {
         <Button
           title="Submit"
           onPress={handleSubmit}
-          disabled={
-            !firstName || !lastName || !gender || !age || !address
-          }
+          disabled={!firstName || !lastName || !gender || !age || !address}
         />
       </ScrollView>
     </KeyboardAvoidingView>

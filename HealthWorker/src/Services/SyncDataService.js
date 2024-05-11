@@ -4,17 +4,18 @@ import InsertService from "../Services/DatabaseServices/InsertService";
 import RegisterPatientService from "./RegisterPatientService";
 import { Alert } from "react-native";
 import FollowupService from "./FollowupService";
+import UpdateService from "./DatabaseServices/UpdateService";
+import AabhaService from "./AabhaService";
 
 let v = 0;
 const SyncDataService = {
-  
   registrationData: async () => {
     try {
       // console.log("Hello");
       const patients = await SelectService.getAllPatients();
 
       for (const patient of patients) {
-        // console.log("Status: ",patient.status);
+        // console.log("Status: ", patient.status);
         if (patient.status === "1") {
           const SurveyQuestionAnswerData =
             await SelectService.getAllSurveyQuestionAnswersByAabhaId(
@@ -51,7 +52,7 @@ const SyncDataService = {
           // console.log("sendMedicalHistoryAnswers", sendMedicalHistoryAnswers);
           // console.log("SurveyQuestionAnswerData: ", SurveyQuestionAnswerData);
           // console.log("MedicalHistoryAnswersData: ", MedicalHistoryAnswersData);
-
+          console.log("Hiiiiiiiiii");
           const patientData = {
             patient: {
               aabhaId: patient.aabhaId,
@@ -64,6 +65,8 @@ const SyncDataService = {
             },
             questionarrieAnsList: sendSurvevyQuestion,
             medicalQueAnsList: sendMedicalHistoryAnswers,
+            consentImage: patient.imageData,
+            image: patient.image,
           };
           console.log("patient data", patientData);
           try {
@@ -121,10 +124,10 @@ const SyncDataService = {
     // const [list, SetList] = useState([]);
 
     console.log("Inside Followup Sync:");
-   
+
     const followpatients = await SelectService.selectFollowUpReferNotRefer();
     console.log("Sync Service:followpatients: ", followpatients);
-    const lst = [];
+    // const lst = [];
     for (const followup of followpatients) {
       let status = followup.status === 1 ? "true" : "false";
       const followupQNA =
@@ -153,16 +156,16 @@ const SyncDataService = {
         referredDuringFollowUp: status,
         latitude: followup.latitude,
         longitude: followup.longitude,
+        image: followup.img,
       };
 
       console.log("Data Send To Server For Followup: ", dataToSend);
-
 
       try {
         const response = await FollowupService.addPatientFollowup(dataToSend);
         console.log("Response : ", response.data);
 
-        if (response.data != -1) {
+        if (response.data != -1 && response.data != -2) {
           console.log(`Followup with added successfully`);
 
           const status1 = await DeleteService.deleteFollowupReferNotReferByPID(
@@ -179,11 +182,24 @@ const SyncDataService = {
             response.data
           );
           console.log("FollowUpQuestionAnswer Status ", status3);
-        } else {
-          lst.push(followup.patientId);
+        } else if (response.data == -1) {
+          // lst.push(followup.patientId);
           console.error("Failed to add patient");
           Alert.alert("Failed to sync data");
-          console.log(lst[0]);
+          const res = await UpdateService.updateFollowUpScheduleStatus(
+            followup.patientId,
+            "Sync Failed(Wrong Location)"
+          );
+          // console.log(lst[0]);
+        } else if (response.data == -2) {
+          // lst.push(followup.patientId);
+          console.error("Failed to add patient");
+          Alert.alert("Failed to sync data");
+          const res = await UpdateService.updateFollowUpScheduleStatus(
+            followup.patientId,
+            "Early FollowUp"
+          );
+          // console.log(lst[0]);
         }
       } catch (error) {
         console.error("Error during adding patient:", error.data);
@@ -191,7 +207,36 @@ const SyncDataService = {
       }
     }
     // SetList(lst);
+  },
 
+  newAabhaData: async () => {
+    // const [list, SetList] = useState([]);
+
+    console.log("Inside AabhaData Sync:");
+
+    const aabhadata = await SelectService.getAllAabhaIdInfo();
+    console.log("Sync Service:Aabha Data: ", aabhadata);
+    // const lst = [];
+    const sendAabhaData = [];
+    for (const abhaId of aabhadata) {
+      if (abhaId.status == "new") {
+        sendAabhaData.push(abhaId.aabhaId);
+      }
+    }
+
+    console.log("Data Send To Server For Followup: ", sendAabhaData);
+
+    try {
+      const response = await AabhaService.sendNotReferedAabhaData(
+        sendAabhaData
+      );
+      console.log("Response : ", response.data);
+    } catch (error) {
+      console.error("Error during sending aabhaId data:", error.data);
+      Alert.alert("Failed to sync data");
+    }
+
+    // SetList(lst);
   },
 };
 export default SyncDataService;

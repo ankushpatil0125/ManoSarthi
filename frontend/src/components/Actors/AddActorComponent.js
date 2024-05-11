@@ -131,7 +131,7 @@ const AddDoctorComponent = () => {
         if (response) {
           // Handle successful password change, e.g., display a success message
           console.log("Add doctor response: ", response)
-          alert(`Doctor with name ${response?.firstname} Added Successfully`);
+          alert(`Doctor with name ${response?.data?.firstname} Added Successfully`);
           window.location.reload();
           // navigate("/admin-home");
           setLoading(false);
@@ -144,7 +144,7 @@ const AddDoctorComponent = () => {
         if (response) {
           // Handle successful password change, e.g., display a success message
           alert(
-            `Supervisor with name ${response?.firstname} Added Successfully`
+            `Supervisor with name ${response?.data?.firstname} Added Successfully`
           );
           window.location.reload();
           // navigate("/admin-home");

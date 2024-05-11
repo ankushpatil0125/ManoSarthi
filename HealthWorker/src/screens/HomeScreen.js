@@ -13,11 +13,12 @@ import { DataTable, Card, Title } from "react-native-paper";
 import { ScrollView } from "react-native";
 import i18n from "../../i18n";
 import { useLanguageContext } from "../context/LanguageProvider";
+import Icon from "react-native-vector-icons/FontAwesome"; // Example: using FontAwesome icons
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
   const [folloupSch, setFolloupSch] = useState([]);
   const languageContext = useLanguageContext(); // Accessing the entire language context
-
+  const { nav } = route.params || {};
   const fetchDataFromDatabase = async () => {
     try {
       const patient_data = await SelectService.getAllPatients();
@@ -92,6 +93,18 @@ const HomeScreen = ({ navigation }) => {
     // Navigate or perform action for missed followup
     navigation.navigate("MissedFollowupScreen", { ftype: "Missed" });
   };
+  const handleRefresh = async () => {
+    try {
+      const data = await SelectService.getFollowUpSchedule();
+      setFolloupSch(data);
+      console.log("[HomeScreen]Follow-Up Schedule Need To Render: ", data);
+    } catch (error) {
+      console.error("Error fetching data from database:", error);
+    }
+  };
+  useEffect(() => {
+    fetchFollowUpScedule();
+  }, [nav]);
   const handleCompleteFollowUp = (age, pid) => {
     navigation.navigate("QuestionnaireScreen", { type: "followup", age, pid });
   };
@@ -119,7 +132,19 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.container}>
           <Card style={styles.card}>
             <Card.Content>
-              <Title style={styles.title}>{i18n.t("Follow-up Schedule")}</Title>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 10,
+                }}
+              >
+                <Title style={styles.title}>
+                  {i18n.t("Follow-up Schedule")}
+                </Title>
+                <Button title="Refresh" onPress={() => handleRefresh()} />
+              </View>
 
               <DataTable>
                 <DataTable.Header style={styles.head}>
@@ -130,8 +155,8 @@ const HomeScreen = ({ navigation }) => {
                   <DataTable.Title>Follow-Up Date</DataTable.Title>
                   <DataTable.Title>Age</DataTable.Title>
                   <DataTable.Title>Follow-Up Type</DataTable.Title>
-                  <DataTable.Title>Action</DataTable.Title>
                   <DataTable.Title>Status</DataTable.Title>
+                  <DataTable.Title>Action</DataTable.Title>
                 </DataTable.Header>
                 {folloupSch
                   .filter((item) => item.type === "Normal")
@@ -144,7 +169,19 @@ const HomeScreen = ({ navigation }) => {
                       <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
                       <DataTable.Cell>{item.age}</DataTable.Cell>
                       <DataTable.Cell>{item.type}</DataTable.Cell>
-                      <DataTable.Cell>Pending</DataTable.Cell>
+                      {/* <DataTable.Cell>{item.status}</DataTable.Cell> */}
+                      <DataTable.Cell>
+                        {item.status === "Pending" && (
+                          <Icon name="exclamation" size={20} color="orange" />
+                        )}
+                        {item.status === "Completed" && (
+                          <Icon name="check" size={20} color="green" />
+                        )}
+                        {!(
+                          item.status === "Pending" ||
+                          item.status === "Completed"
+                        ) && <Icon name="times" size={20} color="red" />}
+                      </DataTable.Cell>
 
                       <DataTable.Cell>
                         <Button

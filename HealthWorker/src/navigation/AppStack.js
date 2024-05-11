@@ -9,7 +9,6 @@ import { AntDesign } from "@expo/vector-icons";
 // import TabNavigation from "./TabNavigation";
 import StackNavigator from "./StackNavigator";
 import PrescriptionScreen from "../screens/PrescriptionScreen";
-import ProfileStackScreen from "./ProfileStackScreen";
 import { LanguageProvider } from "../context/LanguageProvider";
 const Drawer = createDrawerNavigator();
 const AppStack = () => {

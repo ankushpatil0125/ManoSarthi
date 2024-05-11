@@ -71,7 +71,8 @@ const CreateService = {
             patient_adress TEXT,
             followUpDate TEXT,
             age INTEGER,
-            type TEXT
+            type TEXT,
+            status TEXT
             );`,
           [],
           (_, result) => {
@@ -83,6 +84,33 @@ const CreateService = {
           },
           (_, error) => {
             reject("Error creating FollowUpSchedule table: " + error);
+          }
+        );
+      });
+    });
+  },
+
+  createFollowUpReferNotReferTable: () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `CREATE TABLE IF NOT EXISTS followupReferNotRefer (
+            patientId INTEGER PRIMARY KEY,
+            status BOOLEAN DEFAULT 0,
+            latitude TEXT DEFAULT NULL,
+            longitude TEXT DEFAULT NULL,
+            img TEXT DEFAULT "-1"
+          );`,
+          [],
+          (_, result) => {
+            if (result.rowsAffected > 0) {
+              resolve("followupReferNotRefer table created successfully");
+            } else {
+              resolve("followupReferNotRefer table already exists");
+            }
+          },
+          (_, error) => {
+            reject("Error creating followupReferNotRefer table: " + error);
           }
         );
       });
@@ -140,7 +168,9 @@ const CreateService = {
             gender TEXT,
             age INTEGER,
             address TEXT,
-            status TEXT DEFAULT "0" NOT NULL
+            status TEXT DEFAULT "0" NOT NULL,
+            imageData TEXT DEFAULT "-1",
+            image TEXT DEFAULT "-1"
           );`,
           [],
           (_, result) => {
@@ -180,31 +210,6 @@ const CreateService = {
           },
           (_, error) => {
             reject("Error creating SurveyQuestion table: " + error);
-          }
-        );
-      });
-    });
-  },
-
-  createFollowUpReferNotReferTable: () => {
-    return new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        tx.executeSql(
-          `CREATE TABLE IF NOT EXISTS followupReferNotRefer (
-            patientId INTEGER PRIMARY KEY,
-            status BOOLEAN DEFAULT 0,
-            latitude TEXT DEFAULT NULL,
-            longitude TEXT DEFAULT NULL);`,
-          [],
-          (_, result) => {
-            if (result.rowsAffected > 0) {
-              resolve("followupReferNotRefer table created successfully");
-            } else {
-              resolve("followupReferNotRefer table already exists");
-            }
-          },
-          (_, error) => {
-            reject("Error creating followupReferNotRefer table: " + error);
           }
         );
       });

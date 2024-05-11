@@ -39,34 +39,8 @@ const RegisterPatientScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchDataFromDatabase();
-    getLocationFromStorage();
-    removeLocationFromStorage();
   }, []);
 
-  const removeLocationFromStorage = async () => {
-    try {
-      await AsyncStorage.removeItem("currentLocation");
-      console.log("Location removed from AsyncStorage.");
-    } catch (error) {
-      console.error("Error removing location from AsyncStorage:", error);
-    }
-  };
-  const getLocationFromStorage = async () => {
-    try {
-      const jsonLocation = await AsyncStorage.getItem("currentLocation");
-      if (jsonLocation !== null) {
-        const location = JSON.parse(jsonLocation);
-        console.log("Location from AsyncStorage:", location);
-        return location;
-      } else {
-        console.log("No location data found in AsyncStorage.");
-        return null;
-      }
-    } catch (error) {
-      console.error("Error getting location from AsyncStorage:", error);
-      return null;
-    }
-  };
   const handleRegister = () => {
     if (abhaId.trim() === "") {
       Alert.alert("Error", "Please enter ABHA ID");

@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Button,
+  Image,
 } from "react-native";
 import "../Services/SurveyQuestionsService";
 import SelectService from "../Services/DatabaseServices/SelectService";
@@ -13,6 +15,7 @@ import PatientContext from "../context/PatientContext"; // Import PatientContext
 import InsertService from "../Services/DatabaseServices/InsertService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import UpdateService from "../Services/DatabaseServices/UpdateService";
+import * as ImagePicker from "expo-image-picker";
 
 const QuestionnaireScreen = ({ navigation, route }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
@@ -20,6 +23,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
   // State to hold the answers for each question
   const [answers, setAnswers] = useState([]);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+  const [selectedImage, setSelectedImage] = useState(null); // Changed initial value to null
 
   const fetchPatientDataFromDatabase = async () => {
     try {
@@ -188,6 +192,29 @@ const QuestionnaireScreen = ({ navigation, route }) => {
     return unmatchedCount;
   };
 
+  const takePicture = async () => {
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        // Check if image was not cancelled
+        setSelectedImage(result?.assets[0]?.base64); // Update selected image state
+        const resUpdate = await UpdateService.updatePatientFollowupImage(
+          result?.assets[0]?.base64,
+          pid
+        );
+        console.log("resUpdate", resUpdate);
+      }
+    } catch (error) {
+      console.log("Error taking picture:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -217,6 +244,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
           </View>
         ))}
       </ScrollView>
+
       <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>

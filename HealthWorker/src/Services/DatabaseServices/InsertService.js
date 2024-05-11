@@ -8,7 +8,7 @@ const InsertService = {
       db.transaction((tx) => {
         AabhaIdInfo.forEach((aabha) => {
           tx.executeSql(
-            "INSERT INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
+            "INSERT OR REPLACE INTO AabhaIdInfo (aabhaId,status) VALUES (?, ?)",
             [aabha, status],
             (_, { rowsAffected }) => {
               if (rowsAffected > 0) {
@@ -34,7 +34,7 @@ const InsertService = {
       db.transaction((tx) => {
         followUpScheduleList.forEach((followUpSchedule) => {
           tx.executeSql(
-            "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO FollowUpSchedule (patientId, patient_fname, patient_lname, patient_adress,followUpDate,age,type,status) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')",
             [
               followUpSchedule.patientID,
               followUpSchedule.patient_fname,
