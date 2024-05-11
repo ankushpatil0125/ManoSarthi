@@ -131,7 +131,7 @@ const AddDoctorComponent = () => {
         if (response) {
           // Handle successful password change, e.g., display a success message
           console.log("Add doctor response: ", response)
-          alert(`Doctor with name ${response?.firstname} Added Successfully`);
+          alert(`Doctor with name ${response?.data?.firstname} Added Successfully`);
           window.location.reload();
           // navigate("/admin-home");
           setLoading(false);
@@ -144,7 +144,7 @@ const AddDoctorComponent = () => {
         if (response) {
           // Handle successful password change, e.g., display a success message
           alert(
-            `Supervisor with name ${response?.firstname} Added Successfully`
+            `Supervisor with name ${response?.data?.firstname} Added Successfully`
           );
           window.location.reload();
           // navigate("/admin-home");
@@ -339,7 +339,7 @@ const AddDoctorComponent = () => {
 
           <button
             type="submit"
-            className="bg-violet-500 w-full text-white mt-4 px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            className="bg-[#6467c0]-500 w-full text-white mt-4 px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
             {t("addDoctorSupervisor.ADD")}
           </button>

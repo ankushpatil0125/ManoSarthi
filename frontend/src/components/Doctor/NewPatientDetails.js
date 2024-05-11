@@ -32,6 +32,7 @@ const PatientDetails = () => {
   const [followUpDetails, setFollowUpDetails] = useState([]);
   // const [medicalQuesAns, setMedicalQuesAns] = useState([]);
   // setMedicalQuesAns(data?.medicalQuesAnsList)
+  const [base64Image, setBase64Image] = useState('');
   useEffect(() => {
     const handlePatientDetails = async () => {
       try {
@@ -92,11 +93,20 @@ const PatientDetails = () => {
                     <div className="bg-[#e0e0eb] rounded-lg p-4 my-2">
                       {data?.medicalQueAnsList?.map((medical, index) => (
                         <p key={index} className="">
-                          {index + 1}. {medical?.medicalquest?.question} -{" "}
+                          {index + 1}. {medical?.medicalquest?.question}
                           {medical?.question_ans}
                         </p>
                       ))}
                     </div>
+                    <div>
+      {base64Image && (
+        <img
+          src={`data:image/png;base64,${base64Image}`} // Assuming the image format is PNG
+          alt="Fetched Image"
+          style={{ width: '100%', maxWidth: '500px', maxHeight: '500px' }}
+        />
+      )}
+    </div>
                   </div>
                 </div>
               </section>
