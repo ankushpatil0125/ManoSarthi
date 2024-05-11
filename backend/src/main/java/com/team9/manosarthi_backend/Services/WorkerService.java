@@ -15,6 +15,7 @@ public interface WorkerService {
 
     Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId);
 //    Patient registerPatient(Patient patient);
+    List<String> addNotReferredPatientAabhaId(int workerId ,List<String> aabhaIds);
     List<String> getAabhaid(int villagecode);
 
     List<FollowUpSchedule> get_followup_schedule(int workerid);

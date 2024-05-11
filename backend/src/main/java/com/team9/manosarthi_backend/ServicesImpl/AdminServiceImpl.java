@@ -1,7 +1,10 @@
 package com.team9.manosarthi_backend.ServicesImpl;
+import com.team9.manosarthi_backend.DTO.AdminDashboardDTO;
 import com.team9.manosarthi_backend.Entities.*;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
 import com.team9.manosarthi_backend.Services.AdminService;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -35,6 +40,8 @@ public class AdminServiceImpl implements AdminService {
     private PrescriptionRepository prescriptionRepository;
 
     private DiseaseRepository diseaseRepository;
+
+    private NotRefAbhaIdRepository notRefAbhaIdRepository;
 
     @Override
     public Doctor adddoctor(Doctor doctor) {
@@ -126,14 +133,92 @@ public class AdminServiceImpl implements AdminService {
         }
 
     @Override
-    public Doctor reassignDoctor(int doctorID, int oldSubDistrict, int newSubDistrict) {
+    @Transactional
+    public Doctor reassignDoctor(int doctorID, int newSubDistrictCode) {
         Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent()) {
-//            SubDistrict oldSubDistrict = subDistrictRepository.findById(oldSubDistrict);
+            Optional<SubDistrict> oldSubDistrict = subDistrictRepository.findById(doctor.get().getSubdistrictcode().getCode());
+            Optional<SubDistrict> newSubDistrict = subDistrictRepository.findById(newSubDistrictCode);
+            if (oldSubDistrict.isPresent() && newSubDistrict.isPresent()) {
+                if(oldSubDistrict.get().getDoctor_count()<2) throw new APIRequestException("Cannot Reasign Doctor.Doctor count not 2  ");
+                if(newSubDistrict.get().getDoctor_count()>=2) throw new APIRequestException("Cannot Reasign Doctor.Doctor count is 2");
+                oldSubDistrict.get().setDoctor_count(oldSubDistrict.get().getDoctor_count()-1);
+                subDistrictRepository.save(oldSubDistrict.get());
+
+                newSubDistrict.get().setDoctor_count(newSubDistrict.get().getDoctor_count()+1);
+                subDistrictRepository.save(newSubDistrict.get());
+
+                List<Doctor> doctorList= doctorRepository.findDoctorBySubDistrict(oldSubDistrict.get().getCode());
+                Doctor reassignPatienttoDoctor=null;
+                for (Doctor doc : doctorList) {
+                    if(doc.getId()!=doctorID){
+                        reassignPatienttoDoctor = doc;
+                        break;
+                    }
+                }
+                if(reassignPatienttoDoctor==null){ throw new APIRequestException("Cannot Reassign Doctor.Doctor count not 2  "); }
+
+                List<Patient> patientList=patientRepository.findByDoctorID(doctorID);
+                for (Patient patient : patientList) {
+                    patient.setDoctor(reassignPatienttoDoctor);
+                    reassignPatienttoDoctor.setPatient_count(reassignPatienttoDoctor.getPatient_count()+1);
+                    doctor.get().setPatient_count(doctor.get().getPatient_count()-1);
+                    patientRepository.save(patient);
+                }
+                doctorRepository.save(reassignPatienttoDoctor);
+                doctor.get().setSubdistrictcode(newSubDistrict.get());
+                return doctorRepository.save(doctor.get());
+            }
+            else throw new APIRequestException("SubDistrict not found");
         }
         else throw new RuntimeException("Doctor not found");
+    }
 
-        return null;
+    @Override
+    @Transactional
+    public Doctor deleteDoctor(int doctorID) {
+        Optional<Doctor> doctor = doctorRepository.findById(doctorID);
+        if (doctor.isPresent()) {
+            Optional<SubDistrict> subDistrict = subDistrictRepository.findById(doctor.get().getSubdistrictcode().getCode());
+            if (subDistrict.isPresent()) {
+                if(doctor.get().getPatient_count()!=0)
+                {
+                    if(subDistrict.get().getDoctor_count()<2) throw new APIRequestException("Cannot delete Doctor.only 1 doctor in subdistrict ");
+
+                    List<Doctor> doctorList= doctorRepository.findDoctorBySubDistrict(subDistrict.get().getCode());
+                    Doctor reassignPatienttoDoctor=null;
+                    for (Doctor doc : doctorList) {
+                        if(doc.getId()!=doctorID){
+                            reassignPatienttoDoctor = doc;
+                            break;
+                        }
+                    }
+                    if(reassignPatienttoDoctor==null){ throw new APIRequestException("Cannot Reassign Doctor.Doctor count not 2  "); }
+
+                    List<Patient> patientList=patientRepository.findByDoctorID(doctorID);
+                    for (Patient patient : patientList) {
+                        patient.setDoctor(reassignPatienttoDoctor);
+                        reassignPatienttoDoctor.setPatient_count(reassignPatienttoDoctor.getPatient_count()+1);
+                        doctor.get().setPatient_count(doctor.get().getPatient_count()-1);
+                        patientRepository.save(patient);
+                    }
+
+                    doctorRepository.save(reassignPatienttoDoctor);
+                }
+
+                //delete doctor and user
+                subDistrict.get().setDoctor_count(subDistrict.get().getDoctor_count()-1);
+                String username = doctor.get().getUser().getUsername();
+                doctor.get().setUser(null);
+                userRepository.deleteById(username);
+                doctor.get().setSubdistrictcode(null);
+                doctor.get().setActive(false);
+                return doctorRepository.save(doctor.get());
+
+            }
+            else throw new APIRequestException("SubDistrict not found");
+        }
+        else throw new RuntimeException("Doctor not found");
 
     }
 
@@ -224,17 +309,18 @@ public class AdminServiceImpl implements AdminService {
         }
     }
         @Override
-        public Questionarrie addQuestionarrie(Questionarrie que)
+        public List<Questionarrie> addQuestionarrie(List<Questionarrie> ques)
         {
-            return questionarrieRepo.save(que);
+            return questionarrieRepo.saveAll(ques);
         }
 
         @Override
-        public MedicalQue addMedicalQuestionarrie(MedicalQue medicalque)
+        public List<MedicalQue> addMedicalQuestionarrie(List<MedicalQue> medicalque)
         {
-            return medicalQueRepo.save(medicalque);
+            return medicalQueRepo.saveAll(medicalque);
         }
 
+        /*
         @Override
         public List<Object[]> getdistrictstat()
         {
@@ -245,5 +331,29 @@ public class AdminServiceImpl implements AdminService {
         public List<Object[]> getdiseasecount(){
            return diseaseRepository.getDiseaseAndCount();
         }
-
+*/
+        @Override
+        public AdminDashboardDTO dashboard()
+        {
+            AdminDashboardDTO adminDashboardDTO=new AdminDashboardDTO();
+            int RefferedCount= patientRepository.getTotalPatientCount();
+            int NonRefferedCount= notRefAbhaIdRepository.getTotalNonRefCount();
+            int TotalSurveys=RefferedCount+NonRefferedCount;
+            adminDashboardDTO.setRefferedCount(RefferedCount);
+            adminDashboardDTO.setNonRefferedCount(NonRefferedCount);
+            adminDashboardDTO.setTotalSurveysTaken(TotalSurveys);
+            adminDashboardDTO.setDiseaseStats(diseaseRepository.getDiseaseAndCount());
+            adminDashboardDTO.setDistrictStats(patientRepository.patientCountForDistrict());
+            List<Pair<Integer,Integer>> AgeRangeCount=new ArrayList<>();
+            int Age1C= patientRepository.countPatientsInAgeRange(1,20);
+            AgeRangeCount.add(Pair.of(1,Age1C));
+            int Age2C= patientRepository.countPatientsInAgeRange(20,40);
+            AgeRangeCount.add(Pair.of(2,Age2C));
+            int Age3C= patientRepository.countPatientsInAgeRange(40,60);
+            AgeRangeCount.add(Pair.of(3,Age3C));
+            int Age4C= patientRepository.countPatientsInAgeRange(60,100);
+            AgeRangeCount.add(Pair.of(4,Age4C));
+            adminDashboardDTO.setAgeStats(AgeRangeCount);
+            return adminDashboardDTO;
+        }
 }

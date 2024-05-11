@@ -186,6 +186,20 @@ public class WorkerRestController {
 
     }
 
+    @PostMapping("/not-referred-patient")
+    public List<String> notReferredPatient(@RequestBody List<String> aabhaIDs, @RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            System.out.println("aabhaIDs" + aabhaIDs);
+
+            String token = authorizationHeader.substring(7);
+            String workerId = helper.getIDFromToken(token);
+            List<String> addedAabhaIDs = workerService.addNotReferredPatientAabhaId(Integer.parseInt(workerId),aabhaIDs);
+            return addedAabhaIDs;
+        } else {
+            throw new APIRequestException("Error in authorizing");
+        }
+    }
+
 
     /*
         @Autowired
@@ -388,7 +402,7 @@ public class WorkerRestController {
 ////        return amazonS3.putObject(bucketName,"t1", (InputStream) file,null);
 ////        return  amazonS3.putObject(bucketName,"test", (File) file);
 //    }
-
+//
 //    @GetMapping("/view-image")    //working
 //    public ResponseEntity<InputStreamResource> viewImage() throws Exception {
 ////        try {
@@ -460,6 +474,19 @@ public class WorkerRestController {
                 .block();
         System.out.println("result "+result);
        return result;
+    }
+
+    @Autowired
+    PatientRepository patientRepository;
+    @GetMapping("/aabhaid-test")
+    public List<Patient> getAabhaidTest(@RequestParam("abhaid") String abhaid) {
+
+//        System.out.println("Patient List"+ patientRepository.allPatient());
+        System.out.println();
+        System.out.println("patientRepository.findByAabhaId(abhaid)" + patientRepository.getAllAabhaId(abhaid));
+
+        return  patientRepository.allPatient();
+//        return  patientRepository.findByAabhaId(abhaid);
     }
 
 }

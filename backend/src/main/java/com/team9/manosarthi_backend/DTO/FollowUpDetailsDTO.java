@@ -7,6 +7,7 @@ import com.team9.manosarthi_backend.Entities.Questionarrie_ans;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.core.io.InputStreamResource;
 
 import java.sql.Date;
 import java.util.List;
@@ -32,6 +33,8 @@ public class FollowUpDetailsDTO {
     private List<Questionarrie_ans> questionarrieAnsList;
 
     private Prescription prescription;
+//    private InputStreamResource followUpImage;
+    private String followUpImage;
 
     public void followup(FollowUpDetails followUpDetails)
     {

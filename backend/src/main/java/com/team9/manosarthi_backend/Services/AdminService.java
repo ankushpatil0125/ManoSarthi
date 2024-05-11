@@ -3,6 +3,8 @@ package com.team9.manosarthi_backend.Services;
 
 
 import java.util.List;
+
+import com.team9.manosarthi_backend.DTO.AdminDashboardDTO;
 import com.team9.manosarthi_backend.Entities.Doctor;
 import com.team9.manosarthi_backend.Entities.MedicalQue;
 import com.team9.manosarthi_backend.Entities.Questionarrie;
@@ -18,12 +20,13 @@ public interface AdminService  {
     List<Doctor> viewAllDoctor(int pagenumber,int pagesize);
     List<Doctor> viewDoctorByDistrict(int districtcode, int pagenumber, int pagesize);
     List<Doctor> viewDoctorBySubDistrict(int subdistrictcode);
-    Doctor reassignDoctor(int doctorID,int oldSubDistrict,int newSubDistrict);
+    Doctor reassignDoctor(int doctorID,int newSubDistrictCode);
+    Doctor deleteDoctor(int doctorID);
 
     Supervisor ReassignSupervisor(Supervisor updatedSupervisor);
-    Questionarrie addQuestionarrie(Questionarrie questionarrie);
+    List<Questionarrie> addQuestionarrie(List<Questionarrie> questionarrie);
 
-    MedicalQue addMedicalQuestionarrie(MedicalQue medicalques);
+    List<MedicalQue> addMedicalQuestionarrie(List<MedicalQue> medicalques);
 
     List<Supervisor> viewSupervisorByDistrict(int districtcode, int pagenumber, int pagesize);
     List<Supervisor> viewSupervisorBySubDistrict(int subdistrictcode);
@@ -32,7 +35,12 @@ public interface AdminService  {
 
     Supervisor deleteSupervisor(Supervisor supervisor);
 
+    /*
      List<Object[]> getdistrictstat();
 
      List<Object[]> getdiseasecount();
+
+     */
+
+    AdminDashboardDTO dashboard();
 }

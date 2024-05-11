@@ -1,7 +1,8 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.team9.manosarthi_backend.Config.AesEncryptor;
-import com.team9.manosarthi_backend.DTO.PrescriptionDTO;
 import com.team9.manosarthi_backend.DTO.RegisterFollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
 import com.team9.manosarthi_backend.Entities.*;
@@ -12,9 +13,9 @@ import lombok.AllArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Date;
@@ -39,7 +40,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     private FollowUpDetailsRepository followUpDetailsRepository;
 
-    private AbhaIdRepository abhaIdRepository;
+    private NotRefAbhaIdRepository abhaIdRepository;
 
     private AesEncryptor aesEncryptor;
 
@@ -48,6 +49,10 @@ public class WorkerServiceImpl implements WorkerService {
     private PrescriptionRepository prescriptionRepository;
 
     private MissedFollowUpRepository MissedFollowUpRepository;
+
+    private NotRefAbhaIdRepository notRefAbhaIdRepository;
+
+    private AmazonS3 amazonS3;
 
     @Override
     public Worker viewProfile(int id) {
@@ -90,7 +95,7 @@ public class WorkerServiceImpl implements WorkerService {
     public Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
 
         Optional<Worker> worker =workerRepository.findById(workerId);
-        System.out.println("RegisterPatient DTO"+ registerPatientDTO);
+        System.out.println("RegisterPatient ");
 
 
         if (worker.isPresent())
@@ -112,7 +117,9 @@ public class WorkerServiceImpl implements WorkerService {
             registerPatientDTO.getPatient().setFollowUpNumber(0);
             registerPatientDTO.getPatient().setStatus("NEW");
 
-            Patient patient = patientRepository.save(registerPatientDTO.getPatient());
+            Patient registeredpatient = patientRepository.save(registerPatientDTO.getPatient());
+            registeredpatient.setRegisteredDate(Date.valueOf(LocalDate.now()));
+            Patient patient=patientRepository.save(registeredpatient);
             System.out.println("Patient after save"+ patient);
 
             doctorRepository.save(doctor);
@@ -141,6 +148,36 @@ public class WorkerServiceImpl implements WorkerService {
                 medicalQueAns.setPatient(patient);
                 System.out.println("medicalQueAnsRepo"+medicalQueAnsRepo.save(medicalQueAns));
             }
+            //consent image save
+            if (!registerPatientDTO.getConsentImage().isEmpty() && !registerPatientDTO.getConsentImage().equals("-1"))
+            {
+                try {
+                    System.out.println("in consent image");
+                    PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(patient.getPatient_id()),registerPatientDTO.getConsentImage());
+                    System.out.println(" after image upload");
+                    System.out.println("putObjectResult register patient "+putObjectResult);     //patient info image
+
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+            else throw new APIRequestException("Consent image not sent");
+
+            //patient info image
+            if(!registerPatientDTO.getImage().equals("-1") && !registerPatientDTO.getImage().isEmpty())
+            {
+                System.out.println("follow up upload image");
+                PutObjectResult putObjectResult1 = amazonS3.putObject("manosarthi", patient.getPatient_id() +"_"+ newFollowUpDetails.getId(),registerPatientDTO.getImage());
+                newFollowUpDetails.setImage(patient.getPatient_id() +"_"+ newFollowUpDetails.getId());
+                followUpDetailsRepository.save(newFollowUpDetails);
+                System.out.println("putObjectResult register patient "+putObjectResult1);
+            }
+            else {
+                newFollowUpDetails.setImage("-1");
+                followUpDetailsRepository.save(newFollowUpDetails);
+            }
 
 
 
@@ -149,6 +186,31 @@ public class WorkerServiceImpl implements WorkerService {
         }
 
         return null;
+    }
+
+    @Override
+    @Transactional
+    public List<String> addNotReferredPatientAabhaId(int workerId, List<String> aabhaIds) {
+        Optional<Worker> worker =workerRepository.findById(workerId);
+        if(worker.isPresent()){
+            Worker worker1 = worker.get();
+
+            List<String> addedAabhaIds = new ArrayList<>();
+            for (String aabhaId : aabhaIds) {
+                NotRefAbhaId notRefAbhaId = new NotRefAbhaId();
+                notRefAbhaId.setAabha_id(aabhaId);
+                notRefAbhaId.setVillagecode(worker1.getVillagecode());
+                notRefAbhaId.setWorkerid(worker1);
+                notRefAbhaId.setRegisteredDate(Date.valueOf(LocalDate.now()));
+                NotRefAbhaId id = notRefAbhaIdRepository.save(notRefAbhaId);
+                addedAabhaIds.add(id.getAabha_id());
+            }
+
+            return addedAabhaIds;
+
+        }
+        else throw new APIRequestException("Worker not found with ID: " + workerId);
+
     }
 
 //    @Override
@@ -203,17 +265,17 @@ public class WorkerServiceImpl implements WorkerService {
         Optional<Worker> worker=workerRepository.findById(workerid);
         if(worker.isPresent())
         {
-//            Calendar calendar = Calendar.getInstance();
-//            Date startDate = new Date(calendar.getTimeInMillis());
 
-            Date startDate = Date.valueOf(LocalDate.now().plusDays(-7));
-            Date endDate = Date.valueOf(LocalDate.now().plusDays(7));
 
-            // Calculate the end date (today + 6 days)
-//            calendar.add(Calendar.DAY_OF_MONTH, 6);
-//            Date endDate = new Date(calendar.getTimeInMillis());
+//            Date startDate = Date.valueOf(LocalDate.now().plusDays(-7));
+//            Date endDate = Date.valueOf(LocalDate.now().plusDays(7));
+
+            Date requiredDate = Date.valueOf(LocalDate.now().plusDays(7));
+
             int villagecode=worker.get().getVillagecode().getCode();
-            return followUpScheduleRepository.findbyDateAndVill(startDate,endDate,villagecode);
+            //followup schedule is from village code hence after reassigning of worker no problem
+            return followUpScheduleRepository.findbyDateAndVill(requiredDate,villagecode);
+
         }
         else {
             throw new APIRequestException("Worker not found");
@@ -243,6 +305,10 @@ public class WorkerServiceImpl implements WorkerService {
     @Transactional
     public int addFollowUpDetails(RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, int workerid) {
 
+        //return -1 for location error
+        //return -2 if follow up is taken before date
+        //return patientId if everyhing is ok
+
         Optional<Worker> worker = workerRepository.findById(workerid);
         Optional<Patient> patient = patientRepository.findById(registerFollowUpDetailsDTO.getPatientID());
         if(worker.isPresent() && patient.isPresent()) {
@@ -264,8 +330,26 @@ public class WorkerServiceImpl implements WorkerService {
 
             //check if message status is 200 or nor
             if(!jsonObject.get("message").equals("200")) throw new APIRequestException("ERROR in location checking "+jsonObject.get("message").toString());
-            if(jsonObject.get("LGD_VillageCode") != worker.get().getVillagecode()) return -1;   //return -1 if village code does not match
+            int locationVillage = Integer.parseInt(jsonObject.get("LGD_VillageCode").toString());
+            if(locationVillage != worker.get().getVillagecode().getCode() )
+            {
+                System.out.println("jsonObject.get(\"LGD_VillageCode\").equals(worker.get().getVillagecode().getCode()  "+jsonObject.get("LGD_VillageCode").equals(worker.get().getVillagecode().getCode()));
+                System.out.println("village code does not matched api res "+ jsonObject.get("LGD_VillageCode")+"worker village code"+worker.get().getVillagecode().getCode());
+                return -1;   //return -1 if village code does not match
+            }
             System.out.println("village code matched "+ jsonObject.get("LGD_VillageCode"));
+
+            Optional<FollowUpSchedule> getfollowUpSchedule = followUpScheduleRepository.findByPatientID(registerFollowUpDetailsDTO.getPatientID());
+            if(getfollowUpSchedule.isPresent()) {
+                if (getfollowUpSchedule.get().getNextFollowUpDate().after(java.sql.Date.valueOf(LocalDate.now())) )
+                {
+                    System.out.println("follow up before date");
+                    return -2;
+                }
+            }
+            else throw new APIRequestException("FollowUpSchedule not found");
+
+            System.out.println("add follow up");
 
 
             // check for the location of followup
@@ -288,7 +372,7 @@ public class WorkerServiceImpl implements WorkerService {
             patient.get().setReferred(registerFollowUpDetailsDTO.isReferredDuringFollowUp());
             patientRepository.save(patient.get());
 
-            Optional<FollowUpSchedule> getfollowUpSchedule = followUpScheduleRepository.findByPatientID(registerFollowUpDetailsDTO.getPatientID());
+
 
             if(getfollowUpSchedule.isPresent() ) {
                 FollowUpSchedule followUpSchedule = getfollowUpSchedule.get();
@@ -300,11 +384,12 @@ public class WorkerServiceImpl implements WorkerService {
                     missedFollowUp.setPatient(patient.get());
                     missedFollowUp.setFollowUpDate(followUpSchedule.getNextFollowUpDate());
                     missedFollowUp.setCompletedDate(Date.valueOf(LocalDate.now()));
-                    missedFollowUp.setWorker(worker.get());
+                    //add worker id of worker assigned to that followup
+                    missedFollowUp.setWorker(followUpSchedule.getWorker());
                     missedFollowUpRepository.save(missedFollowUp);
                 }
-
-
+                //add current worker id to updated followup schedule(this is useful when worker get reassigned)
+                followUpSchedule.setWorker(worker.get());
                 followUpSchedule.setFollowUpRemaining(followUpSchedule.getFollowUpRemaining() - 1);
                 if (followUpSchedule.getFollowUpRemaining() > 0) {
                     if (Objects.equals(followUpSchedule.getType(), "WEEKLY")) {
@@ -322,6 +407,23 @@ public class WorkerServiceImpl implements WorkerService {
                 followUpScheduleRepository.save(followUpSchedule);
             }
             else throw new APIRequestException("No followup schedule found");
+
+
+            // save image
+            if(!registerFollowUpDetailsDTO.getImage().equals("-1") && !registerFollowUpDetailsDTO.getImage().isEmpty())
+            {
+                System.out.println("follow up upload image");
+                PutObjectResult putObjectResult1 = amazonS3.putObject("manosarthi", patient.get().getPatient_id() +"_"+ newFollowUpDetails.getId(),registerFollowUpDetailsDTO.getImage());
+                newFollowUpDetails.setImage(patient.get().getPatient_id() +"_"+ newFollowUpDetails.getId());
+                followUpDetailsRepository.save(newFollowUpDetails);
+                System.out.println("putObjectResult register patient "+putObjectResult1);
+            }
+            else {
+                newFollowUpDetails.setImage("-1");
+                followUpDetailsRepository.save(newFollowUpDetails);
+            }
+
+
 
             return patient.get().getPatient_id();
         }
