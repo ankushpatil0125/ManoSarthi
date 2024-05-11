@@ -31,13 +31,13 @@ const AdminDashboard = () => {
     if (dashboardStatsData.length === 0) return;
 
     // disease wise count
-    const diseaseLabels = dashboardStatsData.diseaseStats.map((stat) => stat[0]);
+    const diseaseLabels = dashboardStatsData?.diseaseStats?.map((stat) => stat[0]);
     const diseasePieData = {
       labels: diseaseLabels,
       datasets: [
         {
           label: "Disease Pie Dataset",
-          data: dashboardStatsData.diseaseStats.map((stat) => stat[1]),
+          data: dashboardStatsData?.diseaseStats?.map((stat) => stat[1]),
           backgroundColor: [  
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
@@ -57,13 +57,13 @@ const AdminDashboard = () => {
     setDiseasePieChartData(diseasePieData);
 
     // District wise count
-    const districtLabels = dashboardStatsData.districtStats.map((stat) => stat[0]);
+    const districtLabels = dashboardStatsData?.districtStats?.map((stat) => stat[0]);
     const districtPieData = {
       labels: districtLabels,
       datasets: [
         {
           label: "District Pie Dataset",
-          data: dashboardStatsData.districtStats.map((stat) => stat[1]),
+          data: dashboardStatsData?.districtStats?.map((stat) => stat[1]),
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
       datasets: [
         {
           label: "Patients",
-          data:dashboardStatsData.ageStats.map(stat => Object.values(stat)[0]),
+          data:dashboardStatsData?.ageStats?.map(stat => Object.values(stat)[0]),
           backgroundColor: "rgb(75, 192, 192)",
           borderColor: "rgb(75, 192, 192)",
           borderWidth: 1,
