@@ -7,8 +7,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AbhaIdRepository extends JpaRepository<NotRefAbhaId,Integer> {
+public interface NotRefAbhaIdRepository extends JpaRepository<NotRefAbhaId,Integer> {
 
     @Query("SELECT a.aabha_id from NotRefAbhaId a where a.villagecode.code=:villagecode")
     List<String> findAllByVillage(@Param("villagecode") int villagecode);
+
+    @Query("SELECT count(a) from NotRefAbhaId a")
+    Integer getTotalNonRefCount();
 }

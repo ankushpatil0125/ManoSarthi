@@ -9,21 +9,16 @@
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/LogoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/LogoutService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/DoctorRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/MissedFollowupsSupDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/MissedFollowupsSupDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/VillageDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/VillageDetailsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/AbhaId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/NotRefAbhaId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/AbhaIdRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/AbhaIdRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/WorkerDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/WorkerDetailsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpSchedule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/MissedFollowUpRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/MissedFollowUpRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/DoctorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/DoctorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +194,8 @@
       <workItem from="1715087309594" duration="589000" />
       <workItem from="1715105306049" duration="8929000" />
       <workItem from="1715171389714" duration="7377000" />
-      <workItem from="1715332027794" duration="7028000" />
+      <workItem from="1715332027794" duration="28298000" />
+      <workItem from="1720678562839" duration="2627000" />
     </task>
     <servers />
   </component>

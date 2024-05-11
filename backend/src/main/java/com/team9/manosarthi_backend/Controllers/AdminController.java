@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.DTO.AdminDashboardDTO;
 import com.team9.manosarthi_backend.DTO.DoctorResponseDTO;
 import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
 import com.team9.manosarthi_backend.Entities.*;
@@ -31,12 +32,7 @@ public class AdminController {
     @Autowired
     private EmailService emailService;
 
-    @RequestMapping("/index")
-    public String dashboard()
-    {
-        System.out.println("step1");
-        return "admin_dashboard";
-    }
+
 
 
     @PostMapping("/add")
@@ -409,6 +405,13 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/dashboard")
+    public AdminDashboardDTO dashboard()
+    {
+        AdminDashboardDTO adminDashboardDTO=adminService.dashboard();
+        return adminDashboardDTO;
+    }
+    /*
     @GetMapping("/districtstats")
     public  List<Object[]> viewDistrictsStats(){
 
@@ -431,4 +434,6 @@ public class AdminController {
 
         return stats;
     }
+    */
+
 }

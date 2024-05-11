@@ -19,7 +19,7 @@ public class LogoutService implements LogoutHandler {
     private TokenRepository tokenRepository;
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        
         final String authHeader= request.getHeader("Authorization");
         final String jwt;
         if(authHeader==null || !authHeader.startsWith("Bearer "))

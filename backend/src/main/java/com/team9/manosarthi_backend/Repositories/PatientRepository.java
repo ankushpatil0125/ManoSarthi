@@ -31,4 +31,8 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     Patient findByEncryptedAbhaId(String secretKey, String salt, String encryptedAbhaId);
 //    @Query("SELECT p FROM Patient p WHERE decrypt(p.aabhaId, :secretKey, :salt) = :abhaId")
 //    Patient findByEncryptedAbhaId(@Param("abhaId") String abhaId, @Param("secretKey") String secretKey, @Param("salt") String salt);
+
+    @Query(value="SELECT count(p) from Patient p")
+    Integer getTotalPatientCount();
+
 }
