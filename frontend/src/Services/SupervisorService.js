@@ -83,6 +83,30 @@ const SupervisorService = {
           // },
         }
       );
+      console.log("village healthworker", response);
+      return response;
+    } catch (error) {
+      console.error("Error fetching healthworker details:", error);
+      throw error;
+    }
+  },
+  getWorkerDetails: async (villageCode) => {
+    try {
+      const response = await axios.get(
+        BASE_URL + "supervisor/get-worker-details/"+ villageCode,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+          // params: {
+          //   villagecode: {
+          //     code:code,
+          //   },
+          // },
+        }
+      );
       console.log("all village healthworker", response);
       return response;
     } catch (error) {

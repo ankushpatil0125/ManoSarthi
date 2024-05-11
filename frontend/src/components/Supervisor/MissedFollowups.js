@@ -46,39 +46,45 @@ const MissedFollowups = () => {
           <thead className="bg-gray-200">
             <tr>
               <th className="border border-gray-400 px-4 py-2">Village Name</th>
-              {/* <th className="border border-gray-400 px-4 py-2">
+             <th className="border border-gray-400 px-4 py-2">
                 Health Worker Name
               </th>
               <th className="border border-gray-400 px-4 py-2">
                 Health Worker Email
-              </th> */}
+              </th>
               <th className="border border-gray-400 px-4 py-2">
                 MissedFollowUp Count
               </th>
               <th className="border border-gray-400 px-4 py-2">View Details</th>
             </tr>
           </thead>
-          {<tbody>
-            {data.map((village,index) => (
-              <tr key={index}>
-                <td className="border border-gray-400 px-4 py-2">
-                  {village?.villageName}
-                </td>
-                <td className="border border-gray-400 px-4 py-2">
-                  {village?.missedFollowupsCount || "N/A"}
-                </td>
-                
-                <td className="border border-gray-400 px-4 py-2">
-                  <button
-                    onClick={() => handleDetails(village)}
-                    className="bg-[#6467c0] hover:bg-violet-300 text-white font-bold py-2 px-4 rounded"
-                  >
-                    View Details
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>}
+          <tbody>
+  {data.map((village,index) => (
+    <tr key={index}>
+      <td className="border border-gray-400 px-4 py-2">
+        {village?.villageName}
+      </td>
+      <td className="border border-gray-400 px-4 py-2">
+        {village?.workerName || "N/A"}
+      </td>
+      <td className="border border-gray-400 px-4 py-2">
+        {village?.workerEmail || "N/A"}
+      </td>
+      <td className="border border-gray-400 px-4 py-2">
+        {village?.missedFollowupsCount || "N/A"}
+      </td>
+      
+      <td className="border border-gray-400 px-4 py-2">
+        <button
+          onClick={() => handleDetails(village)}
+          className="bg-[#6467c0] hover:bg-[#9698ba] text-white font-bold py-2 px-4 rounded"
+        >
+          View Details
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
       </div>
       {/* <div className="flex gap-2 justify-center">

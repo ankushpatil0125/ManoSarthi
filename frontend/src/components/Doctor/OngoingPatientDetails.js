@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
-import {
-  PlusIcon,
-  TrashIcon,
-  PencilIcon,
-  ChartBarIcon,
-} from "@heroicons/react/outline";
+import { PencilIcon, ChartBarIcon } from "@heroicons/react/outline";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, getToken } from "../../utils/Constants";
 import LoadingComponent from "../Loading/LoadingComponent";
 import profile from "../../utils/profile.svg";
-import AddPrescription from "./AddPrescription";
 import FollowUpQueResponse from "./FollowUpQueResponse";
 import ViewPrescription from "./ViewPrescription";
 const OngoingPatientDetails = () => {
@@ -24,9 +18,10 @@ const OngoingPatientDetails = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [t] = useTranslation("global");
   const [followUpDetails, setFollowUpDetails] = useState([]);
-
+  
   // setMedicalQuesAns(data?.medicalQuesAnsList)
   useEffect(() => {
+    //get the followup of the ongoing patient using patient id and store it in followupDetails state variable
     const handlePatientDetails = async () => {
       try {
         setLoading(true);
@@ -40,7 +35,7 @@ const OngoingPatientDetails = () => {
             },
           }
         );
-        console.log("Survey Questionarrie ", response.data);
+        console.log("Survey Questionarrie ", response?.data);
         if (response) setFollowUpDetails(response?.data);
 
         setLoading(false);
@@ -49,20 +44,25 @@ const OngoingPatientDetails = () => {
         setLoading(false);
       }
     };
+    // const handleImage=()=>{
+    //   setBase64Image(followUpDetails[0]?.followUpImage)
+    // }
     handlePatientDetails();
+    // handleImage();
   }, []);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const renderPage = () => {
     const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    console.log("date:", date);
-    const year = date.getFullYear().toString().substr(-2); // Get last two digits of the year
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month and pad with leading zero if needed
-    const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if needed
-    return `${day}/${month}/${year}`;
-  };
+      const date = new Date(timestamp);
+      console.log("date:", date);
+      const year = date.getFullYear().toString().substr(-2); // Get last two digits of the year
+      const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month and pad with leading zero if needed
+      const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if needed
+      return `${day}/${month}/${year}`;
+    };
     switch (currentPage) {
       case "Patient History":
         if (loading) return <LoadingComponent />;
@@ -103,6 +103,8 @@ const OngoingPatientDetails = () => {
                 </div>
               </section>
             </div>
+
+            
           </div>
         );
       // case "Follow-Up-Details":
@@ -138,7 +140,7 @@ const OngoingPatientDetails = () => {
       //                 d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
       //               />
       //             </svg>
-          
+
       //             <span class="text-sm dark:text-gray-600">{village}</span>
       //               </div>
       //           </div>
@@ -214,7 +216,7 @@ const OngoingPatientDetails = () => {
       //       </section>
       //     </div>
       //       );
-          
+
       case "FollowUp Questionnaire":
         if (loading) return <LoadingComponent />;
         return (
@@ -233,12 +235,22 @@ const OngoingPatientDetails = () => {
               {/* Follow up details  */}
               <FollowUp followUpDetails={followUpDetails} />
             </div>
-            <FollowUpQueResponse followUpDetails={followUpDetails} setFollowUpDetails={setFollowUpDetails} patient_id={data?.patient_id}/>
+            <FollowUpQueResponse
+              followUpDetails={followUpDetails}
+              setFollowUpDetails={setFollowUpDetails}
+              patient_id={data?.patient_id}
+            />
           </div>
         );
       case "View Prescriptions":
         if (loading) return <LoadingComponent />;
-        return <ViewPrescription prescriptionDTO={data?.prescriptionDTO} patient_id={ data?.patient_id} type={"view"}/>;
+        return (
+          <ViewPrescription
+            prescriptionDTO={data?.prescriptionDTO}
+            patient_id={data?.patient_id}
+            type={"view"}
+          />
+        );
       default:
         return null;
     }
@@ -305,6 +317,7 @@ const OngoingPatientDetails = () => {
           >
             <div className="h-full px-3 py-4 overflow-y-auto bg-[#f5f5f9] dark:bg-gray-800 mt-[73px]">
               <ul className="space-y-2 font-medium ">
+                {/* Patient History */}
                 <li>
                   <button
                     onClick={() => setCurrentPage("Patient History")}
@@ -320,23 +333,7 @@ const OngoingPatientDetails = () => {
                     <span className="ms-3">{t("Patient History")}</span>
                   </button>
                 </li>
-                {/* <li>
-                  <button
-                    onClick={() => setCurrentPage("Follow-Up-Details")}
-                    className={`flex items-center p-2 rounded-lg group no-underline ${
-                      currentPage === "Follow-Up-Details"
-                        ? "text-white bg-[#6467c0]"
-                        : "text-gray-900"
-                    }`}
-                  >
-                    <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
-                      <PlusIcon className="text-black" />
-                    </span>
-                    <span className="flex-1 ms-3 whitespace-nowrap">
-                      {t("Follow Up Details")}
-                    </span>
-                  </button>
-                </li> */}
+                {/* FollowUp Questionnaire */}
                 <li>
                   <button
                     onClick={() => setCurrentPage("FollowUp Questionnaire")}
@@ -354,6 +351,8 @@ const OngoingPatientDetails = () => {
                     </span>
                   </button>
                 </li>
+
+                {/* View Prescriptions */}
                 <li>
                   <button
                     onClick={() => setCurrentPage("View Prescriptions")}
@@ -386,7 +385,8 @@ const OngoingPatientDetails = () => {
 
 export default OngoingPatientDetails;
 
-const Profile = ({ firstname, lastname, village,gender,age }) => {
+//Profile component
+const Profile = ({ firstname, lastname, village, gender, age }) => {
   return (
     <div className=" container mx-2 rounded-lg shadow-lg p-6 flex-1 bg-[#e0e0eb] ">
       <div className="max-w-md p-8 sm:flex sm:space-x-6 dark:bg-gray-50 dark:text-gray-800 ">
@@ -418,7 +418,9 @@ const Profile = ({ firstname, lastname, village,gender,age }) => {
                 />
               </svg>
 
-              <span className="text-sm dark:text-gray-600">Village : {village}</span>
+              <span className="text-sm dark:text-gray-600">
+                Village : {village}
+              </span>
             </div>
             <div className="flex flex-row gap-3">
               <svg
@@ -439,12 +441,24 @@ const Profile = ({ firstname, lastname, village,gender,age }) => {
               <span className="text-sm dark:text-gray-600">Age : {age}</span>
             </div>
             <div className="flex flex-row gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-</svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                />
+              </svg>
 
-
-              <span className="text-sm dark:text-gray-600">Gender : {gender}</span>
+              <span className="text-sm dark:text-gray-600">
+                Gender : {gender}
+              </span>
             </div>
           </div>
           {/* <div class="space-y-1">
@@ -487,7 +501,6 @@ const Profile = ({ firstname, lastname, village,gender,age }) => {
   );
 };
 const FollowUp = ({ followUpDetails }) => {
-  
   return (
     <div className=" container mx-auto rounded-lg shadow-lg p-6 flex-1 bg-[#e0e0eb]">
       <div className="flex flex-col gap-1 items-center justify-center">
@@ -510,7 +523,8 @@ const FollowUp = ({ followUpDetails }) => {
             FollowUp Date: {followup?.followupDate}
           </p>
           <p className="font-semibold">
-            Assigned Health Worker: {followup?.workerFname} {followup?.workerLname}
+            Assigned Health Worker: {followup?.workerFname}{" "}
+            {followup?.workerLname}
             {followup?.worker?.lastname}
           </p>
         </div>
@@ -518,6 +532,3 @@ const FollowUp = ({ followUpDetails }) => {
     </div>
   );
 };
-
-// case of followUpDetails
-

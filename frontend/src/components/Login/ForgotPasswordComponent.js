@@ -119,7 +119,7 @@ const ForgotPasswordComponent = ({setIsEmailVerified}) => {
      catch (error) {
       console.log("Error Verify Email for forgot paswor API Response: ",error)
       setLoading(false);
-      alert(`Login Failed : ${error?.response?.data}`);
+      alert(`Login Failed : ${error?.response?.data?.message}`);
     }
   };
 

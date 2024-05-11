@@ -31,12 +31,7 @@ const MissedPatientDetails = () => {
               <th className="border border-gray-400 px-4 py-2">
                 Patient LastName
               </th>
-              <th className="border border-gray-400 px-4 py-2">
-                Worker Name
-              </th>
-              <th className="border border-gray-400 px-4 py-2">
-                Worker Email
-              </th>
+              
             </tr>
           </thead>
           <tbody>
@@ -50,12 +45,6 @@ const MissedPatientDetails = () => {
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
                   {patient?.patient_lname || "N/A"}
-                </td>
-                <td className="border border-gray-400 px-4 py-2">
-                  {patient?.workerName || "N/A"}
-                </td>
-                <td className="border border-gray-400 px-4 py-2">
-                  {patient?.workerEmail || "N/A"}
                 </td>
 
               </tr>

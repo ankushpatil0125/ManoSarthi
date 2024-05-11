@@ -104,8 +104,15 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
       },
     };
     setLoading(true)
-    SupervisorService.updateHealthWorker(reasignHealthWorker);
-
+    try{
+    const response = SupervisorService.updateHealthWorker(reasignHealthWorker);
+    console.log("response of update healthworker",response);
+    setLoading(false);
+    }
+    catch(error){
+      console.log("Error while Updating healthworker");
+      setLoading(false)
+    }
     // Your update worker API call here
     setLoading(false);
     setShowModal(false); // Close modal after updating
@@ -175,7 +182,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
                         handleDelete(healthworker.id);
                       }
                     }}
-                    className={`${action === 'Update' ? 'bg-violet-500 hover:bg-violet-200' : 'bg-violet-500 hover:bg-violet-200'} text-white font-bold py-2 px-4 rounded inline-flex items-center`}
+                    className={`${action === 'Update' ? 'bg-[#6467c0] hover:bg-[#a3a5cf]' : 'bg-[#6467c0] hover:bg-[#a3a5cf]'} text-white font-bold py-2 px-4 rounded inline-flex items-center`}
                     >
                     {action === 'Update'?<FaSyncAlt className="mr-2"/>: <FaTrash className="mr-2" />}
                     {action}
@@ -188,7 +195,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
       </div>
       <div className="flex gap-2 justify-center">
         <button
-          className="bg-violet-500 hover:bg-violet-200 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#8788ac] text-white font-bold py-2 px-4 rounded"
           onClick={handlePrevPage}
           disabled={currentPage === 0}
         >
@@ -196,7 +203,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
         </button>
 
         <button
-          className="bg-violet-500 hover:bg-violet-200 text-white font-bold py-2 px-4 rounded"
+          className="bg-[#6467c0] hover:bg-[#8788ac] text-white font-bold py-2 px-4 rounded"
           onClick={handleNextPage}
           disabled={data.length < 5} // Disable next button when data length is less than 5
         >
@@ -228,7 +235,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
           <div className="flex justify-end">
             <button
               onClick={handleUpdateWorker}
-              className="mt-32 bg-violet-500 hover:bg-violet-200 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+              className="mt-32 bg-[#6467c0] hover:bg-[#9698ba] text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
               <FaSyncAlt className="mr-2" />
               Update

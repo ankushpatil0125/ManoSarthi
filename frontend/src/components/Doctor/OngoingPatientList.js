@@ -25,16 +25,16 @@ const OngoingPatientList = () => {
       // setCurrentPage(0)
       DoctorService.getAllPatients(currentPage, "ONGOING")
         .then((response) => {
-          console.log("List of patients", response.data);
-          setData(response.data);
+          console.log("List of patients", response?.data);
+          setData(response?.data);
           setLoading(false);
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          alert(error?.response?.data?.message);
           setLoading(false);
         });
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error?.response?.data?.message);
       setLoading(false);
     }
   };
