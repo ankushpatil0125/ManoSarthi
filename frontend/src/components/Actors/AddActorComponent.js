@@ -337,7 +337,7 @@ const AddDoctorComponent = () => {
 
           <button
             type="submit"
-            className="bg-violet-500 w-full text-white mt-4 px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            className="bg-[#6467c0]-500 w-full text-white mt-4 px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
             {t("addDoctorSupervisor.ADD")}
           </button>

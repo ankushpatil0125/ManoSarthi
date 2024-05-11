@@ -11,6 +11,7 @@ import {
 import React, { useContext, useState, useEffect } from "react";
 import PatientContext from "../context/PatientContext";
 import SelectService from "../Services/DatabaseServices/SelectService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RegisterPatientScreen = ({ navigation }) => {
   const [abhaId, setAbhaId] = useState("");
@@ -21,10 +22,15 @@ const RegisterPatientScreen = ({ navigation }) => {
   const fetchDataFromDatabase = async () => {
     try {
       const data = await SelectService.getAllAabhaIdInfo();
+      const data2 = await SelectService.selectFollowUpReferNotRefer();
       setAbhaTable(data);
       console.log(
         "[RegisterPatientScreen]AabhaId Fetched From Database: ",
         data
+      );
+      console.log(
+        "[RegisterPatientScreen]Followup Refer Fetched from database: ",
+        data2
       );
     } catch (error) {
       console.error("Error fetching data from database:", error);

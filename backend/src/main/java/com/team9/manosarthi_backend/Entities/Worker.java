@@ -19,11 +19,12 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("WorkerJSONFilter")
+
 public class Worker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @NotBlank(message = "first_name cannot be blank")

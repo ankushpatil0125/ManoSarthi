@@ -26,6 +26,7 @@ import OngoingPatientDetails from "./components/Doctor/OngoingPatientDetails";
 import ReferredDuringFollowUpDetails from "./components/Doctor/ReferredDuringFollowUpDetails";
 import ForgotChangePassword from "./components/Login/ForgotChangePassword";
 import { useState } from "react";
+import MissedPatientFollowUpsDetails from "./components/Supervisor/MissedPatientFollowUpsDetails";
 const App = () => {
   const [isEmailVerifed, setIsEmailVerified] = useState(false);
   const [isOTPVerified, setIsOTPVerified] = useState(false);
@@ -217,6 +218,14 @@ const App = () => {
                   <ReferredDuringFollowUpDetails />
                 </PrivateRoute>
               }
+            />
+            <Route
+            path="/missed-patient-details"
+            element={
+              <PrivateRoute type="missed-patient-details">
+                <MissedPatientFollowUpsDetails />
+              </PrivateRoute>
+            }
             />
             <Route path="*" element={<ErrorPage />} />
           </Routes>

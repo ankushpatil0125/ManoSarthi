@@ -18,9 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-//@JsonFilter("PatientJSONFilter")
 public class Patient {
-
+// use patient id to get the consent image
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patient_id;
@@ -78,6 +77,9 @@ public class Patient {
     @Column(name = "referred_during_follow_up")
     private boolean referred;
 
+    @Column(name = "registered_date")
+    private Date RegisteredDate;
+
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference
     private List<FollowUpDetails> followUpDetailsList;
@@ -89,5 +91,8 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient_pre")
     private List<Prescription> prescription;
+
+//    @Column(name = "consent_image")
+//    private String consentImage;
 
 }

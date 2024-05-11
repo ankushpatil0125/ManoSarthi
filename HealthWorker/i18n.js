@@ -13,12 +13,13 @@ export const translations = {
     "Missed Followup": "Missed Followup",
     "Sync Data": "Sync Data",
     "Follow-up Schedule": "Follow-up Schedule",
-    Name: "Name",
+    "First Name": "First Name",
     Address: "Address",
     Status: "Status",
     "Change Password": "Change Password",
     "Enter Your Old Password": "Enter Your Old Password",
     "Enter Your New Password": "Enter Your New Password",
+    "Search Prescription":"Search Prescription"
     // Add more key-value pairs for English here
   },
   hi: {
@@ -32,12 +33,13 @@ export const translations = {
     "Missed Followup": "फॉलोअप छूट गया",
     "Sync Data": "डेटा सिंक्रनाइज़ करें",
     "Follow-up Schedule": "फॉलो-अप अनुसूची",
-    Name: "नाम",
+    "First Name": "नाम",
     Address: "पता",
     Status: "स्थिति",
     "Change Password": "पासवर्ड बदलें",
     "Enter Your Old Password": "अपना पुराना पासवर्ड दर्ज करें",
     "Enter Your New Password": "अपना नया पासवर्ड दर्ज करें",
+    "Search Prescription":"पासवर्ड"
     // Add more key-value pairs for Hindi here
   },
 };
@@ -46,6 +48,7 @@ const i18n = new I18n(translations);
 
 // Get the first locale detected
 const locale = Localization.getLocales()[0];
+console.log("Locale In i18n: ",locale);
 I18n.translations = translations;
 I18n.locale = locale.languageCode;
 I18n.enableFallback = true; // Enable fallback mechanism

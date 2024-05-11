@@ -1,5 +1,6 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.DTO.AdminDashboardDTO;
 import com.team9.manosarthi_backend.DTO.DoctorResponseDTO;
 import com.team9.manosarthi_backend.DTO.SupervisorResponseDTO;
 import com.team9.manosarthi_backend.Entities.*;
@@ -7,7 +8,7 @@ import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Exceptions.GlobalExceptionhandler;
 import com.team9.manosarthi_backend.Services.AdminService;
 import com.team9.manosarthi_backend.ServicesImpl.EmailService;
-import com.team9.manosarthi_backend.ServicesImpl.UserService;
+import com.team9.manosarthi_backend.ServicesImpl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,17 +27,12 @@ import java.util.List;
 //@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private EmailService emailService;
 
-    @RequestMapping("/index")
-    public String dashboard()
-    {
-        System.out.println("step1");
-        return "admin_dashboard";
-    }
+
 
 
     @PostMapping("/add")
@@ -197,7 +193,29 @@ public class AdminController {
             else
                 throw new APIRequestException("Error while getting doctors of subdistrict",ex.getMessage());
         }
-        }
+    }
+
+    @PutMapping("/reassign-doctor")
+    public DoctorResponseDTO reassignDoctor(@RequestParam("doctorID") int doctorID, @RequestParam("newDistrictCode") int newSubDistrictCode){
+
+        Doctor doctor = adminService.reassignDoctor(doctorID,  newSubDistrictCode);
+        DoctorResponseDTO dto = new DoctorResponseDTO();
+        dto.forAdminDoctorToDoctorResponseDTO(doctor);
+        return dto;
+    }
+
+
+    @DeleteMapping("/doctor")
+    public DoctorResponseDTO deleteDoctor(@RequestParam("doctorID") int doctorID){
+
+        Doctor doctor = adminService.deleteDoctor(doctorID);
+        DoctorResponseDTO dto = new DoctorResponseDTO();
+        dto.forAdminDoctorToDoctorResponseDTO(doctor);
+        return dto;
+    }
+
+
+
 
     @Validated
     @PostMapping("/supervisor")
@@ -370,10 +388,10 @@ public class AdminController {
 
     @Validated
     @PostMapping("/questionarrie")
-    public Questionarrie addQuestionarrie(@Valid @RequestBody Questionarrie questionarrie) throws Exception
+    public List<Questionarrie> addQuestionarrie(@Valid @RequestBody List<Questionarrie> questionarrie) throws Exception
     {
         try {
-            Questionarrie que = adminService.addQuestionarrie(questionarrie);
+            List<Questionarrie> que = adminService.addQuestionarrie(questionarrie);
 
             return que;
         }
@@ -385,12 +403,12 @@ public class AdminController {
 
     @Validated
     @PostMapping("/med-questionarrie")
-    public MedicalQue addMedQuestionarrie(@Valid @RequestBody MedicalQue medquest) throws Exception
+    public List<MedicalQue> addMedQuestionarrie(@Valid @RequestBody List<MedicalQue> medquest) throws Exception
     {
         try {
-            MedicalQue que = adminService.addMedicalQuestionarrie(medquest);
+            List<MedicalQue> ques = adminService.addMedicalQuestionarrie(medquest);
 
-            return que;
+            return ques;
         }
         catch (Exception ex)
         {
@@ -398,6 +416,13 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/dashboard")
+    public AdminDashboardDTO dashboard()
+    {
+        AdminDashboardDTO adminDashboardDTO=adminService.dashboard();
+        return adminDashboardDTO;
+    }
+    /*
     @GetMapping("/districtstats")
     public  List<Object[]> viewDistrictsStats(){
 
@@ -420,4 +445,6 @@ public class AdminController {
 
         return stats;
     }
+    */
+
 }

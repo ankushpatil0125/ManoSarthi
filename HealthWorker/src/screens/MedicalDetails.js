@@ -7,6 +7,7 @@ import {
   View,
   Alert,
   StyleSheet,
+  Button,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +16,8 @@ import SelectService from "../Services/DatabaseServices/SelectService";
 import MedicalQuestionarrieService from "../Services/MedicalQuestionarrieService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import PatientContext from "../context/PatientContext"; // Import PatientContext here
+import * as ImagePicker from "expo-image-picker";
+import UpdateService from "../Services/DatabaseServices/UpdateService";
 
 const MedicalDetails = ({ route }) => {
   const [questions, setQuestions] = useState([]);
@@ -29,7 +32,8 @@ const MedicalDetails = ({ route }) => {
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
   // var commentID;
   const [commentID, setCommentID] = useState(0);
-  const { age,type } = route.params;
+  const { age, type } = route.params;
+  const [selectedImage, setSelectedImage] = useState(null); // Changed initial value to null
 
   useEffect(() => {
     fetchDataFromDatabase();
@@ -117,7 +121,7 @@ const MedicalDetails = ({ route }) => {
         commentID,
         comment,
         age,
-        type
+        type,
       });
     } else {
       Alert.alert(
@@ -140,6 +144,28 @@ const MedicalDetails = ({ route }) => {
       // console.log("[MedicalDetailsScreen]",res);
     } catch (error) {
       console.error("Error While Storing Data Locally", error);
+    }
+  };
+  const takePicture = async () => {
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        // Check if image was not cancelled
+        setSelectedImage(result?.assets[0]?.base64); // Update selected image state
+        const resUpdate = await UpdateService.updatePatientImage(
+          result?.assets[0]?.base64,
+          aabhaId
+        );
+        console.log("resUpdate", resUpdate);
+      }
+    } catch (error) {
+      console.log("Error taking picture:", error);
     }
   };
 
@@ -186,6 +212,18 @@ const MedicalDetails = ({ route }) => {
             width: "50%",
           }}
         />
+        <View>
+          <Button title="Click Picture" onPress={takePicture} />
+        </View>
+        <View style={styles.imageContainer}>
+          {selectedImage && (
+            <Image
+              source={{ uri: `data:image/png;base64,${selectedImage}` }}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          )}
+        </View>
       </ScrollView>
       <TouchableOpacity style={styles.nextButton} onPress={handleFormSubmit}>
         <Text style={styles.nextButtonText}>Next</Text>
@@ -234,6 +272,14 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  imageContainer: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  image: {
+    width: 300,
+    height: 300,
   },
 });
 

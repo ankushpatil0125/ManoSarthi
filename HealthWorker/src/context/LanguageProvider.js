@@ -14,10 +14,12 @@ export const LanguageProvider = ({ children }) => {
     const newLanguage = selectedLanguage === "en" ? "hi" : "en";
     setSelectedLanguage(newLanguage);
     i18n.locale = newLanguage;
+    console.log("In local: ",i18n.locale);
   };
   useEffect(() => {
-    
     console.log("Selected language:", selectedLanguage);
+    // Ensure that i18n.locale is set when the component mounts
+    i18n.locale = selectedLanguage;
   }, [selectedLanguage]);
 
   return (

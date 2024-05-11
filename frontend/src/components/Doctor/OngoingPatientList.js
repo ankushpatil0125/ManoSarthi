@@ -25,16 +25,16 @@ const OngoingPatientList = () => {
       // setCurrentPage(0)
       DoctorService.getAllPatients(currentPage, "ONGOING")
         .then((response) => {
-          console.log("List of patients", response.data);
-          setData(response.data);
+          console.log("List of patients", response?.data);
+          setData(response?.data);
           setLoading(false);
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          alert(error?.response?.data?.message);
           setLoading(false);
         });
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error?.response?.data?.message);
       setLoading(false);
     }
   };
@@ -58,7 +58,7 @@ const OngoingPatientList = () => {
       <div>
         <Header />
 
-        <form className="flex items-center max-w-sm mx-auto">
+        {/* <form className="flex items-center max-w-sm mx-auto">
           <label for="simple-search" className="sr-only">
             Search
           </label>
@@ -108,7 +108,7 @@ const OngoingPatientList = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
-        </form>
+        </form> */}
 
         <div className="p-10 mt-5">
           <div

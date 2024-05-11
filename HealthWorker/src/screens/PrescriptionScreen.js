@@ -11,6 +11,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import SelectService from "../Services/DatabaseServices/SelectService";
 import PrescriptionModal from "../components/PrescriptionModal"; // Import the modal component
+import i18n from "../../i18n";
+import { useLanguageContext } from "../context/LanguageProvider";
 
 const PrescriptionScreen = () => {
   const navigation = useNavigation();
@@ -19,6 +21,7 @@ const PrescriptionScreen = () => {
   const [searchText, setSearchText] = useState(""); // State to hold search text
   const [selectedPrescription, setSelectedPrescription] = useState(null); // State to track selected prescription
   const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
+  const languageContext = useLanguageContext(); // Accessing the entire language context
 
   const fetchDataFromDatabase = async () => {
     try {
@@ -40,9 +43,7 @@ const PrescriptionScreen = () => {
     fetchDataFromDatabase();
   }, []);
 
-  const handleShowPrescription = (aabhaId) => {
-    
-  }
+  const handleShowPrescription = (aabhaId) => {};
 
   const searchFilterFunction = (text) => {
     setSearchText(text); // Update search text state
@@ -71,7 +72,8 @@ const PrescriptionScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textFriends}>Search Prescription</Text>
+      <Text style={styles.textFriends}>{i18n.t("Search Prescription")}</Text>
+
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}

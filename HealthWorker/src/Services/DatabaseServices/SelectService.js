@@ -40,7 +40,7 @@ const SelectService = {
     });
   },
 
-   selectAllPrescriptions: () => {
+  selectAllPrescriptions: () => {
     return new Promise((resolve, reject) => {
       db.transaction(
         (tx) => {
@@ -70,6 +70,7 @@ const SelectService = {
   },
 
   getAllPatients: async () => {
+    console.log("Inside Select");
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
@@ -406,6 +407,29 @@ const SelectService = {
           },
           (_, error) => {
             reject("Error fetching profile_details_table: " + error.message); // Improved error message
+          }
+        );
+      });
+    });
+  },
+  getImage: (aabhaId) => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT * FROM PatientDetails WHERE aabhaId=?`,
+          [aabhaId],
+          (_, { rows }) => {
+            if (rows.length > 0) {
+              // If a row with the specified aabhaId exists, resolve with the row
+              console.log("rows.item(0)", rows.item(0));
+              resolve(rows.item(0));
+            } else {
+              // If no rows are found with the specified aabhaId, resolve with null
+              resolve(null);
+            }
+          },
+          (_, error) => {
+            reject("Error fetching PatientDetails: " + error);
           }
         );
       });

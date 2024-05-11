@@ -16,5 +16,8 @@ public class RegisterFollowUpDetailsDTO {
     private int patientID;
     private List<Questionarrie_ans> questionarrieAnsList;
     private boolean referredDuringFollowUp;
+    private String latitude;
+    private String longitude;
+    private String image;
 
 }

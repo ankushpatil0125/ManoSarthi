@@ -6,7 +6,7 @@ import { Alert } from "react-native";
 import { createDatabase, fetchData } from "../Services/initService";
 import DropService from "../Services/DatabaseServices/DropService";
 import IsPasswordChangeService from "../Services/ChangePasswordService.js/IsPasswordChangeService";
-
+import SyncDataService from "../Services/SyncDataService";
 
 // import {navigation }
 export const AuthContext = createContext();
@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userName, setUserName] = useState("");
-
 
   // const [changePassword,setChangePassword] = useState(false);
   const storeData = async (value) => {
@@ -34,13 +33,14 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await axios.post(BASE_URL + "auth/login", user);
+      console.log("Inside If Response");
       console.log("Login Response Data: ", response.data);
       if (response) {
         await storeData(response?.data?.jwtToken);
         const token = await getToken();
         setUserToken(token);
         setUserName(response?.data?.username);
-        console.log("Inside If Response");
+
         // await DropService.dropTables();
 
         createDatabase()
@@ -75,13 +75,56 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
-  const logout = () => {
+  // const logout = () => {
+  //   setIsLoading(true);
+  //   SyncDataService.registrationData();
+  //   SyncDataService.followUpData();
+  //   SyncDataService.newAabhaData();
+  //   setUserToken(null);
+  //   AsyncStorage.removeItem("JWT");
+  //   // setChangePassword(false);
+  //   setIsLoading(false);
+  // };
+  const logout = async () => {
     setIsLoading(true);
-    setUserToken(null);
-    AsyncStorage.removeItem("JWT");
-    // setChangePassword(false);
-    setIsLoading(false);
+
+    try {
+      await SyncDataService.registrationData();
+    } catch (error) {
+      console.error("Error during registrationData sync:", error);
+      // Handle registrationData sync error
+      // For example, show an error message to the user
+    }
+
+    try {
+      await SyncDataService.followUpData();
+    } catch (error) {
+      console.error("Error during followUpData sync:", error);
+      // Handle followUpData sync error
+      // For example, show an error message to the user
+    }
+
+    try {
+      await SyncDataService.newAabhaData();
+    } catch (error) {
+      console.error("Error during newAabhaData sync:", error);
+      // Handle newAabhaData sync error
+      // For example, show an error message to the user
+    }
+
+    try {
+      setUserToken(null);
+      await AsyncStorage.removeItem("JWT");
+      // setChangePassword(false);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error during logout cleanup:", error);
+      // Handle logout cleanup error
+      // For example, show an error message to the user
+      setIsLoading(false);
+    }
   };
+
   const isLoggedIn = async () => {
     try {
       setIsLoading(true);

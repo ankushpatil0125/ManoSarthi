@@ -61,6 +61,7 @@ const MissedFollowUpsScreen = ({ route, navigation }) => {
                   <DataTable.Title>Follow-Up Date</DataTable.Title>
                   <DataTable.Title>Age</DataTable.Title>
                   <DataTable.Title>Follow-Up Type</DataTable.Title>
+                  <DataTable.Title>Status</DataTable.Title>
                   <DataTable.Title>Action</DataTable.Title>
                 </DataTable.Header>
                 {folloupSch
@@ -73,8 +74,9 @@ const MissedFollowUpsScreen = ({ route, navigation }) => {
                       <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
                       <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
                       <DataTable.Cell>{item.age}</DataTable.Cell>
-
                       <DataTable.Cell>{item.type}</DataTable.Cell>
+                      <DataTable.Cell>{item.status}</DataTable.Cell>
+
                       <DataTable.Cell>
                         <Button
                           title="Proceed"

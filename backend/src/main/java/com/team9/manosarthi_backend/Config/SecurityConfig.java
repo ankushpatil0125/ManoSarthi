@@ -11,11 +11,23 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -29,6 +41,9 @@ public class SecurityConfig {
     private JwtAuthenticationEntryPoint point;
     @Autowired
     private JwtAuthenticationFilter filter;
+
+    @Autowired
+    private LogoutHandler logoutHandler;
     @Bean
     public UserDetailsService getUserDetailService()
     {
@@ -40,6 +55,24 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+/*
+    //try this later
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowCredentials(true);
+        //the below three lines will add the relevant CORS response headers
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+//        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    */
 
  /*
  //Spring securitty
@@ -62,11 +95,29 @@ public class SecurityConfig {
 
     }
     */
-
+    /*
+    @Bean
+    CorsConfigurationSource myWebsiteConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+
+//            DelegatingServerLogoutHandler logoutHandler = new DelegatingServerLogoutHandler(
+//                    new SecurityContextServerLogoutHandler(), new WebSessionServerLogoutHandler()
+//            );
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+
+//                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
+
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
@@ -82,7 +133,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/change-password").hasAnyRole("DOCTOR","ADMIN","SUPERVISOR","WORKER")
                         .requestMatchers("/v3/api-docs").permitAll()
 
-//                        .requestMatchers("/doctor/**").permitAll()
+//
 
                         .requestMatchers("/worker/**").hasRole("WORKER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -105,8 +156,14 @@ public class SecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .csrf(csrf-> csrf.disable())
-//                .cors(cors-> cors.disable());
-                .cors(withDefaults());
+//                .cors(cors-> cors.disable())
+                .cors(withDefaults())
+//                .cors((cors)->cors.configurationSource(corsConfigurationSource()))
+                .logout((logout) -> logout
+                        .logoutUrl("/api/v1/auth/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext())));
+
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
@@ -126,9 +183,6 @@ public class SecurityConfig {
 
         return daoAuthenticationProvider;
     }
-
-
-
 
 
     //Tried work

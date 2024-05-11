@@ -3,7 +3,7 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useTranslation } from 'react-i18next';
 
-const LanguageButton = () => {
+const LanguageButton = ({page}) => {
   const { t, i18n } = useTranslation('global');
 
   const handleChangeLanguage = (lang) => {
@@ -21,9 +21,11 @@ const LanguageButton = () => {
   return (
     <div>
       <Dropdown className="mr-5">
-        <Dropdown.Toggle className="text-black bg-transparent" id="dropdown-basic">
+        {page==="login" ?<Dropdown.Toggle className="text-black bg-transparent" id="dropdown-basic">
           {t('Select_Language')}
-        </Dropdown.Toggle>
+        </Dropdown.Toggle>:<Dropdown.Toggle className="text-gray-900 bg-transparent" id="dropdown-basic">
+          {t('Select_Language')}
+        </Dropdown.Toggle>}
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => handleChangeLanguage('en')}>English</Dropdown.Item>
           <Dropdown.Item onClick={() => handleChangeLanguage('hi')}>Hindi</Dropdown.Item>

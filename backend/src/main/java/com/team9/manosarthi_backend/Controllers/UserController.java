@@ -1,8 +1,12 @@
 package com.team9.manosarthi_backend.Controllers;
 
+import com.team9.manosarthi_backend.DTO.OtpDTO;
 import com.team9.manosarthi_backend.Entities.User;
-import com.team9.manosarthi_backend.ServicesImpl.UserService;
+import com.team9.manosarthi_backend.Exceptions.APIRequestException;
+import com.team9.manosarthi_backend.Repositories.UserRepository;
+import com.team9.manosarthi_backend.ServicesImpl.UserServiceImpl;
 import com.team9.manosarthi_backend.models.ChangePassword;
+import com.team9.manosarthi_backend.security.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +25,11 @@ import java.security.Principal;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
+
+    @Autowired
+    private JwtHelper helper;
+
 
 
     @PostMapping("/add")
@@ -30,8 +38,8 @@ public class UserController {
         return "user_success";
     }
 
-   @Validated
-    @RequestMapping("/change-password")
+    @Validated
+    @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePassword request, Principal principal)
     {
         String oldPassword= request.getOldPassword();
@@ -46,6 +54,100 @@ public class UserController {
 
 
     }
+
+    @Validated
+    @PostMapping("/verify-email/{email}")
+    public ResponseEntity<?> verifyEmail(@PathVariable String email)
+    {
+        try {
+
+                if (userService.verifyEmail(email)) {
+                    return new ResponseEntity<>("Email verified Successfully", HttpStatus.OK);
+                } else
+                    return new ResponseEntity<>("Error in verifying email", HttpStatus.BAD_REQUEST);
+
+        }
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while verifying email.", ex.getMessage());
+        }
+
+    }
+
+    @Validated
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOTP(@RequestBody OtpDTO otpDTO)
+    {
+        try {
+
+                if (userService.verifyOTP(otpDTO.getEmail(), otpDTO.getOtp())) {
+                    return new ResponseEntity<>("OTP verified Successfully", HttpStatus.OK);
+                } else
+                    return new ResponseEntity<>("Invalid OTP", HttpStatus.EXPECTATION_FAILED);
+
+        }
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while verifying otp.", ex.getMessage());
+        }
+    }
+
+    /*
+    @Validated
+    @GetMapping("/resend-otp/{email}")
+    public ResponseEntity<?> resendOtp(@PathVariable String email)
+    {
+        try {
+
+            if (userService.resendOTP(email)) {
+                return new ResponseEntity<>("OTP send Successfully", HttpStatus.OK);
+            } else
+                return new ResponseEntity<>("Cannot resend OTP", HttpStatus.EXPECTATION_FAILED);
+
+        }
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while resending otp.", ex.getMessage());
+        }
+    }
+    */
+
+    @Validated
+    @PostMapping("/setPassword/{email}")
+    public ResponseEntity<?> setPassword(@PathVariable String email, @RequestBody ChangePassword changePassword)
+    {
+        try {
+            System.out.println("inside set password");
+                //here old password and new password means entered and reentered password
+                if (userService.setNewPassword(changePassword.getOldPassword(),changePassword.getNewPassword(),email)) {
+                    return new ResponseEntity<>("Password Set Successfully", HttpStatus.OK);
+                } else
+                    return new ResponseEntity<>("Error in setting new password", HttpStatus.BAD_REQUEST);
+
+        }
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while adding the doctor.", ex.getMessage());
+        }
+    }
+
+
 
 
 }
