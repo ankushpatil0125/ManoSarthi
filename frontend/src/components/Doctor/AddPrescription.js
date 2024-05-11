@@ -149,7 +149,6 @@ const AddPrescription = ({ patient_id, type }) => {
           patient: {
             patient_id: patient_id,
           },
-
           treatement: "given medicines",
         },
         medicineList: medicines,
@@ -325,7 +324,6 @@ const AddPrescription = ({ patient_id, type }) => {
                           className="flex items-center text-red-500"
                         >
                           <FaTimes className="mr-2" />{" "}
-                          {/* Using the trash icon */}
                         </button>
                       </td>
                     </tr>

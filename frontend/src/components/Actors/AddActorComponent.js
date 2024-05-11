@@ -32,12 +32,10 @@ const AddDoctorComponent = () => {
       setEmailError("Email must contain '@'");
       return false;
     }
-
     if (dotIndex === -1 || dotIndex < atIndex) {
       setEmailError("Invalid email format");
       return false;
     }
-
     setEmailError(""); // Clear error if email format is correct
     return true;
   };
@@ -62,7 +60,6 @@ const AddDoctorComponent = () => {
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
     setDistrict(selectedDistrict);
-
     // Fetch subdistrict options based on selected district
     setLoading(true);
     AdminService.getSubDistrict(selectedDistrict, actor, false)
@@ -140,14 +137,15 @@ const AddDoctorComponent = () => {
           alert("Failed to Add Doctor");
         }
       } else {
-        const response = AdminService.addSupervisor(actorData);
+        const response = await AdminService.addSupervisor(actorData);
         if (response) {
           // Handle successful password change, e.g., display a success message
+          console.log("Add Supervisor response: ", response)
           alert(
             `Supervisor with name ${response?.data?.firstname} Added Successfully`
           );
-          window.location.reload();
-          // navigate("/admin-home");
+          // window.location.reload();
+          navigate("/admin-home");
           setLoading(false);
         } else {
           // Handle password change failure

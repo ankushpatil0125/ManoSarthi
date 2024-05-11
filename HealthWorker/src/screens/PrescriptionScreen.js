@@ -32,10 +32,10 @@ const PrescriptionScreen = () => {
         prescRes
       );
       setData(prescRes);
-
+      
       setFilteredData(prescRes);
     } catch (error) {
-      console.error("Error fetching data from database(HomeScreen):", error);
+      console.error("Error fetching data from database(PrescriptionScreen):", error);
     }
   };
 
@@ -77,7 +77,7 @@ const PrescriptionScreen = () => {
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Enter AabhaId "
+          placeholder="Enter Patient Name "
           onChangeText={searchFilterFunction}
           value={searchText}
         />
@@ -93,7 +93,7 @@ const PrescriptionScreen = () => {
               style={styles.itemContainer}
               onPress={() => openModal(item)}
             >
-              <View>
+              <View style={styles.card}>
                 <Text style={styles.textName}>
                   {item.patient_fname} {item.patient_lname}
                 </Text>
@@ -136,6 +136,19 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   textName: {
     fontSize: 17,
