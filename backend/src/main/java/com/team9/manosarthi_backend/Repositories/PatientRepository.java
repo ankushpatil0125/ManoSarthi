@@ -34,4 +34,10 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("select p from Patient p where p.doctor.id=:doctorID")
     List<Patient> findByDoctorID(@Param("doctorID") int doctorID);
+
+    @Query("select p from Patient p")
+    List<Patient> allPatient();
+
+    @Query("select p.aabhaId from Patient p")
+    List<String> getAllAabhaId(String aabhaid);
 }

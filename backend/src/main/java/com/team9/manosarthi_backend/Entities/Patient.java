@@ -18,9 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-
 public class Patient {
-
+// use patient id to get the consent image
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patient_id;
@@ -92,5 +91,8 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient_pre")
     private List<Prescription> prescription;
+
+//    @Column(name = "consent_image")
+//    private String consentImage;
 
 }

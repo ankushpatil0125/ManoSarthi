@@ -7,21 +7,18 @@
     <list default="true" id="a2c5af31-7b64-44d4-bfd8-6018c8ea5335" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/appLog.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/LogoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/LogoutService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AwsConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Config/AwsConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/SupervisorRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/MissedFollowupsSupDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/MissedFollowupsSupDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/VillageDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/VillageDetailsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/AbhaId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/NotRefAbhaId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Controllers/WorkerRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/RegisterFollowUpDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/RegisterFollowUpDetailsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/RegisterPatientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/DTO/RegisterPatientDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/FollowUpDetails.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Entities/Worker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/AbhaIdRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/AbhaIdRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/FollowUpScheduleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/PatientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/SubDistrictRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Repositories/SubDistrictRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/SupervisorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/Services/WorkerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/AdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/SupervisorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/team9/manosarthi_backend/ServicesImpl/WorkerServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
@@ -60,37 +57,37 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ManosarthiBackendApplication (1).executor&quot;: &quot;Run&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Manasi&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/manasi/Documents/GitHub/ManoSarthi/backend/src/main/java/com/team9/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.ManosarthiBackendApplication (1).executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "registerfollowup",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/manasi/Documents/GitHub/ManoSarthi/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/home/manasi/Documents/GitHub/ManoSarthi/backend/src/main/java/com/team9/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Spring Boot.ManosarthiBackendApplication (1)">
     <configuration name="ManosarthiBackendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.team9.manosarthi_backend.ManosarthiBackendApplication" />
