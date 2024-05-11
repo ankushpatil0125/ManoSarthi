@@ -132,20 +132,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public Doctor reassignDoctor(int doctorID, int oldSubDistrictCode, int newSubDistrictCode) {
+    public Doctor reassignDoctor(int doctorID, int newSubDistrictCode) {
         Optional<Doctor> doctor = doctorRepository.findById(doctorID);
         if (doctor.isPresent()) {
-            Optional<SubDistrict> oldSubDistrict = subDistrictRepository.findById(oldSubDistrictCode);
+            Optional<SubDistrict> oldSubDistrict = subDistrictRepository.findById(doctor.get().getSubdistrictcode().getCode());
             Optional<SubDistrict> newSubDistrict = subDistrictRepository.findById(newSubDistrictCode);
             if (oldSubDistrict.isPresent() && newSubDistrict.isPresent()) {
                 if(oldSubDistrict.get().getDoctor_count()<2) throw new APIRequestException("Cannot Reasign Doctor.Doctor count not 2  ");
+                if(newSubDistrict.get().getDoctor_count()>=2) throw new APIRequestException("Cannot Reasign Doctor.Doctor count is 2");
                 oldSubDistrict.get().setDoctor_count(oldSubDistrict.get().getDoctor_count()-1);
                 subDistrictRepository.save(oldSubDistrict.get());
 
                 newSubDistrict.get().setDoctor_count(newSubDistrict.get().getDoctor_count()+1);
                 subDistrictRepository.save(newSubDistrict.get());
 
-                List<Doctor> doctorList= doctorRepository.findDoctorBySubDistrict(oldSubDistrictCode);
+                List<Doctor> doctorList= doctorRepository.findDoctorBySubDistrict(oldSubDistrict.get().getCode());
                 Doctor reassignPatienttoDoctor=null;
                 for (Doctor doc : doctorList) {
                     if(doc.getId()!=doctorID){
@@ -162,14 +163,60 @@ public class AdminServiceImpl implements AdminService {
                     doctor.get().setPatient_count(doctor.get().getPatient_count()-1);
                     patientRepository.save(patient);
                 }
+                doctorRepository.save(reassignPatienttoDoctor);
                 doctor.get().setSubdistrictcode(newSubDistrict.get());
-                doctorRepository.save(doctor.get());
+                return doctorRepository.save(doctor.get());
             }
             else throw new APIRequestException("SubDistrict not found");
         }
         else throw new RuntimeException("Doctor not found");
+    }
 
-        return null;
+    @Override
+    @Transactional
+    public Doctor deleteDoctor(int doctorID) {
+        Optional<Doctor> doctor = doctorRepository.findById(doctorID);
+        if (doctor.isPresent()) {
+            Optional<SubDistrict> subDistrict = subDistrictRepository.findById(doctor.get().getSubdistrictcode().getCode());
+            if (subDistrict.isPresent()) {
+                if(doctor.get().getPatient_count()!=0)
+                {
+                    if(subDistrict.get().getDoctor_count()<2) throw new APIRequestException("Cannot delete Doctor.only 1 doctor in subdistrict ");
+
+                    List<Doctor> doctorList= doctorRepository.findDoctorBySubDistrict(subDistrict.get().getCode());
+                    Doctor reassignPatienttoDoctor=null;
+                    for (Doctor doc : doctorList) {
+                        if(doc.getId()!=doctorID){
+                            reassignPatienttoDoctor = doc;
+                            break;
+                        }
+                    }
+                    if(reassignPatienttoDoctor==null){ throw new APIRequestException("Cannot Reassign Doctor.Doctor count not 2  "); }
+
+                    List<Patient> patientList=patientRepository.findByDoctorID(doctorID);
+                    for (Patient patient : patientList) {
+                        patient.setDoctor(reassignPatienttoDoctor);
+                        reassignPatienttoDoctor.setPatient_count(reassignPatienttoDoctor.getPatient_count()+1);
+                        doctor.get().setPatient_count(doctor.get().getPatient_count()-1);
+                        patientRepository.save(patient);
+                    }
+
+                    doctorRepository.save(reassignPatienttoDoctor);
+                }
+
+                //delete doctor and user
+                subDistrict.get().setDoctor_count(subDistrict.get().getDoctor_count()-1);
+                String username = doctor.get().getUser().getUsername();
+                doctor.get().setUser(null);
+                userRepository.deleteById(username);
+                doctor.get().setSubdistrictcode(null);
+                doctor.get().setActive(false);
+                return doctorRepository.save(doctor.get());
+
+            }
+            else throw new APIRequestException("SubDistrict not found");
+        }
+        else throw new RuntimeException("Doctor not found");
 
     }
 

@@ -28,7 +28,7 @@ public interface SubDistrictRepository extends JpaRepository<SubDistrict,Integer
     @Query("select s from SubDistrict s where s.doctor_count>0 and s.district.code=:district")
     Set<SubDistrict> getAssignedDoctorSubDistrict(@Param("district") int district);
 
-    @Query("select s from SubDistrict s where s.doctor_count=0 or s.doctor_count=1 and s.district.code=:district")
+    @Query("select s from SubDistrict s where s.doctor_count<=1 and s.district.code=:district")
     Set<SubDistrict> getNotAssignedDoctorSubDistrict(@Param("district") int district);
 
     @Query("select s from SubDistrict s where s.supervisor_count>0 and s.district.code=:district")

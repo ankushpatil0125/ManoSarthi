@@ -196,11 +196,21 @@ public class AdminController {
     }
 
     @PutMapping("/reassign-doctor")
-    public DoctorResponseDTO reassignDoctor(@RequestParam("doctorID") int doctorID,@RequestParam("oldDistrictCode") int oldSubDistrictCode, @RequestParam("newDistrictCode") int newSubDistrictCode){
-        Doctor doctor = adminService.reassignDoctor(doctorID, oldSubDistrictCode, newSubDistrictCode);
-        return null;
+    public DoctorResponseDTO reassignDoctor(@RequestParam("doctorID") int doctorID, @RequestParam("newDistrictCode") int newSubDistrictCode){
+        Doctor doctor = adminService.reassignDoctor(doctorID,  newSubDistrictCode);
+        DoctorResponseDTO dto = new DoctorResponseDTO();
+        dto.forAdminDoctorToDoctorResponseDTO(doctor);
+        return dto;
+    }
 
 
+    @DeleteMapping("/doctor")
+    public DoctorResponseDTO deleteDoctor(@RequestParam("doctorID") int doctorID){
+
+        Doctor doctor = adminService.deleteDoctor(doctorID);
+        DoctorResponseDTO dto = new DoctorResponseDTO();
+        dto.forAdminDoctorToDoctorResponseDTO(doctor);
+        return dto;
     }
 
 

@@ -1,5 +1,7 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.team9.manosarthi_backend.Config.AesEncryptor;
 import com.team9.manosarthi_backend.DTO.RegisterFollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.RegisterPatientDTO;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -46,6 +49,10 @@ public class WorkerServiceImpl implements WorkerService {
     private PrescriptionRepository prescriptionRepository;
 
     private MissedFollowUpRepository MissedFollowUpRepository;
+
+    private NotRefAbhaIdRepository notRefAbhaIdRepository;
+
+    private AmazonS3 amazonS3;
 
     @Override
     public Worker viewProfile(int id) {
@@ -141,6 +148,33 @@ public class WorkerServiceImpl implements WorkerService {
                 medicalQueAns.setPatient(patient);
                 System.out.println("medicalQueAnsRepo"+medicalQueAnsRepo.save(medicalQueAns));
             }
+            //consent image save
+//            PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(patient.getPatient_id()),registerPatientDTO.getConsentImage());
+//            System.out.println("putObjectResult register patient "+putObjectResult);     //patient info image
+            if(!registerPatientDTO.getImage().equals("-1"))
+            {
+                PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(newFollowUpDetails.getId()),registerPatientDTO.getImage());
+                newFollowUpDetails.setImage(String.valueOf(newFollowUpDetails.getId()));
+                followUpDetailsRepository.save(newFollowUpDetails);
+                System.out.println("putObjectResult register patient "+putObjectResult);
+            }
+            else {
+                newFollowUpDetails.setImage("-1");
+                followUpDetailsRepository.save(newFollowUpDetails);
+            }
+
+//            //patient info image
+//            if(!registerPatientDTO.getImage().equals("-1"))
+//            {
+//                PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(newFollowUpDetails.getId()),registerPatientDTO.getImage());
+//                newFollowUpDetails.setImage(String.valueOf(newFollowUpDetails.getId()));
+//                followUpDetailsRepository.save(newFollowUpDetails);
+//                System.out.println("putObjectResult register patient "+putObjectResult);
+//            }
+//            else {
+//                newFollowUpDetails.setImage("-1");
+//                followUpDetailsRepository.save(newFollowUpDetails);
+//            }
 
 
 
@@ -149,6 +183,31 @@ public class WorkerServiceImpl implements WorkerService {
         }
 
         return null;
+    }
+
+    @Override
+    @Transactional
+    public List<String> addNotReferredPatientAabhaId(int workerId, List<String> aabhaIds) {
+        Optional<Worker> worker =workerRepository.findById(workerId);
+        if(worker.isPresent()){
+            Worker worker1 = worker.get();
+
+            List<String> addedAabhaIds = new ArrayList<>();
+            for (String aabhaId : aabhaIds) {
+                NotRefAbhaId notRefAbhaId = new NotRefAbhaId();
+                notRefAbhaId.setAabha_id(aabhaId);
+                notRefAbhaId.setVillagecode(worker1.getVillagecode());
+                notRefAbhaId.setWorkerid(worker1);
+                notRefAbhaId.setRegisteredDate(Date.valueOf(LocalDate.now()));
+                NotRefAbhaId id = notRefAbhaIdRepository.save(notRefAbhaId);
+                addedAabhaIds.add(id.getAabha_id());
+            }
+
+            return addedAabhaIds;
+
+        }
+        else throw new APIRequestException("Worker not found with ID: " + workerId);
+
     }
 
 //    @Override
@@ -345,6 +404,22 @@ public class WorkerServiceImpl implements WorkerService {
                 followUpScheduleRepository.save(followUpSchedule);
             }
             else throw new APIRequestException("No followup schedule found");
+
+
+            // save image
+            if(!registerFollowUpDetailsDTO.getImage().equals("-1"))
+            {
+                PutObjectResult putObjectResult = amazonS3.putObject("manosarthi",String.valueOf(newFollowUpDetails.getId()),registerFollowUpDetailsDTO.getImage());
+                newFollowUpDetails.setImage(String.valueOf(newFollowUpDetails.getId()));
+                followUpDetailsRepository.save(newFollowUpDetails);
+                System.out.println("putObjectResult register patient "+putObjectResult);
+            }
+            else {
+                newFollowUpDetails.setImage("-1");
+                followUpDetailsRepository.save(newFollowUpDetails);
+            }
+
+
 
             return patient.get().getPatient_id();
         }

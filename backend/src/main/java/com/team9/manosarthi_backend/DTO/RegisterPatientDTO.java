@@ -18,4 +18,7 @@ public class RegisterPatientDTO {
     private List<MedicalQueAns> medicalQueAnsList;
 
     private List<Questionarrie_ans> questionarrieAnsList;
+
+    private String consentImage;
+    private String image;// image in questionary
 }

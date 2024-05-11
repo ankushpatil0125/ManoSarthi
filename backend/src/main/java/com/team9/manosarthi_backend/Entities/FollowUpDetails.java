@@ -49,6 +49,9 @@ public class FollowUpDetails {
     @OneToOne(mappedBy = "followUpDetails")
     @JsonManagedReference
     private Prescription prescription;
+
+    @Column(name = "image")
+    private String image;   // store image file name during follow up
 }
 
 
