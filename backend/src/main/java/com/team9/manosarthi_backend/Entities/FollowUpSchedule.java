@@ -37,4 +37,7 @@ public class FollowUpSchedule {
     @Column(name = "type")      //weekly or monthly follow up
     private String type;
 
+    @ManyToOne
+    @JoinColumn(name="worker_id")
+    private Worker worker;
 }

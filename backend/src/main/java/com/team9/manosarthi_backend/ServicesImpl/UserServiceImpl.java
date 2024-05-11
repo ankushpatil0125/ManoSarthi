@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -97,16 +98,42 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    
+
     private Integer otpGenerator()
     {
         Random random=new Random();
         return random.nextInt(100_000,999_999);//Generates 6 digit number
     }
+    /*
+    @Override
+    public Boolean resendOTP(String email)
+    {
+        User user=userRepository.findByEmail(email);
+        if(user==null)
+            throw new APIRequestException("User not found");
+        ForgotPassword fp=forgotPasswordRepository.findByUser(email).orElseThrow(() -> new APIRequestException("Invalid OTP"));
+        String otp = Integer.toString(otpGenerator());
+        //for sending email
+        String subject = "OTP for Forgot Password Request";
+        String msg = "Hello " + "\nThis is OTP for forgot password request from Manosarthi Application. Please enter this in your system  " + otp;
+        String to = email;
+        if (emailService.sendEmail(subject, msg, to)) {
+            System.out.println("mail success");
+        } else {
+            System.out.println("mail failed");
+            throw new APIRequestException("Sending mail failed");
+        }
+        fp.setOtp(otp);
+        fp.setExpirationTime(new Date(System.currentTimeMillis() + 30 * 1000));
+        forgotPasswordRepository.save(fp);
+        return true;
+    }
+    */
 
     @Override
     public Boolean verifyOTP(String email,String otp)
     {
+        System.out.println("email got"+email);
         User user=userRepository.findByEmail(email);
         if(user==null)
             throw new APIRequestException("User not found");
@@ -118,7 +145,7 @@ public class UserServiceImpl implements UserService {
             forgotPasswordRepository.deleteById(fp.getFpid());
             return false;
         }
-
+        forgotPasswordRepository.deleteById(fp.getFpid());
         return true;
     }
 
@@ -135,7 +162,8 @@ public class UserServiceImpl implements UserService {
 
         String encodedPassword= bCryptPasswordEncoder.encode(password);
         userRepository.UpdatePassword(encodedPassword,email);
-
+        user.setChangepass(true);
+        userRepository.save(user);
         return true;
     }
 }

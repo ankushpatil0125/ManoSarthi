@@ -169,9 +169,9 @@ const LoginComponent = () => {
       if (response) {
         // Handle successful login, e.g., redirect to another page
         alert("Login Successful...");
-        localStorage.setItem("JWT", response.data.jwtToken);
+        localStorage.setItem("JWT", response?.data?.jwtToken);
         setJWT(response.data.jwtToken);
-        localStorage.setItem("ROLE", response.data.role);
+        localStorage.setItem("ROLE", response?.data?.role);
         // localStorage.setItem("User_Id", response.data.user_id);
 
         // console.log("User Response Data ", response.data);
@@ -189,7 +189,7 @@ const LoginComponent = () => {
         } else {
           if (response.data.role === "[ROLE_ADMIN]") navigate("/admin-home");
           else if (response.data.role === "[ROLE_DOCTOR]") {
-            console.log("role", response.data.role);
+            console.log("role", response?.data?.role);
 
             navigate("/doctor-home", { replace: true });
           } else {
@@ -202,7 +202,7 @@ const LoginComponent = () => {
       console.log("error",error)
       // alert(error.response.data);
       setLoading(false);
-      alert(`Login Failed : ${error.response.data}`);
+      alert(`Login Failed : ${error?.response?.data}`);
     }
   };
 
@@ -227,7 +227,7 @@ const LoginComponent = () => {
   return (
     <div>
       <div className="absolute top-0 right-0 mt-4 mr-4">
-        <LanguageButton />
+        <LanguageButton page="login" />
       </div>
       <div className="font-[sans-serif] text-[#333]">
       
@@ -329,7 +329,7 @@ const LoginComponent = () => {
             <img
               src="https://readymadeui.com/login-image.webp"
               className="w-full h-full object-cover"
-              alt="Dining Experience"
+              alt="Login Img"
             />
           </div>
         </div>

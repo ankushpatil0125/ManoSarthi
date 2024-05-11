@@ -31,13 +31,11 @@ import java.util.*;
 
 @EnableTransactionManagement
 public class DoctorRestController {
-    DoctorRepository doctorRepository;
     DoctorService doctorService;
     private JwtHelper helper;
 
     @Autowired
-    public DoctorRestController(DoctorRepository doctorRepository, DoctorService doctorService, JwtHelper helper) {
-        this.doctorRepository = doctorRepository;
+    public DoctorRestController(DoctorService doctorService, JwtHelper helper) {
         this.doctorService = doctorService;
         this.helper = helper;
     }
@@ -131,17 +129,17 @@ public class DoctorRestController {
 
                 String token = authorizationHeader.substring(7);
                 String doctorId = helper.getIDFromToken(token);
-                List<FollowUpDetails> followups = doctorService.getFollowups(pagenumber, pagesize,Integer.parseInt(doctorId),patientId);
+                return doctorService.getFollowups(pagenumber, pagesize,Integer.parseInt(doctorId),patientId);
 
 
-                List<FollowUpDetailsDTO> followupDTOList=new ArrayList<>();
-                for(FollowUpDetails followup:followups)
-                {
-                    FollowUpDetailsDTO followUpDetailsDTO=new FollowUpDetailsDTO();
-                    followUpDetailsDTO.followup(followup);
-                    followupDTOList.add(followUpDetailsDTO);
-                }
-                return followupDTOList;
+//                List<FollowUpDetailsDTO> followupDTOList=new ArrayList<>();
+//                for(FollowUpDetails followup:followups)
+//                {
+//                    FollowUpDetailsDTO followUpDetailsDTO=new FollowUpDetailsDTO();
+//                    followUpDetailsDTO.followup(followup);
+//                    followupDTOList.add(followUpDetailsDTO);
+//                }
+//                return followupDTOList;
             }
             else {
                 throw new APIRequestException("Error in authorizing");
