@@ -131,7 +131,8 @@ public class SecurityConfig {
                         .requestMatchers("/disease-category/**").permitAll()
                         .requestMatchers("/disease-subcategory/**").permitAll()
                         .requestMatchers("/user/change-password").hasAnyRole("DOCTOR","ADMIN","SUPERVISOR","WORKER")
-                        .requestMatchers("/v3/api-docs").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources").permitAll()
 
 //
 
@@ -159,10 +160,17 @@ public class SecurityConfig {
 //                .cors(cors-> cors.disable())
                 .cors(withDefaults())
 //                .cors((cors)->cors.configurationSource(corsConfigurationSource()))
-                .logout((logout) -> logout
-                        .logoutUrl("/api/v1/auth/logout")
-                        .addLogoutHandler(logoutHandler)
-                        .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext())));
+//                .logout((logout) -> logout
+//                        .logoutUrl("/api/v1/auth/logout")
+//                        .addLogoutHandler(logoutHandler)
+//                        .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext())));
+                .logout()
+                .logoutUrl("/api/v1/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler(
+                        (request, response, authentication) ->
+                                SecurityContextHolder.clearContext()
+                );
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
