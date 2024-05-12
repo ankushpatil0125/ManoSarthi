@@ -23,6 +23,25 @@ const SupervisorService = {
       throw error;
     }
   },
+  deleteHealthWorker: async (healthWorkerId) => {
+    console.log("HW ID: ", healthWorkerId)
+    try {
+      const response = await axios.delete(
+        BASE_URL + "supervisor/worker",
+        {
+          data:healthWorkerId,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      console.error("Error deleteHealthWorker:", error);
+      throw error;
+    }
+  },
   getVillageWorker: async (assigned) => {
     try {
       const response = await axios.get(
@@ -152,6 +171,25 @@ const SupervisorService = {
       return response;
     } catch (error) {
       console.error("Error fetching doctor details:", error);
+      throw error;
+    }
+  },
+  supervisorDashboard: async() => {
+    try{
+      console.log("Calling get Dashboard")
+      const response = await axios.get(
+        BASE_URL + "supervisor/dashboard",
+        {
+          headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      )
+      console.log("supervisor Dashboard data: ", response.data);
+      return response;
+    }
+    catch(error){
       throw error;
     }
   },

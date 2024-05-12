@@ -422,7 +422,7 @@ const AdminHomePage = () => {
                   <button
                     onClick={() => setCurrentPage("AddQuestionarrie")}
                     className={`flex items-center p-2 rounded-lg group no-underline ${
-                      currentPage === "delete"
+                      currentPage === "AddQuestionarrie"
                         ? "text-white bg-[#6467c0]"
                         : "text-gray-900"
                     }`}

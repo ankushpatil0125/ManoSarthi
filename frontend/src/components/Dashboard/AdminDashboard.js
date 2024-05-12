@@ -31,13 +31,13 @@ const AdminDashboard = () => {
     if (dashboardStatsData.length === 0) return;
 
     // disease wise count
-    const diseaseLabels = dashboardStatsData?.diseaseStats?.map((stat) => stat[0]);
+    const diseaseLabels = dashboardStatsData?.diseaseStats?.map((stat) => stat[0]).slice(0, 15);
     const diseasePieData = {
       labels: diseaseLabels,
       datasets: [
         {
           label: "Disease Pie Dataset",
-          data: dashboardStatsData?.diseaseStats?.map((stat) => stat[1]),
+          data: dashboardStatsData?.diseaseStats?.map((stat) => stat[1]).slice(0, 15),
           backgroundColor: [  
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
       datasets: [
         {
           label: "District Pie Dataset",
-          data: dashboardStatsData?.districtStats?.map((stat) => stat[1]),
+          data: dashboardStatsData?.districtStats?.map((stat) => stat[1]).slice(0, 15),
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -110,15 +110,15 @@ const AdminDashboard = () => {
           <span className="text-gray-600"></span>
         </div>
         <div className="flex items-center justify-between">
-          <h5 className="font-semibold">Referred: {dashboardStatsData?.refferedCount}</h5>
+          <h5 className="font-semibold">- Referred: {dashboardStatsData?.refferedCount}</h5>
           <span className="text-gray-600"></span>
         </div>
         <div className="flex items-center justify-between">
-          <h5 className="font-semibold">Not Referred: {dashboardStatsData?.nonRefferedCount}</h5>
+          <h5 className="font-semibold">- Not Referred: {dashboardStatsData?.nonRefferedCount}</h5>
           <span className="text-gray-600"></span>
         </div>
         <div className="flex items-center justify-between">
-          <h5 className="font-semibold">Treated: {dashboardStatsData?.totalTreated}</h5>
+          <h5 className="font-semibold">- Treated: {dashboardStatsData?.totalTreated}</h5>
           <span className="text-gray-600"></span>
         </div>
       </div>
@@ -135,13 +135,13 @@ const AdminDashboard = () => {
     <div className="grid grid-cols-2 gap-4 px-4 py-4">
       <div className="bg-gray-400">
         <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Top 10 Disease wise patients stats</h2>
+          <h2 className="text-lg font-semibold mb-4">Top 15 Disease wise patients stats</h2>
           {diseasePieChartData && <Pie data={diseasePieChartData} options={{}} ref={pieChartRef} />}
         </div>
       </div>
       <div className="bg-gray-400">
         <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Top 10 District wise patients stats</h2>
+          <h2 className="text-lg font-semibold mb-4">Top 15 District wise patients stats</h2>
           {districtPieChartData && <Pie data={districtPieChartData} options={{}} ref={districtPieChartRef} />}
         </div>
       </div>
