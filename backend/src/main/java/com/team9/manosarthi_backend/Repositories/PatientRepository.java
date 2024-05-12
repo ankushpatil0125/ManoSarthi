@@ -50,7 +50,7 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     @Query("SELECT COUNT(p) FROM Patient p WHERE p.age BETWEEN :startAge AND :endAge")
     Integer countPatientsInAgeRange(@Param("startAge") int startAge, @Param("endAge") int endAge);
 
-//    @Query("SELECT count(v) from Patient p where ")
-//    Integer countVillSurveyed(@Param("subdid")int subdid);
+    @Query("SELECT count(p) from Patient p where p.village.code=:villid ")
+    Integer countVillPatients(@Param("villid")int villid);
 
 }

@@ -36,6 +36,8 @@ public class SupervisorServiceImpl implements SupervisorService {
     private FollowUpScheduleRepository followUpScheduleRepository;
     private MissedFollowUpRepository missedFollowUpRepository;
     private TokenRepository tokenRepository;
+    private PatientRepository patientRepository;
+    private NotRefAbhaIdRepository notRefAbhaIdRepository;
 
     @Override
     public Supervisor viewProfile(int id) {
@@ -352,7 +354,36 @@ public class SupervisorServiceImpl implements SupervisorService {
         SupDashboardDTO supDashboardDTO=new SupDashboardDTO();
         List<Village> villages=villageRepository.findVillBySubdistrict(supervisor.get().getSubdistrictcode().getCode());
         supDashboardDTO.setVillagesCount(villages.size());
-
+        List<Pair<String,Integer>> villagewithpatient=new ArrayList<>();
+        int surveyedvillc=0;
+        for(Village village:villages)
+        {
+            String villagename=village.getName();
+            int patientc=patientRepository.countVillPatients(village.getCode());
+            if(patientc!=0)
+                villagewithpatient.add(Pair.of(villagename,patientc));
+            int nonref=notRefAbhaIdRepository.findAllByVillage(village.getCode()).size();
+            if(patientc!=0 || nonref!=0)
+                surveyedvillc++;
+        }
+        supDashboardDTO.setVillSurveyedCount(surveyedvillc);
+        Comparator<Pair<String, Integer>> comparator = (pair1, pair2) -> pair2.getValue().compareTo(pair1.getValue());
+        Collections.sort(villagewithpatient, comparator);
+        supDashboardDTO.setVillagewithpatient(villagewithpatient);
+        List<Pair<String,Integer>> villwithmissedc=new ArrayList<>();
+        for(Village village:villages)
+        {
+            int villageid=village.getCode();
+            //worker has 3 days time period of syncing.
+            // after that period also date is not changed to next followup date show that as missed followup to supervisor
+            Date requiredDate = Date.valueOf(LocalDate.now().minusDays(3));
+            List<FollowUpSchedule> currfollowupsmissed = followUpScheduleRepository.findbyDateAndVill(requiredDate, villageid);
+            int currentmissedcount = currfollowupsmissed.size();
+            if (currentmissedcount!=0)
+                villwithmissedc.add(Pair.of(village.getName(),currentmissedcount));
+        }
+        Collections.sort(villwithmissedc, comparator);
+        supDashboardDTO.setVillwithmissedc(villwithmissedc);
         return supDashboardDTO;
     }
 }
