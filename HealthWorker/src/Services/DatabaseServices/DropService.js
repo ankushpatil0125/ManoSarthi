@@ -2,6 +2,7 @@ import db from "../DatabaseServices/DatabaseServiceInit";
 
 const DropService = {
   dropTables: async () => {
+    console.log("Inside DropService");
     const dr1 = await DropService.dropMedicalQuestionsTable();
     console.log("dr1: ", dr1);
 

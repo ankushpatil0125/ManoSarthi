@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Button,
+  Image,
 } from "react-native";
 import "../Services/SurveyQuestionsService";
 import SelectService from "../Services/DatabaseServices/SelectService";
@@ -13,6 +15,7 @@ import PatientContext from "../context/PatientContext"; // Import PatientContext
 import InsertService from "../Services/DatabaseServices/InsertService";
 import DeleteService from "../Services/DatabaseServices/DeleteService";
 import UpdateService from "../Services/DatabaseServices/UpdateService";
+import * as ImagePicker from "expo-image-picker";
 
 const QuestionnaireScreen = ({ navigation, route }) => {
   const [surveyquestions, setsurveyquestions] = useState([]);
@@ -20,6 +23,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
   // State to hold the answers for each question
   const [answers, setAnswers] = useState([]);
   const { aabhaId } = useContext(PatientContext); // Access aabhaId from the context
+  const [selectedImage, setSelectedImage] = useState(null); // Changed initial value to null
 
   const fetchPatientDataFromDatabase = async () => {
     try {
@@ -39,10 +43,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
 
       setsurveyquestions(data);
       setAnswers(Array(data.length).fill(null));
-      console.log(
-        "[QuestionarieScreen] Questions Need To Render: ",
-        data
-      );
+      console.log("[QuestionarieScreen] Questions Need To Render: ", data);
     } catch (error) {
       console.error("Error fetching data from database:", error);
     }
@@ -85,7 +86,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
     let promises;
     try {
       if (type === "normal") {
-         promises = surveyquestions.map(async (question, index) => {
+        promises = surveyquestions.map(async (question, index) => {
           const answer = answers[index];
           await InsertService.insertSurveyQuestionAnswer(
             aabhaId,
@@ -94,7 +95,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
           );
         });
       } else if (type === "followup") {
-         promises = surveyquestions.map(async (question, index) => {
+        promises = surveyquestions.map(async (question, index) => {
           const answer = answers[index];
           await InsertService.insertFollowUpQuestionAnswer(
             pid,
@@ -120,7 +121,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       if (type === "normal") {
         if (unmatchedCount >= surveyquestions.length / 2) {
           // await InsertService.insertAabhaId(aabhaId, "old");
-          navigation.navigate("MedicalDetails", { age,type });
+          navigation.navigate("MedicalDetails", { age, type });
         } else {
           const res1 = await InsertService.insertAabhaId(aabhaId, "new");
           console.log(
@@ -149,10 +150,29 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       } else if (type === "followup") {
         if (unmatchedCount >= surveyquestions.length / 2) {
           // await InsertService.insertAabhaId(aabhaId, "old");
-          InsertService.insertFollowUpReferNotRefer(pid, "1");
+          // InsertService.insertFollowUpReferNotRefer(pid, "1");
+          const res1 = await InsertService.insertFollowUpReferNotRefer(pid);
+          console.log(
+            "[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",
+            res1
+          );
+
+          const res2 = await UpdateService.updateFollowUpReferNotRefer(
+            pid,
+            true
+          );
+          console.log(
+            "[QuestionarieScreen]Refer staus storing Response: ",
+            res2
+          );
           navigation.navigate("Preview", { age, pid, type });
         } else {
-          InsertService.insertFollowUpReferNotRefer(pid, "0");
+          // InsertService.insertFollowUpReferNotRefer(pid, "0");
+          const res1 = await InsertService.insertFollowUpReferNotRefer(pid);
+          console.log(
+            "[QuestionarieScreen]PatientId staus storing Response in Followup referNotRefer: ",
+            res1
+          );
 
           navigation.navigate("Preview", { age, pid, type });
         }
@@ -170,6 +190,29 @@ const QuestionnaireScreen = ({ navigation, route }) => {
       }
     });
     return unmatchedCount;
+  };
+
+  const takePicture = async () => {
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        // Check if image was not cancelled
+        setSelectedImage(result?.assets[0]?.base64); // Update selected image state
+        const resUpdate = await UpdateService.updatePatientFollowupImage(
+          result?.assets[0]?.base64,
+          pid
+        );
+        console.log("resUpdate", resUpdate);
+      }
+    } catch (error) {
+      console.log("Error taking picture:", error);
+    }
   };
 
   return (
@@ -201,6 +244,7 @@ const QuestionnaireScreen = ({ navigation, route }) => {
           </View>
         ))}
       </ScrollView>
+
       <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
@@ -227,7 +271,8 @@ const styles = StyleSheet.create({
   radioButton: {
     borderWidth: 1,
     borderColor: "#000",
-    borderRadius: 10,
+    borderRadius: 10, // const [newLatitude, setNewLatitude] = useState("NULL");
+    // const [newLongitude, setNewLongitude] = useState("NULL");
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginRight: 10,

@@ -8,6 +8,8 @@ import {
   Alert,
   ScrollView,
   Card,
+  Image,
+  Button,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
 import SelectService from "../Services/DatabaseServices/SelectService";
@@ -16,7 +18,8 @@ import UpdateService from "../Services/DatabaseServices/UpdateService";
 import InsertService from "../Services/DatabaseServices/InsertService";
 import NetInfo from "@react-native-community/netinfo";
 import SyncDataService from "../Services/SyncDataService";
-
+import * as Location from "expo-location";
+import * as ImagePicker from "expo-image-picker";
 // import { useNavigation } from "@react-navigation/native";
 
 const Preview = ({ navigation, route }) => {
@@ -33,13 +36,7 @@ const Preview = ({ navigation, route }) => {
   const [patientPersonalDetails, setPatientPersonalDeatils] = useState([]);
   const { type, pid, age } = route.params;
   const { aabhaId } = useContext(PatientContext);
-  const { patientId = -1} = route.params;
-
-
-  // const checkNetworkConnectivity = async () => {
-  //   const state = await NetInfo.fetch();
-  //   return state.isConnected;
-  // };
+  const [selectedImage, setSelectedImage] = useState(null); // Changed initial value to null
 
   const checkNetworkConnectivity = async () => {
     const state = await NetInfo.fetch();
@@ -60,6 +57,22 @@ const Preview = ({ navigation, route }) => {
 
   const handleCheckboxChange = () => {
     setConsentChecked(!consentChecked);
+  };
+
+  const getLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status === "granted") {
+      // Permission granted, you can now access location
+      console.log("Permission Status: ", status);
+
+      return true;
+    } else {
+      // Permission denied
+      console.log("Permission Status: ", status);
+
+      return false;
+    }
   };
 
   const handleSubmit = async () => {
@@ -101,7 +114,43 @@ const Preview = ({ navigation, route }) => {
           [{ text: "OK" }]
         );
       }
-    }else if(type=== "followup"){
+    } else if (type === "followup") {
+      const permissionGranted = await getLocationPermission();
+      if (permissionGranted) {
+        try {
+          const location = await Location.getCurrentPositionAsync({});
+          console.log("Location:", location);
+          // await storeLocationInStorage(location);
+          // setNewLatitude(location.coords.latitude);
+          // setNewLongitude(location.coords.longitude);
+          const newLatitude = location.coords.latitude;
+          const newLongitude = location.coords.longitude;
+          console.log("NL:: NL:::", newLongitude, newLatitude);
+          const res = await UpdateService.updateFollowUpReferNotRefer(
+            pid,
+            undefined,
+            newLatitude,
+            newLongitude
+          );
+          console.log(
+            "[PreviewScreen]Longitude Lattitude status storing Response: ",
+            res
+          );
+          const res2 = await UpdateService.updateFollowUpScheduleStatus(
+            pid,
+            "Completed"
+          );
+          console.log(
+            "[PreviewScreen]Update FollowUpScheduleStatus Response: ",
+            res2
+          );
+        } catch (error) {
+          console.error("Error getting location:", error);
+        }
+      } else {
+        console.log("Location permission not granted.");
+      }
+
       Alert.alert("Data saved in local DB successfully!", "OK", [
         {
           text: "OK",
@@ -109,17 +158,16 @@ const Preview = ({ navigation, route }) => {
             console.log(
               "Patient data has been successfully saved to the local database"
             );
-            navigation.navigate("HomeScreen");
+            navigation.navigate("HomeScreen", { nav: "Refresh" });
           },
         },
       ]);
-
     }
   };
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
-    console.log("date:", date);
+    // console.log("date:", date);
     const year = date.getFullYear().toString().substr(-2); // Get last two digits of the year
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get month and pad with leading zero if needed
     const day = date.getDate().toString().padStart(2, "0"); // Get day and pad with leading zero if needed
@@ -219,6 +267,57 @@ const Preview = ({ navigation, route }) => {
     };
     fun();
   }, []);
+
+  const takeConsent = async () => {
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        // Check if image was not cancelled
+        setSelectedImage(result?.assets[0]?.base64); // Update selected image state
+        const resUpdate = await UpdateService.updatePatientConsentImage(
+          result?.assets[0]?.base64,
+          aabhaId
+        );
+        console.log("resUpdate", resUpdate);
+      }
+    } catch (error) {
+      console.log("Error taking picture:", error);
+    }
+  };
+
+  const takeFollowupPic = async () => {
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        // Check if image was not cancelled
+        setSelectedImage(result?.assets[0]?.base64); // Update selected image state
+        const resUpdate = await UpdateService.updatePatientFollowupImage(
+          result?.assets[0]?.base64,
+          pid
+        );
+        console.log("resUpdate", resUpdate);
+      }
+    } catch (error) {
+      console.log("Error taking picture:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log("Selecded", selectedImage);
+  // }, [selectedImage]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -288,6 +387,37 @@ const Preview = ({ navigation, route }) => {
             </View>
           ) : null}
         </View>
+        {type === "normal" ? (
+          <View>
+            <View>
+              <Button title="Take Consent" onPress={takeConsent} />
+            </View>
+            <View style={styles.imageContainer}>
+              {selectedImage && (
+                <Image
+                  source={{ uri: `data:image/png;base64,${selectedImage}` }}
+                  style={styles.image}
+                  resizeMode="contain"
+                />
+              )}
+            </View>
+          </View>
+        ) : (
+          <View>
+            <View>
+              <Button title="Take Followup Pic" onPress={takeFollowupPic} />
+            </View>
+            <View style={styles.imageContainer}>
+              {selectedImage && (
+                <Image
+                  source={{ uri: `data:image/png;base64,${selectedImage}` }}
+                  style={styles.image}
+                  resizeMode="contain"
+                />
+              )}
+            </View>
+          </View>
+        )}
 
         <View style={styles.checkboxContainer}>
           <CheckBox
@@ -374,6 +504,14 @@ const styles = StyleSheet.create({
   consentText: {
     fontSize: 16,
     marginLeft: 8,
+  },
+  imageContainer: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  image: {
+    width: 300,
+    height: 300,
   },
 });
 

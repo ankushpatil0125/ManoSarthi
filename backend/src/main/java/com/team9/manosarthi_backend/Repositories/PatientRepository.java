@@ -42,5 +42,11 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     List<Patient> allPatient();
 
     @Query("select p.aabhaId from Patient p")
+
     List<String> getAllAabhaId();
+    List<String> getAllAabhaId(String aabhaid);
+
+    @Query("SELECT COUNT(p) FROM Patient p WHERE p.age BETWEEN :startAge AND :endAge")
+    Integer countPatientsInAgeRange(@Param("startAge") int startAge, @Param("endAge") int endAge);
+
 }

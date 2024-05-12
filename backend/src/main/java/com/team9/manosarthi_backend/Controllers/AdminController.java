@@ -197,6 +197,7 @@ public class AdminController {
 
     @PutMapping("/reassign-doctor")
     public DoctorResponseDTO reassignDoctor(@RequestParam("doctorID") int doctorID, @RequestParam("newDistrictCode") int newSubDistrictCode){
+
         Doctor doctor = adminService.reassignDoctor(doctorID,  newSubDistrictCode);
         DoctorResponseDTO dto = new DoctorResponseDTO();
         dto.forAdminDoctorToDoctorResponseDTO(doctor);

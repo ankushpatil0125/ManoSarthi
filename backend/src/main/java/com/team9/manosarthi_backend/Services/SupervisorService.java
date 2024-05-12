@@ -21,7 +21,7 @@ public interface SupervisorService {
 
     Pair<Worker,Boolean> ReassignWorker(Worker updatedWorker);
 
-    Pair<Boolean,Boolean> DeleteWorker(Integer workerid);
+    Pair<Boolean,Boolean> DeleteWorker(Worker worker);
 
     WorkerDetailsDTO workerdetails(int workerid,int userid);
 

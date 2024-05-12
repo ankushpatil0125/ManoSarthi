@@ -151,7 +151,11 @@ const PrivateRoute = ({ children, type }) => {
     type === "forgot-change-password"
   )
   return children;
-  
+
+  else if(
+    type === "missed-patient-details"
+  )
+  return children;
   else return <Navigate to="/" />;
 };
 export default PrivateRoute;
