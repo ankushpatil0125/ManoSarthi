@@ -351,4 +351,18 @@ public class SupervisorRestController {
         }
         return result;
     }
+
+    @GetMapping("/dashboard")
+    public SupDashboardDTO dashboard(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            // Extract the token part after "Bearer "
+            String token = authorizationHeader.substring(7);
+            String userid = helper.getIDFromToken(token);
+            int supid = Integer.parseInt(userid);
+            SupDashboardDTO supDashboardDTO = supervisorService.dashboard(supid);
+            return supDashboardDTO;
+        } else {
+            throw new APIRequestException("Error in authorizing");
+        }
+    }
 }

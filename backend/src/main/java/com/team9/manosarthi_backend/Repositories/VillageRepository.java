@@ -18,4 +18,6 @@ public interface VillageRepository extends JpaRepository<Village,Integer> {
 
     @Query("SELECT v from Village v where v.subDistrict.code =:subdistrictcode")
     List<Village> findVillBySubdistrict(@Param("subdistrictcode") int subdistrictcode);
+
+
 }
