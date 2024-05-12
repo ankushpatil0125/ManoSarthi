@@ -59,7 +59,7 @@ public class DoctorServiceImpl implements DoctorService {
         if(doctor.isPresent()) {
             subDistrictCode= doctor.get().getSubdistrictcode().getCode();
             Pageable pageable = PageRequest.of(pagenumber,pagesize);
-            Page<Patient> patientList=patientRepository.getPatientListBySubdistrict(type,subDistrictCode,pageable);
+            Page<Patient> patientList=patientRepository.getPatientListBySubdistrict(doctorId,type,subDistrictCode,pageable);
 
             List<PatientResponseDTO> patientResponseDTOList=new ArrayList<>();
             for (Patient patient : patientList.getContent()) {
