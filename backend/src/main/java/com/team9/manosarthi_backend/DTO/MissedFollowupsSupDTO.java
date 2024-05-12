@@ -12,11 +12,12 @@ import java.sql.Date;
 @ToString
 public class MissedFollowupsSupDTO {
 
-        private Integer villageCode;
-        private String patient_fname;
-        private String patient_lname;
-        private Integer workerId;
+        private String villageName;
+        private String patientName;
+        private String workerName;
         @JsonFormat(pattern = "dd-MMMM-yyyy", timezone = "Asia/Kolkata")
         private Date followup_date;
+        @JsonFormat(pattern = "dd-MMMM-yyyy", timezone = "Asia/Kolkata")
+        private Date completed_date=null;
 
 }

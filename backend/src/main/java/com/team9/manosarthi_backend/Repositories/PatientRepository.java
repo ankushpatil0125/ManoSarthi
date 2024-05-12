@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
-    @Query("SELECT p from Patient p where p.village.subDistrict.code=:subdistrictcode and p.status=:type")
-    Page<Patient> getPatientListBySubdistrict(@Param("type") String type,@Param("subdistrictcode") int subdistrictcode, Pageable pageable);
+    @Query("SELECT p from Patient p where p.village.subDistrict.code=:subdistrictcode and p.status=:type and p.doctor.id=:doctorId")
+    Page<Patient> getPatientListBySubdistrict(@Param("doctorId") int doctorId ,@Param("type") String type,@Param("subdistrictcode") int subdistrictcode, Pageable pageable);
 
 
     @Query("SELECT p from Patient p where p.aabhaId=:aabhaid")
@@ -35,6 +35,9 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     @Query(value="SELECT count(p) from Patient p")
     Integer getTotalPatientCount();
 
+    @Query(value="SELECT count(p) from Patient p where p.status='TREATED'")
+    Integer getTreatedPatientCount();
+
     @Query("select p from Patient p where p.doctor.id=:doctorID")
     List<Patient> findByDoctorID(@Param("doctorID") int doctorID);
 
@@ -46,5 +49,8 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
     @Query("SELECT COUNT(p) FROM Patient p WHERE p.age BETWEEN :startAge AND :endAge")
     Integer countPatientsInAgeRange(@Param("startAge") int startAge, @Param("endAge") int endAge);
+
+//    @Query("SELECT count(v) from Patient p where ")
+//    Integer countVillSurveyed(@Param("subdid")int subdid);
 
 }

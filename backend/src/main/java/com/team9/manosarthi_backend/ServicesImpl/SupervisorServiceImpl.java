@@ -1,5 +1,7 @@
 package com.team9.manosarthi_backend.ServicesImpl;
 
+import com.team9.manosarthi_backend.DTO.MissedFollowupsSupDTO;
+import com.team9.manosarthi_backend.DTO.SupDashboardDTO;
 import com.team9.manosarthi_backend.DTO.WorkerDetailsDTO;
 import com.team9.manosarthi_backend.Entities.*;
 
@@ -18,10 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 
@@ -35,6 +35,7 @@ public class SupervisorServiceImpl implements SupervisorService {
     private SupervisorRepository supervisorRepository;
     private FollowUpScheduleRepository followUpScheduleRepository;
     private MissedFollowUpRepository missedFollowUpRepository;
+    private TokenRepository tokenRepository;
 
     @Override
     public Supervisor viewProfile(int id) {
@@ -226,7 +227,7 @@ public class SupervisorServiceImpl implements SupervisorService {
             //worker has 3 days time period of syncing.
             // after that period also date is not changed to next followup date show that as missed followup to supervisor
             Date requiredDate = Date.valueOf(LocalDate.now().minusDays(3));
-            System.out.println("currmiss count"+workerid);
+            System.out.println("worker id"+workerid);
             //finding current missed followups
             List<FollowUpSchedule> currfollowupsmissed = followUpScheduleRepository.findMissedByWorker(requiredDate, workerid);
             int currentmissedcount = currfollowupsmissed.size();
@@ -238,24 +239,77 @@ public class SupervisorServiceImpl implements SupervisorService {
             workerDetailsDTO.setWorkerEmail(worker.get().getEmail());
             String currvill = worker.get().getVillagecode().getName();
             workerDetailsDTO.setCurrentMissedFollowupsCounts(Pair.of(currvill, currentmissedcount));
-            //finding prev missed followups count
-            List<Object[]> prevfollowupsmissed = missedFollowUpRepository.findByWorker(workerid);
-            List<Pair<String, Integer>> prevFollMissCount = new ArrayList<>();
+            System.out.println("current missed followup count "+ workerDetailsDTO.getCurrentMissedFollowupsCounts());
+
+            //finding prev missed followups count for each village
+            List<Object[]> prevfollowupsmissed = missedFollowUpRepository.findByWorkerAndVill(workerid);
+//            List<Map<String,Integer>> prevfollowupsmissed = missedFollowUpRepository.findByWorkerAndVill(workerid);
+
+            System.out.println("prevmissfoll list"+prevfollowupsmissed);
+//            List<Pair<String, Integer>> prevFollMissCount = new ArrayList<>();
+            List<Pair<String,Integer>> prevFollMissCount = new ArrayList<>();
             int prevmissedcount=0;
             for (Object[] missFoll : prevfollowupsmissed) {
+                System.out.println("inside loop of prev missed");
+
+                for (Object obj : missFoll) {
+                    System.out.println("obj  "+obj + " "); // Print each element followed by a space
+                }
+                System.out.println("misss 0  "+ missFoll[0]);
+                System.out.println("misss  1 "+ missFoll[1]);
+                System.out.println(missFoll.length);
 
                 String villageCode = (String) missFoll[0]; // village code is at index 0
-                Integer count = (Integer) missFoll[1]; // count is at index 1
+                System.out.println("villagecode"+villageCode);
+
+                int count = Integer.parseInt(missFoll[1].toString()); // count is at index 1
+                System.out.println("count"+count);
+//                String villageCode=missFoll.get(patient.village.name)
+//                System.out.println("Pair.of(villageCode, count)"+Pair.of(villageCode, count));
                 prevFollMissCount.add(Pair.of(villageCode, count)); // Construct pair and add to list
+//                prevFollMissCount.add(missFoll); // Construct pair and add to list
+
                 prevmissedcount+=count;
             }
+            System.out.println("prevmissedcount"+prevmissedcount);
             workerDetailsDTO.setPrevMissedFollowupsCounts(prevFollMissCount);
+            System.out.println("Prev missed followup count "+ workerDetailsDTO.getPrevMissedFollowupsCounts());
+
             //Total missed followup count
             int totalmissedcount=prevmissedcount+currentmissedcount;
             workerDetailsDTO.setTotalmissedcount(totalmissedcount);
+            System.out.println("Total missed followup count "+ workerDetailsDTO.getTotalmissedcount());
+
             //current missed followups
-            workerDetailsDTO.setCurrentMissedFollowups(currfollowupsmissed);
+            List<MissedFollowupsSupDTO> missedFollowupsSupDTOList=new ArrayList<>();
+
+            for(FollowUpSchedule followupsch: currfollowupsmissed)
+            {
+                MissedFollowupsSupDTO missedFollowupsSupDTO=new MissedFollowupsSupDTO();
+                missedFollowupsSupDTO.setPatientName(followupsch.getPatient().getFirstname()+" "+followupsch.getPatient().getLastname());
+                missedFollowupsSupDTO.setFollowup_date(followupsch.getNextFollowUpDate());
+                missedFollowupsSupDTO.setVillageName(followupsch.getVillage().getName());
+                missedFollowupsSupDTO.setWorkerName(followupsch.getWorker().getFirstname()+" "+followupsch.getWorker().getLastname());
+                missedFollowupsSupDTOList.add(missedFollowupsSupDTO);
+            }
+            workerDetailsDTO.setCurrentMissedFollowups(missedFollowupsSupDTOList);
+            System.out.println("Current missed followups "+ workerDetailsDTO.getCurrentMissedFollowups());
+
             //previous missed followup
+            List<MissedFollowupsSupDTO> prevmissedFollowupsSupDTOList=new ArrayList<>();
+            List<MissedFollowUp> prevmissedfoll=missedFollowUpRepository.findByWorker(workerid);
+            for(MissedFollowUp prevfoll:prevmissedfoll)
+            {
+                MissedFollowupsSupDTO missedFollowupsSupDTO=new MissedFollowupsSupDTO();
+                missedFollowupsSupDTO.setWorkerName(prevfoll.getWorker().getFirstname()+" "+prevfoll.getWorker().getLastname());
+                missedFollowupsSupDTO.setFollowup_date(prevfoll.getFollowUpDate());
+                missedFollowupsSupDTO.setCompleted_date(prevfoll.getCompletedDate());
+                missedFollowupsSupDTO.setPatientName(prevfoll.getPatient().getFirstname()+" "+prevfoll.getPatient().getLastname());
+                missedFollowupsSupDTO.setVillageName(prevfoll.getPatient().getVillage().getName());
+                prevmissedFollowupsSupDTOList.add(missedFollowupsSupDTO);
+            }
+            workerDetailsDTO.setPrevMissedFollowups(prevmissedFollowupsSupDTOList);
+            System.out.println("Prev missed followups "+ workerDetailsDTO.getPrevMissedFollowups());
             System.out.println("worker details dto"+workerDetailsDTO);
             return workerDetailsDTO;
         }
@@ -280,7 +334,7 @@ public class SupervisorServiceImpl implements SupervisorService {
                     villageRepository.save(village.get());
             }
             String userName = deleteWorker.get().getUser().getUsername();
-
+            tokenRepository.deleteTokensByUsername(userName);
             deleteWorker.get().setUser(null);
             userRepository.deleteById(userName);
             deleteWorker.get().setActive(false);
@@ -289,5 +343,16 @@ public class SupervisorServiceImpl implements SupervisorService {
             return Pair.of(true, NeedtoAssign);
         }
         throw new APIRequestException("Worker not found");
+    }
+
+    @Override
+    public SupDashboardDTO dashboard(int supid)
+    {
+        Optional<Supervisor> supervisor=supervisorRepository.findById(supid);
+        SupDashboardDTO supDashboardDTO=new SupDashboardDTO();
+        List<Village> villages=villageRepository.findVillBySubdistrict(supervisor.get().getSubdistrictcode().getCode());
+        supDashboardDTO.setVillagesCount(villages.size());
+
+        return supDashboardDTO;
     }
 }

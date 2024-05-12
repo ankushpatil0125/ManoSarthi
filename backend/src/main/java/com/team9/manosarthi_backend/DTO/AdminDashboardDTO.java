@@ -17,4 +17,5 @@ public class AdminDashboardDTO {
     int NonRefferedCount;
     int TotalSurveysTaken;
     List<Pair<Integer,Integer>> AgeStats; //1 for 1-20, 2 for 20-40, 3 for 40-60, 4 for 60 above
+    int TotalTreated;
 }

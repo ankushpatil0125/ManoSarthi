@@ -2,6 +2,7 @@ package com.team9.manosarthi_backend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +30,7 @@ public class FollowUpDetails {
     private Patient patient;
 
     @Column(name = "followup_date")
+    @JsonFormat(pattern = "dd-MMMM-yyyy", timezone = "Asia/Kolkata")
     private Date followupDate;
 
     @Column(name = "follow_up_no")

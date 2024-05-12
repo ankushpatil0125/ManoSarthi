@@ -242,6 +242,7 @@ public class WorkerRestController {
 
                 String token = authorizationHeader.substring(7);
                 String workerId = helper.getIDFromToken(token);
+                System.out.println("workerid" +workerId);
                 List<String> Abhaid = workerService.getAabhaid(Integer.parseInt(workerId));
                 return Abhaid;
             } else {
