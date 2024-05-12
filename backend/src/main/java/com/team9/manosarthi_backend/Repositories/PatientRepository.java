@@ -42,5 +42,5 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
     List<Patient> allPatient();
 
     @Query("select p.aabhaId from Patient p")
-    List<String> getAllAabhaId(String aabhaid);
+    List<String> getAllAabhaId();
 }

@@ -13,7 +13,7 @@ public interface WorkerService {
     Worker viewProfile(int id);
     Worker UpdateWorkerProfile(Worker updatedWorker);
 
-    Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId);
+    String registerPatient(RegisterPatientDTO registerPatientDTO,int workerId);
 //    Patient registerPatient(Patient patient);
     List<String> addNotReferredPatientAabhaId(int workerId ,List<String> aabhaIds);
     List<String> getAabhaid(int villagecode);

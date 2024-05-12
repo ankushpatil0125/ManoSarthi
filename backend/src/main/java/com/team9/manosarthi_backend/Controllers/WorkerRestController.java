@@ -157,8 +157,8 @@ public class WorkerRestController {
                 String token = authorizationHeader.substring(7);
                 String workerId = helper.getIDFromToken(token);
 
-                Patient newPatient = workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
-                return newPatient.getAabhaId();
+                return workerService.registerPatient(registerPatientDTO, Integer.parseInt(workerId));
+//                return newPatient.getAabhaId();
             } else {
                 throw new APIRequestException("Error in authorizing");
             }
@@ -483,7 +483,7 @@ public class WorkerRestController {
 
 //        System.out.println("Patient List"+ patientRepository.allPatient());
         System.out.println();
-        System.out.println("patientRepository.findByAabhaId(abhaid)" + patientRepository.getAllAabhaId(abhaid));
+        System.out.println("patientRepository.findByAabhaId(abhaid)" + patientRepository.getAllAabhaId());
 
         return  patientRepository.allPatient();
 //        return  patientRepository.findByAabhaId(abhaid);

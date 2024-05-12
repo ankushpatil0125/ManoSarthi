@@ -92,7 +92,12 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     @Transactional
-    public Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
+    public String registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
+
+        List<String> aabhaIdList =  patientRepository.getAllAabhaId();
+        for (String aabhaId : aabhaIdList) {
+            if(aabhaId.equals(registerPatientDTO.getPatient().getAabhaId())) return aabhaId;
+        }
 
         Optional<Worker> worker =workerRepository.findById(workerId);
         System.out.println("RegisterPatient ");
@@ -181,7 +186,7 @@ public class WorkerServiceImpl implements WorkerService {
 
 
 
-            return patientRepository.findById(patient.getPatient_id()).get();
+            return patientRepository.findById(patient.getPatient_id()).get().getAabhaId();
 
         }
 
