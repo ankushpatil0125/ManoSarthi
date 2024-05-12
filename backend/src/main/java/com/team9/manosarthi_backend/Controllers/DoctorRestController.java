@@ -74,17 +74,17 @@ public class DoctorRestController {
 
                 String token = authorizationHeader.substring(7);
                 String doctorId = helper.getIDFromToken(token);
-                List<Patient> patientList = doctorService.getPatientList(type,Integer.parseInt(doctorId), pagenumber, pagesize);
+                return doctorService.getPatientList(type,Integer.parseInt(doctorId), pagenumber, pagesize);
 
-                List<PatientResponseDTO> patientResponseDTOList = new ArrayList<>();
-                for (Patient pat : patientList)
-                {
-                    PatientResponseDTO patientResponseDTO = new PatientResponseDTO();
-                    patientResponseDTO.doctor_PatientToPatientResponseDTO(pat);
-                    patientResponseDTOList.add(patientResponseDTO);
-
-                }
-                return patientResponseDTOList;
+//                List<PatientResponseDTO> patientResponseDTOList = new ArrayList<>();
+//                for (Patient pat : patientList)
+//                {
+//                    PatientResponseDTO patientResponseDTO = new PatientResponseDTO();
+//                    patientResponseDTO.doctor_PatientToPatientResponseDTO(pat);
+//                    patientResponseDTOList.add(patientResponseDTO);
+//
+//                }
+//                return patientResponseDTOList;
             }
             else {
                 throw new APIRequestException("Error in authorizing");

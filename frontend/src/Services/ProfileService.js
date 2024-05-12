@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL, getToken } from "../utils/Constants";
-import { getUserId } from "../utils/Constants";
 const ProfileService = {
     getDoctorData : async () => {
         try {

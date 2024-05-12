@@ -81,6 +81,8 @@ import LanguageButton from "../Header/LanguageButton";
 import IsPasswordChangeService from "../../Services/IsPasswordChangeService";
 import AuthContext from "../Context/AuthContext";
 import LoadingComponent from "../Loading/LoadingComponent";
+//const ForgotPasswordComponent = ({setIsEmailVerified}) => {
+
 const ForgotPasswordComponent = ({setIsEmailVerified}) => {
   const [t] = useTranslation("global");
   const navigate = useNavigate();
@@ -111,13 +113,13 @@ const ForgotPasswordComponent = ({setIsEmailVerified}) => {
       if (response?.data) {
         setLoading(false);
         setIsEmailVerified(true);
-        navigate("/otp-verify",{state :{email :requestData.email}}); 
+        navigate("/otp-verify",{state :{email :requestData?.email}}); 
       } 
       }
      catch (error) {
       console.log("Error Verify Email for forgot paswor API Response: ",error)
       setLoading(false);
-      alert(`Login Failed : ${error?.response?.data}`);
+      alert(`Login Failed : ${error?.response?.data?.message}`);
     }
   };
 
@@ -147,7 +149,7 @@ const ForgotPasswordComponent = ({setIsEmailVerified}) => {
                     required
                     className="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]"
                     placeholder={t("login.Enter Email Address")}
-                    value={requestData.email}
+                    value={requestData?.email}
                     onChange={handleChange}
                   />
                   <svg

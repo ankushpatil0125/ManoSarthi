@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.team9.manosarthi_backend.DTO.FollowUpDetailsDTO;
 import com.team9.manosarthi_backend.DTO.PatientFollowUpPrescriptionDTO;
+import com.team9.manosarthi_backend.DTO.PatientResponseDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import com.team9.manosarthi_backend.Exceptions.APIRequestException;
 import com.team9.manosarthi_backend.Repositories.*;
@@ -52,14 +53,32 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Patient> getPatientList(String type,int doctorId, int pagenumber, int pagesize) {
+    public List<PatientResponseDTO> getPatientList(String type,int doctorId, int pagenumber, int pagesize) {
         Optional<Doctor> doctor = doctorRepository.findById(doctorId);
         int subDistrictCode;
         if(doctor.isPresent()) {
             subDistrictCode= doctor.get().getSubdistrictcode().getCode();
             Pageable pageable = PageRequest.of(pagenumber,pagesize);
-            Page<Patient> patientList=patientRepository.getPatientListBySubdistrict(doctorId,type,subDistrictCode,pageable);
-            return patientList.getContent();
+            Page<Patient> patientList=patientRepository.getPatientListBySubdistrict(type,subDistrictCode,pageable);
+
+            List<PatientResponseDTO> patientResponseDTOList=new ArrayList<>();
+            for (Patient patient : patientList.getContent()) {
+                PatientResponseDTO patientResponseDTO=new PatientResponseDTO();
+
+                String imageName = followUpDetailsRepository.getImageNameForNewRegisterPatient(patient.getPatient_id());
+                if(imageName != null && !imageName.equals("-1"))
+                {
+                    System.out.println("fetcing image in new patient");
+                    String res = amazonS3.getObjectAsString("manosarthi",imageName);
+                    System.out.println("image fetched");
+                    patientResponseDTO.setImage(res);
+                }
+                patientResponseDTO.doctor_PatientToPatientResponseDTO(patient);
+                patientResponseDTOList.add(patientResponseDTO);
+
+            }
+            return patientResponseDTOList;
+//            return patientList.getContent();
         }
         else return null;
     }

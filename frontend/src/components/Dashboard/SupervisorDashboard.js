@@ -7,7 +7,7 @@ const SupervisorDashboard = () => {
   const [chartData, setChartData] = useState(null);
   const [pieChartData, setPieChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
-  const [surveyStats, setSurveyStats] = useState([]); // [{dictrict: patientCount}]
+  const [patientsVillageStats, setPatientsVillageStats] = useState([]); // [{dictrict: patientCount}]
   const chartRef = useRef(null);
   const pieChartRef = useRef(null);
   const barChartRef = useRef(null);
@@ -18,16 +18,15 @@ const SupervisorDashboard = () => {
 
   const fetchData = async () => {
     try {
-      const response = await AdminService.getSurveyStats();
-      setSurveyStats(response.data);    
+      // const patientsVillageStatsRes = await AdminService.getPatientCountAccordingtoVillage();
+      // console.log("patientsVillageStatsRes: ", patientsVillageStatsRes.data)
+      // setPatientsVillageStats(patientsVillageStatsRes.data);    
     } catch (error) {
       console.error("Error fetching survey stats: ", error);
     }
   }
 
   useEffect(() => {
-    if (surveyStats.length === 0) return; // Don't proceed if surveyStats is empty
-    
     const labels = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july'];
     const data = {
       labels: labels,
@@ -41,12 +40,13 @@ const SupervisorDashboard = () => {
     };
     setChartData(data);
 
-    const pieLabels = ['Referred', 'Not Referred', 'Not Surveyed'];
+    // Sample data for the Pie chart
+    const pieLabels = patientsVillageStats.map((stat) => stat[0]); //All villages under supervisor
     const pieData = {
       labels: pieLabels,
       datasets: [{
         label: 'Pie Dataset',
-        data: [12, 19, 3],
+        data: patientsVillageStats.map((stat) => stat[1]), //Patient count in a village,
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
@@ -59,25 +59,25 @@ const SupervisorDashboard = () => {
 
 
     // Sample data for the bar chart
-    const barLabels =  surveyStats.map((stat) => stat[0]); //All Districts
+    const barLabels =  patientsVillageStats.map((stat) => stat[0]); //All villages under supervisor
     const barData = {
       labels: barLabels,
       datasets: [{
         label: 'Bar Dataset',
-        data: surveyStats.map((stat) => stat[1]), // Patient count in a district
+        data: patientsVillageStats.map((stat) => stat[1]), // Patient count in a village
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgb(75, 192, 192)',
         borderWidth: 1
       }]
     };
     setBarChartData(barData);
-  }, [surveyStats]);
+  }, [patientsVillageStats ]);
 
   return (
-    <div className="flex gap-2 px-1 py-1 mb-4 h-12">
+    <div className="flex gap-2 px-1 py-1 mb-4 h-10">
       <div className="w-1/2 bg-gray-400 mt-10">
         <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Patient Registered</h2>
+          <h2 className="text-lg font-semibold mb-4">Patient Registered in Village</h2>
           {pieChartData && <Pie data={pieChartData} options={{}} ref={pieChartRef} />}
         </div>
       </div>
@@ -89,7 +89,7 @@ const SupervisorDashboard = () => {
           )}
         </div>     
         <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">District wise patients stats</h2>
+          <h2 className="text-lg font-semibold mb-4">Village wise patients stats</h2>
           {barChartData && <Bar data={barChartData} options={{ scales: { y: { suggestedMin: 1 }}}} ref={barChartRef} />}
         </div>
       </div>

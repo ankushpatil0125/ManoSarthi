@@ -19,6 +19,46 @@ const AdminService = {
       throw error;
     }
   },
+  addQuestionarrie: async(questionarrieData) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "admin/questionarrie",
+        questionarrieData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      // console.error("Service: Error Adding Supervisor: ", error);
+      // throw error;
+      throw error;
+    }
+  },
+  addMedicalQuestionarrie: async(questionarrieData) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "admin/med-questionarrie",
+        questionarrieData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      // console.error("Service: Error Adding Supervisor: ", error);
+      // throw error;
+      throw error;
+    }
+  },
   addSupervisor: async (supervisorData) => {
     try {
       const response = await axios.post(
@@ -39,7 +79,6 @@ const AdminService = {
       throw error;
     }
   },
-
   reassignSupervisor: async (reasignSupervisor) => {
     try {
       console.log("inside reassignSupervisor")
@@ -100,24 +139,67 @@ const AdminService = {
       throw error;
     }
   },
-  deleteSupervisor: async (Id) => {
+  // reassignDoctor: async (reasignSupervisor) => {
+  //   try {
+  //     const response = await axios.put(
+  //       BASE_URL + "admin/reassign-doctor?doctorID=" + reasignSupervisor.id + "&newDistrictCode=" +  reasignSupervisor.subdistrictcode.code,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: Bearer ${getToken()},
+  //           // withCredentials:false
+  //         },
+  //       }
+  //     );
+  //     return response;
+  //   } catch (error) {
+  //     // console.error("Service: Error Reassigning Supervisor: ", error);
+  //     console.log("AEERORRRR: ", error);
+  //     // throw error;
+  //     throw error;
+  //   }
+  // },
+
+  reassignDoctor: async (selectedSubDistrict, selectedSupervisorId) => {
     try {
-      const response = await axios.delete(BASE_URL + "admin/supervisor", {
-        data: Id,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
+      console.log("token: ", getToken());
+      const response = await axios.put(
+        BASE_URL + "admin/reassign-doctor?doctorID=" + selectedSupervisorId + "&newDistrictCode=" + selectedSubDistrict,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      );
       return response;
     } catch (error) {
-      // console.error("Service: Error Reassigning Supervisor: ", error);
-      // throw error;
+      // console.log("ERROR: ", error);
       throw error;
     }
   },
+  
+  // deleteSupervisor: async (Id) => {
+  //   try {
+  //     const response = await axios.delete(BASE_URL + "admin/supervisor", {
+  //       data: Id,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${getToken()}`,
+  //       },
+  //     });
+  //     return response;
+  //   } catch (error) {
+  //     // console.error("Service: Error Reassigning Supervisor: ", error);
+  //     // throw error;
+  //     throw error;
+  //   }
+  // },
+
   getDistrict: async (role, assigned) => {
     try {
+      console.log("getDistrict")
       const response = await axios.get(
         BASE_URL + "district/?role=" + role + "&assigned=" + assigned,
         {
@@ -128,7 +210,6 @@ const AdminService = {
           },
         }
       );
-
       return response;
     } catch (error) {
       // console.error("Service: Error Fetching District Options: ", error);
@@ -138,6 +219,8 @@ const AdminService = {
 
   getSubDistrict: async (districtcode, role, assigned) => {
     try {
+      console.log("in getsubdistrict for role: ", role, assigned, districtcode)
+    
       const response = await axios.get(
         BASE_URL +
           "subdistrict/?districtcode=" +
@@ -230,26 +313,6 @@ const AdminService = {
     }
   },
 
-  getSurveyStats: async() => {
-    try{
-      console.log("Calling getSurveyStats")
-      const response = await axios.get(
-        BASE_URL + "admin/districtstats",
-        {
-          headers:{
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      )
-      console.log("SurveyStats: ", response.data);
-      return response;
-    }
-    catch(error){
-      throw error;
-    }
-  },
-
   getAllSupervisors: async (pagenumber) => {
     try {
       console.log("before calling getAll");
@@ -321,11 +384,52 @@ const AdminService = {
       throw error;
     }
   },
-  getPatientCountAccordingtoDistrict: async() => {
+
+  // getPatientCountAccordingtoDistrict: async() => {
+  //   try{
+  //     console.log("Calling getPatientCountAccordingtoDistrict")
+  //     const response = await axios.get(
+  //       BASE_URL + "admin/districtstats",
+  //       {
+  //         headers:{
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${getToken()}`
+  //         }
+  //       }
+  //     )
+  //     console.log("getPatientCountAccordingtoDistrict: ", response.data);
+  //     return response;
+  //   }
+  //   catch(error){
+  //     throw error;
+  //   }
+  // },
+  
+  // getPatientAccordingtoSubcategory: async() => {
+  //   try{
+  //     console.log("Calling get Stats")
+  //     const response = await axios.get(
+  //       BASE_URL + "admin/diseasestats",
+  //       {
+  //         headers:{
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${getToken()}`
+  //         }
+  //       }
+  //     )
+  //     console.log("SurveyStats: ", response.data);
+  //     return response;
+  //   }
+  //   catch(error){
+  //     throw error;
+  //   }
+  // },
+
+  adminDashboard: async() => {
     try{
-      console.log("Calling getSurveyStats")
+      console.log("Calling get Dashboard")
       const response = await axios.get(
-        BASE_URL + "admin/districtstats",
+        BASE_URL + "admin/dashboard",
         {
           headers:{
             "Content-Type": "application/json",
@@ -333,26 +437,7 @@ const AdminService = {
           }
         }
       )
-      console.log("SurveyStats: ", response.data);
-      return response;
-    }
-    catch(error){
-      throw error;
-    }
-  },
-  getPatientAccordingtoSubcategory: async() => {
-    try{
-      console.log("Calling getSurveyStats")
-      const response = await axios.get(
-        BASE_URL + "admin/diseasestats",
-        {
-          headers:{
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      )
-      console.log("SurveyStats: ", response.data);
+      console.log("Dashboard data: ", response.data);
       return response;
     }
     catch(error){

@@ -131,7 +131,8 @@ public class SecurityConfig {
                         .requestMatchers("/disease-category/**").permitAll()
                         .requestMatchers("/disease-subcategory/**").permitAll()
                         .requestMatchers("/user/change-password").hasAnyRole("DOCTOR","ADMIN","SUPERVISOR","WORKER")
-                        .requestMatchers("/v3/api-docs").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources").permitAll()
 
 //
 

@@ -11,6 +11,8 @@ import { AntDesign } from "@expo/vector-icons";
 import LanguageToggleButton from "../MultiLingual/LanguageButton";
 import { useLanguageContext } from "../context/LanguageProvider";
 import SyncDataService from "../Services/SyncDataService";
+import { fetchData } from "../Services/initService";
+
 const CustomDrawer = (props) => {
   const { logout, userName } = useContext(AuthContext);
   const { selectedLanguage, handleLanguageToggle } = useLanguageContext(); // Accessing selectedLanguage and handleLanguageToggle from LanguageProvider
@@ -19,6 +21,12 @@ const CustomDrawer = (props) => {
     console.log("Before Syncing :");
     // SyncDataService.registrationData();
     SyncDataService.followUpData();
+    // SyncDataService.newAabhaData();
+  };
+
+  handlefetch = async () => {
+    console.log("Before Fetching :");
+    fetchData();
   };
   return (
     <View style={{ flex: 1 }}>
@@ -50,6 +58,19 @@ const CustomDrawer = (props) => {
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
+      <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
+        <Pressable
+          onPress={() => {
+            handlefetch();
+          }}
+          style={{ paddingVertical: 15, borderColor: "#87CEEB" }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <AntDesign name="download" size={24} color="black" />
+            <Text style={{ fontSize: 15, marginLeft: 5 }}>Fetch</Text>
+          </View>
+        </Pressable>
+      </View>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
         <Pressable
           onPress={() => {

@@ -42,7 +42,22 @@ const ShowHealthWorkerActivity = () => {
         setLoading(false); // Set loading to false in case of error
       }
     };
+    const fetchData2 = async () => {
+      setLoading(true); // Set loading to true when fetching health worker data
+      try {
+        if (villageCode) {
+          // Fetch Health workers assigned to selected village code
+          const response = await SupervisorService.getWorkerDetails(villageCode);
+          console.log("resp",response);
+          setLoading(false); // Set loading to false after data is fetched
+        }
+      } catch (error) {
+        alert(error.response.data.message);
+        setLoading(false); // Set loading to false in case of error
+      }
+    };
     fetchData();
+    fetchData2();
   }, [villageCode]);
 
 
