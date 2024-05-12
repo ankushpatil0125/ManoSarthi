@@ -20,25 +20,26 @@ const SupervisorDashboard = () => {
     const fetchData = async () => {
       try {
         const response = await SupervisorService.supervisorDashboard();
+        console.log("supervisorDashboard ", response.data)
         setDashboardStatsData(response.data);
       } catch (error) {
         console.error("Error fetching dashboard stats: ", error);
       }
     };
-    // fetchData();
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (dashboardStatsData.length === 0) return;
 
     // disease wise count
-    const diseaseLabels = dashboardStatsData?.diseaseStats?.map((stat) => stat[0]).slice(0, 15);
+    const diseaseLabels = dashboardStatsData?.villwithmissedc?.map((stat) => Object.keys(stat)[0]).slice(0, 15);
     const diseasePieData = {
       labels: diseaseLabels,
       datasets: [
         {
           label: "Disease Pie Dataset",
-          data: dashboardStatsData?.diseaseStats?.map((stat) => stat[1]).slice(0, 15),
+          data : dashboardStatsData?.villwithmissedc?.map(stat => Object.values(stat)[0]).slice(0, 15),
           backgroundColor: [  
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
@@ -58,13 +59,13 @@ const SupervisorDashboard = () => {
     setDiseasePieChartData(diseasePieData);
 
     // village wise count
-    const villageLabels = dashboardStatsData?.villageStats?.map((stat) => stat[0]);
+    const villageLabels = dashboardStatsData?.villagewithpatient?.map((stat) => Object.keys(stat)[0]).slice(0, 15);
     const villagePieData = {
       labels: villageLabels,
       datasets: [
         {
-          label: "village Pie Dataset",
-          data: dashboardStatsData?.villageStats?.map((stat) => stat[1]).slice(0, 15),
+          label: "Count",
+          data : dashboardStatsData?.villagewithpatient?.map(stat => Object.values(stat)[0]).slice(0, 15),
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -106,15 +107,15 @@ const SupervisorDashboard = () => {
     <div className="bg-white p-6 mt-4 rounded shadow-md">
       <div className="grid grid-cols-1 gap-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Total Surveys: {dashboardStatsData?.totalSurveysTaken}</h2>
+          <h2 className="font-semibold">Total Villages: {dashboardStatsData?.villagesCount}</h2>
           <span className="text-gray-600"></span>
         </div>
         <div className="flex items-center justify-between">
-          <h5 className="font-semibold">- Referred: {dashboardStatsData?.refferedCount}</h5>
+          <h5 className="font-semibold">- Surevyed: {dashboardStatsData?.villSurveyedCount}</h5>
           <span className="text-gray-600"></span>
         </div>
         <div className="flex items-center justify-between">
-          <h5 className="font-semibold">- Not Referred: {dashboardStatsData?.nonRefferedCount}</h5>
+          <h5 className="font-semibold">- Not Surevyed: {dashboardStatsData?.nonRefferedCount}</h5>
           <span className="text-gray-600"></span>
         </div>
         <div className="flex items-center justify-between">
@@ -135,13 +136,13 @@ const SupervisorDashboard = () => {
     <div className="grid grid-cols-2 gap-4 px-4 py-4">
       <div className="bg-gray-400">
         <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Top 15 Disease wise patients stats</h2>
+          <h2 className="text-lg font-semibold mb-4">Top 15 Villages With Missed FollowUps</h2>
           {diseasePieChartData && <Pie data={diseasePieChartData} options={{}} ref={pieChartRef} />}
         </div>
       </div>
       <div className="bg-gray-400">
         <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Top 15 District wise patients stats</h2>
+          <h2 className="text-lg font-semibold mb-4">Top 15 Villages Wise Patients Registrations</h2>
           {villagePieChartData && <Pie data={villagePieChartData} options={{}} ref={villagePieChartRef} />}
         </div>
       </div>
