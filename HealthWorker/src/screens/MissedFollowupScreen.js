@@ -1,7 +1,15 @@
-import { ScrollView, StyleSheet, Text, View, Button } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { DataTable, Card, Title } from "react-native-paper";
 import SelectService from "../Services/DatabaseServices/SelectService";
+import Icon from "react-native-vector-icons/FontAwesome"; // Example: using FontAwesome icons
 
 const MissedFollowUpsScreen = ({ route, navigation }) => {
   const [folloupSch, setFolloupSch] = useState([]);
@@ -48,48 +56,59 @@ const MissedFollowUpsScreen = ({ route, navigation }) => {
       </View>
       <View style={{ marginTop: 50 }}>
         <View style={styles.container}>
-          <Card style={styles.card}>
-            <Card.Content>
-              {/* <Title style={styles.title}>Follow-up Schedule</Title> */}
-
-              <DataTable>
-                <DataTable.Header style={styles.head}>
-                  <DataTable.Title>Patient Id</DataTable.Title>
-                  <DataTable.Title>First Name</DataTable.Title>
-                  <DataTable.Title>Last Name</DataTable.Title>
-                  <DataTable.Title>Adress</DataTable.Title>
-                  <DataTable.Title>Follow-Up Date</DataTable.Title>
-                  <DataTable.Title>Age</DataTable.Title>
-                  <DataTable.Title>Follow-Up Type</DataTable.Title>
-                  <DataTable.Title>Status</DataTable.Title>
-                  <DataTable.Title>Action</DataTable.Title>
-                </DataTable.Header>
-                {folloupSch
-                  .filter((item) => item.type === ftype)
-                  .map((item, patientID) => (
-                    <DataTable.Row key={patientID} style={styles.row}>
-                      <DataTable.Cell>{item.patientId}</DataTable.Cell>
-                      <DataTable.Cell>{item.patient_fname}</DataTable.Cell>
-                      <DataTable.Cell>{item.patient_lname}</DataTable.Cell>
-                      <DataTable.Cell>{item.patient_adress}</DataTable.Cell>
-                      <DataTable.Cell>{item.followUpDate}</DataTable.Cell>
-                      <DataTable.Cell>{item.age}</DataTable.Cell>
-                      <DataTable.Cell>{item.type}</DataTable.Cell>
-                      <DataTable.Cell>{item.status}</DataTable.Cell>
-
-                      <DataTable.Cell>
-                        <Button
-                          title="Proceed"
-                          onPress={() =>
-                            handleCompleteFollowUp(item.age, item.patientId)
-                          }
-                        />
-                      </DataTable.Cell>
-                    </DataTable.Row>
-                  ))}
-              </DataTable>
-            </Card.Content>
-          </Card>
+          {folloupSch
+            .filter((item) => item.type === ftype)
+            .map((item, index) => (
+              <Card key={index} style={styles.card}>
+                <Card.Content>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>First Name:</Text>
+                    <Text>{item.patient_fname}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Last Name:</Text>
+                    <Text>{item.patient_lname}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Address:</Text>
+                    <Text>{item.patient_adress}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={styles.label}>Follow-Up Date:</Text>
+                    <Text>{item.followUpDate}</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text style={[styles.label, { fontSize: 16 }]}>
+                      Status:
+                    </Text>
+                    {item.status === "Pending" && (
+                      <Icon name="exclamation" size={30} color="orange" />
+                    )}
+                    {item.status === "Completed" && (
+                      <Icon name="check" size={30} color="green" />
+                    )}
+                    {!(
+                      item.status === "Pending" || item.status === "Completed"
+                    ) && (
+                      <>
+                        <Icon name="times" size={30} color="red" />
+                        <Text
+                          style={{ fontSize: 18, color: "red", marginLeft: 10 }}
+                        >
+                          {item.status}
+                        </Text>
+                      </>
+                    )}
+                  </View>
+                  <Button
+                    title="Proceed"
+                    onPress={() =>
+                      handleCompleteFollowUp(item.age, item.patientId)
+                    }
+                  />
+                </Card.Content>
+              </Card>
+            ))}
         </View>
       </View>
     </ScrollView>
@@ -101,6 +120,7 @@ export default MissedFollowUpsScreen;
 const styles = StyleSheet.create({
   container: { flex: 1, paddingTop: 10, paddingHorizontal: 30 },
   card: {
+    marginBottom: 20,
     elevation: 5,
     borderRadius: 10,
     backgroundColor: "#fff",
@@ -113,11 +133,17 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   title: {
-    marginBottom: 10,
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
   },
-  head: { height: 44, backgroundColor: "lightblue" },
-  row: { height: 50 },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  label: {
+    fontWeight: "bold",
+    marginRight: 5,
+  },
 });

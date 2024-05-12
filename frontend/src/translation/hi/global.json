@@ -13,20 +13,20 @@
     "Logout": "लॉगआउट",
     "username": "उपयोगकर्ता नाम",
     "User name": "उपयोगकर्ता नाम",
-  "Enter user name": "उपयोगकर्ता नाम दर्ज करें",
-  "Enter password": "पासवर्ड दर्ज करें",
-  "Forgot-password": "पासवर्ड भूल गए",
-  "Sign in to your Account":"साइन इन टू योर अकाउंट",
+    "Enter user name": "उपयोगकर्ता नाम दर्ज करें",
+    "Enter password": "पासवर्ड दर्ज करें",
+    "Forgot-password": "पासवर्ड भूल गए",
+    "Sign in to your Account": "साइन इन टू योर अकाउंट",
     "Password": "पासवर्ड",
     "forgot-password": "पासवर्ड भूल गए हैं",
     "Click_Here": "यहाँ क्लिक करें",
     "Forgot Password": "पासवर्ड भूल गए",
-  "Email Address": "ईमेल पता",
-  "Enter Email Address": "ईमेल पता दर्ज करें",
-  "Verify Email Address": "ईमेल पता सत्यापित करें",
-  "Enter 6 Digit OTP": "6 अंकों का ओटीपी दर्ज करें",
-  "Verify OTP": "ओटीपी सत्यापित करें",
-  "OTP":"ओटीपी"
+    "Email Address": "ईमेल पता",
+    "Enter Email Address": "ईमेल पता दर्ज करें",
+    "Verify Email Address": "ईमेल पता सत्यापित करें",
+    "Enter 6 Digit OTP": "6 अंकों का ओटीपी दर्ज करें",
+    "Verify OTP": "ओटीपी सत्यापित करें",
+    "OTP": "ओटीपी"
   },
   "Select_Language": "भाषा चुनें",
   "Actor": {
@@ -40,7 +40,7 @@
     "Delete HealthWorker": "स्वास्थ्य कर्मी हटाएं",
     "Show Activity": "शो एक्टिविटी",
     "HealthWorker": "स्वास्थ्य कर्मी",
-    "Dashboard":"डैशबोर्ड"
+    "Dashboard": "डैशबोर्ड"
   },
   "addDoctorSupervisor": {
     "Doctor": "डॉक्टर",
@@ -111,19 +111,19 @@
     "Change Password": "पासवर्ड बदलें",
     "Doctor Profile": "डॉक्टर प्रोफ़ाइल",
     "Supervisor Profile": "सुपरवाइजर प्रोफ़ाइल",
-    "Other Details":"अन्य विवरण"
+    "Other Details": "अन्य विवरण"
   },
 
-  "ViewPatientDetails" : {
+  "ViewPatientDetails": {
     "Patient Details": "रोगी विवरण"
   },
-  
-  "admin":{
-      "Dashboard": "डैशबोर्ड",
-      "Add": "जोड़ें",
-      "Update": "अपडेट करें",
-      "Delete": "हटाएँ"
-      
+
+  "admin": {
+    "Dashboard": "डैशबोर्ड",
+    "Add": "जोड़ें",
+    "Update": "अपडेट करें",
+    "Delete": "हटाएँ",
+    "Add Questionarrie": "प्रश्नावली"
   },
   "doctor": {
     "Dashboard": "डैशबोर्ड",

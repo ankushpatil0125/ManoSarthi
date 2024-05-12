@@ -18,7 +18,7 @@ const OngoingPatientDetails = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [t] = useTranslation("global");
   const [followUpDetails, setFollowUpDetails] = useState([]);
-  
+
   // setMedicalQuesAns(data?.medicalQuesAnsList)
   useEffect(() => {
     //get the followup of the ongoing patient using patient id and store it in followupDetails state variable
@@ -35,7 +35,7 @@ const OngoingPatientDetails = () => {
             },
           }
         );
-        console.log("Survey Questionarrie ", response?.data);
+        console.log("Survey Questionarrie Doc: ", response?.data);
         if (response) setFollowUpDetails(response?.data);
 
         setLoading(false);
@@ -103,8 +103,6 @@ const OngoingPatientDetails = () => {
                 </div>
               </section>
             </div>
-
-            
           </div>
         );
       // case "Follow-Up-Details":
