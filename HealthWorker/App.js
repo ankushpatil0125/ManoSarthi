@@ -11,7 +11,6 @@ NativeWindStyleSheet.setOutput({
   default: "native",
 });
 
-
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
  useEffect(() => {
