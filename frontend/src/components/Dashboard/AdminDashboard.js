@@ -36,7 +36,7 @@ const AdminDashboard = () => {
       labels: diseaseLabels,
       datasets: [
         {
-          label: "Disease Pie Dataset",
+          label: "Count",
           data: dashboardStatsData?.diseaseStats?.map((stat) => stat[1]).slice(0, 15),
           backgroundColor: [  
           "rgb(255, 99, 132)",
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
       labels: districtLabels,
       datasets: [
         {
-          label: "District Pie Dataset",
+          label: "Count",
           data: dashboardStatsData?.districtStats?.map((stat) => stat[1]).slice(0, 15),
           backgroundColor: [
             "rgb(255, 99, 132)",

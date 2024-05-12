@@ -176,14 +176,15 @@ const SupervisorService = {
   },
   supervisorDashboard: async() => {
     try{
-      console.log("Calling get Dashboard")
+      console.log("Calling get supervisor Dashboard")
       const response = await axios.get(
         BASE_URL + "supervisor/dashboard",
         {
-          headers:{
+          headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-          }
+            Authorization: `Bearer ${getToken()}`,
+            // withCredentials:false
+          },
         }
       )
       console.log("supervisor Dashboard data: ", response.data);
