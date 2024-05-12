@@ -37,6 +37,8 @@ public class PatientResponseDTO {
 
     private PrescriptionDTO prescriptionDTO;
 
+    private String image;
+
     public void doctor_PatientToPatientResponseDTO(Patient patient)
     {
         this.patient_id=patient.getPatient_id();
