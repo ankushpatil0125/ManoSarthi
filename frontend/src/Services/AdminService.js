@@ -117,7 +117,6 @@ const AdminService = {
       throw error;
     }
   },
-
   reassignSupervisor: async (reasignSupervisor) => {
     try {
       const response = await axios.put(
@@ -443,6 +442,6 @@ const AdminService = {
     catch(error){
       throw error;
     }
-  },
+  },  
 };
 export default AdminService;

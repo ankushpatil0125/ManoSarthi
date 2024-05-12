@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SupervisorService from "../../Services/SupervisorService";
 import "../../css/modal.css";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LoadingComponent from "../Loading/LoadingComponent";
 import { FaSyncAlt, FaTimes, FaTrash } from "react-icons/fa";
@@ -14,7 +15,7 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
   const [selectedVillage, setSelectedVillage] = useState("");
   const [selectedHealthWorkerId, setSelectedHealthWorkerId] = useState(null);
   const [loading,setLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   const [data, setData] = useState([]);
   const { t } = useTranslation("global");
@@ -83,16 +84,37 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
     setSelectedHealthWorkerId(healthWorkerId);
   };
 
-  const handleDelete = (healthWorkerId) => {
-    setSelectedHealthWorkerId(healthWorkerId);
-    alert(`Do you want to delete the health worker with id:${healthWorkerId}`)
+  const handleDelete = async(healthWorkerId) => {
+    // setSelectedHealthWorkerId(healthWorkerId);
+    const Id = {
+      id: healthWorkerId,
+    };
+    const confirmation = window.confirm(`Do you want to delete the health worker with id: ${healthWorkerId}`);
+    try{
+      if (confirmation) {
+      const delRes = await SupervisorService.deleteHealthWorker(Id);
+      const delResDats = delRes?.data;
+      const value = delResDats[Object.keys(delResDats)[0]];
+        console.log("Response of delete health worker:", value);
+        if(value){
+          alert(`Health worker deleted sucessfully! Followups remaining in the village, Please assigned new healthworker`)
+          navigate('/add-healthworker');
+        }
+        else{
+          alert(`Health worker deleted sucessfully!`)
+        }
+      }
+    }
+    catch(error){
+      console.log("Error while deleting healthworker");
+    }
   }
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-  const handleUpdateWorker = () => {
+  const handleUpdateWorker = async() => {
     // Call update worker API with selected village code
     console.log("Selected Village:", selectedVillage);
     console.log("HealthWorker ID:", selectedHealthWorkerId);
@@ -104,10 +126,21 @@ const ViewHealthWorker = ({action,  allHealWorker, village }) => {
       },
     };
     setLoading(true)
-    try{
-    const response = SupervisorService.updateHealthWorker(reasignHealthWorker);
-    console.log("response of update healthworker",response);
-    setLoading(false);
+    try {
+      const response = await SupervisorService.updateHealthWorker(reasignHealthWorker);
+      const responseData = response?.data;
+      if (responseData) {
+        const value = responseData[Object.keys(responseData)[0]];
+        console.log("Response of update health worker:", value);
+        if(value){
+          alert(`Health worker reassigned sucessfully! Followups remaining in the village, Please assigned new healthworker`)
+          navigate('/add-healthworker');
+        }
+        else{
+          alert(`Health worker reassigned sucessfully!`)
+        }
+      }
+      setLoading(false);
     }
     catch(error){
       console.log("Error while Updating healthworker");
