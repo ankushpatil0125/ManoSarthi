@@ -18,6 +18,7 @@ const ShowHealthWorkerActivity = () => {
     // Fetch village options
     SupervisorService.getVillageWorker(true)
       .then((response) => {
+        console.log("Villages List: ", response.data);
         setVillage(response.data);
         setLoading(false); // Set loading to false after data is fetched
       })
@@ -33,7 +34,11 @@ const ShowHealthWorkerActivity = () => {
       try {
         if (villageCode) {
           // Fetch Health workers assigned to selected village code
-          const response = await SupervisorService.getAllVillageHealthWorker(villageCode);
+          const response = await SupervisorService.getAllVillageHealthWorker(
+            villageCode
+          );
+          console.log("All HealthWorker of a Village: ", response.data);
+
           setHealthWorker(response.data[0]);
           setLoading(false); // Set loading to false after data is fetched
         }
@@ -47,8 +52,10 @@ const ShowHealthWorkerActivity = () => {
       try {
         if (villageCode) {
           // Fetch Health workers assigned to selected village code
-          const response = await SupervisorService.getWorkerDetails(villageCode);
-          console.log("resp",response);
+          const response = await SupervisorService.getWorkerDetails(
+            villageCode
+          );
+          console.log("Working details of a Worker: ", response);
           setLoading(false); // Set loading to false after data is fetched
         }
       } catch (error) {
@@ -59,7 +66,6 @@ const ShowHealthWorkerActivity = () => {
     fetchData();
     fetchData2();
   }, [villageCode]);
-
 
   useEffect(() => {
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
@@ -78,7 +84,6 @@ const ShowHealthWorkerActivity = () => {
     setChartData(data);
   }, []);
 
-
   if (loading) return <LoadingComponent />; // Render loading component if loading is true
   return (
     <div>
@@ -89,59 +94,61 @@ const ShowHealthWorkerActivity = () => {
         </h4>
 
         <div className="flex flex-wrap items-center mb-4">
-        {/* Select Village */}
-        <div className="w-full md:w-1/2 mb-2 md:mb-0">
-          <label htmlFor="village" className="block font-semibold mb-2">
-            Select Village:
-          </label>
-          <select
-            id="village"
-            value={villageCode || 0}
-            onChange={(e) => setVillageCode(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          >
-            <option value={0}>{t("addHealthWorker.Select")}</option>
-            {village.map((village, index) => (
-              <option key={index} value={village.code}>
-                {village.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-
-        {/* Health Worker Details */}
-        {healthWorker?
-        <div className="pl-4 w-full md:w-1/2 mt-15">
-        <div className="bg-white p-6 rounded shadow-md">
-          <div className="grid grid-cols-2 ">
-            <div>
-              <p className="font-semibold mb-1">Name:</p>
-              <p className="mb-2">{healthWorker?.firstname} {healthWorker?.lastname}</p>
-            </div>
-            <div>
-              <p className="font-semibold mb-1">Village:</p>
-              <p className="mb-2">{healthWorker?.villagename}</p>
-            </div>
-            <div>
-              <p className="font-semibold mb-1">Email:</p>
-              <p className="mb-2">{healthWorker?.email}</p>
-            </div>
+          {/* Select Village */}
+          <div className="w-full md:w-1/2 mb-2 md:mb-0">
+            <label htmlFor="village" className="block font-semibold mb-2">
+              Select Village:
+            </label>
+            <select
+              id="village"
+              value={villageCode || 0}
+              onChange={(e) => setVillageCode(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md"
+            >
+              <option value={0}>{t("addHealthWorker.Select")}</option>
+              {village.map((village, index) => (
+                <option key={index} value={village.code}>
+                  {village.name}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
-      </div>:null}
-      </div>
 
-      <div className="pt-6">
-        <div className="bg-white p-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
-          {chartData && (
-            <Line
-              data={chartData}
-              options={{ scales: { x: { type: "category" } } }}
-              ref={chartRef}
-            />
-          )}
+          {/* Health Worker Details */}
+          {healthWorker ? (
+            <div className="pl-4 w-full md:w-1/2 mt-15">
+              <div className="bg-white p-6 rounded shadow-md">
+                <div className="grid grid-cols-2 ">
+                  <div>
+                    <p className="font-semibold mb-1">Name:</p>
+                    <p className="mb-2">
+                      {healthWorker?.firstname} {healthWorker?.lastname}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">Village:</p>
+                    <p className="mb-2">{healthWorker?.villagename}</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">Email:</p>
+                    <p className="mb-2">{healthWorker?.email}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        <div className="pt-6">
+          <div className="bg-white p-6 shadow-md">
+            <h2 className="text-lg font-semibold mb-4">Survey Registrations</h2>
+            {chartData && (
+              <Line
+                data={chartData}
+                options={{ scales: { x: { type: "category" } } }}
+                ref={chartRef}
+              />
+            )}
           </div>
         </div>
       </div>

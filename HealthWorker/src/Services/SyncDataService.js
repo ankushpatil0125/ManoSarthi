@@ -9,6 +9,17 @@ import AabhaService from "./AabhaService";
 
 let v = 0;
 const SyncDataService = {
+  syncData: async () => {
+    try {
+      await SyncDataService.registrationData();
+      await SyncDataService.followUpData();
+      await SyncDataService.newAabhaData();
+      console.log("Syncing Completed");
+    } catch (error) {
+      console.error("Error during syncing data:", error);
+      Alert.alert("Failed to sync data");
+    }
+  },
   registrationData: async () => {
     try {
       // console.log("Hello");
@@ -202,7 +213,7 @@ const SyncDataService = {
           // console.log(lst[0]);
         }
       } catch (error) {
-        console.error("Error during adding patient:", error.data);
+        console.error("Error during adding patient followup:", error.data);
         Alert.alert("Failed to sync data");
       }
     }

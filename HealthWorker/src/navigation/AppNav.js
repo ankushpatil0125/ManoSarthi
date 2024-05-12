@@ -30,7 +30,7 @@ const AppNav = () => {
           type: "success",
           text1: "Back online",
         });
-        SyncDataService.registrationData();
+        SyncDataService.syncData();
       } else if (!connected && prevConnected) {
         Toast.show({
           type: "error",

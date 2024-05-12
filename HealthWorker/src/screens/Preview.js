@@ -115,6 +115,7 @@ const Preview = ({ navigation, route }) => {
         );
       }
     } else if (type === "followup") {
+      console.log("Internet Status: ", isConnected);
       const permissionGranted = await getLocationPermission();
       if (permissionGranted) {
         try {
@@ -146,6 +147,15 @@ const Preview = ({ navigation, route }) => {
           );
         } catch (error) {
           console.error("Error getting location:", error);
+        }
+        try {
+          if (isConnected) {
+            console.log("Inside FollowUp Isconected");
+
+            await SyncDataService.followUpData();
+          }
+        } catch (error) {
+          console.error("Error Syncing FollowUp:", error);
         }
       } else {
         console.log("Location permission not granted.");

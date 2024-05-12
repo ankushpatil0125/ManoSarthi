@@ -89,27 +89,9 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(true);
 
     try {
-      await SyncDataService.registrationData();
+      await SyncDataService.syncData();
     } catch (error) {
-      console.error("Error during registrationData sync:", error);
-      // Handle registrationData sync error
-      // For example, show an error message to the user
-    }
-
-    try {
-      await SyncDataService.followUpData();
-    } catch (error) {
-      console.error("Error during followUpData sync:", error);
-      // Handle followUpData sync error
-      // For example, show an error message to the user
-    }
-
-    try {
-      await SyncDataService.newAabhaData();
-    } catch (error) {
-      console.error("Error during newAabhaData sync:", error);
-      // Handle newAabhaData sync error
-      // For example, show an error message to the user
+      console.error("Error during Data syncing:", error);
     }
 
     try {
