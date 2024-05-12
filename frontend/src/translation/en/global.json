@@ -6,17 +6,17 @@
     "Contact": "Contact Us",
     "Dashboard": "Dashboard",
     "Profile": "Profile",
-    "Patient":"Patient"
+    "Patient": "Patient"
   },
   "login": {
     "LOGIN": "LOGIN",
     "Logout": "Logout",
     "username": "username",
     "User name": "User name",
-    "Enter user name":"Enter user name",
-    "Enter password":"Enter password",
+    "Enter user name": "Enter user name",
+    "Enter password": "Enter password",
     "Forgot-password": "Forgot-password",
-    "Sign in to your Account":"Sign in to your Account",
+    "Sign in to your Account": "Sign in to your Account",
     "Password": "Password",
     "forgot-password": "Forgot-password",
     "Click_Here": "Click_Here",
@@ -39,7 +39,7 @@
     "Delete HealthWorker": "Delete HealthWorker",
     "Show Activity": "Show Activity",
     "HealthWorker": "HealthWorker",
-    "Dashboard":"Dashboard"
+    "Dashboard": "Dashboard"
   },
   "addDoctorSupervisor": {
     "Doctor": "Doctor",
@@ -113,30 +113,31 @@
     "Other Details": "Other Details"
   },
 
-  "ViewPatientDetails" : {
+  "ViewPatientDetails": {
     "Patient Details": "Patient Details"
   },
 
-  "admin":{
+  "admin": {
     "Dashboard": "Dashboard",
     "Add": "Add",
     "Update": "Update",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "Add Questionarrie": "Add Questionarrie"
   },
-  
-  "doctor":{
-    "Dashboard":"Dashboard",
+
+  "doctor": {
+    "Dashboard": "Dashboard",
     "New Patient": "New Patient",
     "Ongoing Patient": "Ongoing Patient",
     "Treated Patient": "Treated Patient",
-    "New Patients" : "New Patients",
-    "FirstName":"First Name",
-    "LastName":"Last Name",
-    "Gender":"Gender",
-    "Village":"Village",
-    "View Details":"View Details",
-    "Previous":"Previous",
-    "Next":"Next",
-    "Referred During FollowUp":"Referred During FollowUp"
+    "New Patients": "New Patients",
+    "FirstName": "First Name",
+    "LastName": "Last Name",
+    "Gender": "Gender",
+    "Village": "Village",
+    "View Details": "View Details",
+    "Previous": "Previous",
+    "Next": "Next",
+    "Referred During FollowUp": "Referred During FollowUp"
   }
 }

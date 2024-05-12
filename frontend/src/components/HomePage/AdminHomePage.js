@@ -23,7 +23,7 @@ const AdminHomePage = () => {
     switch (currentPage) {
       case "dashboard":
         return (
-          <AdminDashboard/>
+          <AdminDashboard />
           // <div className="p-4 bg-blue-100 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
           //   <div className="grid grid-cols-3 gap-4 mb-4">
           //     <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
@@ -285,9 +285,9 @@ const AdminHomePage = () => {
       case "update":
         return <UpdateDeleteActor action={"Reassign"} />;
       case "delete":
-        return <UpdateDeleteActor action={"Delete"}/>;
+        return <UpdateDeleteActor action={"Delete"} />;
       case "AddQuestionarrie":
-        return <AddQuestionarrie/>
+        return <AddQuestionarrie />;
       default:
         return null;
     }
@@ -381,7 +381,9 @@ const AdminHomePage = () => {
                     <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
                       <PlusIcon className="text-black" />
                     </span>
-                    <span className="flex-1 ms-3 whitespace-nowrap">{t('admin.Add')}</span>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      {t("admin.Add")}
+                    </span>
                   </button>
                 </li>
                 <li>
@@ -428,11 +430,11 @@ const AdminHomePage = () => {
                     }`}
                   >
                     <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
-                    <PlusIcon className="text-black" />
+                      <PlusIcon className="text-black" />
                     </span>
                     <span className="flex-1 ms-3 whitespace-nowrap">
                       {/* {t("admin.Delete")} */}
-                      Add Questionarrie
+                      {t("admin.Add Questionarrie")}
                     </span>
                   </button>
                 </li>

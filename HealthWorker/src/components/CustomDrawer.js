@@ -20,8 +20,9 @@ const CustomDrawer = (props) => {
   handleSync = async () => {
     console.log("Before Syncing :");
     // SyncDataService.registrationData();
-    SyncDataService.followUpData();
+    // SyncDataService.followUpData();
     // SyncDataService.newAabhaData();
+    SyncDataService.syncData();
   };
 
   handlefetch = async () => {

@@ -22,8 +22,6 @@
     "axios": "^1.6.8",
     "expo": "~50.0.14",
     "expo-file-system": "^16.0.8",
-    "expo-image-picker": "~14.7.1",
-    "expo-local-authentication": "^14.0.1",
     "expo-localization": "^14.8.3",
     "expo-location": "^17.0.1",
     "expo-permissions": "^14.4.0",
@@ -45,7 +43,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "~0.19.6",
-    "twrnc": "^4.2.0"
+    "twrnc": "^4.2.0",
+    "expo-image-picker": "~14.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
