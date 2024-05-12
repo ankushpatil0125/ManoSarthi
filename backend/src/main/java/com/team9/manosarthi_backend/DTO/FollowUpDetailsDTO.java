@@ -17,7 +17,7 @@ import java.util.List;
 @ToString
 public class FollowUpDetailsDTO {
 
-    @JsonFormat(pattern="dd-MMM-yyyy")
+    @JsonFormat(pattern = "dd-MMMM-yyyy", timezone = "Asia/Kolkata")
     private Date followupDate;
 
     private int followUpNo;

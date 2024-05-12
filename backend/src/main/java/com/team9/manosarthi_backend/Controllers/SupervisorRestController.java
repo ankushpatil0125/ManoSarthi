@@ -283,13 +283,13 @@ public class SupervisorRestController {
                             villageDetailsDTO.setVillageName(followUpSchedule.getVillage().getName());
                             villageDetailsDTO.setWorkerEmail(worker.get(0).getEmail());
                             villageDetailsDTO.setWorkerName(worker.get(0).getFirstname() + " " + worker.get(0).getLastname());
+                            villageDetailsDTO.setWorkerId(worker.get(0).getId());
                         }
                         //set missedFollowups
                         MissedFollowupsSupDTO missedfollowup=new MissedFollowupsSupDTO();
-                        missedfollowup.setVillageCode(followUpSchedule.getVillage().getCode());
-                        missedfollowup.setWorkerId(worker.get(0).getId());
-                        missedfollowup.setPatient_fname(followUpSchedule.getPatient().getFirstname());
-                        missedfollowup.setPatient_lname(followUpSchedule.getPatient().getLastname());
+                        missedfollowup.setVillageName(followUpSchedule.getVillage().getName());
+                        missedfollowup.setWorkerName(worker.get(0).getFirstname()+" "+worker.get(0).getLastname());
+                        missedfollowup.setPatientName(followUpSchedule.getPatient().getFirstname()+ " "+followUpSchedule.getPatient().getLastname());
                         missedfollowup.setFollowup_date(followUpSchedule.getNextFollowUpDate());
                         missedFollowupsSupDTOList.add(missedfollowup);
                         count++;
@@ -338,5 +338,17 @@ public class SupervisorRestController {
         {
             throw new APIRequestException("Error while getting worker details.",ex.getMessage());
         }
+    }
+    @DeleteMapping("/worker")
+    public Pair<Boolean,Boolean> deleteSupervisor(@RequestBody Worker worker)
+    {
+        //first boolean represent successfully deleted or not 2nd represent need to assign other worker or not
+        Pair<Boolean,Boolean> result = supervisorService.DeleteWorker(worker);
+
+        if (!result.getKey())
+        {
+            throw new APIRequestException("Supervisor not found with id"+worker.getId());
+        }
+        return result;
     }
 }

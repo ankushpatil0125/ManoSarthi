@@ -92,7 +92,12 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     @Transactional
-    public Patient registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
+    public String registerPatient(RegisterPatientDTO registerPatientDTO,int workerId) {
+
+        List<String> aabhaIdList =  patientRepository.getAllAabhaId();
+        for (String aabhaId : aabhaIdList) {
+            if(aabhaId.equals(registerPatientDTO.getPatient().getAabhaId())) return aabhaId;
+        }
 
         Optional<Worker> worker =workerRepository.findById(workerId);
         System.out.println("RegisterPatient ");
@@ -181,7 +186,7 @@ public class WorkerServiceImpl implements WorkerService {
 
 
 
-            return patientRepository.findById(patient.getPatient_id()).get();
+            return patientRepository.findById(patient.getPatient_id()).get().getAabhaId();
 
         }
 
@@ -379,7 +384,10 @@ public class WorkerServiceImpl implements WorkerService {
 
                 //for missed follow up
                 LocalDate followUpSyncBefore = followUpSchedule.getNextFollowUpDate().toLocalDate().plusDays(3);
-                if (!followUpSyncBefore.isBefore(LocalDate.now())) {      //missed
+                System.out.println("followUpSyncBefore" + followUpSyncBefore);
+                System.out.println("LocalDate.now()  "+LocalDate.now());
+                if (followUpSyncBefore.isBefore(LocalDate.now())) {      //missed
+                    System.out.println(" in missed follow up");
                     MissedFollowUp missedFollowUp = new MissedFollowUp();
                     missedFollowUp.setPatient(patient.get());
                     missedFollowUp.setFollowUpDate(followUpSchedule.getNextFollowUpDate());
