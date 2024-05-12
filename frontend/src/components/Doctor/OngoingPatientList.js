@@ -119,7 +119,7 @@ const OngoingPatientList = () => {
             }}
           >
             <h4 className="flex justify-center items-center text-[#6467c0]">
-              {t("doctor.Ongoing Patients")}:
+              {t("Ongoing Patients")}:
             </h4>
           </div>
           <table className="table-auto border border-collapse border-gray-400">
@@ -146,7 +146,7 @@ const OngoingPatientList = () => {
             </thead>
 
             <tbody>
-              {data.map((patient,index) => (
+              {data.map((patient, index) => (
                 <tr key={index}>
                   <td className="border border-gray-400 px-4 py-2">
                     {patient.firstname}

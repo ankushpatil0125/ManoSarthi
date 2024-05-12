@@ -429,10 +429,34 @@ const HomeScreen = ({ navigation, route }) => {
                       Status:
                     </Text>
                     {item.status === "Pending" && (
-                      <Icon name="exclamation" size={30} color="orange" />
+                      // <Icon name="exclamation" size={30} color="orange" />
+                      <>
+                        <Icon name="exclamation" size={30} color="orange" />
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: "orange",
+                            marginLeft: 10,
+                          }}
+                        >
+                          {item.status}
+                        </Text>
+                      </>
                     )}
                     {item.status === "Completed" && (
-                      <Icon name="check" size={30} color="green" />
+                      // <Icon name="check" size={30} color="green" />
+                      <>
+                        <Icon name="check" size={30} color="green" />
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: "green",
+                            marginLeft: 10,
+                          }}
+                        >
+                          {item.status}
+                        </Text>
+                      </>
                     )}
                     {!(
                       item.status === "Pending" || item.status === "Completed"
@@ -446,6 +470,11 @@ const HomeScreen = ({ navigation, route }) => {
                         </Text>
                       </>
                     )}
+                    {/* <Text
+                      style={{ fontSize: 18, color: "red", marginLeft: 10 }}
+                    >
+                      {item.status}
+                    </Text> */}
                   </View>
 
                   <Button

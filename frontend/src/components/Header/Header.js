@@ -29,7 +29,7 @@ const Header = () => {
       localStorage.removeItem("ROLE");
       localStorage.removeItem("User_Id");
       navigate("/");
-      alert(error?.response?.data?.message);
+      // alert(error?.response?.data?.message);
       console.log(error);
     }
   };

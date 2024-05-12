@@ -343,9 +343,7 @@ const Preview = ({ navigation, route }) => {
                     fieldNames.hasOwnProperty(key) && (
                       <Text key={key}>
                         {fieldNames[key]}:{" "}
-                        {key === "followUpDate"
-                          ? formatDate(detail[key])
-                          : detail[key]}
+                        {key === "followUpDate" ? detail[key] : detail[key]}
                       </Text>
                     )
                 )}
