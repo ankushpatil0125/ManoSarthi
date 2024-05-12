@@ -19,6 +19,7 @@ public class WorkerDetailsDTO {
     private Pair<String,Integer> CurrentMissedFollowupsCounts; //village name and count
     private List<Pair<String,Integer>> PrevMissedFollowupsCounts;
     private Integer totalmissedcount;
-    private List<FollowUpSchedule> CurrentMissedFollowups;
+    private List<MissedFollowupsSupDTO> CurrentMissedFollowups;
+    private List<MissedFollowupsSupDTO> PrevMissedFollowups;
 
 }

@@ -1,5 +1,7 @@
 package com.team9.manosarthi_backend.Services;
 
+import com.team9.manosarthi_backend.DTO.AdminDashboardDTO;
+import com.team9.manosarthi_backend.DTO.SupDashboardDTO;
 import com.team9.manosarthi_backend.DTO.WorkerDetailsDTO;
 import com.team9.manosarthi_backend.Entities.*;
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,5 +28,7 @@ public interface SupervisorService {
     WorkerDetailsDTO workerdetails(int workerid,int userid);
 
     List<List<FollowUpSchedule>> subdistMissedFollowup(int userid);
+
+    SupDashboardDTO dashboard(int supid);
 
 }

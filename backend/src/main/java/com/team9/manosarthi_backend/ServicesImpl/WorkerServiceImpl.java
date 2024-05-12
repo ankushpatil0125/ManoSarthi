@@ -384,7 +384,10 @@ public class WorkerServiceImpl implements WorkerService {
 
                 //for missed follow up
                 LocalDate followUpSyncBefore = followUpSchedule.getNextFollowUpDate().toLocalDate().plusDays(3);
-                if (!followUpSyncBefore.isBefore(LocalDate.now())) {      //missed
+                System.out.println("followUpSyncBefore" + followUpSyncBefore);
+                System.out.println("LocalDate.now()  "+LocalDate.now());
+                if (followUpSyncBefore.isBefore(LocalDate.now())) {      //missed
+                    System.out.println(" in missed follow up");
                     MissedFollowUp missedFollowUp = new MissedFollowUp();
                     missedFollowUp.setPatient(patient.get());
                     missedFollowUp.setFollowUpDate(followUpSchedule.getNextFollowUpDate());

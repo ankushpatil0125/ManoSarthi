@@ -43,6 +43,7 @@ public class AdminServiceImpl implements AdminService {
 
     private NotRefAbhaIdRepository notRefAbhaIdRepository;
 
+    private TokenRepository tokenRepository;
     @Override
     public Doctor adddoctor(Doctor doctor) {
 
@@ -259,7 +260,7 @@ public class AdminServiceImpl implements AdminService {
                 subDistrictRepository.save(temp);
             });
             String userName = deleteSupervisor.get().getUser().getUsername();
-
+            tokenRepository.deleteTokensByUsername(userName);
             deleteSupervisor.get().setUser(null);
             userRepository.deleteById(userName);
 
@@ -344,6 +345,7 @@ public class AdminServiceImpl implements AdminService {
             adminDashboardDTO.setTotalSurveysTaken(TotalSurveys);
             adminDashboardDTO.setDiseaseStats(diseaseRepository.getDiseaseAndCount());
             adminDashboardDTO.setDistrictStats(patientRepository.patientCountForDistrict());
+            adminDashboardDTO.setTotalTreated(patientRepository.getTreatedPatientCount());
             List<Pair<Integer,Integer>> AgeRangeCount=new ArrayList<>();
             int Age1C= patientRepository.countPatientsInAgeRange(1,20);
             AgeRangeCount.add(Pair.of(1,Age1C));
