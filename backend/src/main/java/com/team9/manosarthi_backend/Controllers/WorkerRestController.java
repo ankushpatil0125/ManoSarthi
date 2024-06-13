@@ -128,9 +128,14 @@ public class WorkerRestController {
             System.out.println("questions"+questions);
 
             return questions;
-        } catch (Exception ex) {
-            throw new APIRequestException("Error while getting questionarrie", ex.getMessage());
         }
+        catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting questionarrie", ex.getMessage());
+        }
+
     }
 
     @GetMapping("/get-medical-questionarrie")
@@ -139,9 +144,14 @@ public class WorkerRestController {
             List<MedicalQue> questions = questionarrieService.getmedicalquestions();
 
             return questions;
-        } catch (Exception ex) {
-            throw new APIRequestException("Error while getting medical questionarrie", ex.getMessage());
         }
+        catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting medical questionarrie", ex.getMessage());
+        }
+
     }
 
     @Validated
@@ -188,15 +198,22 @@ public class WorkerRestController {
 
     @PostMapping("/not-referred-patient")
     public List<String> notReferredPatient(@RequestBody List<String> aabhaIDs, @RequestHeader("Authorization") String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            System.out.println("aabhaIDs" + aabhaIDs);
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                System.out.println("aabhaIDs" + aabhaIDs);
 
-            String token = authorizationHeader.substring(7);
-            String workerId = helper.getIDFromToken(token);
-            List<String> addedAabhaIDs = workerService.addNotReferredPatientAabhaId(Integer.parseInt(workerId),aabhaIDs);
-            return addedAabhaIDs;
-        } else {
-            throw new APIRequestException("Error in authorizing");
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
+                List<String> addedAabhaIDs = workerService.addNotReferredPatientAabhaId(Integer.parseInt(workerId), aabhaIDs);
+                return addedAabhaIDs;
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while registering patient", ex.getMessage());
         }
     }
 
@@ -258,30 +275,29 @@ public class WorkerRestController {
 
     @GetMapping("/getFollowupSchedule")
     public List<FollowupScheduleDTO> getFollowupSchedule(@RequestHeader("Authorization") String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
-            String token = authorizationHeader.substring(7);
-            String workerId = helper.getIDFromToken(token);
-            List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
+                List<FollowUpSchedule> schedules = workerService.get_followup_schedule(Integer.parseInt(workerId));
 
-            List<FollowupScheduleDTO> followupScheduleDTOList = new ArrayList<>();
-            for (FollowUpSchedule schedule : schedules) {
-                FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
-                Date today = java.sql.Date.valueOf(LocalDate.now());
+                List<FollowupScheduleDTO> followupScheduleDTOList = new ArrayList<>();
+                for (FollowUpSchedule schedule : schedules) {
+                    FollowupScheduleDTO followupScheduleDTO = new FollowupScheduleDTO();
+                    Date today = java.sql.Date.valueOf(LocalDate.now());
 
 //                Date today = Calendar.getInstance().getTime();
 //                Date nextFollowUpDate = schedule.getNextFollowUpDate();
 
 
-                if(schedule.getNextFollowUpDate().equals(today) )
-                {
-                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
-                } else if (schedule.getNextFollowUpDate().before(today))
-                {
-                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Missed");
-                } else if (schedule.getNextFollowUpDate().after(today)) {
-                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
-                }
+                    if (schedule.getNextFollowUpDate().equals(today)) {
+                        followupScheduleDTO.FollowupScheduleToDTO(schedule, "Normal");
+                    } else if (schedule.getNextFollowUpDate().before(today)) {
+                        followupScheduleDTO.FollowupScheduleToDTO(schedule, "Missed");
+                    } else if (schedule.getNextFollowUpDate().after(today)) {
+                        followupScheduleDTO.FollowupScheduleToDTO(schedule, "Normal");
+                    }
 
 //                if(nextFollowUpDate.compareTo(today) < 0) {
 //                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Missed");
@@ -289,61 +305,79 @@ public class WorkerRestController {
 //                else {
 //                    followupScheduleDTO.FollowupScheduleToDTO(schedule,"Normal");
 //                }
-                System.out.println("date "+followupScheduleDTO.getFollowUpDate()+"  type  "+followupScheduleDTO.getType());
+                    System.out.println("date " + followupScheduleDTO.getFollowUpDate() + "  type  " + followupScheduleDTO.getType());
 
-                followupScheduleDTOList.add(followupScheduleDTO);
+                    followupScheduleDTOList.add(followupScheduleDTO);
 
+                }
+                for (FollowupScheduleDTO followupScheduleDTO : followupScheduleDTOList)
+                    System.out.println("followupScheduleDTO   " + followupScheduleDTO.getFollowUpDate());
+                return followupScheduleDTOList;
+            } else {
+                throw new APIRequestException("Error in authorizing");
             }
-            for (FollowupScheduleDTO followupScheduleDTO : followupScheduleDTOList) System.out.println("followupScheduleDTO   "+followupScheduleDTO.getFollowUpDate());
-          return followupScheduleDTOList;
-        }
-        else {
-            throw new APIRequestException("Error in authorizing");
+        }catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting followup schedule", ex.getMessage());
         }
     }
 
     @GetMapping("/getprescriptions")
     public List<PrescriptionDTO> getPrescriptions(@RequestHeader("Authorization") String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
-            String token = authorizationHeader.substring(7);
-            String workerId = helper.getIDFromToken(token);
-            List<Prescription> prescriptions = workerService.getprescriptions(Integer.parseInt(workerId));
-            List<PrescriptionDTO> prescriptionDTOList = new ArrayList<>();
-            Date sevendaysback=java.sql.Date.valueOf(LocalDate.now().minusDays(7));
-            for (Prescription prescription : prescriptions) {
-                PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
+                List<Prescription> prescriptions = workerService.getprescriptions(Integer.parseInt(workerId));
+                List<PrescriptionDTO> prescriptionDTOList = new ArrayList<>();
+                Date sevendaysback = java.sql.Date.valueOf(LocalDate.now().minusDays(7));
+                for (Prescription prescription : prescriptions) {
+                    PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
 
-                if(prescription.getDate().after(sevendaysback))
-                    prescriptionDTO.PrescriptionToDTO(prescription,true);
-                else
-                    prescriptionDTO.PrescriptionToDTO(prescription,false);
+                    if (prescription.getDate().after(sevendaysback))
+                        prescriptionDTO.PrescriptionToDTO(prescription, true);
+                    else
+                        prescriptionDTO.PrescriptionToDTO(prescription, false);
 
-                prescriptionDTOList.add(prescriptionDTO);
+                    prescriptionDTOList.add(prescriptionDTO);
 
+                }
+                return prescriptionDTOList;
+            } else {
+                throw new APIRequestException("Error in authorizing");
             }
-            return prescriptionDTOList;
-        } else {
-            throw new APIRequestException("Error in authorizing");
+        }catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting prescription", ex.getMessage());
         }
     }
 
 
     @PostMapping("/register-followup")
     public int registerFollowUP(@RequestBody RegisterFollowUpDetailsDTO registerFollowUpDetailsDTO, @RequestHeader("Authorization") String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String token = authorizationHeader.substring(7);
-            String workerId = helper.getIDFromToken(token);
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                String token = authorizationHeader.substring(7);
+                String workerId = helper.getIDFromToken(token);
 
-            int pattientId = workerService.addFollowUpDetails(registerFollowUpDetailsDTO, Integer.parseInt(workerId));
-            return pattientId;
+                int pattientId = workerService.addFollowUpDetails(registerFollowUpDetailsDTO, Integer.parseInt(workerId));
+                return pattientId;
 
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
         }
-        else {
-            throw new APIRequestException("Error in authorizing");
+        catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while registering followup", ex.getMessage());
         }
-
-//        return null;
     }
 
 //    @GetMapping("/getrecentpresc")

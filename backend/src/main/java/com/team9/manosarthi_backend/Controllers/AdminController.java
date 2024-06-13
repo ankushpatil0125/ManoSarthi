@@ -121,7 +121,6 @@ public class AdminController {
             }
             return doctorResponseDTOs;
         }
-
         catch (RuntimeException ex){
             if(ex instanceof APIRequestException)
             {
@@ -198,20 +197,52 @@ public class AdminController {
     @PutMapping("/reassign-doctor")
     public DoctorResponseDTO reassignDoctor(@RequestParam("doctorID") int doctorID, @RequestParam("newDistrictCode") int newSubDistrictCode){
 
-        Doctor doctor = adminService.reassignDoctor(doctorID,  newSubDistrictCode);
-        DoctorResponseDTO dto = new DoctorResponseDTO();
-        dto.forAdminDoctorToDoctorResponseDTO(doctor);
-        return dto;
+        try {
+            Doctor doctor = adminService.reassignDoctor(doctorID, newSubDistrictCode);
+            DoctorResponseDTO dto = new DoctorResponseDTO();
+            dto.forAdminDoctorToDoctorResponseDTO(doctor);
+            return dto;
+        }catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
+
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
+
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
+        } catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while reassigning the doctor.", ex.getMessage());
+        }
     }
 
 
     @DeleteMapping("/doctor")
     public DoctorResponseDTO deleteDoctor(@RequestParam("doctorID") int doctorID){
-
-        Doctor doctor = adminService.deleteDoctor(doctorID);
-        DoctorResponseDTO dto = new DoctorResponseDTO();
-        dto.forAdminDoctorToDoctorResponseDTO(doctor);
-        return dto;
+        try {
+            Doctor doctor = adminService.deleteDoctor(doctorID);
+            DoctorResponseDTO dto = new DoctorResponseDTO();
+            dto.forAdminDoctorToDoctorResponseDTO(doctor);
+            return dto;
+        }catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while deleting the doctor.", ex.getMessage());
+        }
     }
 
 
@@ -292,96 +323,137 @@ public class AdminController {
                 throw new APIRequestException("Supervisor with given ID not found");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while updating the supervisor.",ex.getMessage());
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while updating the supervisor.", ex.getMessage());
         }
+
     }
 
     @GetMapping("/supervisor")
     public List<SupervisorResponseDTO> viewAllSupervisor(@RequestParam("pagenumber") int pagenumber){
-        int pagesize = 3;
+        try {
+            int pagesize = 3;
 
-//        List<Doctor> doctors = adminService.viewAllDoctor(pagenumber,pagesize);
-        List<Supervisor> supervisorList=adminService.viewAllSupervisor(pagenumber,pagesize);
+            List<Supervisor> supervisorList = adminService.viewAllSupervisor(pagenumber, pagesize);
 
-        if(supervisorList== null)
-        {
-            throw new APIRequestException("No Supervisor found");
+            if (supervisorList == null) {
+                throw new APIRequestException("No Supervisor found");
+            }
+
+            List<SupervisorResponseDTO> supervisorResponseDTOS = new ArrayList<>();
+            for (Supervisor sup : supervisorList) {
+                SupervisorResponseDTO dto = new SupervisorResponseDTO();
+                dto.forAdminSupervisorToSupervisorResponseDTO(sup);
+                supervisorResponseDTOS.add(dto);
+            }
+            return supervisorResponseDTOS;
+        }catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while viewing the supervisor.", ex.getMessage());
         }
-
-        List<SupervisorResponseDTO> supervisorResponseDTOS = new ArrayList<>();
-        for (Supervisor sup : supervisorList)
-        {
-            SupervisorResponseDTO dto = new SupervisorResponseDTO();
-            dto.forAdminSupervisorToSupervisorResponseDTO(sup);
-            supervisorResponseDTOS.add(dto);
-        }
-
-
-
-        return supervisorResponseDTOS;
     }
 
 
 
     @GetMapping("/supervisor/district")
     public List<SupervisorResponseDTO> viewSupervisorByDistrict(@RequestParam("districtcode") int districtcode,@RequestParam("pagenumber") int pagenumber){
-        int pagesize=3;
-//        List<Doctor> doctors= adminService.viewDoctorByDistrict(districtcode, pagenumber, pagesize);
-        List<Supervisor> supervisorList=adminService.viewSupervisorByDistrict(districtcode,pagenumber,pagesize);
-        if(supervisorList== null)
-        {
-            throw new APIRequestException("No Supervisor found");
+        try {
+            int pagesize = 3;
+            List<Supervisor> supervisorList = adminService.viewSupervisorByDistrict(districtcode, pagenumber, pagesize);
+            if (supervisorList == null) {
+                throw new APIRequestException("No Supervisor found");
+            }
+
+            List<SupervisorResponseDTO> supervisorResponseDTOS = new ArrayList<>();
+            for (Supervisor sup : supervisorList) {
+                SupervisorResponseDTO dto = new SupervisorResponseDTO();
+                dto.forAdminSupervisorToSupervisorResponseDTO(sup);
+                supervisorResponseDTOS.add(dto);
+            }
+
+            return supervisorResponseDTOS;
         }
-
-        List<SupervisorResponseDTO> supervisorResponseDTOS = new ArrayList<>();
-        for (Supervisor sup : supervisorList)
-        {
-            SupervisorResponseDTO dto = new SupervisorResponseDTO();
-            dto.forAdminSupervisorToSupervisorResponseDTO(sup);
-            supervisorResponseDTOS.add(dto);
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while viewing the supervisor with given district.", ex.getMessage());
         }
-
-        return supervisorResponseDTOS;
-
     }
 
     @GetMapping("/supervisor/subdistrict/")
     public  List<SupervisorResponseDTO> viewSupervisorBySubDistrict(@RequestParam("subdistrictcode") int subdistrictcode){
-
-        List<Supervisor> supervisorList=adminService.viewSupervisorBySubDistrict(subdistrictcode);
-        if(supervisorList.isEmpty())
-        {
-            throw new APIRequestException("No Supervisor found");
+        try {
+            List<Supervisor> supervisorList = adminService.viewSupervisorBySubDistrict(subdistrictcode);
+            if (supervisorList.isEmpty()) {
+                throw new APIRequestException("No Supervisor found");
+            }
+            List<SupervisorResponseDTO> supervisorResponseDTOS = new ArrayList<>();
+            for (Supervisor sup : supervisorList) {
+                SupervisorResponseDTO dto = new SupervisorResponseDTO();
+                dto.forAdminSupervisorToSupervisorResponseDTO(sup);
+                supervisorResponseDTOS.add(dto);
+            }
+            return supervisorResponseDTOS;
         }
-        List<SupervisorResponseDTO> supervisorResponseDTOS = new ArrayList<>();
-        for (Supervisor sup : supervisorList)
-        {
-            SupervisorResponseDTO dto = new SupervisorResponseDTO();
-            dto.forAdminSupervisorToSupervisorResponseDTO(sup);
-            supervisorResponseDTOS.add(dto);
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while viewing the supervisor with given subdistrict.", ex.getMessage());
         }
-        return supervisorResponseDTOS;
     }
 
     @DeleteMapping("/supervisor")
     public SupervisorResponseDTO deleteSupervisor(@RequestBody Supervisor supervisor)
     {
-        Supervisor deletedSupervisor = adminService.deleteSupervisor(supervisor);
+        try {
+            Supervisor deletedSupervisor = adminService.deleteSupervisor(supervisor);
 
-        if (deletedSupervisor!=null)
-        {
-            System.out.println("Supervisor with ID " + deletedSupervisor.getId() + " was deleted successfully"+deletedSupervisor);
-            SupervisorResponseDTO dto = new SupervisorResponseDTO();
-            dto.forAdminSupervisorToSupervisorResponseDTO(deletedSupervisor);
-            return dto;
-        }
-        else
-        {
-            throw new APIRequestException("Supervisor not found");
-        }
+            if (deletedSupervisor != null) {
+                System.out.println("Supervisor with ID " + deletedSupervisor.getId() + " was deleted successfully" + deletedSupervisor);
+                SupervisorResponseDTO dto = new SupervisorResponseDTO();
+                dto.forAdminSupervisorToSupervisorResponseDTO(deletedSupervisor);
+                return dto;
+            } else {
+                throw new APIRequestException("Supervisor not found");
+            }
+        } catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
 
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
+
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
+        } catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while deleting the Supervisor.", ex.getMessage());
+        }
     }
 
     
@@ -395,10 +467,30 @@ public class AdminController {
 
             return que;
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while adding the questionarrie",ex.getMessage());
+        catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
+
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
+
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
+        } catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while adding the questionarrie", ex.getMessage());
         }
+
     }
 
     @Validated
@@ -410,41 +502,46 @@ public class AdminController {
 
             return ques;
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while adding the medical questionarrie",ex.getMessage());
+        catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
+
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
+
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
+        } catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while adding the medical questionarrie", ex.getMessage());
         }
+
     }
 
     @GetMapping("/dashboard")
     public AdminDashboardDTO dashboard()
     {
-        AdminDashboardDTO adminDashboardDTO=adminService.dashboard();
-        return adminDashboardDTO;
-    }
-    /*
-    @GetMapping("/districtstats")
-    public  List<Object[]> viewDistrictsStats(){
-
-        List<Object[]> stats=adminService.getdistrictstat();
-        if(stats.isEmpty())
-        {
-            throw new APIRequestException("No Stats found");
+        try {
+            AdminDashboardDTO adminDashboardDTO = adminService.dashboard();
+            return adminDashboardDTO;
+        }catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while adding the medical questionarrie", ex.getMessage());
         }
-
-        return stats;
     }
-    @GetMapping("/diseasestats")
-    public  List<Object[]> viewDiseaseStats(){
-
-        List<Object[]> stats=adminService.getdiseasecount();
-        if(stats.isEmpty())
-        {
-            throw new APIRequestException("No Stats found");
-        }
-
-        return stats;
-    }
-    */
 
 }

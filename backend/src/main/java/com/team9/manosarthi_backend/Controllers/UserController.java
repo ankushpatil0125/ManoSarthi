@@ -42,16 +42,21 @@ public class UserController {
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePassword request, Principal principal)
     {
-        String oldPassword= request.getOldPassword();
-        String newPassword= request.getNewPassword();
-        if(userService.changePassword(oldPassword,newPassword,principal))
-        {
-            return new ResponseEntity<>("Successfully Changed ! ", HttpStatus.OK);
+        try {
+            String oldPassword = request.getOldPassword();
+            String newPassword = request.getNewPassword();
+            if (userService.changePassword(oldPassword, newPassword, principal)) {
+                return new ResponseEntity<>("Successfully Changed ! ", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Wrong Credentials !", HttpStatus.BAD_REQUEST);
+            }
         }
-        else {
-            return new ResponseEntity<>("Wrong Credentials !", HttpStatus.BAD_REQUEST);
+        catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while changing password", ex.getMessage());
         }
-
 
     }
 
@@ -143,7 +148,7 @@ public class UserController {
                 throw new APIRequestException(ex.getMessage());
             }
             else
-                throw new APIRequestException("Error while adding the doctor.", ex.getMessage());
+                throw new APIRequestException("Error while setting new password", ex.getMessage());
         }
     }
 

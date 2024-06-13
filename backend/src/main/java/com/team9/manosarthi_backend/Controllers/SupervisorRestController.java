@@ -56,10 +56,15 @@ public class SupervisorRestController {
                 throw new APIRequestException("Error in authorizing");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting supervisor details",ex.getMessage());
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting supervisor details", ex.getMessage());
         }
+
     }
 
     //get village from subdistrict code of supervisor where worker not assigned if assigned=false and worker assigned if assigned=true
@@ -88,10 +93,15 @@ public class SupervisorRestController {
             throw new APIRequestException("Error in authorizing");
         }
        }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting villages of supervisor district",ex.getMessage());
-        }
+       catch (Exception ex) {
+           if(ex instanceof APIRequestException)
+           {
+               throw new APIRequestException(ex.getMessage());
+           }
+           else
+               throw new APIRequestException("Error while getting villages of supervisor district", ex.getMessage());
+       }
+
     }
 
 
@@ -191,10 +201,15 @@ public class SupervisorRestController {
                 throw new APIRequestException("Error in authorizing");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while adding the worker.",ex.getMessage());
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting subdistrict workers", ex.getMessage());
         }
+
     }
 
     @GetMapping("/get-village-worker")
@@ -214,10 +229,15 @@ public class SupervisorRestController {
                 throw new APIRequestException("No workers found");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting the village worker.",ex.getMessage());
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting village worker", ex.getMessage());
         }
+
     }
 
     //For reassigning worker to another village
@@ -249,10 +269,30 @@ public class SupervisorRestController {
                 throw new APIRequestException("Worker with given ID not found");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while reassigning worker.",ex.getMessage());
+        catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
+
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
+
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
+        } catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while reassigning worker", ex.getMessage());
         }
+
     }
 
     @GetMapping("/all-missed-followups")
@@ -306,10 +346,15 @@ public class SupervisorRestController {
                 throw new APIRequestException("Error in authorizing");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting missed followups.",ex.getMessage());
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting missed followups", ex.getMessage());
         }
+
     }
 
 
@@ -334,35 +379,57 @@ public class SupervisorRestController {
                 throw new APIRequestException("Error in authorizing");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting worker details.",ex.getMessage());
+        catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while getting worker details.", ex.getMessage());
         }
+
     }
     @DeleteMapping("/worker")
     public Pair<Boolean,Boolean> deleteSupervisor(@RequestBody Worker worker)
     {
-        //first boolean represent successfully deleted or not 2nd represent need to assign other worker or not
-        Pair<Boolean,Boolean> result = supervisorService.DeleteWorker(worker);
+        try {
+            //first boolean represent successfully deleted or not 2nd represent need to assign other worker or not
+            Pair<Boolean, Boolean> result = supervisorService.DeleteWorker(worker);
 
-        if (!result.getKey())
-        {
-            throw new APIRequestException("Supervisor not found with id"+worker.getId());
+            if (!result.getKey()) {
+                throw new APIRequestException("Supervisor not found with id" + worker.getId());
+            }
+            return result;
+        }catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while deleting supervisor", ex.getMessage());
         }
-        return result;
     }
 
     @GetMapping("/dashboard")
     public SupDashboardDTO dashboard(@RequestHeader("Authorization") String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            // Extract the token part after "Bearer "
-            String token = authorizationHeader.substring(7);
-            String userid = helper.getIDFromToken(token);
-            int supid = Integer.parseInt(userid);
-            SupDashboardDTO supDashboardDTO = supervisorService.dashboard(supid);
-            return supDashboardDTO;
-        } else {
-            throw new APIRequestException("Error in authorizing");
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                // Extract the token part after "Bearer "
+                String token = authorizationHeader.substring(7);
+                String userid = helper.getIDFromToken(token);
+                int supid = Integer.parseInt(userid);
+                SupDashboardDTO supDashboardDTO = supervisorService.dashboard(supid);
+                return supDashboardDTO;
+            } else {
+                throw new APIRequestException("Error in authorizing");
+            }
+        }catch (Exception ex) {
+            if(ex instanceof APIRequestException)
+            {
+                throw new APIRequestException(ex.getMessage());
+            }
+            else
+                throw new APIRequestException("Error while showing supervisor dashboard", ex.getMessage());
         }
     }
 }

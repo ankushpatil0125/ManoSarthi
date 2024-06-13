@@ -17,6 +17,7 @@ import com.team9.manosarthi_backend.Repositories.PrescriptionRepository;
 import com.team9.manosarthi_backend.Services.DoctorService;
 import com.team9.manosarthi_backend.security.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -60,10 +61,13 @@ public class DoctorRestController {
                 throw new APIRequestException("Error in authorizing");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting doctors of district",ex.getMessage());
+        catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting doctor details", ex.getMessage());
         }
+
     }
     @GetMapping("/patient")
     public List<PatientResponseDTO> getNewPatientDetails(@RequestParam("type") String type, @RequestParam("pagenumber") int pagenumber,@RequestHeader("Authorization") String authorizationHeader){
@@ -90,16 +94,18 @@ public class DoctorRestController {
                 throw new APIRequestException("Error in authorizing");
             }
         }
-        catch (Exception ex)
-        {
-            throw new APIRequestException("Error while getting new patients",ex.getMessage());
+        catch (Exception ex) {
+            if (ex instanceof APIRequestException) {
+                throw new APIRequestException(ex.getMessage());
+            } else
+                throw new APIRequestException("Error while getting new patients", ex.getMessage());
         }
+
     }
 
     @PostMapping("/prescription-followup")
     public boolean giveprescription(@RequestBody PatientFollowUpPrescriptionDTO patientFollowUpPrescriptionDTO) {
 //        System.out.println("patientFollowUpPrescriptionDTO "+patientFollowUpPrescriptionDTO.toString());
-        System.out.println("/doctor/prescription-followup");
 
         try {
 
@@ -107,6 +113,22 @@ public class DoctorRestController {
 
             if(prescription!=null) return true;
             else return false;
+        }
+        catch (DataIntegrityViolationException ex) {
+            String errorMessage = ex.getCause().getMessage();
+            String duplicateEntryMessage = null;
+
+            if (errorMessage.contains("Duplicate entry")) {
+                // Extract the part of the message that contains the duplicate entry information
+                duplicateEntryMessage = errorMessage.substring(errorMessage.indexOf("Duplicate entry"), errorMessage.indexOf("for key"));
+            }
+
+            if (duplicateEntryMessage != null) {
+                throw new APIRequestException(duplicateEntryMessage, ex.getMessage());
+            } else {
+                // If the message doesn't contain the expected format, throw a generic exception
+                throw new APIRequestException("Duplicate entry constraint violation occurred", ex.getMessage());
+            }
         }
         catch (Exception ex)
         {
